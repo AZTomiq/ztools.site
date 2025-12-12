@@ -177,10 +177,22 @@ async function buildPage(filePath, locale) {
   // Helper for t()
   const t = (key) => getTranslation(key, locale);
 
+  // Calculate pageUrl for language switcher
+  // relativePath examples: "index.ejs", "tax/index.ejs", "about.ejs"
+  let pageUrl = relativePath;
+  if (pageUrl.endsWith('index.ejs')) {
+    pageUrl = pageUrl.substring(0, pageUrl.length - 'index.ejs'.length);
+  } else if (pageUrl.endsWith('.ejs')) {
+    pageUrl = pageUrl.replace('.ejs', '.html');
+  }
+  // Ensure we don't have backslashes on Windows dev environments (though user is on Mac)
+  pageUrl = pageUrl.replace(/\\/g, '/');
+
   const pageData = {
     title: t('meta.title'), // Default title, can be overridden by page content
     rootPath,
     currentPath: relativePath === 'index.ejs' ? 'home' : path.dirname(relativePath),
+    pageUrl,
     locale,
     t
   };

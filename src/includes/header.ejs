@@ -19,8 +19,8 @@
       </ul>
     </nav>
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/" style="text-decoration: none; font-size: 1.2rem;"
-        title="Switch Language">
+      <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/<%= pageUrl %>"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
         <%= locale==='vi' ? '🇺🇸' : '🇻🇳' %>
       </a>
       <button id="theme-toggle" aria-label="Toggle Dark Mode">
