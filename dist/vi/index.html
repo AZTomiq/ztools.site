@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools</span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../tax/"
+            class="">
+            Tính Thuế
+          </a></li>
+        <li><a href="../bmi/"
+            class="">
+            BMI
+          </a></li>
+        <li><a href="../json-formatter/"
+            class="">
+            JSON
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../en/" style="text-decoration: none; font-size: 1.2rem;"
+        title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+
+<section class="hero" style="text-align: center; padding: 3rem 1rem;">
+  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+    Công cụ tiện ích cho mọi người
+  </h1>
+  <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+    Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.
+  </p>
+</section>
+
+<section class="tools-grid container">
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+
+    <!-- Tool Card: Tax -->
+    <a href="tax/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        Tính thuế TNCN
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Tính thuế 2025, so sánh Gross/Net, bảo hiểm...
+      </p>
+    </a>
+
+    <!-- Tool Card: BMI -->
+    <a href="bmi/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        Tính BMI
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Kiểm tra chỉ số cơ thể, đánh giá sức khỏe.
+      </p>
+    </a>
+
+    <!-- Tool Card: JSON -->
+    <a href="json-formatter/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        JSON Formatter
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Làm đẹp, validate và convert JSON code.
+      </p>
+    </a>
+
+    <!-- Coming Soon -->
+    <div class="card tool-item" style="opacity: 0.6;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔜</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        Sắp ra mắt
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Nhiều công cụ hữu ích khác đang được phát triển.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .tool-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+</style>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../about.html">
+            Giới thiệu
+          </a></li>
+        <li><a href="../privacy.html">
+            Chính sách
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../assets/js/global.js"></script>
+</body>
+
+</html>

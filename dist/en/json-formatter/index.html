@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Free Online Utility Tools
+</title>
+<meta name="description" content="Free online utilities: Vietnam PIT Calculator, BMI Calculator, JSON Formatter, and more.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../en/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools</span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../en/tax/"
+            class="">
+            Tax Calc
+          </a></li>
+        <li><a href="../../en/bmi/"
+            class="">
+            BMI
+          </a></li>
+        <li><a href="../../en/json-formatter/"
+            class="active">
+            JSON
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../" style="text-decoration: none; font-size: 1.2rem;"
+        title="Switch Language">
+        🇻🇳
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: JSON Formatter & Validator - ZTools -->
+<link rel="stylesheet" href="../../assets/css/json-formatter.css">
+
+<section class="tool-container">
+  <div class="card intro-card">
+    <h1>JSON Formatter & Validator</h1>
+    <p>Làm đẹp (Beautify), kiểm tra lỗi (Validate) và chuyển đổi JSON sang các định dạng khác.</p>
+  </div>
+
+  <div class="card tool-card">
+    <div class="editor-toolbar">
+      <button class="btn btn-sm" onclick="formatJSON()">Beautify</button>
+      <button class="btn btn-sm btn-secondary" onclick="minifyJSON()">Minify</button>
+      <button class="btn btn-sm btn-secondary" onclick="copyJSON()">Copy</button>
+      <button class="btn btn-sm btn-secondary" onclick="clearEditor()">Clear</button>
+    </div>
+
+    <div class="editor-container">
+      <textarea id="json-input" placeholder="Paste your JSON here..."></textarea>
+      <!-- Future: Output or Side-by-side view -->
+    </div>
+
+    <div id="json-error"></div>
+  </div>
+</section>
+
+<script src="../../assets/js/json-formatter.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Free, simple, and secure utility tools.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Links
+      </h4>
+      <ul>
+        <li><a href="../../en/about.html">
+            About
+          </a></li>
+        <li><a href="../../en/privacy.html">
+            Privacy
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

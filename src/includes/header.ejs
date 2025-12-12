@@ -1,0 +1,31 @@
+<header class="site-header">
+  <div class="header-inner container">
+    <a href="<%= rootPath %><%= locale %>/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools</span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="<%= rootPath %><%= locale %>/tax/" class="<%= currentPath === 'tax' ? 'active' : '' %>">
+            <%= t('nav.tax') %>
+          </a></li>
+        <li><a href="<%= rootPath %><%= locale %>/bmi/" class="<%= currentPath === 'bmi' ? 'active' : '' %>">
+            <%= t('nav.bmi') %>
+          </a></li>
+        <li><a href="<%= rootPath %><%= locale %>/json-formatter/"
+            class="<%= currentPath === 'json-formatter' ? 'active' : '' %>">
+            <%= t('nav.json') %>
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/" style="text-decoration: none; font-size: 1.2rem;"
+        title="Switch Language">
+        <%= locale==='vi' ? '🇺🇸' : '🇻🇳' %>
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,1 @@
+.tool-card{margin-top:2rem}.editor-toolbar{margin-bottom:1rem;display:flex;gap:.5rem}.editor-container{display:grid;grid-template-columns:1fr;gap:1rem}#json-input{font-family:monospace;min-height:400px;padding:1rem;border-radius:var(--radius);border:1px solid var(--border-color);width:100%;resize:vertical}#json-error{color:var(--text-danger);margin-top:.5rem;display:none}

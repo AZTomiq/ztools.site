@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.js",
-    "dev": "node build.js && npx serve dist"
+    "build:secure": "node build.js --obfuscate",
+    "dev": "node build.js && npx serve dist",
+    "serve": "npx serve dist"
   },
   "keywords": [
     "tools",
@@ -20,6 +22,10 @@
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
-    "serve": "^14.2.1"
+    "serve": "^14.2.1",
+    "javascript-obfuscator": "^4.0.0",
+    "terser": "^5.0.0",
+    "clean-css-cli": "^5.0.0",
+    "html-minifier-terser": "^7.0.0"
   }
 }

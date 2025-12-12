@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Free Online Utility Tools
+</title>
+<meta name="description" content="Free online utilities: Vietnam PIT Calculator, BMI Calculator, JSON Formatter, and more.">
+<link rel="stylesheet" href="../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../en/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools</span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../en/tax/"
+            class="">
+            Tax Calc
+          </a></li>
+        <li><a href="../en/bmi/"
+            class="">
+            BMI
+          </a></li>
+        <li><a href="../en/json-formatter/"
+            class="">
+            JSON
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../" style="text-decoration: none; font-size: 1.2rem;"
+        title="Switch Language">
+        🇻🇳
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+
+<section class="hero" style="text-align: center; padding: 3rem 1rem;">
+  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+    Utility Tools for Everyone
+  </h1>
+  <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+    Simple, fast, secure, and completely free.
+  </p>
+</section>
+
+<section class="tools-grid container">
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+
+    <!-- Tool Card: Tax -->
+    <a href="tax/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        PIT Calculator
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Calculate 2025 tax, Gross/Net conversion, insurance...
+      </p>
+    </a>
+
+    <!-- Tool Card: BMI -->
+    <a href="bmi/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        BMI Calculator
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Check body mass index and health status.
+      </p>
+    </a>
+
+    <!-- Tool Card: JSON -->
+    <a href="json-formatter/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        JSON Formatter
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Beautify, validate, and convert JSON code.
+      </p>
+    </a>
+
+    <!-- Coming Soon -->
+    <div class="card tool-item" style="opacity: 0.6;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔜</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        Coming Soon
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        More useful tools are under development.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .tool-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+</style>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Free, simple, and secure utility tools.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Links
+      </h4>
+      <ul>
+        <li><a href="../en/about.html">
+            About
+          </a></li>
+        <li><a href="../en/privacy.html">
+            Privacy
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../assets/js/global.js"></script>
+</body>
+
+</html>

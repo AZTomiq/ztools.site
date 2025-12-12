@@ -1,0 +1,71 @@
+<!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+
+<section class="hero" style="text-align: center; padding: 3rem 1rem;">
+  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+    <%= t('home.hero_title') %>
+  </h1>
+  <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+    <%= t('home.hero_desc') %>
+  </p>
+</section>
+
+<section class="tools-grid container">
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+
+    <!-- Tool Card: Tax -->
+    <a href="tax/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        <%= t('home.tools.tax_title') %>
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <%= t('home.tools.tax_desc') %>
+      </p>
+    </a>
+
+    <!-- Tool Card: BMI -->
+    <a href="bmi/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        <%= t('home.tools.bmi_title') %>
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <%= t('home.tools.bmi_desc') %>
+      </p>
+    </a>
+
+    <!-- Tool Card: JSON -->
+    <a href="json-formatter/index.html" class="card tool-item"
+      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        <%= t('home.tools.json_title') %>
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <%= t('home.tools.json_desc') %>
+      </p>
+    </a>
+
+    <!-- Coming Soon -->
+    <div class="card tool-item" style="opacity: 0.6;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔜</div>
+      <h3 style="margin-bottom: 0.5rem;">
+        <%= t('home.tools.soon_title') %>
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <%= t('home.tools.soon_desc') %>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .tool-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+</style>

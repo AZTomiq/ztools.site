@@ -1,0 +1,16 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  <%= title %>
+</title>
+<meta name="description" content="<%= t('meta.description') %>">
+<link rel="stylesheet" href="<%= rootPath %>assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="<%= rootPath %>manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>

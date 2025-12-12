@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "title": "ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí",
+    "description": "Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "tax": "Tính Thuế",
+    "bmi": "BMI",
+    "json": "JSON"
+  },
+  "home": {
+    "hero_title": "Công cụ tiện ích cho mọi người",
+    "hero_desc": "Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.",
+    "tools": {
+      "tax_title": "Tính thuế TNCN",
+      "tax_desc": "Tính thuế 2025, so sánh Gross/Net, bảo hiểm...",
+      "bmi_title": "Tính BMI",
+      "bmi_desc": "Kiểm tra chỉ số cơ thể, đánh giá sức khỏe.",
+      "json_title": "JSON Formatter",
+      "json_desc": "Làm đẹp, validate và convert JSON code.",
+      "soon_title": "Sắp ra mắt",
+      "soon_desc": "Nhiều công cụ hữu ích khác đang được phát triển."
+    }
+  },
+  "footer": {
+    "about_title": "ZTools.site",
+    "about_desc": "Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.",
+    "links_title": "Liên kết",
+    "intro": "Giới thiệu",
+    "policy": "Chính sách",
+    "copyright": "© 2025 ZTools. Built with ❤️."
+  }
+}

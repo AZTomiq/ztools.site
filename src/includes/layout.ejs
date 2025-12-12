@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="<%= locale %>" data-theme="light">
+
+<head>
+  <%- include('head.ejs') %>
+</head>
+
+<body>
+  <%- include('header.ejs') %>
+
+    <main class="container">
+      <%- body %>
+    </main>
+
+    <%- include('footer.ejs') %>
+
+      <script src="<%= rootPath %>assets/js/global.js"></script>
+</body>
+
+</html>

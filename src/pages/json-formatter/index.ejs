@@ -1,0 +1,27 @@
+<!-- title: JSON Formatter & Validator - ZTools -->
+<link rel="stylesheet" href="<%= rootPath %>assets/css/json-formatter.css">
+
+<section class="tool-container">
+  <div class="card intro-card">
+    <h1>JSON Formatter & Validator</h1>
+    <p>Làm đẹp (Beautify), kiểm tra lỗi (Validate) và chuyển đổi JSON sang các định dạng khác.</p>
+  </div>
+
+  <div class="card tool-card">
+    <div class="editor-toolbar">
+      <button class="btn btn-sm" onclick="formatJSON()">Beautify</button>
+      <button class="btn btn-sm btn-secondary" onclick="minifyJSON()">Minify</button>
+      <button class="btn btn-sm btn-secondary" onclick="copyJSON()">Copy</button>
+      <button class="btn btn-sm btn-secondary" onclick="clearEditor()">Clear</button>
+    </div>
+
+    <div class="editor-container">
+      <textarea id="json-input" placeholder="Paste your JSON here..."></textarea>
+      <!-- Future: Output or Side-by-side view -->
+    </div>
+
+    <div id="json-error"></div>
+  </div>
+</section>
+
+<script src="<%= rootPath %>assets/js/json-formatter.js"></script>

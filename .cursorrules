@@ -1,0 +1,18 @@
+# Project Rules
+
+## Core Principles
+1. **Separation of Concerns (Critical)**:
+   - **CSS**: Must always be in separate `.css` files. Do not use `<style>` blocks in HTML.
+   - **JavaScript**: Must always be in separate `.js` files. Do not use inline `<script>` blocks for logic.
+   - **HTML/EJS**: Should only contain structure and references to external assets.
+
+## Project Structure
+- Source code resides in `src/`.
+- Built output goes to `dist/`.
+- Assets (CSS, JS, Images) should be organized within `src/assets/`.
+
+## Technology Stack
+- **HTML/Template**: EJS for templating.
+- **CSS**: Vanilla CSS.
+- **JS**: Vanilla JavaScript.
+- **Build System**: Custom Node.js SSG (`build.js`).

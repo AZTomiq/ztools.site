@@ -1,4 +1,19 @@
 :root {
+  /* Light Mode Defaults */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-card: #f1f5f9;
+  --accent: #0891b2;
+  /* Darker cyan for light mode text/borders */
+  --accent-dim: #0e7490;
+  --success: #16a34a;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border: #e2e8f0;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Overrides */
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
   --bg-card: #334155;
