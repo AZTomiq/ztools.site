@@ -3,7 +3,7 @@
   "short_name": "ZTools",
   "description": "Bộ công cụ tiện ích online miễn phí: Tính thuế TNCN, BMI, JSON Formatter và nhiều hơn nữa.",
   "id": "/?source=pwa",
-  "start_url": "/?source=pwa",
+  "start_url": "/en/?source=pwa",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0f172a",
@@ -43,7 +43,7 @@
       "name": "Tính Thuế",
       "short_name": "Thuế",
       "description": "Ước tính thuế TNCN nhanh chóng",
-      "url": "/tax/?source=pwa",
+      "url": "/vi/tax/?source=pwa",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>",
@@ -56,7 +56,7 @@
       "name": "Format JSON",
       "short_name": "JSON",
       "description": "Làm đẹp và validate JSON",
-      "url": "/json-formatter/?source=pwa",
+      "url": "/vi/json-formatter/?source=pwa",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>",
