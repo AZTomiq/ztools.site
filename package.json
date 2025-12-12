@@ -1,0 +1,25 @@
+{
+  "name": "ztools-site",
+  "version": "1.0.0",
+  "description": "Multi-tool utility site",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js",
+    "dev": "node build.js && npx serve dist"
+  },
+  "keywords": [
+    "tools",
+    "utility",
+    "calculator"
+  ],
+  "author": "Anph",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
