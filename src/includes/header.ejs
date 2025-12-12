@@ -2,19 +2,25 @@
   <div class="header-inner container">
     <a href="<%= rootPath %><%= locale %>/" class="logo">
       <span class="logo-icon">🛠️</span>
-      <span class="logo-text">ZTools</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          <%= category %>
+        </span></span>
     </a>
     <nav class="main-nav">
       <ul>
-        <li><a href="<%= rootPath %><%= locale %>/tax/" class="<%= currentPath === 'tax' ? 'active' : '' %>">
-            <%= t('nav.tax') %>
+        <li><a href="<%= rootPath %><%= locale %>/#job-income" class="<%= currentPath === 'tax' ? 'active' : '' %>">
+            <%= t('nav.menu_job') %>
           </a></li>
-        <li><a href="<%= rootPath %><%= locale %>/bmi/" class="<%= currentPath === 'bmi' ? 'active' : '' %>">
-            <%= t('nav.bmi') %>
+        <li><a href="<%= rootPath %><%= locale %>/#finance" class="<%= currentPath === 'finance' ? 'active' : '' %>">
+            <%= t('nav.menu_finance') %>
           </a></li>
-        <li><a href="<%= rootPath %><%= locale %>/json-formatter/"
+        <li><a href="<%= rootPath %><%= locale %>/#daily-utilities"
+            class="<%= currentPath === 'bmi' ? 'active' : '' %>">
+            <%= t('nav.menu_utils') %>
+          </a></li>
+        <li><a href="<%= rootPath %><%= locale %>/#dev-tools"
             class="<%= currentPath === 'json-formatter' ? 'active' : '' %>">
-            <%= t('nav.json') %>
+            <%= t('nav.menu_dev') %>
           </a></li>
       </ul>
     </nav>

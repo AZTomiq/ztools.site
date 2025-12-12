@@ -1,13 +1,26 @@
 {
   "meta": {
     "title": "ZTools - Free Online Utility Tools",
-    "description": "Free online utilities: Vietnam PIT Calculator, BMI Calculator, JSON Formatter, and more."
+    "description": "Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more."
+  },
+  "about": {
+    "title": "About ZTools"
+  },
+  "privacy": {
+    "title": "Privacy Policy"
+  },
+  "terms": {
+    "title": "Terms of Service"
   },
   "nav": {
     "home": "Home",
     "tax": "Tax Calc",
     "bmi": "BMI",
-    "json": "JSON"
+    "json": "JSON",
+    "menu_job": "Job & Income",
+    "menu_finance": "Finance",
+    "menu_utils": "Utilities",
+    "menu_dev": "Dev Tools"
   },
   "home": {
     "hero_title": "Utility Tools for Everyone",
@@ -21,6 +34,29 @@
       "json_desc": "Beautify, validate, and convert JSON code.",
       "soon_title": "Coming Soon",
       "soon_desc": "More useful tools are under development."
+    },
+    "cats": {
+      "job": {
+        "corp_tax": "Corporate Tax",
+        "insurance": "Social Insurance",
+        "salary": "Salary Utilities"
+      },
+      "finance": {
+        "loan": "Loan Calculator",
+        "compound": "Compound Interest",
+        "savings": "Savings Interest",
+        "currency": "Currency & Credit"
+      },
+      "daily": {
+        "pdf": "PDF & Text Tools",
+        "image": "Image Tools",
+        "qr": "Encryption & QR"
+      },
+      "dev": {
+        "encoder": "Encoder / Decoder",
+        "generator": "Generators",
+        "tester": "Testers & Formatters"
+      }
     }
   },
   "footer": {
@@ -28,7 +64,8 @@
     "about_desc": "Free, simple, and secure utility tools.",
     "links_title": "Links",
     "intro": "About",
-    "policy": "Privacy",
+    "policy": "Privacy Policy",
+    "terms": "Terms of Service",
     "copyright": "© 2025 ZTools. Built with ❤️."
   }
 }

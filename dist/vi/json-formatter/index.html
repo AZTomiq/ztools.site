@@ -18,6 +18,12 @@
   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
 </head>
 
 <body>
@@ -25,19 +31,25 @@
   <div class="header-inner container">
     <a href="../../vi/" class="logo">
       <span class="logo-icon">🛠️</span>
-      <span class="logo-text">ZTools</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          Dev Tools
+        </span></span>
     </a>
     <nav class="main-nav">
       <ul>
-        <li><a href="../../vi/tax/" class="">
-            Tính Thuế
+        <li><a href="../../vi/#job-income" class="">
+            Thuế &amp; Lương
           </a></li>
-        <li><a href="../../vi/bmi/" class="">
-            BMI
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
           </a></li>
-        <li><a href="../../vi/json-formatter/"
+        <li><a href="../../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
             class="active">
-            JSON
+            Dev Tools
           </a></li>
       </ul>
     </nav>
@@ -98,11 +110,14 @@
         Liên kết
       </h4>
       <ul>
-        <li><a href="../../vi/about.html">
+        <li><a href="../../vi/about/">
             Giới thiệu
           </a></li>
-        <li><a href="../../vi/privacy.html">
+        <li><a href="../../vi/privacy/">
             Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
           </a></li>
       </ul>
     </div>

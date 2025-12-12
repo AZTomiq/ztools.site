@@ -18,6 +18,12 @@
   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
 </head>
 
 <body>
@@ -25,19 +31,25 @@
   <div class="header-inner container">
     <a href="../../vi/" class="logo">
       <span class="logo-icon">🛠️</span>
-      <span class="logo-text">ZTools</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          Thuế &amp; Lương
+        </span></span>
     </a>
     <nav class="main-nav">
       <ul>
-        <li><a href="../../vi/tax/" class="active">
-            Tính Thuế
+        <li><a href="../../vi/#job-income" class="active">
+            Thuế &amp; Lương
           </a></li>
-        <li><a href="../../vi/bmi/" class="">
-            BMI
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
           </a></li>
-        <li><a href="../../vi/json-formatter/"
+        <li><a href="../../vi/#daily-utilities"
             class="">
-            JSON
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
+            class="">
+            Dev Tools
           </a></li>
       </ul>
     </nav>
@@ -109,7 +121,8 @@
           <div class="history-header">
             <div class="history-title">
               <span>🕐 Lịch sử</span>
-              <span class="history-privacy" id="historyPrivacy">🔒 Lưu trên máy bạn (Local Storage)</span>
+              <span class="history-privacy" id="historyPrivacy">🔒 Chúng tôi đảm bảo chỉ lưu trữ lịch sử tính toán
+                trên trình duyệt của bạn, không gửi lên server dưới mọi hình thức</span>
             </div>
             <label class="switch">
               <input type="checkbox" id="historyEnabled" checked onchange="setHistoryEnabled(this.checked)">
@@ -348,11 +361,14 @@
         Liên kết
       </h4>
       <ul>
-        <li><a href="../../vi/about.html">
+        <li><a href="../../vi/about/">
             Giới thiệu
           </a></li>
-        <li><a href="../../vi/privacy.html">
+        <li><a href="../../vi/privacy/">
             Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
           </a></li>
       </ul>
     </div>

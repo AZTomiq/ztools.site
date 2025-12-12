@@ -165,12 +165,24 @@ async function buildPage(filePath, locale) {
   const pageContent = await fs.readFile(filePath, 'utf-8');
 
   // Determine Output Path
-  // Always dist/[locale]/path/to/file.html
-  let outputRelPath = path.join(locale, relativePath.replace('.ejs', '.html'));
+  // 1. 404.ejs -> 404.html (Standard convention for static hosts)
+  // 2. index.ejs -> index.html
+  // 3. other.ejs -> other/index.html (Clean URL) -- e.g. about.ejs -> about/index.html
 
-  // Calculate generic rootPath for assets (always point to root assets)
-  // For vi/index.html (depth 1) -> ../
-  // For vi/tax/index.html (depth 2) -> ../../
+  let outputFileName = 'index.html';
+  let outputDirRel = path.dirname(relativePath); // e.g. tax/index.ejs -> tax ; about.ejs -> .
+
+  if (path.basename(relativePath) === '404.ejs') {
+    outputFileName = '404.html';
+  } else if (path.basename(relativePath) !== 'index.ejs') {
+    // about.ejs -> about/index.html
+    const slug = path.basename(relativePath, '.ejs');
+    outputDirRel = path.join(outputDirRel, slug);
+  }
+
+  let outputRelPath = path.join(locale, outputDirRel, outputFileName);
+
+  // Calculate generic rootPath for assets
   const depth = outputRelPath.split(path.sep).length - 1;
   const rootPath = depth > 0 ? '../'.repeat(depth) : './';
 
@@ -182,11 +194,26 @@ async function buildPage(filePath, locale) {
   let pageUrl = relativePath;
   if (pageUrl.endsWith('index.ejs')) {
     pageUrl = pageUrl.substring(0, pageUrl.length - 'index.ejs'.length);
+  } else if (pageUrl === '404.ejs') {
+    pageUrl = '404.html';
   } else if (pageUrl.endsWith('.ejs')) {
-    pageUrl = pageUrl.replace('.ejs', '.html');
+    // about.ejs -> about/
+    pageUrl = pageUrl.replace('.ejs', '/');
   }
   // Ensure we don't have backslashes on Windows dev environments (though user is on Mac)
   pageUrl = pageUrl.replace(/\\/g, '/');
+  // Ensure we don't have leading slash for relative joining
+  if (pageUrl.startsWith('/')) pageUrl = pageUrl.substring(1);
+
+  // Determine Category for Header
+  let categoryKey = '';
+  const dirName = path.dirname(relativePath);
+
+  if (dirName === 'tax') categoryKey = 'nav.menu_job';
+  else if (dirName === 'bmi') categoryKey = 'nav.menu_utils';
+  else if (dirName === 'json-formatter') categoryKey = 'nav.menu_dev';
+
+  const category = categoryKey ? t(categoryKey) : '';
 
   const pageData = {
     title: t('meta.title'), // Default title, can be overridden by page content
@@ -194,6 +221,7 @@ async function buildPage(filePath, locale) {
     currentPath: relativePath === 'index.ejs' ? 'home' : path.dirname(relativePath),
     pageUrl,
     locale,
+    category,
     t
   };
 

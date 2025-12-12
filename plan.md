@@ -24,60 +24,89 @@
 *   **Domain**: 1 Domain chính (Authority Brand). URL dạng sạch `/tool-slug`.
 *   **SEO**: Auto-gen Sitemap, Canonical tags, Structured Data (JSON-LD).
 
-## 4. Danh sách Công cụ (Roadmap)
-Dựa trên nhu cầu thị trường Việt Nam và cộng đồng Dev.
+## 4. Hệ sinh thái Công cụ (Roadmap)
+Chiến lược phát triển theo hướng phục vụ nhu cầu thực tế tại **Việt Nam** và **Cộng đồng Developer**.
 
-### Phase 1: The Foundation (Nền móng & Core Tools)
-*Mục tiêu: Hoàn thiện kiến trúc SSG và ra mắt 3 tool flagship.*
-1.  **System**: Setup SSG script, Global CSS (Dark mode), Header/Footer.
-2.  **Tool 1: Tính thuế TNCN Pro 2025** (Tài chính - *High Traffic*)
-    *   Gồm: Tính xuôi (Gross->Net), Tính ngược (Net->Gross), Biểu đồ dòng tiền, So sánh lương.
-3.  **Tool 2: JSON Kitchen** (Dev Tool - *Sticky*)
-    *   Gồm: Format, Validate, **JSON to Types (TS, Go, Java, Dart)**.
-4.  **Tool 3: BMI & Calo Tracker** (Sức khỏe - *General User*)
-    *   Gồm: Tính BMI chuẩn WHO/IDI, gợi ý cân nặng, BMR/TDEE calculator.
+### Group 1: Tiền / Thuế / Lương (Job & Income)
+*Phục vụ người đi làm, nhân sự, kế toán.*
+- [x] **Tính thuế TNCN 2025/2026**:
+    - [x] Tính xuôi (Gross → Net) & Tính ngược (Net → Gross).
+    - [x] So sánh Luật 2025 vs Nghị quyết 110/2025.
+    - [x] Biểu đồ dòng tiền & So sánh lương.
+- [ ] **Tính thuế TNDN** (Thu nhập doanh nghiệp).
+- [ ] **Tính BHXH & Hưu trí**:
+    - [ ] BHXH bắt buộc vs Tự nguyện.
+    - [ ] Dự tính lương hưu / BHXH 1 lần.
+- [ ] **Tiện ích Lương thưởng**:
+    - [ ] Tính tiền tăng ca (OT).
+    - [ ] Tính KPI, Thưởng Tết, Lương tháng 13.
 
-### Phase 2: Expansion (Mở rộng hệ sinh thái)
-*Mục tiêu: Đa dạng hóa tool để kéo organic traffic từ nhiều ngách.*
-1.  **Nhóm Tài chính**:
-    *   **Tính Lãi vay (Mortgage)**: Bảng dòng tiền trả nợ (Dư nợ giảm dần vs Đều hàng tháng).
-    *   **Tính BHXH (1 lần & Lương hưu)**: Công cụ dự báo dòng tiền hưu trí.
-2.  **Nhóm Dev Utilities**:
-    *   **UUID/ObjectId Generator**: Tạo ID số lượng lớn.
-    *   **Base64 Encoder/Decoder**: Xử lý file/text.
-    *   **Unix Timestamp**: Converter & Countdown.
-    *   **SQL Formatter**: Làm đẹp câu lệnh SQL.
-    *   **Regex Tester**: Test & giải thích Regex pattern.
-3.  **Nhóm Tiện ích**:
-    *   **QR Code Generator**: Tạo QR có logo, màu sắc, WiFi QR.
-    *   **Đọc số thành chữ**: Hỗ trợ tiền tệ Việt Nam.
+### Group 2: Tài chính & Ngân hàng (Finance)
+*Evergreen traffic - Luôn có nhu cầu tìm kiếm.*
+- [ ] **Tính lãi vay (Mortgage)**: Mua nhà/xe, dư nợ giảm dần vs đều.
+- [ ] **Tính lãi kép (Compound Interest)**: Sức mạnh của tích lũy.
+- [ ] **Lãi suất tiết kiệm**: So sánh/Tính toán gửi tiết kiệm.
+- [ ] **Tỷ giá & Tín dụng**:
+    - [ ] Chuyển đổi tiền tệ (Currency Converter).
+    - [ ] Tính hạn mức / Trả góp thẻ tín dụng.
 
-### Phase 3: Advanced & Polish (Nâng cao)
-*Mục tiêu: Các tool xử lý file nặng hoặc tính năng phức tạp.*
-1.  **Image Tools (Client-side WASM)**:
-    *   Compress Image (JPG/PNG/WebP).
-    *   Resize/Crop Image.
-    *   Convert PDF to Image.
-2.  **Security Tools**:
-    *   **Password Generator**: Tạo pass mạnh.
-    *   **Hash Generator**: MD5, SHA-1, SHA-256 (Local only).
-3.  **Global Features**:
-    *   Đa ngôn ngữ (i18n) cho các tool Dev (English/Vietnamese).
-    *   PWA (Installable App).
+### Group 3: Tiện ích đời sống & Media (Daily Utilities)
+*Công cụ xử lý nhanh file và dữ liệu thường ngày.*
+- [x] **Sức khỏe**: BMI & Calo Tracker (Chuẩn IDI/WPRO cho người Việt).
+- [ ] **Xử lý PDF/Văn bản**:
+    - [ ] PDF to Word (Client-side/Serverless).
+    - [ ] Đọc số thành chữ (Tiền Việt Nam).
+- [ ] **Xử lý Ảnh (Client-side WASM)**:
+    - [ ] Nén ảnh, Resize, Crop.
+    - [ ] Ghép ảnh online.
+- [ ] **Mã hóa & QR**:
+    - [ ] QR Code Generator (WiFi, Contact, Styled).
+    - [ ] AES/Hash (MD5, SHA) Simple Tool.
+
+### Group 4: Dev Tools (For Developers)
+*Traffic chất lượng cao, user trung thành.*
+- [x] **JSON Toolkit**:
+    - [x] Formatter / Validator / Minify.
+    - [x] JSON to Types (TypeScript, Go, Java, Dart, Python).
+- [ ] **Encoder / Decoder**:
+    - [ ] Base64 Support Files/Text.
+    - [ ] JWT Debugger / Decode.
+- [ ] **Generators**:
+    - [ ] UUID / ObjectId / Random String.
+    - [ ] CURL to Code (Fetch/Axios/Python).
+- [ ] **Testers & Formatters**:
+    - [ ] Regex Tester.
+    - [ ] SQL Formatter.
+    - [ ] Cron Expression Tester.
+    - [ ] Unix Timestamp Converter.
+
+### Phase 4: Content & Trust (SEO & AdSense Optimization)
+*Mục tiêu: Tối ưu nội dung để được Google Index tốt hơn và duyệt AdSense.*
+1.  **Tool Content Enrichment**:
+    *   Bổ sung 3 section bắt buộc cho mỗi tool:
+        - [ ] **Mô tả (Description)**: Giới thiệu tool là gì, tại sao cần dùng.
+        - [ ] **Hướng dẫn sử dụng (How-to)**: Các bước thực hiện.
+        - [ ] **FAQ**: Câu hỏi thường gặp.
+2.  **Essential Trust Pages**:
+    - [ ] **Privacy Policy**: Chính sách bảo mật (Cookie, Local Storage).
+    - [ ] **Terms of Service**: Điều khoản sử dụng.
+    - [ ] **About / Contact**: Giới thiệu team & liên hệ.
 
 ## 5. Quy trình Triển khai (Action Plan)
 1.  **Setup Framework (Ngay bây giờ)**:
-    *   `npm init` & cài dependency (`ejs`, `fs-extra`).
-    *   Viết `build.js`.
-    *   Tạo layout base (`header`, `footer`).
+    - [x] `npm init` & cài dependency (`ejs`, `fs-extra`).
+    - [x] Viết `build.js`.
+    - [x] Tạo layout base (`header`, `footer`).
 2.  **Migrate "Thuế TNCN"**:
-    *   Chuyển code từ `/tax` hiện tại vào cấu trúc `/src/pages/tax`.
-    *   Refactor CSS/JS để tách biệt.
+    - [x] Chuyển code từ `/tax` hiện tại vào cấu trúc `/src/pages/tax`.
+    - [x] Refactor CSS/JS để tách biệt.
 3.  **Develop New Tools**:
-    *   Code JSON Kitchen & BMI theo tiến độ Phase 1.
+    - [x] Code JSON Kitchen & BMI theo tiến độ Phase 1.
 4.  **Launch**:
-    *   Deploy lên Production.
-    *   Test Performance (Lighthouse).
+    - [ ] Deploy lên Production.
+    - [ ] Test Performance (Lighthouse).
+5.  **Maintenance & Bug Fixes**:
+    - [x] Fix i18n redirect issue (keep relative path).
 
 ## 6. Cam kết Chất lượng
 *   **Performance**: Load < 0.5s.

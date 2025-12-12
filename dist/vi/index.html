@@ -18,6 +18,12 @@
   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
 </head>
 
 <body>
@@ -25,19 +31,25 @@
   <div class="header-inner container">
     <a href="../vi/" class="logo">
       <span class="logo-icon">🛠️</span>
-      <span class="logo-text">ZTools</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
     </a>
     <nav class="main-nav">
       <ul>
-        <li><a href="../vi/tax/" class="">
-            Tính Thuế
+        <li><a href="../vi/#job-income" class="">
+            Thuế &amp; Lương
           </a></li>
-        <li><a href="../vi/bmi/" class="">
-            BMI
+        <li><a href="../vi/#finance" class="">
+            Tài chính
           </a></li>
-        <li><a href="../vi/json-formatter/"
+        <li><a href="../vi/#daily-utilities"
             class="">
-            JSON
+            Tiện ích
+          </a></li>
+        <li><a href="../vi/#dev-tools"
+            class="">
+            Dev Tools
           </a></li>
       </ul>
     </nav>
@@ -65,62 +77,221 @@
   </p>
 </section>
 
-<section class="tools-grid container">
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
-
-    <!-- Tool Card: Tax -->
-    <a href="tax" class="card tool-item" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+<div class="category-section" id="job-income">
+  <h2 class="category-title">🛠️ ZTools Job & Income</h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="vi/tax/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
-      <h3 style="margin-bottom: 0.5rem;">
+      <h3>
         Tính thuế TNCN
       </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">
+      <p>
         Tính thuế 2025, so sánh Gross/Net, bảo hiểm...
       </p>
     </a>
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tính thuế TNDN
+      </h3>
+      <p class="desc-soon">Corporate Income Tax</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tính BHXH &amp; Hưu trí
+      </h3>
+      <p class="desc-soon">Social Insurance & Pension</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tiện ích Lương thưởng
+      </h3>
+      <p class="desc-soon">OT, KPI, 13th Month Salary</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Tool Card: BMI -->
-    <a href="bmi" class="card tool-item" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+<div class="category-section" id="finance">
+  <h2 class="category-title">💰 ZTools Finance</h2>
+  <div class="tools-grid">
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tính lãi vay
+      </h3>
+      <p class="desc-soon">Mortgage Calculator</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tính lãi kép
+      </h3>
+      <p class="desc-soon">Compound Interest</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Lãi suất tiết kiệm
+      </h3>
+      <p class="desc-soon">Savings Interest</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tỷ giá &amp; Tín dụng
+      </h3>
+      <p class="desc-soon">Currency & Credit</p>
+    </div>
+  </div>
+</div>
+
+<div class="category-section" id="daily-utilities">
+  <h2 class="category-title">☕ ZTools Daily Utilities</h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="vi/bmi/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
-      <h3 style="margin-bottom: 0.5rem;">
+      <h3>
         Tính BMI
       </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">
+      <p>
         Kiểm tra chỉ số cơ thể, đánh giá sức khỏe.
       </p>
     </a>
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Xử lý PDF/Văn bản
+      </h3>
+      <p class="desc-soon">PDF to Word, Read Numbers</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Xử lý Ảnh
+      </h3>
+      <p class="desc-soon">Compress, Resize, Crop</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Mã hóa &amp; QR
+      </h3>
+      <p class="desc-soon">QR Code, Hash</p>
+    </div>
+  </div>
+</div>
 
-    <!-- Tool Card: JSON -->
-    <a href="json-formatter" class="card tool-item"
-      style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+<div class="category-section" id="dev-tools">
+  <h2 class="category-title">💻 ZTools DEV</h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="vi/json-formatter/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
-      <h3 style="margin-bottom: 0.5rem;">
+      <h3>
         JSON Formatter
       </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">
+      <p>
         Làm đẹp, validate và convert JSON code.
       </p>
     </a>
-
     <!-- Coming Soon -->
-    <div class="card tool-item" style="opacity: 0.6;">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔜</div>
-      <h3 style="margin-bottom: 0.5rem;">
-        Sắp ra mắt
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Encoder / Decoder
       </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">
-        Nhiều công cụ hữu ích khác đang được phát triển.
-      </p>
+      <p class="desc-soon">Base64, JWT</p>
     </div>
-
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Generators
+      </h3>
+      <p class="desc-soon">UUID, Random String</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Testers &amp; Formatters
+      </h3>
+      <p class="desc-soon">Regex, SQL, Cron</p>
+    </div>
   </div>
-</section>
+</div>
 
 <style>
+  .category-section {
+    margin-bottom: 4rem;
+  }
+
+  .category-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tool-item {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .tool-item:hover {
     transform: translateY(-5px);
     border-color: var(--primary-color);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .tool-item h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .tool-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    flex-grow: 1;
+  }
+
+  /* Upcoming tools style */
+  .tool-item.upcoming {
+    opacity: 0.7;
+    background-color: var(--bg-secondary);
+    border-style: dashed;
+    cursor: default;
+  }
+
+  .tool-item.upcoming:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-color);
+  }
+
+  .icon-soon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .desc-soon {
+    font-style: italic;
   }
 </style>
     </main>
@@ -140,11 +311,14 @@
         Liên kết
       </h4>
       <ul>
-        <li><a href="../vi/about.html">
+        <li><a href="../vi/about/">
             Giới thiệu
           </a></li>
-        <li><a href="../vi/privacy.html">
+        <li><a href="../vi/privacy/">
             Chính sách
+          </a></li>
+        <li><a href="../vi/terms/">
+            Điều khoản
           </a></li>
       </ul>
     </div>

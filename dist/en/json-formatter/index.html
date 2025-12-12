@@ -7,7 +7,7 @@
 <title>
   ZTools - Free Online Utility Tools
 </title>
-<meta name="description" content="Free online utilities: Vietnam PIT Calculator, BMI Calculator, JSON Formatter, and more.">
+<meta name="description" content="Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more.">
 <link rel="stylesheet" href="../../assets/css/global.css">
 <link rel="icon" type="image/png"
   href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
@@ -18,6 +18,12 @@
   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
 </head>
 
 <body>
@@ -25,19 +31,25 @@
   <div class="header-inner container">
     <a href="../../en/" class="logo">
       <span class="logo-icon">🛠️</span>
-      <span class="logo-text">ZTools</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          Dev Tools
+        </span></span>
     </a>
     <nav class="main-nav">
       <ul>
-        <li><a href="../../en/tax/" class="">
-            Tax Calc
+        <li><a href="../../en/#job-income" class="">
+            Job &amp; Income
           </a></li>
-        <li><a href="../../en/bmi/" class="">
-            BMI
+        <li><a href="../../en/#finance" class="">
+            Finance
           </a></li>
-        <li><a href="../../en/json-formatter/"
+        <li><a href="../../en/#daily-utilities"
+            class="">
+            Utilities
+          </a></li>
+        <li><a href="../../en/#dev-tools"
             class="active">
-            JSON
+            Dev Tools
           </a></li>
       </ul>
     </nav>
@@ -98,11 +110,14 @@
         Links
       </h4>
       <ul>
-        <li><a href="../../en/about.html">
+        <li><a href="../../en/about/">
             About
           </a></li>
-        <li><a href="../../en/privacy.html">
-            Privacy
+        <li><a href="../../en/privacy/">
+            Privacy Policy
+          </a></li>
+        <li><a href="../../en/terms/">
+            Terms of Service
           </a></li>
       </ul>
     </div>

@@ -3,11 +3,24 @@
     "title": "ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí",
     "description": "Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt."
   },
+  "about": {
+    "title": "Về ZTools"
+  },
+  "privacy": {
+    "title": "Chính Sách Bảo Mật"
+  },
+  "terms": {
+    "title": "Điều Khoản Sử Dụng"
+  },
   "nav": {
     "home": "Trang chủ",
     "tax": "Tính Thuế",
     "bmi": "BMI",
-    "json": "JSON"
+    "json": "JSON",
+    "menu_job": "Thuế & Lương",
+    "menu_finance": "Tài chính",
+    "menu_utils": "Tiện ích",
+    "menu_dev": "Dev Tools"
   },
   "home": {
     "hero_title": "Công cụ tiện ích cho mọi người",
@@ -21,6 +34,29 @@
       "json_desc": "Làm đẹp, validate và convert JSON code.",
       "soon_title": "Sắp ra mắt",
       "soon_desc": "Nhiều công cụ hữu ích khác đang được phát triển."
+    },
+    "cats": {
+      "job": {
+        "corp_tax": "Tính thuế TNDN",
+        "insurance": "Tính BHXH & Hưu trí",
+        "salary": "Tiện ích Lương thưởng"
+      },
+      "finance": {
+        "loan": "Tính lãi vay",
+        "compound": "Tính lãi kép",
+        "savings": "Lãi suất tiết kiệm",
+        "currency": "Tỷ giá & Tín dụng"
+      },
+      "daily": {
+        "pdf": "Xử lý PDF/Văn bản",
+        "image": "Xử lý Ảnh",
+        "qr": "Mã hóa & QR"
+      },
+      "dev": {
+        "encoder": "Encoder / Decoder",
+        "generator": "Generators",
+        "tester": "Testers & Formatters"
+      }
     }
   },
   "footer": {
@@ -29,6 +65,7 @@
     "links_title": "Liên kết",
     "intro": "Giới thiệu",
     "policy": "Chính sách",
+    "terms": "Điều khoản",
     "copyright": "© 2025 ZTools. Built with ❤️."
   }
 }

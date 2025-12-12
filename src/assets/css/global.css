@@ -80,6 +80,14 @@ a:hover {
   color: var(--text-color);
 }
 
+.logo-sub {
+  font-weight: normal;
+  font-size: 0.9em;
+  color: var(--text-muted);
+  margin-left: 0.2rem;
+  opacity: 0.8;
+}
+
 .main-nav ul {
   display: flex;
   list-style: none;

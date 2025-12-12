@@ -5,8 +5,8 @@
   "main": "build.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build.js",
-    "build:secure": "node build.js --obfuscate",
+    "build:dev": "node build.js",
+    "build": "node build.js --obfuscate",
     "dev": "node build.js && npx serve dist",
     "serve": "npx serve dist"
   },

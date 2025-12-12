@@ -32,7 +32,7 @@
     <a href="../../vi/" class="logo">
       <span class="logo-icon">🛠️</span>
       <span class="logo-text">ZTools <span class="logo-sub">
-          Tiện ích
+          
         </span></span>
     </a>
     <nav class="main-nav">
@@ -44,7 +44,7 @@
             Tài chính
           </a></li>
         <li><a href="../../vi/#daily-utilities"
-            class="active">
+            class="">
             Tiện ích
           </a></li>
         <li><a href="../../vi/#dev-tools"
@@ -54,7 +54,7 @@
       </ul>
     </nav>
     <div style="display: flex; gap: 0.5rem; align-items: center;">
-      <a href="../../en/bmi/"
+      <a href="../../en/about/"
         style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
         🇺🇸
       </a>
@@ -66,83 +66,37 @@
 </header>
 
     <main class="container">
-      <!-- title: Tính chỉ số BMI Online (Chuẩn cho người Việt) -->
+      <section class="container page-content" style="padding: 2rem 0; max-width: 800px; margin: 0 auto;">
+  <h1 style="text-align: center; margin-bottom: 2rem;">
+    Về ZTools
+  </h1>
 
-<section class="tool-container">
-  <div class="card intro-card">
-    <h1>Tính chỉ số BMI Online</h1>
-    <p>Công cụ tính chỉ số khối cơ thể (BMI) theo chuẩn IDI & WPRO dành riêng cho người Châu Á và Việt Nam.</p>
-  </div>
+  <div class="card">
+    <h2>👋 Xin chào!</h2>
+    <p>
+      <strong>ZTools</strong> là bộ công cụ tiện ích trực tuyến được xây dựng với mục tiêu:
+      <strong>Đơn giản - Nhanh chóng - Riêng tư - Tiện lợi</strong>.
+    </p>
+    <p>
+      Chúng tôi hiểu rằng khi bạn cần tính toán thuế, kiểm tra BMI hay format JSON, bạn muốn có kết quả ngay lập tức
+      mà không bị làm phiền bởi quảng cáo hay lo lắng về dữ liệu cá nhân.
+    </p>
 
-  <div class="card tool-card" style="margin-top: 2rem;">
-    <form id="bmi-form">
-      <div class="form-group">
-        <label for="height">Chiều cao (cm)</label>
-        <input type="number" id="height" required placeholder="Ví dụ: 170" min="50" max="250">
-      </div>
+    <h3 style="margin-top: 1.5rem;">🚀 Tại sao chọn ZTools?</h3>
+    <ul>
+      <li><strong>Miễn phí trọn đời:</strong> Tất cả công cụ đều miễn phí.</li>
+      <li><strong>Bảo mật tuyệt đối:</strong> Mọi tính toán diễn ra ngay trên trình duyệt của bạn (Client-side). Không
+        có dữ liệu nào được gửi về máy chủ.</li>
+      <li><strong>Giao diện thân thiện:</strong> Sạch sẽ, dễ nhìn, hỗ trợ Dark Mode.</li>
+    </ul>
 
-      <div class="form-group">
-        <label for="weight">Cân nặng (kg)</label>
-        <input type="number" id="weight" required placeholder="Ví dụ: 65" min="20" max="300" step="0.1">
-      </div>
-
-      <button type="submit" class="btn" style="width: 100%;">Tính toán ngay</button>
-    </form>
-
-    <div id="result-box" class="result-box" style="display: none; margin-top: 2rem;">
-      <h2>Kết quả của bạn</h2>
-      <p>Chỉ số BMI: <strong id="bmi-value" style="font-size: 1.5rem;">--</strong></p>
-      <p>Phân loại: <strong id="bmi-category">--</strong></p>
-      <p id="bmi-feedback" style="margin-top: 1rem; font-style: italic;"></p>
-    </div>
-  </div>
-
-  <div class="card info-card" style="margin-top: 2rem;">
-    <h3>Thông tin tham khảo</h3>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-      <thead>
-        <tr style="background: var(--bg-color); text-align: left;">
-          <th style="padding: 0.5rem;">Phân loại</th>
-          <th style="padding: 0.5rem;">BMI (kg/m²)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">Nhẹ cân</td>
-          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">&lt; 18.5</td>
-        </tr>
-        <tr>
-          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">Bình thường</td>
-          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">18.5 - 22.9</td>
-        </tr>
-        <tr>
-          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">Thừa cân</td>
-          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">23 - 24.9</td>
-        </tr>
-        <tr>
-          <td style="padding: 0.5rem;">Béo phì</td>
-          <td style="padding: 0.5rem;">&ge; 25</td>
-        </tr>
-      </tbody>
-    </table>
+    <h3 style="margin-top: 1.5rem;">📬 Liên hệ</h3>
+    <p>
+      Mọi ý kiến đóng góp, báo lỗi hoặc đề xuất tính năng, vui lòng liên hệ qua email:
+      <a href="mailto:contact@ztools.site">contact@ztools.site</a>
+    </p>
   </div>
 </section>
-
-<script src="../../assets/js/bmi.js"></script>
-
-<style>
-  .text-warning {
-    color: #fd7e14;
-  }
-
-  .text-success {
-    color: #198754;
-  }
-
-  .text-danger {
-    color: #dc3545;
-  }
-</style>
     </main>
 
     <footer class="site-footer">
