@@ -3,7 +3,7 @@
   "short_name": "ZTools",
   "description": "Bộ công cụ tiện ích online miễn phí: Tính thuế TNCN, BMI, JSON Formatter và nhiều hơn nữa.",
   "id": "/?source=pwa",
-  "start_url": "/en/?source=pwa",
+  "start_url": "/vi/?source=pwa",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0f172a",
