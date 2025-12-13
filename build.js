@@ -7,7 +7,7 @@ const { execSync } = require('child_process');
 const isSecure = process.argv.includes('--obfuscate');
 
 const SRC_DIR = path.join(__dirname, 'src');
-const DIST_DIR = path.join(__dirname, 'dist');
+const DIST_DIR = path.join(__dirname, isSecure ? 'dist' : 'dist-dev');
 const ASSETS_DIST = path.join(DIST_DIR, 'assets');
 
 // Locales Configuration

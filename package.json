@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "node build.js",
     "build": "node build.js --obfuscate",
-    "dev": "node build.js && npx serve dist",
-    "serve": "npx serve dist"
+    "dev": "node build.js && npx serve dist-dev",
+    "serve": "npx serve dist",
+    "serve:dev": "npx serve dist-dev"
   },
   "keywords": [
     "tools",

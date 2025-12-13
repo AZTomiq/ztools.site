@@ -51,13 +51,16 @@
   <h2 class="category-title">💰 ZTools Finance</h2>
   <div class="tools-grid">
     <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
+    <!-- Active Tools -->
+    <a href="<%= rootPath %><%= locale %>/loan-calculator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
       <h3>
         <%= t('home.cats.finance.loan') || 'Tính lãi vay' %>
       </h3>
-      <p class="desc-soon">Mortgage Calculator</p>
-    </div>
+      <p>
+        <%= t('home.cats.finance.loan_desc') || 'Mortgage Calculator' %>
+      </p>
+    </a>
     <div class="card tool-item upcoming">
       <div class="icon-soon">🔜</div>
       <h3>
