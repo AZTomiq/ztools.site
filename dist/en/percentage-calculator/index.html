@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Free Online Utility Tools
+</title>
+<meta name="description" content="Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../en/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../en/#job-income" class="">
+            Job &amp; Income
+          </a></li>
+        <li><a href="../../en/#finance" class="">
+            Finance
+          </a></li>
+        <li><a href="../../en/#daily-utilities"
+            class="">
+            Utilities
+          </a></li>
+        <li><a href="../../en/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../vi/percentage-calculator/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇻🇳
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: Percentage Calculator - ZTools -->
+
+<link rel="stylesheet" href="../../assets/css/percentage.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>📊 Percentage Calculator
+    </h1>
+    <p>
+      Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="basic">
+        Basic
+      </button>
+      <button class="tab-btn" data-tab="change">
+        Change
+      </button>
+      <button class="tab-btn" data-tab="phrase">
+        Phrases
+      </button>
+    </div>
+
+    <!-- Tab 1: Basic (X% of Y) -->
+    <div id="tab-basic" class="tab-panel active">
+      <form class="calc-form" id="form-basic">
+        <div class="inline-inputs">
+          <label>
+            What is
+          </label>
+          <input type="number" id="basic-percent" placeholder="20" step="any">
+          <label>
+            % of
+          </label>
+          <input type="number" id="basic-num" placeholder="1000" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcBasic()">
+          Calculate
+        </button>
+
+        <div class="result-box" id="res-basic-box" style="display:none">
+          <span>
+            Result:
+          </span>
+          <strong id="res-basic-val"></strong>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab 2: Change (From X to Y) -->
+    <div id="tab-change" class="tab-panel">
+      <form class="calc-form" id="form-change">
+        <div class="inline-inputs">
+          <label>
+            From
+          </label>
+          <input type="number" id="change-from" placeholder="100" step="any">
+          <label>
+            To
+          </label>
+          <input type="number" id="change-to" placeholder="150" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcChange()">
+          Calculate
+        </button>
+
+        <div class="result-box" id="res-change-box" style="display:none">
+          <span>
+            Change:
+          </span>
+          <strong id="res-change-val"></strong>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab 3: Phrase (X is what % of Y) -->
+    <div id="tab-phrase" class="tab-panel">
+      <form class="calc-form" id="form-phrase">
+        <div class="inline-inputs">
+          <label>
+            Number
+          </label>
+          <input type="number" id="phrase-x" placeholder="25" step="any">
+          <label>
+            is what % of
+          </label>
+          <input type="number" id="phrase-y" placeholder="100" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcPhrase()">
+          Calculate
+        </button>
+
+        <div class="result-box" id="res-phrase-box" style="display:none">
+          <span>
+            Result:
+          </span>
+          <strong id="res-phrase-val"></strong>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script src="../../assets/js/percentage.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Free, simple, and secure utility tools.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Links
+      </h4>
+      <ul>
+        <li><a href="../../en/about/">
+            About
+          </a></li>
+        <li><a href="../../en/privacy/">
+            Privacy Policy
+          </a></li>
+        <li><a href="../../en/terms/">
+            Terms of Service
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

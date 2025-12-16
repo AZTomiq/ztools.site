@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../vi/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../vi/#job-income" class="">
+            Thuế &amp; Lương
+          </a></li>
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
+          </a></li>
+        <li><a href="../../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../en/compound-interest/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: Tính Lãi Kép - ZTools -->
+
+<link rel="stylesheet" href="../../assets/css/compound-interest.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>💰 Tính Lãi Kép
+    </h1>
+    <p>
+      Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <form id="compound-form" class="finance-form">
+      <!-- Initial Investment -->
+      <div class="form-group">
+        <label for="initial">
+          Số tiền gốc ban đầu
+        </label>
+        <div class="input-group">
+          <input type="text" id="initial" placeholder="100.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Interest Rate -->
+        <div class="form-group">
+          <label for="rate">
+            Lãi suất hàng năm
+          </label>
+          <div class="input-group">
+            <input type="number" id="rate" placeholder="7.5" step="0.1" min="0">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+
+        <!-- Years -->
+        <div class="form-group">
+          <label for="years">
+            Số năm đầu tư
+          </label>
+          <div class="input-group">
+            <input type="number" id="years" placeholder="10" min="1" max="100">
+            <span class="input-suffix">
+              Năm
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Options -->
+      <div class="form-row">
+        <!-- Monthly Contribution -->
+        <div class="form-group">
+          <label for="contribution">
+            Đóng thêm hàng tháng
+          </label>
+          <div class="input-group">
+            <input type="text" id="contribution" placeholder="5.000.000" inputmode="numeric">
+            <span class="input-suffix">VNĐ</span>
+          </div>
+        </div>
+
+        <!-- Frequency -->
+        <div class="form-group">
+          <label for="frequency">
+            Tần suất ghép lãi
+          </label>
+          <select id="frequency">
+            <option value="12">
+              Hàng tháng
+            </option>
+            <option value="4">
+              Hàng quý
+            </option>
+            <option value="2">
+              Mỗi 6 tháng
+            </option>
+            <option value="1">
+              Hàng năm
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate" class="btn-calculate">
+          Tính lãi kép
+        </button>
+        <button type="button" id="btn-reset" class="btn-reset">
+          common.reset
+        </button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div id="result-section" class="result-section">
+      <h3>
+        Kết quả dự tính
+      </h3>
+
+      <div class="result-grid">
+        <div class="result-card primary">
+          <span>
+            Tổng giá trị tương lai
+          </span>
+          <strong id="res-future-value">0 đ</strong>
+        </div>
+        <div class="result-card secondary">
+          <span>
+            Tổng tiền lãi
+          </span>
+          <strong id="res-total-interest">0 đ</strong>
+        </div>
+        <div class="result-card">
+          <span>
+            Tổng tiền gốc đã đóng
+          </span>
+          <strong id="res-total-principal">0 đ</strong>
+        </div>
+      </div>
+
+      <div class="breakdown-table-wrapper">
+        <h4>
+          Bảng chi tiết từng năm
+        </h4>
+        <div class="table-scroll">
+          <table class="breakdown-table">
+            <thead>
+              <tr>
+                <th>
+                  Năm
+                </th>
+                <th>
+                  Số dư cuối kỳ
+                </th>
+                <th>
+                  Tiền lãi
+                </th>
+                <th>
+                  Tổng tiền gốc đã đóng
+                </th>
+              </tr>
+            </thead>
+            <tbody id="breakdown-body">
+              <!-- Rows generated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="card" style="padding: 2rem; margin-top: 3rem;">
+    <h2>💡 About Compound Interest</h2>
+    <p>Compound interest is the interest on a loan or deposit calculated based on both the initial principal and the
+      accumulated interest from previous periods.</p>
+    <p>The formula for annual compound interest is: <code>A = P(1 + r/n)^(nt)</code></p>
+    <ul>
+      <li><strong>P</strong>: Principal investment amount</li>
+      <li><strong>r</strong>: Annual interest rate (decimal)</li>
+      <li><strong>n</strong>: Number of times interest is compounded per year</li>
+      <li><strong>t</strong>: Number of years</li>
+    </ul>
+    <p><em>"Compound interest is the eighth wonder of the world. He who understands it, earns it... he who doesn't...
+        pays it." - Albert Einstein</em></p>
+  </section>
+</section>
+
+<script src="../../assets/js/compound-interest.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

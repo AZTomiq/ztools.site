@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../vi/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../vi/#job-income" class="">
+            Thuế &amp; Lương
+          </a></li>
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
+          </a></li>
+        <li><a href="../../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../en/loan-calculator/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: Tính lãi vay - ZTools -->
+
+<link rel="stylesheet" href="../../assets/css/loan-calculator.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>💸 Tính lãi vay
+    </h1>
+    <p>
+      Tính lịch trả nợ vay ngân hàng, dư nợ giảm dần hoặc cố định.
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <form id="loan-form" onsubmit="return false;">
+      <div class="form-group">
+        <label for="loan-amount">Số tiền vay (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="loan-amount" placeholder="Ví dụ: 1.000.000.000" inputmode="numeric" autocomplete="off">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+      </div>
+
+      <div class="form-group" style="display: flex; gap: 1rem;">
+        <div style="flex: 1;">
+          <label for="loan-term">Thời hạn vay (Tháng)</label>
+          <div class="input-group">
+            <input type="number" id="loan-term" placeholder="Ví dụ: 12" min="1">
+            <span class="input-suffix">Tháng</span>
+          </div>
+        </div>
+        <div style="flex: 1;">
+          <label for="interest-rate">Lãi suất (% / Năm)</label>
+          <div class="input-group">
+            <input type="number" id="interest-rate" placeholder="Ví dụ: 10.5" step="0.01">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="start-date">Ngày giải ngân (Để tính lịch trả nợ)</label>
+        <input type="date" id="start-date">
+      </div>
+
+      <div class="form-group">
+        <label>Hình thức trả lãi</label>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="calculation-method" value="reducing" checked>
+            <span>Dư nợ giảm dần (Gốc đều) - Phổ biến</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="calculation-method" value="flat">
+            <span>Dư nợ ban đầu (Lãi phẳng) - Vay tín chấp</span>
+          </label>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic;">
+          * Lưu ý: "Gốc đều" nghĩa là tiền Gốc trả hàng tháng bằng nhau, Lãi giảm dần.
+        </p>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate" class="btn-calculate">Tính toán</button>
+        <button type="button" id="btn-reset" class="btn-reset">Nhập lại</button>
+      </div>
+    </form>
+
+    <div id="result-section" class="result-section">
+      <h3 style="margin-bottom: 1.5rem; border-left: 4px solid var(--primary-color); padding-left: 0.5rem;">Kết quả
+        tính toán</h3>
+
+      <div class="result-summary">
+        <div class="result-item">
+          <span class="label">Trả tháng đầu (Gốc + Lãi)</span>
+          <span class="value" id="result-monthly">0</span>
+          <small style="color: var(--text-muted); font-size: 0.8rem;">(Giảm dần các tháng sau nếu chọn Dư nợ giảm
+            dần)</small>
+        </div>
+        <div class="result-item">
+          <span class="label">Tổng tiền lãi phải trả</span>
+          <span class="value" id="result-total-interest">0</span>
+        </div>
+        <div class="result-item">
+          <span class="label">Tổng số tiền trả (Gốc + Lãi)</span>
+          <span class="value total-payment" id="result-total-payment">0</span>
+        </div>
+      </div>
+
+      <h4 style="margin-bottom: 1rem;">Lịch trả nợ chi tiết</h4>
+      <div class="schedule-container">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th class="month-col">Kỳ</th>
+              <th>Ngày trả</th>
+              <th>Dư nợ đầu kỳ</th>
+              <th>Gốc</th>
+              <th>Lãi</th>
+              <th>Tổng trả</th>
+              <th>Dư nợ cuối kỳ</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-body">
+            <!-- Content via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content Section -->
+  <section class="card" style="padding: 2rem; margin-top: 3rem;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Tìm hiểu về cách tính lãi suất vay</h2>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">1. Cách tính lãi dư nợ giảm dần là gì?
+    </h3>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Đây là phương pháp tính lãi dựa trên số tiền thực tế bạn còn nợ sau khi đã trả một phần tiền gốc ở các kỳ trước
+      đó.
+      Số tiền lãi sẽ giảm dần theo thời gian vì tiền gốc giảm xuống. Đây là cách tính có lợi cho người vay và thường
+      áp dụng cho vay thế chấp (mua nhà, mua xe).
+    </p>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Cách tính lãi dư nợ ban đầu (Lãi
+      phẳng) là gì?</h3>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Lãi suất được tính dựa trên số tiền gốc vay ban đầu trong suốt thời hạn vay.
+      Dù bạn đã trả bớt gốc, tiền lãi hàng tháng vẫn giữ nguyên. Cách này thường thấy ở các khoản vay tín chấp, vay
+      tiêu dùng hay trả góp điện thoại.
+    </p>
+  </section>
+</section>
+
+<script src="../../assets/js/loan-calculator.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

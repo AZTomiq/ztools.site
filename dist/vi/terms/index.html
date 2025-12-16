@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../vi/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../vi/#job-income" class="">
+            Thuế &amp; Lương
+          </a></li>
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
+          </a></li>
+        <li><a href="../../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../en/terms/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <section class="container page-content" style="padding: 2rem 0; max-width: 800px; margin: 0 auto;">
+  <h1 style="text-align: center; margin-bottom: 2rem;">
+    Điều Khoản Sử Dụng
+  </h1>
+
+  <div class="card">
+    <h3 style="margin-top: 1.5rem;">1. Chấp nhận điều khoản</h3>
+    <p>
+      Bằng việc truy cập và sử dụng <strong>ZTools</strong>, bạn đồng ý tuân thủ các điều khoản sử dụng này.
+      Nếu bạn không đồng ý, vui lòng ngưng sử dụng dịch vụ.
+    </p>
+
+    <h3 style="margin-top: 1.5rem;">2. Mục đích sử dụng</h3>
+    <p>
+      ZTools cung cấp các công cụ tính toán và tiện ích cho mục đích tham khảo.
+    </p>
+    <ul>
+      <li><strong>Công cụ Tài chính (Thuế, Lương...):</strong> Kết quả tính toán chỉ mang tính chất tham khảo. Chúng tôi
+        nỗ lực cập nhật theo luật mới nhất nhưng không chịu trách nhiệm pháp lý về tính chính xác tuyệt đối trong mọi
+        trường hợp. Vui lòng tham khảo ý kiến chuyên gia kế toán/thuế cho các quyết định quan trọng.</li>
+      <li><strong>Công cụ Sức khỏe (BMI...):</strong> Không thay thế cho lời khuyên y tế chuyên nghiệp.</li>
+    </ul>
+
+    <h3 style="margin-top: 1.5rem;">3. Miễn trừ trách nhiệm</h3>
+    <p>
+      ZTools được cung cấp "nguyên trạng". Chúng tôi không cam kết rằng dịch vụ sẽ không bị gián đoạn hoặc không có lỗi.
+      Chúng tôi không chịu trách nhiệm về bất kỳ thiệt hại nào phát sinh từ việc sử dụng các công cụ trên trang web này.
+    </p>
+
+    <h3 style="margin-top: 1.5rem;">4. Bản quyền</h3>
+    <p>
+      Mã nguồn và nội dung của ZTools thuộc quyền sở hữu của đội ngũ phát triển, trừ các thư viện mã nguồn mở được sử
+      dụng hợp lệ.
+    </p>
+  </div>
+</section>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

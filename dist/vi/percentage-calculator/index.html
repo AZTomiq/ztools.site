@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../vi/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../vi/#job-income" class="">
+            Thuế &amp; Lương
+          </a></li>
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
+          </a></li>
+        <li><a href="../../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../en/percentage-calculator/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: Tính Phần Trăm (%) - ZTools -->
+
+<link rel="stylesheet" href="../../assets/css/percentage.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>📊 Tính Phần Trăm (%)
+    </h1>
+    <p>
+      Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="basic">
+        Cơ bản
+      </button>
+      <button class="tab-btn" data-tab="change">
+        Tăng/Giảm
+      </button>
+      <button class="tab-btn" data-tab="phrase">
+        Tìm tỷ lệ
+      </button>
+    </div>
+
+    <!-- Tab 1: Basic (X% of Y) -->
+    <div id="tab-basic" class="tab-panel active">
+      <form class="calc-form" id="form-basic">
+        <div class="inline-inputs">
+          <label>
+            Tìm
+          </label>
+          <input type="number" id="basic-percent" placeholder="20" step="any">
+          <label>
+            % của
+          </label>
+          <input type="number" id="basic-num" placeholder="1000" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcBasic()">
+          Tính toán
+        </button>
+
+        <div class="result-box" id="res-basic-box" style="display:none">
+          <span>
+            Kết quả:
+          </span>
+          <strong id="res-basic-val"></strong>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab 2: Change (From X to Y) -->
+    <div id="tab-change" class="tab-panel">
+      <form class="calc-form" id="form-change">
+        <div class="inline-inputs">
+          <label>
+            Từ số
+          </label>
+          <input type="number" id="change-from" placeholder="100" step="any">
+          <label>
+            Thành số
+          </label>
+          <input type="number" id="change-to" placeholder="150" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcChange()">
+          Tính toán
+        </button>
+
+        <div class="result-box" id="res-change-box" style="display:none">
+          <span>
+            Thay đổi:
+          </span>
+          <strong id="res-change-val"></strong>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab 3: Phrase (X is what % of Y) -->
+    <div id="tab-phrase" class="tab-panel">
+      <form class="calc-form" id="form-phrase">
+        <div class="inline-inputs">
+          <label>
+            Số
+          </label>
+          <input type="number" id="phrase-x" placeholder="25" step="any">
+          <label>
+            là bao nhiêu % của
+          </label>
+          <input type="number" id="phrase-y" placeholder="100" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcPhrase()">
+          Tính toán
+        </button>
+
+        <div class="result-box" id="res-phrase-box" style="display:none">
+          <span>
+            Kết quả:
+          </span>
+          <strong id="res-phrase-val"></strong>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script src="../../assets/js/percentage.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

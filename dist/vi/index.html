@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../vi/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../vi/#job-income" class="">
+            Thuế &amp; Lương
+          </a></li>
+        <li><a href="../vi/#finance" class="">
+            Tài chính
+          </a></li>
+        <li><a href="../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../vi/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../en/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+
+<section class="hero" style="text-align: center; padding: 3rem 1rem;">
+  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+    Công cụ tiện ích cho mọi người
+  </h1>
+  <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+    Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.
+  </p>
+</section>
+
+<div class="category-section" id="job-income">
+  <h2 class="category-title">🛠️ Job & Income</h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="../vi/tax/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
+      <h3>
+        Tính thuế TNCN
+      </h3>
+      <p>
+        Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.
+      </p>
+    </a>
+    <a href="../vi/business-tax/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
+      <h3>
+        Tính thuế TNDN
+      </h3>
+      <p>Corporate Income Tax Calculator</p>
+    </a>
+    <a href="../vi/social-insurance/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏥</div>
+      <h3>
+        Tính BHXH &amp; Hưu trí
+      </h3>
+      <p>Social Insurance & Pension Calculator</p>
+    </a>
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tiện ích Lương thưởng
+      </h3>
+      <p class="desc-soon">OT, KPI, 13th Month Salary</p>
+    </div>
+  </div>
+</div>
+
+<div class="category-section" id="finance">
+  <h2 class="category-title">💰 Finance</h2>
+  <div class="tools-grid">
+    <!-- Coming Soon -->
+    <!-- Active Tools -->
+    <a href="../vi/loan-calculator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
+      <h3>
+        Tính lãi vay
+      </h3>
+      <p>
+        Tính lịch trả nợ vay ngân hàng, dư nợ giảm dần hoặc cố định.
+      </p>
+    </a>
+    <a href="../vi/compound-interest/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
+      <h3>
+        Tính Lãi Kép
+      </h3>
+      <p>
+        Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.
+      </p>
+    </a>
+    <a href="../vi/savings-interest/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏦</div>
+      <h3>
+        Tính Lãi Suất Tiết Kiệm
+      </h3>
+      <p>
+        Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.
+      </p>
+    </a>
+    <a href="../vi/percentage-calculator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">％</div>
+      <h3>
+        Tính Phần Trăm (%)
+      </h3>
+      <p>
+        Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.
+      </p>
+    </a>
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Tỷ giá &amp; Tín dụng
+      </h3>
+      <p class="desc-soon">Currency & Credit</p>
+    </div>
+  </div>
+</div>
+
+<div class="category-section" id="text-tools">
+  <h2 class="category-title">📝 Công cụ Văn bản
+  </h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="../vi/word-counter/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+      <h3>
+        Đếm từ &amp; Phân tích văn bản
+      </h3>
+      <p>
+        Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).
+      </p>
+    </a>
+
+    <a href="../vi/lorem-ipsum/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
+      <h3>
+        Lorem Ipsum Generator
+      </h3>
+      <p>
+        Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.
+      </p>
+    </a>
+  </div>
+</div>
+
+<div class="category-section" id="generator-tools">
+  <h2 class="category-title">⚙️ Generators (Tạo mã)
+  </h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="../vi/password-generator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔐</div>
+      <h3>
+        Tạo Mật Khẩu Mạnh
+      </h3>
+      <p>
+        Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.
+      </p>
+    </a>
+
+    <a href="../vi/uuid-generator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🆔</div>
+      <h3>
+        UUID Generator
+      </h3>
+      <p>
+        Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.
+      </p>
+    </a>
+  </div>
+</div>
+
+<div class="category-section" id="daily-utilities">
+  <h2 class="category-title">☕ Daily Utilities</h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="../vi/bmi/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+      <h3>
+        Tính chỉ số BMI
+      </h3>
+      <p>
+        Tính chỉ số khối cơ thể (BMI) theo chuẩn IDI &amp; WPRO cho người Việt.
+      </p>
+    </a>
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Xử lý PDF/Văn bản
+      </h3>
+      <p class="desc-soon">PDF to Word, Read Numbers</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Xử lý Ảnh
+      </h3>
+      <p class="desc-soon">Compress, Resize, Crop</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Mã hóa &amp; QR
+      </h3>
+      <p class="desc-soon">QR Code, Hash</p>
+    </div>
+  </div>
+</div>
+
+<div class="category-section" id="dev-tools">
+  <h2 class="category-title">💻 DEV Tools</h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="../vi/json-toolkit/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+      <h3>
+        JSON Toolkit
+      </h3>
+      <p>
+        Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.
+      </p>
+    </a>
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Encoder / Decoder
+      </h3>
+      <p class="desc-soon">Base64, JWT</p>
+    </div>
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        Testers &amp; Formatters
+      </h3>
+      <p class="desc-soon">Regex, SQL, Cron</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .category-section {
+    margin-bottom: 4rem;
+  }
+
+  .category-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tool-item {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tool-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .tool-item h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .tool-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    flex-grow: 1;
+  }
+
+  /* Upcoming tools style */
+  .tool-item.upcoming {
+    opacity: 0.7;
+    background-color: var(--bg-secondary);
+    border-style: dashed;
+    cursor: default;
+  }
+
+  .tool-item.upcoming:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-color);
+  }
+
+  .icon-soon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .desc-soon {
+    font-style: italic;
+  }
+</style>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../vi/terms/">
+            Điều khoản
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../assets/js/global.js"></script>
+</body>
+
+</html>
