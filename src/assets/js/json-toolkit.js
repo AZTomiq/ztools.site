@@ -1,17 +1,69 @@
-// JSON Toolkit - Unified JavaScript
+// JSON Toolkit - Unified JavaScript with Monaco Editor
 
 // Global state
 let currentIndent = 2;
 let currentPath = '';
 let maximizedPanel = null;
 let currentView = 'code'; // 'code' or 'tree'
+let inputEditor = null;
+let outputEditor = null;
+let convertInputEditor = null;
+let convertOutputEditor = null;
+
+// ===== MONACO INIT =====
+require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
+require(['vs/editor/editor.main'], function () {
+  const defaultValue = '{\n  "name": "John Doe",\n  "age": 30,\n  "city": "Hanoi"\n}';
+
+  inputEditor = monaco.editor.create(document.getElementById('monaco-input'), {
+    value: defaultValue,
+    language: 'json',
+    theme: 'vs-dark',
+    minimap: { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    fontSize: 14
+  });
+
+  outputEditor = monaco.editor.create(document.getElementById('monaco-output'), {
+    value: '',
+    language: 'json',
+    theme: 'vs-dark',
+    readOnly: true,
+    minimap: { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    fontSize: 14
+  });
+  // Convert Tab Editors
+  convertInputEditor = monaco.editor.create(document.getElementById('monaco-convert-input'), {
+    value: '{\n  "name": "Product",\n  "price": 99.99\n}',
+    language: 'json',
+    theme: 'vs-dark',
+    minimap: { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    fontSize: 14
+  });
+
+  convertOutputEditor = monaco.editor.create(document.getElementById('monaco-convert-output'), {
+    value: '',
+    language: 'xml',
+    theme: 'vs-dark',
+    readOnly: true,
+    minimap: { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    fontSize: 14
+  });
+});
 
 // ===== VIEW TOGGLE (CODE VS TREE) =====
 function toggleOutputView(view) {
   currentView = view;
   const btnCode = document.getElementById('btn-view-code');
   const btnTree = document.getElementById('btn-view-tree');
-  const outputCode = document.getElementById('json-output');
+  const outputContainer = document.getElementById('monaco-output'); // The Monaco Div
   const outputTree = document.getElementById('tree-container');
   const pathDisplay = document.getElementById('path-display');
   const treeControls = document.getElementById('tree-controls');
@@ -19,17 +71,17 @@ function toggleOutputView(view) {
   if (view === 'code') {
     btnCode.classList.add('active');
     btnTree.classList.remove('active');
-    outputCode.classList.add('active');
-    outputTree.classList.remove('active');
-    outputTree.style.display = 'none'; // Ensure hidden
+    outputContainer.style.display = 'block';
+    outputTree.style.display = 'none';
     pathDisplay.style.display = 'none';
     if (treeControls) treeControls.style.display = 'none';
+    // Refresh layout when becoming visible
+    if (outputEditor) outputEditor.layout();
   } else {
     btnCode.classList.remove('active');
     btnTree.classList.add('active');
-    outputCode.classList.remove('active');
-    outputTree.classList.add('active');
-    outputTree.style.display = 'block'; // Ensure visible
+    outputContainer.style.display = 'none';
+    outputTree.style.display = 'block';
     // pathDisplay handled by showPath
     if (treeControls) treeControls.style.display = 'flex';
   }
@@ -63,6 +115,11 @@ function togglePanel(panelName) {
     layout.classList.add('has-maximized');
     maximizedPanel = panelName;
   }
+  // Trigger layout update for Monaco
+  setTimeout(() => {
+    if (inputEditor) inputEditor.layout();
+    if (outputEditor) outputEditor.layout();
+  }, 100);
 }
 
 // Tab Switching
@@ -77,6 +134,14 @@ function switchTab(tabName) {
   });
 
   document.getElementById(`tab-${tabName}`).classList.add('active');
+
+  // If switching back to format tab, layout editors
+  if (tabName === 'format') {
+    setTimeout(() => {
+      if (inputEditor) inputEditor.layout();
+      if (outputEditor) outputEditor.layout();
+    }, 50);
+  }
 }
 
 // Helper: Relaxed JSON Parser
@@ -85,7 +150,6 @@ function parseRelaxedJSON(str) {
     return JSON.parse(str);
   } catch (e) {
     try {
-      // Try to parse relaxed JSON (e.g. {a:1} instead of {"a":1})
       return new Function('return ' + str)();
     } catch (e2) {
       throw new Error('Invalid JSON');
@@ -101,8 +165,8 @@ function updateIndent() {
 }
 
 function formatJSON() {
-  const input = document.getElementById('json-input').value.trim();
-  const output = document.getElementById('json-output');
+  if (!inputEditor) return;
+  const input = inputEditor.getValue().trim();
   const treeContainer = document.getElementById('tree-container');
 
   if (!input) {
@@ -115,7 +179,7 @@ function formatJSON() {
     const formatted = JSON.stringify(parsed, null, currentIndent);
 
     // Update Text View
-    output.value = formatted;
+    if (outputEditor) outputEditor.setValue(formatted);
 
     // Update Tree View
     treeContainer.innerHTML = '';
@@ -125,13 +189,12 @@ function formatJSON() {
     showValidation('✅ Valid JSON! Formatted successfully', 'success');
   } catch (error) {
     showValidation(`❌ Invalid JSON: ${error.message}`, 'error');
-    // Don't clear output, user might want to fix it
   }
 }
 
 function minifyJSON() {
-  const input = document.getElementById('json-input').value.trim();
-  const output = document.getElementById('json-output');
+  if (!inputEditor) return;
+  const input = inputEditor.getValue().trim();
   const treeContainer = document.getElementById('tree-container');
 
   if (!input) {
@@ -143,9 +206,9 @@ function minifyJSON() {
     const parsed = parseRelaxedJSON(input);
     const minified = JSON.stringify(parsed);
 
-    output.value = minified;
+    if (outputEditor) outputEditor.setValue(minified);
 
-    // Update tree view too (structure is same)
+    // Update tree view too
     treeContainer.innerHTML = '';
     buildTree(parsed, treeContainer, '');
 
@@ -157,7 +220,8 @@ function minifyJSON() {
 }
 
 function validateJSON() {
-  const input = document.getElementById('json-input').value.trim();
+  if (!inputEditor) return;
+  const input = inputEditor.getValue().trim();
 
   if (!input) {
     showValidation('Please enter JSON to validate', 'error');
@@ -178,7 +242,8 @@ function validateJSON() {
 }
 
 function copyJSON() {
-  const output = document.getElementById('json-output').value;
+  if (!outputEditor) return;
+  const output = outputEditor.getValue();
   if (!output) {
     showValidation('Nothing to copy!', 'error');
     return;
@@ -189,8 +254,8 @@ function copyJSON() {
 }
 
 function clearJSON() {
-  document.getElementById('json-input').value = '';
-  document.getElementById('json-output').value = '';
+  if (inputEditor) inputEditor.setValue('');
+  if (outputEditor) outputEditor.setValue('');
   document.getElementById('tree-container').innerHTML = '<div class="tree-placeholder">Format JSON to see tree view</div>';
   document.getElementById('validation-result').style.display = 'none';
   document.getElementById('output-stats').textContent = '';
@@ -208,8 +273,10 @@ function loadSample() {
     "active": true
   };
 
-  document.getElementById('json-input').value = JSON.stringify(sample, null, 2);
-  formatJSON(); // Auto format
+  if (inputEditor) {
+    inputEditor.setValue(JSON.stringify(sample, null, 2));
+    formatJSON();
+  }
 }
 
 function showValidation(message, type) {
@@ -225,7 +292,247 @@ function updateStats(json) {
   stats.textContent = `${lines} lines, ${chars} chars`;
 }
 
-// ===== TREE VIEW LOGIC =====
+
+
+
+// ===== VIEW TOGGLE (CODE VS TREE) =====
+function toggleOutputView(view) {
+  currentView = view;
+  const btnCode = document.getElementById('btn-view-code');
+  const btnTree = document.getElementById('btn-view-tree');
+  const outputContainer = document.getElementById('monaco-output'); // The Monaco Div
+  const outputTree = document.getElementById('tree-container');
+  const pathDisplay = document.getElementById('path-display');
+  const treeControls = document.getElementById('tree-controls');
+
+  if (view === 'code') {
+    btnCode.classList.add('active');
+    btnTree.classList.remove('active');
+    outputContainer.style.display = 'block';
+    outputTree.style.display = 'none';
+    pathDisplay.style.display = 'none';
+    if (treeControls) treeControls.style.display = 'none';
+    // Refresh layout when becoming visible
+    if (outputEditor) outputEditor.layout();
+  } else {
+    btnCode.classList.remove('active');
+    btnTree.classList.add('active');
+    outputContainer.style.display = 'none';
+    outputTree.style.display = 'block';
+    // pathDisplay handled by showPath
+    if (treeControls) treeControls.style.display = 'flex';
+  }
+}
+
+// Panel Toggle (Maximize/Minimize)
+function togglePanel(panelName) {
+  const layout = document.getElementById('editor-layout');
+  const inputPanel = document.getElementById('input-panel');
+  const outputPanel = document.getElementById('output-panel');
+
+  if (maximizedPanel === panelName) {
+    // Restore to split view
+    inputPanel.classList.remove('maximized', 'minimized');
+    outputPanel.classList.remove('maximized', 'minimized');
+    layout.classList.remove('has-maximized');
+    maximizedPanel = null;
+  } else {
+    // Maximize selected panel
+    if (panelName === 'input') {
+      inputPanel.classList.add('maximized');
+      inputPanel.classList.remove('minimized');
+      outputPanel.classList.add('minimized');
+      outputPanel.classList.remove('maximized');
+    } else {
+      outputPanel.classList.add('maximized');
+      outputPanel.classList.remove('minimized');
+      inputPanel.classList.add('minimized');
+      inputPanel.classList.remove('maximized');
+    }
+    layout.classList.add('has-maximized');
+    maximizedPanel = panelName;
+  }
+  // Trigger layout update for Monaco
+  setTimeout(() => {
+    if (inputEditor) inputEditor.layout();
+    if (outputEditor) outputEditor.layout();
+    if (convertInputEditor) convertInputEditor.layout();
+    if (convertOutputEditor) convertOutputEditor.layout();
+  }, 100);
+}
+
+// Tab Switching
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    panel.classList.remove('active');
+  });
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.tab === tabName) btn.classList.add('active');
+  });
+
+  document.getElementById(`tab-${tabName}`).classList.add('active');
+
+  // If switching back to format tab, layout editors
+  setTimeout(() => {
+    if (tabName === 'format') {
+      if (inputEditor) inputEditor.layout();
+      if (outputEditor) outputEditor.layout();
+    } else if (tabName === 'convert') {
+      if (convertInputEditor) convertInputEditor.layout();
+      if (convertOutputEditor) convertOutputEditor.layout();
+    }
+  }, 50);
+}
+
+// Helper: Relaxed JSON Parser
+function parseRelaxedJSON(str) {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    try {
+      return new Function('return ' + str)();
+    } catch (e2) {
+      throw new Error('Invalid JSON');
+    }
+  }
+}
+
+// ===== FORMAT & VALIDATE =====
+
+function updateIndent() {
+  const select = document.getElementById('indent-size');
+  currentIndent = select.value === 'tab' ? '\t' : parseInt(select.value);
+}
+
+function formatJSON() {
+  if (!inputEditor) return;
+  const input = inputEditor.getValue().trim();
+  const treeContainer = document.getElementById('tree-container');
+
+  if (!input) {
+    showValidation('Please enter JSON to format', 'error');
+    return;
+  }
+
+  try {
+    const parsed = parseRelaxedJSON(input);
+    const formatted = JSON.stringify(parsed, null, currentIndent);
+
+    // Update Text View
+    if (outputEditor) outputEditor.setValue(formatted);
+
+    // Update Tree View
+    treeContainer.innerHTML = '';
+    buildTree(parsed, treeContainer, '');
+
+    updateStats(formatted);
+    showValidation('✅ Valid JSON! Formatted successfully', 'success');
+  } catch (error) {
+    showValidation(`❌ Invalid JSON: ${error.message}`, 'error');
+  }
+}
+
+function minifyJSON() {
+  if (!inputEditor) return;
+  const input = inputEditor.getValue().trim();
+  const treeContainer = document.getElementById('tree-container');
+
+  if (!input) {
+    showValidation('Please enter JSON to minify', 'error');
+    return;
+  }
+
+  try {
+    const parsed = parseRelaxedJSON(input);
+    const minified = JSON.stringify(parsed);
+
+    if (outputEditor) outputEditor.setValue(minified);
+
+    // Update tree view too
+    treeContainer.innerHTML = '';
+    buildTree(parsed, treeContainer, '');
+
+    updateStats(minified);
+    showValidation(`✅ Minified! Reduced from ${input.length} to ${minified.length} chars`, 'success');
+  } catch (error) {
+    showValidation(`❌ Invalid JSON: ${error.message}`, 'error');
+  }
+}
+
+function validateJSON() {
+  if (!inputEditor) return;
+  const input = inputEditor.getValue().trim();
+
+  if (!input) {
+    showValidation('Please enter JSON to validate', 'error');
+    return;
+  }
+
+  try {
+    JSON.parse(input);
+    showValidation('✅ Valid Strict JSON!', 'success');
+  } catch (error) {
+    try {
+      parseRelaxedJSON(input);
+      showValidation('⚠️ Valid JS Object (Relaxed JSON), format it to convert to Strict JSON.', 'warning');
+    } catch (e2) {
+      showValidation(`❌ Invalid JSON: ${error.message}`, 'error');
+    }
+  }
+}
+
+function copyJSON() {
+  if (!outputEditor) return;
+  const output = outputEditor.getValue();
+  if (!output) {
+    showValidation('Nothing to copy!', 'error');
+    return;
+  }
+  copyTextToClipboard(output, () => showValidation('📋 Copied to clipboard!', 'success'));
+}
+
+function clearJSON() {
+  if (inputEditor) inputEditor.setValue('');
+  if (outputEditor) outputEditor.setValue('');
+  document.getElementById('tree-container').innerHTML = '<div class="tree-placeholder">Format JSON to see tree view</div>';
+  document.getElementById('validation-result').style.display = 'none';
+  document.getElementById('output-stats').textContent = '';
+}
+
+function loadSample() {
+  const sample = {
+    "name": "John Doe",
+    "age": 30,
+    "email": "john@example.com",
+    "address": {
+      "street": "123 Main St",
+      "city": "Hanoi"
+    },
+    "active": true
+  };
+
+  if (inputEditor) {
+    inputEditor.setValue(JSON.stringify(sample, null, 2));
+    formatJSON();
+  }
+}
+
+function showValidation(message, type) {
+  const validation = document.getElementById('validation-result');
+  validation.textContent = message;
+  validation.className = `validation-result show ${type}`;
+}
+
+function updateStats(json) {
+  const stats = document.getElementById('output-stats');
+  const lines = json.split('\n').length;
+  const chars = json.length;
+  stats.textContent = `${lines} lines, ${chars} chars`;
+}
+
+// ===== TREE VIEW LOGIC (Unchanged) =====
 
 function buildTree(obj, container, path) {
   if (obj === null) {
@@ -262,7 +569,6 @@ function buildTree(obj, container, path) {
       toggle.onclick = () => toggleNode(toggle);
       node.appendChild(toggle);
     } else {
-      // Spacer
       const spacer = document.createElement('span');
       spacer.style.display = 'inline-block';
       spacer.style.width = '1rem';
@@ -311,20 +617,31 @@ function showPath(path) {
 
 function copyPath() {
   if (!currentPath) return;
-  navigator.clipboard.writeText(currentPath).then(() => {
-    // maybe toast
-  });
+  copyTextToClipboard(currentPath, () => showValidation(`Path copied: ${currentPath}`, 'success'));
 }
 
 // ===== TAB: CONVERT =====
 
-function convertJSON() {
-  const input = document.getElementById('convert-input').value.trim();
+function updateConvertLanguage() {
+  if (!convertOutputEditor) return;
   const format = document.getElementById('convert-format').value;
-  const result = document.getElementById('convert-result');
+  const langMap = {
+    'xml': 'xml', 'yaml': 'yaml', 'csv': 'plaintext',
+    'typescript': 'typescript', 'go': 'go', 'java': 'java',
+    'protobuf': 'cpp' // Fallback for color
+  };
+  const lang = langMap[format] || 'plaintext';
+  monaco.editor.setModelLanguage(convertOutputEditor.getModel(), lang);
+}
+
+function convertJSON() {
+  if (!convertInputEditor || !convertOutputEditor) return;
+  const input = convertInputEditor.getValue().trim();
+  const format = document.getElementById('convert-format').value;
+  // const result = document.getElementById('convert-result'); // Removed
 
   if (!input) {
-    result.textContent = 'Please enter JSON to convert';
+    convertOutputEditor.setValue('Please enter JSON to convert');
     return;
   }
 
@@ -339,17 +656,20 @@ function convertJSON() {
       case 'typescript': converted = jsonToTypeScript(parsed); break;
       case 'go': converted = jsonToGo(parsed); break;
       case 'java': converted = jsonToJava(parsed); break;
+      case 'protobuf': converted = jsonToProtobuf(parsed); break;
     }
 
-    result.textContent = converted;
+    convertOutputEditor.setValue(converted);
+    // Be sure language is correct (user might not have changed dropdown)
+    updateConvertLanguage();
   } catch (error) {
-    result.textContent = `Error: ${error.message}`;
+    convertOutputEditor.setValue(`Error: ${error.message}`);
   }
 }
 
-// Converters (Simplified for brevity, same as before)
+// Converters...
+
 function jsonToXML(obj, indent = 0) {
-  // ... (Same implementation)
   const spaces = '  '.repeat(indent);
   let xml = '';
   for (const [key, value] of Object.entries(obj)) {
@@ -478,13 +798,66 @@ function getJavaType(value) {
   return 'String';
 }
 
-function copyConverted() {
-  const result = document.getElementById('convert-result').textContent;
-  if (!result || result.includes('Select a format')) return;
-  navigator.clipboard.writeText(result).then(() => alert('Copied!'));
+function jsonToProtobuf(obj, rootName = 'Root') {
+  let messages = [];
+
+  function parseMessage(name, object) {
+    let lines = [`message ${name} {`];
+    let fieldId = 1;
+
+    for (const [key, value] of Object.entries(object)) {
+      let type = 'string';
+      let rule = '';
+
+      if (value === null) {
+        type = 'string'; // Default
+      } else if (Array.isArray(value)) {
+        rule = 'repeated ';
+        if (value.length > 0) {
+          let item = value[0];
+          if (typeof item === 'object' && item !== null) {
+            const typeName = key.charAt(0).toUpperCase() + key.slice(1);
+            parseMessage(typeName, item);
+            type = typeName;
+          } else {
+            type = getProtoType(item);
+          }
+        } else {
+          type = 'string';
+        }
+      } else if (typeof value === 'object') {
+        const typeName = key.charAt(0).toUpperCase() + key.slice(1);
+        parseMessage(typeName, value);
+        type = typeName;
+      } else {
+        type = getProtoType(value);
+      }
+
+      lines.push(`  ${rule}${type} ${key} = ${fieldId};`);
+      fieldId++;
+    }
+    lines.push('}');
+    messages.push(lines.join('\n'));
+  }
+
+  parseMessage(rootName, obj);
+  return 'syntax = "proto3";\n\n' + messages.reverse().join('\n\n');
 }
 
-// ===== TAB: TOOLS =====
+function getProtoType(val) {
+  if (typeof val === 'number') return Number.isInteger(val) ? 'int32' : 'double';
+  if (typeof val === 'boolean') return 'bool';
+  return 'string';
+}
+
+function copyConverted() {
+  if (!convertOutputEditor) return;
+  const result = convertOutputEditor.getValue();
+  if (!result || result.includes('Error:')) return;
+  copyTextToClipboard(result, () => alert('Copied!'));
+}
+
+// ===== TAB: TOOLS (Unchanged logic using DOM textareas) =====
 
 function csvToJSONTool() {
   const input = document.getElementById('csv-input').value.trim();
@@ -544,7 +917,7 @@ function sqlToJSONTool() {
     if (matches.length === 0) throw new Error('No valid INSERT statements');
     const json = matches.map(match => {
       const cols = match[1].split(',').map(c => c.trim().replace(/[`"']/g, ''));
-      const valsStr = match[2]; // Simplified value parsing
+      const valsStr = match[2];
       const vals = valsStr.split(',').map(v => {
         let val = v.trim();
         if (val.startsWith("'") || val.startsWith('"')) val = val.substring(1, val.length - 1);
@@ -567,7 +940,6 @@ function sqlToJSONTool() {
 }
 
 function findPath() {
-  // Reuse existing logic or simplified... keeping it simple for update
   const input = document.getElementById('path-json').value;
   const search = document.getElementById('search-value').value;
   const result = document.getElementById('path-result');
@@ -600,9 +972,6 @@ function compareJSON() {
   try {
     const o1 = parseRelaxedJSON(t1);
     const o2 = parseRelaxedJSON(t2);
-    const diffs = []; // Simplified logic
-    // ... use existing findDifferences logic if possible, or just re-implement briefly
-    // For brevity, just checking equality
     if (JSON.stringify(o1) === JSON.stringify(o2)) res.textContent = 'Identical';
     else res.textContent = 'Objects differ (Detailed diff skipped for brevity)';
     res.classList.add('show');
@@ -647,7 +1016,55 @@ function unescapeJSON() {
   document.getElementById('escape-result').style.display = 'block';
 }
 
+// ===== CLIPBOARD HELPER =====
+function copyTextToClipboard(text, onSuccess) {
+  if (!text) return;
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(() => fallbackCopyExec(text, onSuccess));
+  } else {
+    fallbackCopyExec(text, onSuccess);
+  }
+}
+
+function fallbackCopyExec(text, onSuccess) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-9999px";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    if (onSuccess) onSuccess();
+  } catch (err) {
+    console.error('Copy failed', err);
+    alert('Failed to copy. Please copy manually.');
+  }
+  document.body.removeChild(textArea);
+}
+
+function switchSubTool(id) {
+  // 1. Sidebar Active State
+  document.querySelectorAll('.tool-menu-item').forEach(el => el.classList.remove('active'));
+  const item = document.querySelector(`.tool-menu-item[data-subtool="${id}"]`);
+  if (item) item.classList.add('active');
+
+  // 2. Show Workspace
+  document.querySelectorAll('.tool-workspace').forEach(el => {
+    el.style.display = 'none';
+    el.classList.remove('active');
+  });
+
+  const target = document.getElementById(`subtool-${id}`);
+  if (target) {
+    target.style.display = 'flex'; // Uses flex layout
+    target.classList.add('active');
+  }
+}
+
 // Exports
+window.switchSubTool = switchSubTool;
 window.toggleOutputView = toggleOutputView;
 window.togglePanel = togglePanel;
 window.switchTab = switchTab;
@@ -669,6 +1086,5 @@ window.compareJSON = compareJSON;
 window.analyzeJSON = analyzeJSON;
 window.escapeJSON = escapeJSON;
 window.unescapeJSON = unescapeJSON;
-// Missing expand/collapse all?
 window.expandAll = () => document.querySelectorAll('.tree-children').forEach(el => el.classList.remove('collapsed'));
 window.collapseAll = () => document.querySelectorAll('.tree-children').forEach(el => el.classList.add('collapsed'));

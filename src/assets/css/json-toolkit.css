@@ -6,6 +6,11 @@
   padding: 1.5rem;
 }
 
+/* Force Wide Layout override against global.css */
+main.container {
+  max-width: 1400px !important;
+}
+
 .page-header {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -91,7 +96,6 @@
   background: var(--border-color);
   margin: 0 0.5rem;
   display: none;
-  /* Hidden on mobile */
 }
 
 @media (min-width: 768px) {
@@ -179,9 +183,7 @@
   display: flex;
   flex-direction: column;
   background: var(--card-bg);
-  /* Add bg to panel */
   border-radius: 8px;
-  /* overflow: hidden; Removed to allow maximizing over */
 }
 
 .panel-header {
@@ -189,7 +191,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 0;
-  /* Changed padding */
   margin-bottom: 0.5rem;
   border-bottom: 2px solid var(--border-color);
 }
@@ -222,6 +223,8 @@
   border-radius: 4px;
   font-size: 1rem;
   transition: all 0.2s;
+  min-width: 24px;
+  text-align: center;
 }
 
 .btn-icon:hover {
@@ -284,7 +287,9 @@
 textarea {
   width: 100%;
   flex: 1;
+  /* Key for Tools Tab */
   min-height: 550px;
+  /* Default for Main/Convert. Overridden by flex context usually */
   padding: 1rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -294,6 +299,24 @@ textarea {
   font-size: 0.95rem;
   line-height: 1.6;
   resize: vertical;
+}
+
+/* Textarea in Tools/Flex Layout should resizing via container */
+.split-editor textarea,
+.single-editor textarea {
+  resize: none;
+  min-height: 0;
+  /* Allow shrinking */
+}
+
+.monaco-editor-container {
+  width: 100%;
+  flex: 1;
+  min-height: 550px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-color);
+  overflow: hidden;
 }
 
 textarea:focus {
@@ -327,11 +350,12 @@ textarea[readonly] {
   overflow: auto;
   font-family: 'Courier New', monospace;
   font-size: 0.9rem;
+  height: 550px;
+  /* Fallback */
 }
 
 .tree-placeholder {
   display: flex;
-  /* Centering */
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -397,7 +421,6 @@ textarea[readonly] {
   border-radius: 4px;
   cursor: pointer;
   display: none;
-  /* Hidden by default */
 }
 
 .path-display.show {
@@ -435,16 +458,22 @@ textarea[readonly] {
   border: 1px solid #f59e0b;
 }
 
-/* Convert & Tools (Existing Styles retained/updated) */
+/* Convert */
 .convert-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
+/* Align inputs in Convert Tab vertically properly */
+#convert-input {
+  min-height: 200px;
+  /* Reduced from 550 to allow comfortable view */
+}
+
 .convert-result {
-  min-height: 550px;
-  max-height: 800px;
+  min-height: 200px;
+  max-height: 600px;
   overflow: auto;
   padding: 1rem;
   background: var(--bg-color);
@@ -455,45 +484,145 @@ textarea[readonly] {
   white-space: pre-wrap;
 }
 
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 1.5rem;
-}
-
-.tool-box {
-  background: var(--bg-hover);
-  padding: 1.5rem;
-  border-radius: 8px;
+/* ===== NEW TOOLS TAB UX ===== */
+.tools-wrapper {
+  display: flex;
+  height: 700px;
+  /* Fixed height for app-like feel */
   border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.tool-box h3 {
+.tools-sidebar {
+  width: 250px;
+  background: var(--bg-color);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.tool-menu-item {
+  padding: 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.2s;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tool-menu-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-color);
+}
+
+.tool-menu-item.active {
+  background: rgba(34, 211, 238, 0.05);
+  color: var(--primary-color);
+  border-left: 3px solid var(--primary-color);
+}
+
+.tool-main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  min-width: 0;
+}
+
+.tool-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.tool-header h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color);
+}
+
+.tool-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.tool-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.tool-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tool-controls input {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  flex: 1;
+}
+
+.split-editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.single-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  font-weight: 600;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
 
   .editor-layout,
-  .convert-layout {
+  .convert-layout,
+  .split-editor {
     grid-template-columns: 1fr;
+  }
+
+  .tools-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .tools-sidebar {
+    width: 100%;
+    max-height: 200px;
+  }
+
+  .split-editor {
+    height: 800px;
   }
 
   .toolbar {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .toolbar label,
-  .btn-group {
-    justify-content: space-between;
-  }
-
-  .header-left {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
   }
 }

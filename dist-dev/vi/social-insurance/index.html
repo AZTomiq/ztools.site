@@ -277,9 +277,9 @@
           <div style="background: var(--bg-color); padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
             <p style="margin-bottom: 0.5rem;"><strong>Lương hưu = Lương bình quân × Tỷ lệ hưởng</strong></p>
             <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-muted);">
-              <li>20 năm đầu: 45%</li>
+              <li><strong>Tỷ lệ 45%:</strong> Nam 20 năm, Nữ 15 năm</li>
               <li>Mỗi năm tiếp theo: +2% (tối đa 75%)</li>
-              <li>Ví dụ: 25 năm = 45% + (5 × 2%) = 55%</li>
+              <li>Ví dụ: Nữ 25 năm = 45% + (10 × 2%) = 65%</li>
             </ul>
           </div>
         </div>
@@ -347,25 +347,34 @@
           <small class="hint">Bình quân lương đóng BHXH của 6 tháng trước khi thôi việc</small>
         </div>
 
-        <div class="form-group">
-          <label for="onetime-years">Số năm đã đóng BHXH</label>
-          <div class="input-group">
-            <input type="number" id="onetime-years" placeholder="Ví dụ: 10" min="1" max="20" step="0.5">
-            <span class="input-suffix">năm</span>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="years-pre-2014">Số năm trước 2014</label>
+            <div class="input-group">
+              <input type="number" id="years-pre-2014" placeholder="0" min="0" max="40" step="0.5">
+              <span class="input-suffix">năm</span>
+            </div>
+            <small class="hint">Hệ số 1.5 tháng/năm</small>
           </div>
-          <small class="hint">Chỉ áp dụng cho người đóng dưới 20 năm và thôi việc</small>
+          <div class="form-group">
+            <label for="years-post-2014">Số năm từ 2014</label>
+            <div class="input-group">
+              <input type="number" id="years-post-2014" placeholder="0" min="0" max="40" step="0.5">
+              <span class="input-suffix">năm</span>
+            </div>
+            <small class="hint">Hệ số 2.0 tháng/năm</small>
+          </div>
         </div>
 
         <div class="info-box">
           <h4>📋 Điều kiện nhận BHXH một lần</h4>
           <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--text-muted);">
-            <li>Đóng BHXH dưới 20 năm</li>
+            <li>Sau 1 năm nghỉ việc không đóng BHXH</li>
             <li>Ra nước ngoài định cư</li>
             <li>Mắc bệnh hiểm nghèo</li>
-            <li>Chết hoặc mất tích (người thân nhận)</li>
           </ul>
           <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">
-            <strong>Công thức:</strong> BHXH 1 lần = Lương BQ 6 tháng × Số năm đóng × 1.5 tháng
+            <strong>Công thức:</strong> (1.5 × Năm trước 2014 + 2.0 × Năm từ 2014) × Lương BQ
           </p>
         </div>
 
@@ -384,11 +393,11 @@
               <strong id="onetime-avg">0 đ</strong>
             </div>
             <div class="breakdown-item">
-              <span>Số năm đã đóng</span>
-              <strong id="onetime-years-display">0 năm</strong>
+              <span>Tổng số năm đóng</span>
+              <strong id="onetime-total-years">0 năm</strong>
             </div>
             <div class="breakdown-item">
-              <span>Hệ số tính (× 1.5 tháng/năm)</span>
+              <span>Hệ số hưởng</span>
               <strong id="onetime-coefficient">0 tháng</strong>
             </div>
             <div class="breakdown-item highlight">

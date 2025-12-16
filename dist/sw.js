@@ -7,7 +7,7 @@ const STATIC_ASSETS = [
   './assets/js/global.js',
   './vi/tax/',
   './vi/bmi/',
-  './vi/json-formatter/',
+  './vi/json-toolkit/',
   './vi/loan-calculator/',
   './vi/business-tax/',
   './vi/social-insurance/',

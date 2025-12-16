@@ -36,7 +36,9 @@ const PENSION_RATES = {
 // Utility Functions
 function parseNumber(str) {
   if (!str) return 0;
-  return parseFloat(str.toString().replace(/[^\d.-]/g, '')) || 0;
+  // Remove dots (thousands separator) and replace comma with dot (decimal)
+  // Input: "50.000.000" -> "50000000" -> 50000000
+  return parseFloat(str.toString().replace(/\./g, '').replace(',', '.')) || 0;
 }
 
 function formatCurrency(num) {
@@ -102,7 +104,8 @@ const pensionResults = document.getElementById('pension-results');
 
 // DOM Elements - One-time
 const onetimeSalaryInput = document.getElementById('onetime-salary');
-const onetimeYearsInput = document.getElementById('onetime-years');
+const yearsPre2014Input = document.getElementById('years-pre-2014');
+const yearsPost2014Input = document.getElementById('years-post-2014');
 const btnCalculateOnetime = document.getElementById('btn-calculate-onetime');
 const btnResetOnetime = document.getElementById('btn-reset-onetime');
 const onetimeResults = document.getElementById('onetime-results');
@@ -175,6 +178,7 @@ function resetContribution() {
 function calculatePension() {
   const avgSalary = parseNumber(avgSalaryInput.value);
   const years = parseFloat(yearsContributedInput.value) || 0;
+  const gender = genderSelect.value; // 'male' or 'female'
 
   if (avgSalary === 0) {
     alert('Vui lòng nhập lương bình quân!');
@@ -182,19 +186,26 @@ function calculatePension() {
     return;
   }
 
-  if (years < PENSION_RATES.min_years) {
-    alert(`Cần đóng tối thiểu ${PENSION_RATES.min_years} năm để được hưởng lương hưu!`);
+  // Minimum years to receive monthly pension is 20 for both (standard)
+  if (years < 20) {
+    alert('Cần đóng tối thiểu 20 năm để được hưởng lương hưu hàng tháng!');
     yearsContributedInput.focus();
     return;
   }
 
   // Calculate pension rate
-  let pensionRate = PENSION_RATES.base;
-  if (years > PENSION_RATES.min_years) {
-    const additionalYears = years - PENSION_RATES.min_years;
-    pensionRate += additionalYears * PENSION_RATES.additional;
+  // Male: 45% for 20 years
+  // Female: 45% for 15 years
+  const baseYears = gender === 'female' ? 15 : 20;
+  let pensionRate = 0.45;
+
+  if (years > baseYears) {
+    const extraYears = years - baseYears;
+    pensionRate += extraYears * 0.02; // +2% per extra year
   }
-  pensionRate = Math.min(pensionRate, PENSION_RATES.max);
+
+  // Max rate 75%
+  pensionRate = Math.min(pensionRate, 0.75);
 
   // Calculate pension amount
   const pensionAmount = avgSalary * pensionRate;
@@ -225,7 +236,8 @@ function resetPension() {
 // ===== ONE-TIME BHXH CALCULATOR =====
 function calculateOnetime() {
   const salary = parseNumber(onetimeSalaryInput.value);
-  const years = parseFloat(onetimeYearsInput.value) || 0;
+  const yearsPre = parseFloat(yearsPre2014Input.value) || 0;
+  const yearsPost = parseFloat(yearsPost2014Input.value) || 0;
 
   if (salary === 0) {
     alert('Vui lòng nhập lương bình quân 6 tháng!');
@@ -233,27 +245,26 @@ function calculateOnetime() {
     return;
   }
 
-  if (years === 0) {
+  if (yearsPre === 0 && yearsPost === 0) {
     alert('Vui lòng nhập số năm đã đóng BHXH!');
-    onetimeYearsInput.focus();
+    yearsPost2014Input.focus();
     return;
   }
 
-  if (years >= 20) {
-    alert('BHXH một lần chỉ áp dụng cho người đóng dưới 20 năm!');
-    onetimeYearsInput.focus();
-    return;
-  }
+  // Formula:
+  // Pre 2014: 1.5 months per year
+  // Post 2014: 2.0 months per year
+  const coeffPre = yearsPre * 1.5;
+  const coeffPost = yearsPost * 2.0;
+  const totalCoeff = coeffPre + coeffPost;
 
-  // Calculate one-time BHXH
-  // Formula: Lương BQ 6 tháng × Số năm × 1.5 tháng
-  const coefficient = years * 1.5;
-  const onetimeAmount = salary * coefficient;
+  const onetimeAmount = salary * totalCoeff;
+  const totalYears = yearsPre + yearsPost;
 
   // Display results
   document.getElementById('onetime-avg').textContent = formatCurrency(salary);
-  document.getElementById('onetime-years-display').textContent = years + ' năm';
-  document.getElementById('onetime-coefficient').textContent = coefficient.toFixed(1) + ' tháng';
+  document.getElementById('onetime-total-years').textContent = totalYears + ' năm';
+  document.getElementById('onetime-coefficient').textContent = totalCoeff.toFixed(2) + ' tháng';
   document.getElementById('onetime-amount').textContent = formatCurrency(onetimeAmount);
 
   onetimeResults.classList.add('show');
@@ -262,7 +273,8 @@ function calculateOnetime() {
 
 function resetOnetime() {
   onetimeSalaryInput.value = '';
-  onetimeYearsInput.value = '';
+  yearsPre2014Input.value = '';
+  yearsPost2014Input.value = '';
   onetimeResults.classList.remove('show');
 }
 

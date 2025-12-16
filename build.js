@@ -240,7 +240,7 @@ async function buildPage(filePath, locale) {
 
   if (dirName === 'tax') categoryKey = 'nav.menu_job';
   else if (dirName === 'bmi') categoryKey = 'nav.menu_utils';
-  else if (dirName === 'json-formatter') categoryKey = 'nav.menu_dev';
+  else if (dirName === 'json-toolkit') categoryKey = 'nav.menu_dev';
 
   const category = categoryKey ? t(categoryKey) : '';
 

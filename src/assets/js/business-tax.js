@@ -46,7 +46,8 @@ const btnResetSimple = document.getElementById('btn-reset-simple');
 // Utility Functions
 function parseNumber(str) {
   if (!str) return 0;
-  return parseFloat(str.toString().replace(/[^\d.-]/g, '')) || 0;
+  // Remove dots (thousands separator) and replace comma with dot (decimal)
+  return parseFloat(str.toString().replace(/\./g, '').replace(',', '.')) || 0;
 }
 
 function formatCurrency(num) {

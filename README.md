@@ -41,13 +41,13 @@ ztools.site/
 │   │   │   ├── tax.css           # Tax calculator styles
 │   │   │   ├── bmi.css           # BMI calculator styles
 │   │   │   ├── loan-calculator.css
-│   │   │   └── json-formatter.css
+│   │   │   └── json-toolkit.css
 │   │   └── js/                   # JavaScript files
 │   │       ├── global.js         # Theme toggle & global utilities
 │   │       ├── tax.js
 │   │       ├── bmi.js
 │   │       ├── loan-calculator.js
-│   │       └── json-formatter.js
+│   │       └── json-toolkit.js
 │   ├── includes/                 # EJS partials
 │   │   ├── layout.ejs            # Main layout wrapper
 │   │   ├── head.ejs              # <head> content
@@ -61,7 +61,7 @@ ztools.site/
 │       ├── tax/index.ejs
 │       ├── bmi/index.ejs
 │       ├── loan-calculator/index.ejs
-│       ├── json-formatter/index.ejs
+│       ├── json-toolkit/index.ejs
 │       ├── about/index.ejs
 │       ├── privacy/index.ejs
 │       ├── terms/index.ejs
