@@ -35,7 +35,11 @@
       "json_title": "JSON Toolkit",
       "json_desc": "Format, validate, and convert JSON. Includes Tree View and data processing tools.",
       "word_counter_title": "Word Counter & Analyzer",
-      "word_counter_desc": "Count words, analyze frequency, and convert case (Case Converter)."
+      "word_counter_desc": "Count words, analyze frequency, and convert case (Case Converter).",
+      "lorem_title": "Lorem Ipsum Generator",
+      "lorem_desc": "Generate placeholder text for designs and mockups.",
+      "password_title": "Strong Password Generator",
+      "password_desc": "Generate secure, random passwords instantly."
     },
     "cats": {
       "job": {
@@ -63,6 +67,11 @@
         "word_counter": "Word Counter",
         "case_converter": "Case Converter",
         "lorem": "Lorem Ipsum Generator"
+      },
+      "generator": {
+        "title": "Generator Tools",
+        "password": "Password Generator",
+        "uuid": "UUID Generator"
       },
       "dev": {
         "encoder": "Encoder / Decoder",

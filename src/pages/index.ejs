@@ -100,13 +100,40 @@
       </p>
     </a>
 
+    <a href="<%= rootPath %><%= locale %>/lorem-ipsum/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
+      <h3>
+        <%= t('home.tools.lorem_title') %>
+      </h3>
+      <p>
+        <%= t('home.tools.lorem_desc') %>
+      </p>
+    </a>
+  </div>
+</div>
+
+<div class="category-section" id="generator-tools">
+  <h2 class="category-title">⚙️ <%= t('home.cats.generator.title') || 'Generators' %>
+  </h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="<%= rootPath %><%= locale %>/password-generator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔐</div>
+      <h3>
+        <%= t('home.tools.password_title') %>
+      </h3>
+      <p>
+        <%= t('home.tools.password_desc') %>
+      </p>
+    </a>
+
     <!-- Coming Soon -->
     <div class="card tool-item upcoming">
       <div class="icon-soon">🔜</div>
       <h3>
-        <%= t('home.cats.text.lorem') || 'Lorem Ipsum Generator' %>
+        <%= t('home.cats.generator.uuid') || 'UUID Generator' %>
       </h3>
-      <p class="desc-soon">Dummy Text Generator</p>
+      <p class="desc-soon">Version 1, 4, 7</p>
     </div>
   </div>
 </div>

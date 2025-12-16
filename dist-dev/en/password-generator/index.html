@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Free Online Utility Tools
+</title>
+<meta name="description" content="Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../en/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../en/#job-income" class="">
+            Job &amp; Income
+          </a></li>
+        <li><a href="../../en/#finance" class="">
+            Finance
+          </a></li>
+        <li><a href="../../en/#daily-utilities"
+            class="">
+            Utilities
+          </a></li>
+        <li><a href="../../en/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../vi/password-generator/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇻🇳
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: Strong Password Generator - ZTools -->
+<link rel="stylesheet" href="../../assets/css/password-generator.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>🔐 Strong Password Generator
+    </h1>
+    <p>
+      Generate secure, random passwords instantly.
+    </p>
+  </div>
+
+  <div class="calculator-card">
+
+    <!-- Output Display -->
+    <div class="password-display">
+      <input type="text" id="password-output" readonly placeholder="Your Secure Password">
+      <div class="display-actions">
+        <button class="btn-icon" onclick="copyPassword()" title="Copy">📋</button>
+        <button class="btn-icon" onclick="generatePassword()" title="Regenerate">🔄</button>
+      </div>
+    </div>
+
+    <!-- Strength Meter -->
+    <div class="strength-meter">
+      <div class="strength-bar" id="strength-bar"></div>
+      <span id="strength-text">Strength</span>
+    </div>
+
+    <div class="controls-grid">
+      <!-- Length -->
+      <div class="control-box full-width">
+        <div class="range-header">
+          <label>Password Length: <span id="length-val">12</span></label>
+        </div>
+        <input type="range" id="length" min="4" max="50" value="12" oninput="updateLength(this.value)">
+      </div>
+
+      <!-- Character Sets -->
+      <div class="control-box">
+        <h3>Characters</h3>
+        <label class="checkbox-container">
+          <input type="checkbox" id="uppercase" checked>
+          <span>Uppercase (A-Z)</span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox" id="lowercase" checked>
+          <span>Lowercase (a-z)</span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox" id="numbers" checked>
+          <span>Numbers (0-9)</span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox" id="symbols" checked>
+          <span>Symbols (!@#$%)</span>
+        </label>
+      </div>
+
+      <!-- Advanced Options -->
+      <div class="control-box">
+        <h3>Options</h3>
+        <label class="checkbox-container">
+          <input type="checkbox" id="exclude-ambiguous">
+          <span>Exclude Ambiguous (l, I, 1, O, 0)</span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox" id="easy-say">
+          <span>Easy to Say (Avoid numbers/symbols)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Generate Button (Secondary, since refresh icon is primary) -->
+    <button class="btn btn-primary btn-block" onclick="generatePassword()">Generate Password</button>
+
+  </div>
+
+  <div class="info-section">
+    <h2>Why use a strong password?</h2>
+    <p>Using a unique, random password for every account is the single best thing you can do to protect your digital
+      life.</p>
+  </div>
+</section>
+
+<script src="../../assets/js/password-generator.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Free, simple, and secure utility tools.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Links
+      </h4>
+      <ul>
+        <li><a href="../../en/about/">
+            About
+          </a></li>
+        <li><a href="../../en/privacy/">
+            Privacy Policy
+          </a></li>
+        <li><a href="../../en/terms/">
+            Terms of Service
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>

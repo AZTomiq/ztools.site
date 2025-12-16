@@ -35,7 +35,11 @@
       "json_title": "JSON Toolkit",
       "json_desc": "Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.",
       "word_counter_title": "Đếm từ & Phân tích văn bản",
-      "word_counter_desc": "Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter)."
+      "word_counter_desc": "Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).",
+      "lorem_title": "Lorem Ipsum Generator",
+      "lorem_desc": "Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.",
+      "password_title": "Tạo Mật Khẩu Mạnh",
+      "password_desc": "Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao."
     },
     "cats": {
       "job": {
@@ -63,6 +67,11 @@
         "word_counter": "Đếm từ & Ký tự",
         "case_converter": "Chuyển đổi Chữ hoa/thường",
         "lorem": "Lorem Ipsum Generator"
+      },
+      "generator": {
+        "title": "Generators (Tạo mã)",
+        "password": "Password Generator",
+        "uuid": "UUID Generator"
       },
       "dev": {
         "encoder": "Encoder / Decoder",
