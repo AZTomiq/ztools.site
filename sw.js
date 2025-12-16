@@ -1,13 +1,14 @@
-const CACHE_NAME = 'ztools-v2';
+const CACHE_NAME = 'ztools-v3';
 const STATIC_ASSETS = [
-  './',
-  './index.html',
+  './vi/',
+  './vi/index.html',
   './manifest.json',
   './assets/css/global.css',
   './assets/js/global.js',
-  './tax/index.html',
-  './bmi/index.html',
-  './json-formatter/index.html'
+  './vi/tax/',
+  './vi/bmi/',
+  './vi/json-formatter/',
+  './vi/loan-calculator/'
 ];
 
 // Install Event: Cache Core Assets

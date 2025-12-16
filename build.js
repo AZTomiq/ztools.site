@@ -253,13 +253,8 @@ async function createRootRedirect() {
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="0;url=/vi/">
     <script>
-        // Optional: Auto-detect language
-        const userLang = navigator.language || navigator.userLanguage;
-        if (userLang.startsWith('en')) {
-            window.location.href = '/en/';
-        } else {
-            window.location.href = '/vi/';
-        }
+        // Default to Vietnamese
+        window.location.href = '/vi/';
     </script>
     <title>Redirecting...</title>
 </head>

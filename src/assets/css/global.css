@@ -247,3 +247,140 @@ label {
   border-radius: var(--radius);
   border-left: 4px solid var(--primary-color);
 }
+
+/* Responsive Styles for Mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+
+  /* Header adjustments */
+  .site-header {
+    height: auto;
+    min-height: var(--header-height);
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .logo-sub {
+    display: none; /* Hide category on mobile */
+  }
+
+  /* Navigation - Stack vertically on mobile */
+  .main-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-nav ul {
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    justify-content: flex-start;
+  }
+
+  .main-nav a {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  /* Main content padding */
+  main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Cards and tool containers */
+  .card,
+  .tool-container {
+    padding: 1rem;
+  }
+
+  /* Buttons - Make them easier to tap */
+  .btn {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    min-height: 44px; /* iOS recommended touch target */
+  }
+
+  /* Form inputs - Better touch targets */
+  input,
+  select,
+  textarea {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevent zoom on iOS */
+    min-height: 44px;
+  }
+
+  /* Footer adjustments */
+  .footer-inner {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Typography adjustments */
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Tables - Allow horizontal scroll */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small screens */
+  .logo {
+    font-size: 1rem;
+  }
+
+  .main-nav a {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .main-nav a.active {
+    padding: 0.25rem 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  /* Reduce padding on very small screens */
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .card,
+  .tool-container {
+    padding: 0.75rem;
+  }
+}
