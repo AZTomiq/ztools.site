@@ -1,0 +1,19 @@
+{
+  "percentage": {
+    "title": "Tính Phần Trăm (%)",
+    "desc": "Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.",
+    "tab_basic": "Cơ bản",
+    "tab_change": "Tăng/Giảm",
+    "tab_phrase": "Tìm tỷ lệ",
+    "lbl_what_is": "Tìm",
+    "lbl_of": "% của",
+    "lbl_from": "Từ số",
+    "lbl_to": "Thành số",
+    "lbl_result_change": "Thay đổi",
+    "lbl_is_what": "Số",
+    "lbl_of_total": "là bao nhiêu % của",
+    "calc": "Tính toán",
+    "result": "Kết quả",
+    "error_num": "Vui lòng nhập số hợp lệ"
+  }
+}

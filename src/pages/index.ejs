@@ -61,20 +61,34 @@
         <%= t('loan.desc') %>
       </p>
     </a>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
+    <a href="<%= rootPath %><%= locale %>/compound-interest/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
       <h3>
-        <%= t('home.cats.finance.compound') || 'Tính lãi kép' %>
+        <%= t('compound.title') %>
       </h3>
-      <p class="desc-soon">Compound Interest</p>
-    </div>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
+      <p>
+        <%= t('compound.desc') %>
+      </p>
+    </a>
+    <a href="<%= rootPath %><%= locale %>/savings-interest/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏦</div>
       <h3>
-        <%= t('home.cats.finance.savings') || 'Lãi suất tiết kiệm' %>
+        <%= t('savings.title') %>
       </h3>
-      <p class="desc-soon">Savings Interest</p>
-    </div>
+      <p>
+        <%= t('savings.desc') %>
+      </p>
+    </a>
+    <a href="<%= rootPath %><%= locale %>/percentage-calculator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">％</div>
+      <h3>
+        <%= t('percentage.title') %>
+      </h3>
+      <p>
+        <%= t('percentage.desc') %>
+      </p>
+    </a>
+    <!-- Coming Soon -->
     <div class="card tool-item upcoming">
       <div class="icon-soon">🔜</div>
       <h3>

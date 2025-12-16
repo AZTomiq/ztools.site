@@ -14,7 +14,10 @@ const STATIC_ASSETS = [
   './vi/word-counter/',
   './vi/lorem-ipsum/',
   './vi/password-generator/',
-  './vi/uuid-generator/'
+  './vi/uuid-generator/',
+  './vi/compound-interest/',
+  './vi/savings-interest/',
+  './vi/percentage-calculator/'
 ];
 
 // Install Event: Cache Core Assets

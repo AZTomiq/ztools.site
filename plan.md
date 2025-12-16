@@ -45,10 +45,10 @@
     - [x] Tính xuôi (Gross → Net) & Tính ngược (Net → Gross)
     - [x] So sánh Luật 2025 vs Nghị quyết 110/2025
     - [x] Biểu đồ dòng tiền & So sánh lương
-- [ ] **Tính thuế TNDN** (Thu nhập doanh nghiệp)
-- [ ] **Tính BHXH & Hưu trí**
-    - [ ] BHXH bắt buộc vs Tự nguyện
-    - [ ] Dự tính lương hưu / BHXH 1 lần
+- [x] **Tính thuế TNDN** (Thu nhập doanh nghiệp)
+- [x] **Tính BHXH & Hưu trí**
+    - [x] BHXH bắt buộc vs Tự nguyện
+    - [x] Dự tính lương hưu / BHXH 1 lần
 - [ ] **Tiện ích Lương thưởng**
     - [ ] Tính tiền tăng ca (OT)
     - [ ] Tính KPI, Thưởng Tết, Lương tháng 13
@@ -63,10 +63,10 @@
     - [x] Dư nợ giảm dần vs Dư nợ ban đầu
     - [x] Lịch trả nợ chi tiết
 - [ ] **Mortgage Calculator** (Tính vay mua nhà)
-- [ ] **Compound Interest Calculator** (Lãi kép)
-- [ ] **Lãi suất tiết kiệm**
+- [x] **Compound Interest Calculator** (Lãi kép)
+- [x] **Lãi suất tiết kiệm**
 - [ ] **Currency Converter** (Chuyển đổi tiền tệ)
-- [ ] **Percentage Calculator** (Tính phần trăm)
+- [x] **Percentage Calculator** (Tính phần trăm)
 - [ ] **Statistics Calculator** (Thống kê)
 - [ ] **Fraction Calculator** (Phân số)
 - [ ] **Expression Evaluator** (Tính biểu thức)

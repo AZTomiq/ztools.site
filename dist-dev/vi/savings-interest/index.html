@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="icon" type="image/png"
+  href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+<link rel="manifest" href="../../manifest.json">
+
+<!-- Dark Mode Script (Blocking) -->
+<script>
+  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
+<!-- Vercel Analytics -->
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <a href="../../vi/" class="logo">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text">ZTools <span class="logo-sub">
+          
+        </span></span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../../vi/#job-income" class="">
+            Thuế &amp; Lương
+          </a></li>
+        <li><a href="../../vi/#finance" class="">
+            Tài chính
+          </a></li>
+        <li><a href="../../vi/#daily-utilities"
+            class="">
+            Tiện ích
+          </a></li>
+        <li><a href="../../vi/#dev-tools"
+            class="">
+            Dev Tools
+          </a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="../../en/savings-interest/"
+        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+</header>
+
+    <main class="container">
+      <!-- title: Tính Lãi Suất Tiết Kiệm - ZTools -->
+
+<link rel="stylesheet" href="../../assets/css/savings-interest.css">
+<!-- Reusing compound-interest styles as they are identical layout-wise -->
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>💰 Tính Lãi Suất Tiết Kiệm
+    </h1>
+    <p>
+      Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <form id="savings-form" class="finance-form">
+      <!-- Deposit Amount -->
+      <div class="form-group">
+        <label for="amount">
+          Số tiền gửi
+        </label>
+        <div class="input-group">
+          <input type="text" id="amount" placeholder="100.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Interest Rate -->
+        <div class="form-group">
+          <label for="rate">
+            Lãi suất (%/năm)
+          </label>
+          <div class="input-group">
+            <input type="number" id="rate" placeholder="5.5" step="0.01" min="0">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+
+        <!-- Term -->
+        <div class="form-group">
+          <label for="term">
+            Kỳ hạn gửi
+          </label>
+          <select id="term">
+            <option value="1">
+              1 Tháng
+            </option>
+            <option value="3">
+              3 Tháng
+            </option>
+            <option value="6" selected>
+              6 Tháng
+            </option>
+            <option value="12">
+              12 Tháng
+            </option>
+            <option value="24">
+              24 Tháng
+            </option>
+            <option value="36">
+              36 Tháng
+            </option>
+            <option value="custom">
+              Hoặc nhập số tháng tùy chỉnh
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Custom Term Input (Hidden by default) -->
+      <div class="form-group" id="custom-term-group" style="display: none;">
+        <label for="custom-months">
+          Hoặc nhập số tháng tùy chỉnh
+        </label>
+        <div class="input-group">
+          <input type="number" id="custom-months" placeholder="Enter months" min="1">
+          <span class="input-suffix">
+            Tháng
+          </span>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate" class="btn-calculate">
+          Tính lãi
+        </button>
+        <button type="button" id="btn-reset" class="btn-reset">
+          common.reset
+        </button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div id="result-section" class="result-section">
+      <h3>
+        Kết quả tính lãi
+      </h3>
+
+      <div class="result-grid" style="grid-template-columns: 1fr 1fr;"> <!-- 2 columns only -->
+        <div class="result-card primary">
+          <span>
+            Tổng tiền lãi nhận được
+          </span>
+          <strong id="res-interest">0 đ</strong>
+        </div>
+        <div class="result-card secondary">
+          <span>
+            Tổng tiền gốc + lãi
+          </span>
+          <strong id="res-total">0 đ</strong>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
+          ℹ️ Interest is calculated based on simple interest formula:
+          <code>Interest = Principal × Rate% × (Months / 12)</code>.
+          <br>Assumes interest is paid at maturity (End of term).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../../assets/js/savings-interest.js"></script>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p>
+        © 2025 ZTools. Built with ❤️.
+      </p>
+    </div>
+  </div>
+</footer>
+
+      <script src="../../assets/js/global.js"></script>
+</body>
+
+</html>
