@@ -33,9 +33,9 @@
       "loan_title": "Loan Calculator",
       "loan_desc": "Calculate bank loan amortization schedule, reducing balance.",
       "json_title": "JSON Toolkit",
-      "json_desc": "Format, validate, and convert JSON. Includes tree view and data tools.",
-      "word_counter_title": "Word Counter & Text Analyzer",
-      "word_counter_desc": "Count words, chars, sentences, lines. Analyze reading time and keywords."
+      "json_desc": "Format, validate, and convert JSON. Includes Tree View and data processing tools.",
+      "word_counter_title": "Word Counter & Analyzer",
+      "word_counter_desc": "Count words, analyze frequency, and convert case (Case Converter)."
     },
     "cats": {
       "job": {

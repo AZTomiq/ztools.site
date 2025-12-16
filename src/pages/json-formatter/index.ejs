@@ -71,6 +71,12 @@ Example:
             </div>
           </div>
           <div class="panel-actions">
+            <!-- Tree Controls (Hidden by default) -->
+            <div id="tree-controls" class="btn-group" style="display: none; margin-right: 1rem;">
+              <button class="btn-icon" onclick="expandAll()" title="Expand All">➕</button>
+              <button class="btn-icon" onclick="collapseAll()" title="Collapse All">➖</button>
+            </div>
+
             <div class="output-stats" id="output-stats"></div>
             <button class="btn-icon" onclick="togglePanel('output')" title="Maximize/Restore">⛶</button>
           </div>

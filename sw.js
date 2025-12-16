@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ztools-v3';
+const CACHE_NAME = 'ztools-v4';
 const STATIC_ASSETS = [
   './vi/',
   './vi/index.html',
@@ -8,7 +8,10 @@ const STATIC_ASSETS = [
   './vi/tax/',
   './vi/bmi/',
   './vi/json-formatter/',
-  './vi/loan-calculator/'
+  './vi/loan-calculator/',
+  './vi/business-tax/',
+  './vi/social-insurance/',
+  './vi/word-counter/'
 ];
 
 // Install Event: Cache Core Assets
@@ -20,7 +23,7 @@ self.addEventListener('install', (e) => {
       return cache.addAll(STATIC_ASSETS);
     })
   );
-  self.skipWaiting();    
+  self.skipWaiting();
 });
 
 // Activate Event: Clean old caches

@@ -14,6 +14,7 @@ function toggleOutputView(view) {
   const outputCode = document.getElementById('json-output');
   const outputTree = document.getElementById('tree-container');
   const pathDisplay = document.getElementById('path-display');
+  const treeControls = document.getElementById('tree-controls');
 
   if (view === 'code') {
     btnCode.classList.add('active');
@@ -22,6 +23,7 @@ function toggleOutputView(view) {
     outputTree.classList.remove('active');
     outputTree.style.display = 'none'; // Ensure hidden
     pathDisplay.style.display = 'none';
+    if (treeControls) treeControls.style.display = 'none';
   } else {
     btnCode.classList.remove('active');
     btnTree.classList.add('active');
@@ -29,6 +31,7 @@ function toggleOutputView(view) {
     outputTree.classList.add('active');
     outputTree.style.display = 'block'; // Ensure visible
     // pathDisplay handled by showPath
+    if (treeControls) treeControls.style.display = 'flex';
   }
 }
 

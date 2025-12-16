@@ -35,7 +35,7 @@
       "json_title": "JSON Toolkit",
       "json_desc": "Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.",
       "word_counter_title": "Đếm từ & Phân tích văn bản",
-      "word_counter_desc": "Đếm số từ, ký tự, câu, dòng và thời gian đọc. Phân tích tần suất từ khóa."
+      "word_counter_desc": "Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter)."
     },
     "cats": {
       "job": {
