@@ -10,29 +10,29 @@
 </section>
 
 <div class="category-section" id="job-income">
-  <h2 class="category-title">🛠️ ZTools Job & Income</h2>
+  <h2 class="category-title">🛠️ Job & Income</h2>
   <div class="tools-grid">
     <!-- Active Tools -->
     <a href="<%= rootPath %><%= locale %>/tax/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
       <h3>
-        <%= t('home.tools.tax_title') %>
+        <%= t('tax.title') %>
       </h3>
       <p>
-        <%= t('home.tools.tax_desc') %>
+        <%= t('tax.desc') %>
       </p>
     </a>
     <a href="<%= rootPath %><%= locale %>/business-tax/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
       <h3>
-        <%= t('home.cats.job.corp_tax') || 'Tính thuế TNDN' %>
+        <%= t('business_tax.title') %>
       </h3>
       <p>Corporate Income Tax Calculator</p>
     </a>
     <a href="<%= rootPath %><%= locale %>/social-insurance/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏥</div>
       <h3>
-        <%= t('home.cats.job.insurance') || 'Tính BHXH & Hưu trí' %>
+        <%= t('social_insurance.title') %>
       </h3>
       <p>Social Insurance & Pension Calculator</p>
     </a>
@@ -48,17 +48,17 @@
 </div>
 
 <div class="category-section" id="finance">
-  <h2 class="category-title">💰 ZTools Finance</h2>
+  <h2 class="category-title">💰 Finance</h2>
   <div class="tools-grid">
     <!-- Coming Soon -->
     <!-- Active Tools -->
     <a href="<%= rootPath %><%= locale %>/loan-calculator/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
       <h3>
-        <%= t('home.cats.finance.loan') || 'Tính lãi vay' %>
+        <%= t('loan.title') %>
       </h3>
       <p>
-        <%= t('home.cats.finance.loan_desc') || 'Mortgage Calculator' %>
+        <%= t('loan.desc') %>
       </p>
     </a>
     <div class="card tool-item upcoming">
@@ -93,20 +93,20 @@
     <a href="<%= rootPath %><%= locale %>/word-counter/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
       <h3>
-        <%= t('home.tools.word_counter_title') %>
+        <%= t('word_counter.title') %>
       </h3>
       <p>
-        <%= t('home.tools.word_counter_desc') %>
+        <%= t('word_counter.desc') %>
       </p>
     </a>
 
     <a href="<%= rootPath %><%= locale %>/lorem-ipsum/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
       <h3>
-        <%= t('home.tools.lorem_title') %>
+        <%= t('lorem.title') %>
       </h3>
       <p>
-        <%= t('home.tools.lorem_desc') %>
+        <%= t('lorem.desc') %>
       </p>
     </a>
   </div>
@@ -120,35 +120,36 @@
     <a href="<%= rootPath %><%= locale %>/password-generator/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔐</div>
       <h3>
-        <%= t('home.tools.password_title') %>
+        <%= t('password.title') %>
       </h3>
       <p>
-        <%= t('home.tools.password_desc') %>
+        <%= t('password.desc') %>
       </p>
     </a>
 
-    <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
+    <a href="<%= rootPath %><%= locale %>/uuid-generator/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🆔</div>
       <h3>
-        <%= t('home.cats.generator.uuid') || 'UUID Generator' %>
+        <%= t('uuid.title') %>
       </h3>
-      <p class="desc-soon">Version 1, 4, 7</p>
-    </div>
+      <p>
+        <%= t('uuid.desc') %>
+      </p>
+    </a>
   </div>
 </div>
 
 <div class="category-section" id="daily-utilities">
-  <h2 class="category-title">☕ ZTools Daily Utilities</h2>
+  <h2 class="category-title">☕ Daily Utilities</h2>
   <div class="tools-grid">
     <!-- Active Tools -->
     <a href="<%= rootPath %><%= locale %>/bmi/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
       <h3>
-        <%= t('home.tools.bmi_title') %>
+        <%= t('bmi.title') %>
       </h3>
       <p>
-        <%= t('home.tools.bmi_desc') %>
+        <%= t('bmi.desc') %>
       </p>
     </a>
     <!-- Coming Soon -->
@@ -177,16 +178,16 @@
 </div>
 
 <div class="category-section" id="dev-tools">
-  <h2 class="category-title">💻 ZTools DEV</h2>
+  <h2 class="category-title">💻 DEV Tools</h2>
   <div class="tools-grid">
     <!-- Active Tools -->
     <a href="<%= rootPath %><%= locale %>/json-formatter/" class="card tool-item">
       <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
       <h3>
-        <%= t('home.tools.json_title') %>
+        <%= t('json.title') %>
       </h3>
       <p>
-        <%= t('home.tools.json_desc') %>
+        <%= t('json.desc') %>
       </p>
     </a>
     <!-- Coming Soon -->
@@ -196,13 +197,6 @@
         <%= t('home.cats.dev.encoder') || 'Encoder / Decoder' %>
       </h3>
       <p class="desc-soon">Base64, JWT</p>
-    </div>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.dev.generator') || 'Generators' %>
-      </h3>
-      <p class="desc-soon">UUID, Random String</p>
     </div>
     <div class="card tool-item upcoming">
       <div class="icon-soon">🔜</div>

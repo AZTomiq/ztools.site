@@ -1,0 +1,73 @@
+<!-- title: <%= t('uuid.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= rootPath %>assets/css/uuid-generator.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>🆔 <%= t('uuid.title') %>
+    </h1>
+    <p>
+      <%= t('uuid.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <div class="controls-grid">
+      <!-- Version -->
+      <div class="control-box">
+        <label for="uuid-version">UUID Version</label>
+        <select id="uuid-version">
+          <option value="v4" selected>Version 4 (Random) - Recommended</option>
+          <option value="v1">Version 1 (Timestamp)</option>
+          <option value="v7">Version 7 (Time-ordered)</option>
+          <option value="guid">GUID (Microsoft)</option>
+        </select>
+      </div>
+
+      <!-- Quantity -->
+      <div class="control-box">
+        <label for="uuid-quantity">Quantity</label>
+        <input type="number" id="uuid-quantity" value="1" min="1" max="1000" oninput="validateQuantity(this)">
+      </div>
+
+      <!-- Options -->
+      <div class="control-box full-width options-row">
+        <label class="checkbox-container">
+          <input type="checkbox" id="uppercase">
+          <span>Uppercase</span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox" id="hyphens" checked>
+          <span>Hyphens</span>
+        </label>
+        <label class="checkbox-container">
+          <input type="checkbox" id="braces">
+          <span>Braces {}</span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" onclick="generateUUIDs()">Generate UUIDs</button>
+
+    <div class="output-section">
+      <div class="toolbar">
+        <span id="output-stats">Generated 1 UUID</span>
+        <button class="btn btn-sm" onclick="copyUUIDs()">📋 Copy All</button>
+      </div>
+      <textarea id="uuid-output" readonly placeholder="UUIDs will appear here..."></textarea>
+    </div>
+  </div>
+
+  <section class="info-section">
+    <h2>UUID Versions Explained</h2>
+    <ul>
+      <li><strong>Version 4 (Random):</strong> Generated using random numbers. The most common and recommended widely.
+      </li>
+      <li><strong>Version 1 (Time-based):</strong> Uses timestamp and random node (since MAC is private). Uniqueness
+        guaranteed if generated at different times.</li>
+      <li><strong>Version 7 (Time-ordered):</strong> Newer standard. Sortable by time (starts with timestamp). Great for
+        database keys.</li>
+    </ul>
+  </section>
+</section>
+
+<script src="<%= rootPath %>assets/js/uuid-generator.js"></script>

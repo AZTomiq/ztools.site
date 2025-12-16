@@ -13,9 +13,38 @@ const ASSETS_DIST = path.join(DIST_DIR, 'assets');
 // Locales Configuration
 const LOCALES = ['vi', 'en'];
 const DEFAULT_LOCALE = 'vi';
+
+function loadLocales(lang) {
+  const translations = {};
+
+  // 1. Load legacy file (e.g., locales/vi.json)
+  const legacyPath = path.join(SRC_DIR, 'locales', `${lang}.json`);
+  if (fs.existsSync(legacyPath)) {
+    try {
+      Object.assign(translations, require(legacyPath));
+    } catch (e) { console.error(`Error loading legacy locale ${lang}`, e); }
+  }
+
+  // 2. Load module folders (e.g., locales/vi/*.json)
+  const dirPath = path.join(SRC_DIR, 'locales', lang);
+  if (fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory()) {
+    const files = fs.readdirSync(dirPath);
+    for (const file of files) {
+      if (file.endsWith('.json')) {
+        try {
+          const content = require(path.join(dirPath, file));
+          // Shallow merge (top-level keys)
+          Object.assign(translations, content);
+        } catch (e) { console.error(`Error loading locale module ${lang}/${file}`, e); }
+      }
+    }
+  }
+  return translations;
+}
+
 const TRANSLATIONS = {
-  vi: require('./src/locales/vi.json'),
-  en: require('./src/locales/en.json')
+  vi: loadLocales('vi'),
+  en: loadLocales('en')
 };
 
 async function build() {

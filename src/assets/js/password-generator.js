@@ -14,6 +14,8 @@ function updateLength(val) {
 
 function generatePassword() {
   const length = parseInt(document.getElementById('length').value);
+  const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
   const useUpper = document.getElementById('uppercase').checked;
   const useLower = document.getElementById('lowercase').checked;
   const useNumbers = document.getElementById('numbers').checked;
@@ -43,23 +45,38 @@ function generatePassword() {
   if (includeSymbols) addSet(CHARS.symbols);
 
   const output = document.getElementById('password-output');
+  const strengthBar = document.getElementById('strength-bar');
+  const strengthText = document.getElementById('strength-text');
 
   if (validChars.length === 0) {
     output.value = '';
-    updateStrength(0);
+    strengthBar.style.width = '0%';
+    strengthText.textContent = 'Strength: ...';
     return;
   }
 
-  let password = mustInclude.join('');
-  for (let i = password.length; i < length; i++) {
-    password += validChars[Math.floor(Math.random() * validChars.length)];
+  const generatedList = [];
+
+  for (let q = 0; q < quantity; q++) {
+    let password = mustInclude.join('');
+    for (let i = password.length; i < length; i++) {
+      password += validChars[Math.floor(Math.random() * validChars.length)];
+    }
+
+    // Shuffle
+    password = password.split('').sort(() => 0.5 - Math.random()).join('');
+    generatedList.push(password);
   }
 
-  // Shuffle
-  password = password.split('').sort(() => 0.5 - Math.random()).join('');
+  output.value = generatedList.join('\n');
 
-  output.value = password;
-  calculateStrength(password);
+  // Auto-resize rows (max 10)
+  output.rows = Math.min(Math.max(quantity, 1), 10);
+
+  // Calc strength based on first password config
+  if (generatedList.length > 0) {
+    calculateStrength(generatedList[0]);
+  }
 }
 
 function calculateStrength(password) {
@@ -72,8 +89,6 @@ function calculateStrength(password) {
   if (/[0-9]/.test(password)) strength += 1;
   if (/[^A-Za-z0-9]/.test(password)) strength += 1;
 
-  // Normalize to 0-4
-  // Max possible: 3 (len) + 4 (types) = 7
   let percentage = Math.min((strength / 7) * 100, 100);
 
   const bar = document.getElementById('strength-bar');
@@ -107,31 +122,35 @@ function copyPassword() {
 
   if (navigator.clipboard) {
     navigator.clipboard.writeText(output.value).then(() => {
-      // Toast or visual feedback?
-      const prev = output.type;
-      output.type = 'text'; // Ensure it's text
-      // Maybe quick flash?
-      output.classList.add('copied');
-      setTimeout(() => output.classList.remove('copied'), 200);
+      const btn = document.querySelector('.display-actions .btn-icon');
+      // Visual feedback
+      output.classList.add('copied'); // Assuming css handles this or just ignore
+      alert('Copied to clipboard!'); // Simple fallback or use toast if available
     });
   }
 }
 
-// Event Listeners for checkboxes to auto-regenerate
+// Event Listeners
 document.querySelectorAll('input[type="checkbox"]').forEach(el => {
   el.addEventListener('change', generatePassword);
 });
 
-// UI Logic for "Easy Say"
+// Quantity listener
+document.getElementById('quantity').addEventListener('change', generatePassword);
+document.getElementById('quantity').addEventListener('input', generatePassword);
+
 document.getElementById('easy-say').addEventListener('change', (e) => {
   const nums = document.getElementById('numbers');
   const syms = document.getElementById('symbols');
   if (e.target.checked) {
+    nums.checked = false;
+    syms.checked = false;
     nums.disabled = true;
     syms.disabled = true;
   } else {
     nums.disabled = false;
     syms.disabled = false;
+    // Don't auto check, let user decide
   }
   generatePassword();
 });

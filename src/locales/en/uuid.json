@@ -1,0 +1,6 @@
+{
+  "uuid": {
+    "title": "UUID Generator",
+    "desc": "Generate random UUIDs/GUIDs (V1, V4, V7) instantly."
+  }
+}

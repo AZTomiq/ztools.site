@@ -25,22 +25,6 @@
   "home": {
     "hero_title": "Công cụ tiện ích cho mọi người",
     "hero_desc": "Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.",
-    "tools": {
-      "tax_title": "Tính thuế TNCN",
-      "tax_desc": "Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.",
-      "bmi_title": "Tính chỉ số BMI",
-      "bmi_desc": "Tính chỉ số khối cơ thể (BMI) theo chuẩn IDI & WPRO cho người Việt.",
-      "loan_title": "Tính lãi vay",
-      "loan_desc": "Tính lịch trả nợ vay ngân hàng, dư nợ giảm dần hoặc cố định.",
-      "json_title": "JSON Toolkit",
-      "json_desc": "Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.",
-      "word_counter_title": "Đếm từ & Phân tích văn bản",
-      "word_counter_desc": "Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).",
-      "lorem_title": "Lorem Ipsum Generator",
-      "lorem_desc": "Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.",
-      "password_title": "Tạo Mật Khẩu Mạnh",
-      "password_desc": "Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao."
-    },
     "cats": {
       "job": {
         "title": "Việc làm & Lương thưởng",

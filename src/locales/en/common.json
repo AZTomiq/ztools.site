@@ -25,22 +25,6 @@
   "home": {
     "hero_title": "Utility Tools for Everyone",
     "hero_desc": "Simple, fast, secure, and completely free.",
-    "tools": {
-      "tax_title": "PIT Calculator",
-      "tax_desc": "Calculate Personal Income Tax 2024, Net/Gross salary converter.",
-      "bmi_title": "BMI Calculator",
-      "bmi_desc": "Calculate Body Mass Index (BMI) with IDI & WPRO standards.",
-      "loan_title": "Loan Calculator",
-      "loan_desc": "Calculate bank loan amortization schedule, reducing balance.",
-      "json_title": "JSON Toolkit",
-      "json_desc": "Format, validate, and convert JSON. Includes Tree View and data processing tools.",
-      "word_counter_title": "Word Counter & Analyzer",
-      "word_counter_desc": "Count words, analyze frequency, and convert case (Case Converter).",
-      "lorem_title": "Lorem Ipsum Generator",
-      "lorem_desc": "Generate placeholder text for designs and mockups.",
-      "password_title": "Strong Password Generator",
-      "password_desc": "Generate secure, random passwords instantly."
-    },
     "cats": {
       "job": {
         "title": "Job & Income",

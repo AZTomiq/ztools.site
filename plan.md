@@ -90,12 +90,12 @@
 ### 📝 Group 4: Text Tools - 36 tools
 *Công cụ xử lý văn bản đa dạng*
 
-- [ ] **Word Counter** (Đếm từ)
+- [x] **Word Counter** (Đếm từ)
 - [ ] **Character Counter** (Đếm ký tự)
 - [ ] **Sentence Counter** (Đếm câu)
 - [ ] **Line Counter** (Đếm dòng)
-- [ ] **Text Case Converter** (Chuyển đổi chữ hoa/thường)
-- [ ] **Lorem Ipsum Generator**
+- [x] **Text Case Converter** (Chuyển đổi chữ hoa/thường)
+- [x] **Lorem Ipsum Generator**
 - [ ] **Text Diff Checker** (So sánh văn bản)
 - [ ] **Find & Replace** (Tìm & thay thế)
 - [ ] **Duplicate Line Remover**
@@ -185,7 +185,7 @@
 - [ ] **SQL Encoder/Decoder**
 - [ ] **UTF-8 Validator**
 - [ ] **Base32 Encoder/Decoder**
-- [ ] **Password Generator**
+- [x] **Password Generator**
 - [ ] **Password Strength Checker**
 - [ ] **AES Encryption/Decryption**
 - [ ] **MAC Address Generator**
@@ -237,7 +237,7 @@
 ### ⚙️ Group 8: Generator Tools - 49 tools
 *Tạo mã, dữ liệu và thiết kế*
 
-- [ ] **UUID Generator**
+- [x] **UUID Generator**
 - [ ] **Random Number Generator**
 - [ ] **Random String Generator**
 - [ ] **Random Color Generator**
@@ -399,14 +399,14 @@
 
 | Category            | Tools Count   | Status           |
 | ------------------- | ------------- | ---------------- |
-| Job & Income        | 10            | 1/10 ✅           |
+| Job & Income        | 10            | 3/10 ✅           |
 | Finance             | 15            | 1/15 ✅           |
 | Health & Lifestyle  | 8             | 1/8 ✅            |
-| Text Tools          | 36            | 0/36             |
+| Text Tools          | 36            | 3/36             |
 | Conversion Tools    | 33            | 0/33             |
 | Encoding/Security   | 25            | 0/25             |
-| Data Processing     | 39            | 3/39 ✅           |
-| Generators          | 49            | 0/49             |
+| Data Processing     | 39            | 1/39 ✅           |
+| Generators          | 49            | 2/49             |
 | Image Tools         | 43            | 0/43             |
 | Number & Math       | 32            | 0/32             |
 | Utility & Dev Tools | 29            | 0/29             |
@@ -574,5 +574,10 @@
 ---
 
 **Last Updated**: 2025-12-16  
-**Current Status**: Phase 1 Complete, Moving to Phase 2  
-**Next Milestone**: Complete 20 Text Tools by Q1 2026
+**Current Status**: 🚀 Phase 2 (Quick Wins) In Progress  
+**Recent Achievements**:
+- ✅ **Full i18n Refactor**: Migrated to modular JSON resources for all 10 tools.
+- ✅ **New Generators**: Password Generator, UUID Generator.
+- ✅ **Text Tools**: Lorem Ipsum, Word Counter Updates.
+- ✅ **Job & Income**: Business Tax, Social Insurance.
+**Next Milestone**: Implement Conversion Tools (Base64, URL) & Technical SEO (Sitemap/Schema).

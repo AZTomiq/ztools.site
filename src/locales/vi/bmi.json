@@ -1,0 +1,6 @@
+{
+  "bmi": {
+    "title": "Tính chỉ số BMI",
+    "desc": "Tính chỉ số khối cơ thể (BMI) theo chuẩn IDI & WPRO cho người Việt."
+  }
+}

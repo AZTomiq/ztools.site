@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ztools-v5';
+const CACHE_NAME = 'ztools-v6';
 const STATIC_ASSETS = [
   './vi/',
   './vi/index.html',
@@ -13,7 +13,8 @@ const STATIC_ASSETS = [
   './vi/social-insurance/',
   './vi/word-counter/',
   './vi/lorem-ipsum/',
-  './vi/password-generator/'
+  './vi/password-generator/',
+  './vi/uuid-generator/'
 ];
 
 // Install Event: Cache Core Assets

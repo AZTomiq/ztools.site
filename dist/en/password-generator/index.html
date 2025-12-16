@@ -82,7 +82,7 @@
 
     <!-- Output Display -->
     <div class="password-display">
-      <input type="text" id="password-output" readonly placeholder="Your Secure Password">
+      <textarea id="password-output" readonly placeholder="Your Secure Password(s)" rows="1"></textarea>
       <div class="display-actions">
         <button class="btn-icon" onclick="copyPassword()" title="Copy">📋</button>
         <button class="btn-icon" onclick="generatePassword()" title="Regenerate">🔄</button>
@@ -96,12 +96,16 @@
     </div>
 
     <div class="controls-grid">
-      <!-- Length -->
-      <div class="control-box full-width">
-        <div class="range-header">
-          <label>Password Length: <span id="length-val">12</span></label>
+      <!-- Quantity & Length -->
+      <div class="control-box full-width" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div>
+          <label class="control-label">Quantity</label>
+          <input type="number" id="quantity" value="1" min="1" max="50" class="form-input">
         </div>
-        <input type="range" id="length" min="4" max="50" value="12" oninput="updateLength(this.value)">
+        <div>
+          <label class="control-label">Password Length: <span id="length-val">12</span></label>
+          <input type="range" id="length" min="4" max="50" value="12" oninput="updateLength(this.value)">
+        </div>
       </div>
 
       <!-- Character Sets -->
@@ -139,8 +143,7 @@
       </div>
     </div>
 
-    <!-- Generate Button (Secondary, since refresh icon is primary) -->
-    <button class="btn btn-primary btn-block" onclick="generatePassword()">Generate Password</button>
+    <button class="btn btn-primary btn-block" onclick="generatePassword()">Generate Password(s)</button>
 
   </div>
 
@@ -148,6 +151,7 @@
     <h2>Why use a strong password?</h2>
     <p>Using a unique, random password for every account is the single best thing you can do to protect your digital
       life.</p>
+    <p>We generate passwords locally on your device. Nothing is sent to our servers.</p>
   </div>
 </section>
 
