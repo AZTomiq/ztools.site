@@ -85,6 +85,32 @@
   </div>
 </div>
 
+<div class="category-section" id="text-tools">
+  <h2 class="category-title">📝 <%= t('home.cats.text.title') || 'Cong cu Van ban' %>
+  </h2>
+  <div class="tools-grid">
+    <!-- Active Tools -->
+    <a href="<%= rootPath %><%= locale %>/word-counter/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+      <h3>
+        <%= t('home.tools.word_counter_title') %>
+      </h3>
+      <p>
+        <%= t('home.tools.word_counter_desc') %>
+      </p>
+    </a>
+
+    <!-- Coming Soon -->
+    <div class="card tool-item upcoming">
+      <div class="icon-soon">🔜</div>
+      <h3>
+        <%= t('home.cats.text.lorem') || 'Lorem Ipsum Generator' %>
+      </h3>
+      <p class="desc-soon">Dummy Text Generator</p>
+    </div>
+  </div>
+</div>
+
 <div class="category-section" id="daily-utilities">
   <h2 class="category-title">☕ ZTools Daily Utilities</h2>
   <div class="tools-grid">
