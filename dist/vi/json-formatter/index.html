@@ -66,29 +66,220 @@
 </header>
 
     <main class="container">
-      <!-- title: JSON Formatter & Validator - ZTools -->
+      <!-- title: JSON Toolkit - ZTools -->
 <link rel="stylesheet" href="../../assets/css/json-formatter.css">
 
 <section class="tool-container">
-  <div class="card intro-card">
-    <h1>JSON Formatter & Validator</h1>
-    <p>Làm đẹp (Beautify), kiểm tra lỗi (Validate) và chuyển đổi JSON sang các định dạng khác.</p>
+  <div class="page-header">
+    <h1>🔧 JSON Toolkit
+    </h1>
+    <p>
+      Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.
+    </p>
   </div>
 
-  <div class="card tool-card">
-    <div class="editor-toolbar">
-      <button class="btn btn-sm" onclick="formatJSON()">Beautify</button>
-      <button class="btn btn-sm btn-secondary" onclick="minifyJSON()">Minify</button>
-      <button class="btn btn-sm btn-secondary" onclick="copyJSON()">Copy</button>
-      <button class="btn btn-sm btn-secondary" onclick="clearEditor()">Clear</button>
+  <!-- Tools Navigation -->
+  <div class="tools-nav">
+    <button class="tab-btn active" onclick="switchTab('format')" data-tab="format">✨ Format & Validate</button>
+    <button class="tab-btn" onclick="switchTab('convert')" data-tab="convert">🔄 Convert</button>
+    <button class="tab-btn" onclick="switchTab('tools')" data-tab="tools">🛠️ Tools</button>
+  </div>
+
+  <!-- TAB 1: FORMAT & VALIDATE (Merged with Tree View) -->
+  <div id="tab-format" class="tab-panel active">
+    <div class="toolbar">
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="formatJSON()">✨ Format / Beautify</button>
+        <button class="btn" onclick="minifyJSON()">📦 Minify</button>
+        <button class="btn" onclick="validateJSON()">✅ Validate</button>
+        <button class="btn" onclick="copyJSON()">📋 Copy</button>
+        <button class="btn btn-danger" onclick="clearJSON()">🗑️ Clear</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <label>
+        <span>Indent:</span>
+        <select id="indent-size" onchange="updateIndent()">
+          <option value="2" selected>2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </label>
     </div>
 
-    <div class="editor-container">
-      <textarea id="json-input" placeholder="Paste your JSON here..."></textarea>
-      <!-- Future: Output or Side-by-side view -->
+    <div class="editor-layout" id="editor-layout">
+      <!-- Input Panel -->
+      <div class="editor-panel" id="input-panel">
+        <div class="panel-header">
+          <h3>Input</h3>
+          <div class="panel-actions">
+            <button class="btn-sm" onclick="loadSample()">Load Sample</button>
+            <button class="btn-icon" onclick="togglePanel('input')" title="Maximize/Restore">⛶</button>
+          </div>
+        </div>
+        <textarea id="json-input" placeholder='Paste your JSON here...
+Example:
+{
+  "name": "John Doe",
+  "age": 30,
+  "city": "Hanoi"
+}'></textarea>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="editor-panel" id="output-panel">
+        <div class="panel-header">
+          <div class="header-left">
+            <h3>Output</h3>
+            <!-- View Toggle -->
+            <div class="view-toggle">
+              <button class="view-btn active" onclick="toggleOutputView('code')" id="btn-view-code">Code</button>
+              <button class="view-btn" onclick="toggleOutputView('tree')" id="btn-view-tree">Tree</button>
+            </div>
+          </div>
+          <div class="panel-actions">
+            <!-- Tree Controls (Hidden by default) -->
+            <div id="tree-controls" class="btn-group" style="display: none; margin-right: 1rem;">
+              <button class="btn-icon" onclick="expandAll()" title="Expand All">➕</button>
+              <button class="btn-icon" onclick="collapseAll()" title="Collapse All">➖</button>
+            </div>
+
+            <div class="output-stats" id="output-stats"></div>
+            <button class="btn-icon" onclick="togglePanel('output')" title="Maximize/Restore">⛶</button>
+          </div>
+        </div>
+
+        <!-- Code View -->
+        <textarea id="json-output" class="view-content active" placeholder="Formatted JSON will appear here..."
+          readonly></textarea>
+
+        <!-- Tree View -->
+        <div id="tree-container" class="view-content tree-view-container" style="display: none;">
+          <div class="tree-placeholder">Format JSON to see tree view</div>
+        </div>
+
+        <!-- Path Display for Tree -->
+        <div id="path-display" class="path-display" onclick="copyPath()">Click on a key to see path</div>
+      </div>
     </div>
 
-    <div id="json-error"></div>
+    <div id="validation-result" class="validation-result"></div>
+  </div>
+
+  <!-- Tab 3: Convert -->
+  <div id="tab-convert" class="tab-panel">
+    <div class="toolbar">
+      <label>
+        Convert to:
+        <select id="convert-format">
+          <option value="xml">XML</option>
+          <option value="yaml">YAML</option>
+          <option value="csv">CSV (Flat)</option>
+          <option value="typescript">TypeScript Interface</option>
+          <option value="go">Go Struct</option>
+          <option value="java">Java Class</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" onclick="convertJSON()">🔄 Convert</button>
+      <button class="btn" onclick="copyConverted()">📋 Copy Result</button>
+    </div>
+
+    <div class="convert-layout">
+      <div class="convert-input">
+        <h3>JSON Input</h3>
+        <textarea id="convert-input" placeholder='Paste JSON to convert...
+{
+  "name": "Product",
+  "price": 99.99,
+  "inStock": true
+}'></textarea>
+      </div>
+
+      <div class="convert-output">
+        <h3>Converted Output</h3>
+        <pre id="convert-result" class="convert-result">
+Select a format and click Convert
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 4: Tools -->
+  <div id="tab-tools" class="tab-panel">
+    <div class="tools-grid">
+      <!-- CSV to JSON -->
+      <div class="tool-box">
+        <h3>📊 CSV to JSON</h3>
+        <p>Convert CSV data to JSON array</p>
+        <textarea id="csv-input" placeholder='name,age,city
+Alice,30,New York
+Bob,25,London'></textarea>
+        <button class="btn btn-primary" onclick="csvToJSONTool()">Convert to JSON</button>
+        <div id="csv-result" class="result-box"></div>
+      </div>
+
+      <!-- JS Object to JSON -->
+      <div class="tool-box">
+        <h3>💻 JS Object to JSON</h3>
+        <p>Convert relaxed JS objects to strict JSON</p>
+        <textarea id="js-obj-input" placeholder='{ name: "Alice", age: 30, "active": true }'></textarea>
+        <button class="btn btn-primary" onclick="jsObjToJSON()">Convert to JSON</button>
+        <div id="js-obj-result" class="result-box"></div>
+      </div>
+
+      <!-- SQL to JSON -->
+      <div class="tool-box">
+        <h3>🗄️ SQL to JSON</h3>
+        <p>Convert INSERT statements to JSON</p>
+        <textarea id="sql-input" placeholder="INSERT INTO users (id, name) VALUES (1, 'Alice');"></textarea>
+        <button class="btn btn-primary" onclick="sqlToJSONTool()">Convert to JSON</button>
+        <div id="sql-result" class="result-box"></div>
+      </div>
+
+      <!-- JSON Path Finder -->
+      <div class="tool-box">
+        <h3>🔍 JSON Path Finder</h3>
+        <p>Find path to a specific value</p>
+        <textarea id="path-json" placeholder='{"user": {"name": "Alice"}}'></textarea>
+        <input type="text" id="search-value" placeholder="Search value (e.g., Alice)">
+        <button class="btn btn-primary" onclick="findPath()">Find Path</button>
+        <div id="path-result" class="result-box"></div>
+      </div>
+
+      <!-- JSON Diff -->
+      <div class="tool-box">
+        <h3>⚖️ JSON Diff</h3>
+        <p>Compare two JSON objects</p>
+        <div class="diff-inputs">
+          <textarea id="diff-json1" placeholder='JSON 1: {"a": 1}'></textarea>
+          <textarea id="diff-json2" placeholder='JSON 2: {"a": 2}'></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="compareJSON()">Compare</button>
+        <div id="diff-result" class="result-box"></div>
+      </div>
+
+      <!-- JSON Stats -->
+      <div class="tool-box">
+        <h3>📊 JSON Statistics</h3>
+        <p>Analyze JSON structure and depth</p>
+        <textarea id="stats-json" placeholder='{"items": [1, 2, 3]}'></textarea>
+        <button class="btn btn-primary" onclick="analyzeJSON()">Analyze</button>
+        <div id="stats-result" class="result-box"></div>
+      </div>
+
+      <!-- Escape/Unescape -->
+      <div class="tool-box">
+        <h3>🔐 Escape / Unescape</h3>
+        <p>Escape JSON for strings</p>
+        <textarea id="escape-input" placeholder='{"text": "Hello \"World\""}'></textarea>
+        <div class="btn-group">
+          <button class="btn" onclick="escapeJSON()">Escape</button>
+          <button class="btn" onclick="unescapeJSON()">Unescape</button>
+        </div>
+        <div id="escape-result" class="result-box"></div>
+      </div>
+    </div>
   </div>
 </section>
 
