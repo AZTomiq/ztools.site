@@ -22,21 +22,21 @@
         <%= t('home.tools.tax_desc') %>
       </p>
     </a>
-    <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
+    <a href="<%= rootPath %><%= locale %>/business-tax/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
       <h3>
         <%= t('home.cats.job.corp_tax') || 'Tính thuế TNDN' %>
       </h3>
-      <p class="desc-soon">Corporate Income Tax</p>
-    </div>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
+      <p>Corporate Income Tax Calculator</p>
+    </a>
+    <a href="<%= rootPath %><%= locale %>/social-insurance/" class="card tool-item">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏥</div>
       <h3>
         <%= t('home.cats.job.insurance') || 'Tính BHXH & Hưu trí' %>
       </h3>
-      <p class="desc-soon">Social Insurance & Pension</p>
-    </div>
+      <p>Social Insurance & Pension Calculator</p>
+    </a>
+    <!-- Coming Soon -->
     <div class="card tool-item upcoming">
       <div class="icon-soon">🔜</div>
       <h3>

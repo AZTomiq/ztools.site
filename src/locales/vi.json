@@ -27,30 +27,42 @@
     "hero_desc": "Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.",
     "tools": {
       "tax_title": "Tính thuế TNCN",
-      "tax_desc": "Tính thuế 2025, so sánh Gross/Net, bảo hiểm...",
-      "bmi_title": "Tính BMI",
-      "bmi_desc": "Kiểm tra chỉ số cơ thể, đánh giá sức khỏe.",
-      "json_title": "JSON Formatter",
-      "json_desc": "Làm đẹp, validate và convert JSON code.",
-      "soon_title": "Sắp ra mắt",
-      "soon_desc": "Nhiều công cụ hữu ích khác đang được phát triển."
+      "tax_desc": "Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.",
+      "bmi_title": "Tính chỉ số BMI",
+      "bmi_desc": "Tính chỉ số khối cơ thể (BMI) theo chuẩn IDI & WPRO cho người Việt.",
+      "loan_title": "Tính lãi vay",
+      "loan_desc": "Tính lịch trả nợ vay ngân hàng, dư nợ giảm dần hoặc cố định.",
+      "json_title": "JSON Toolkit",
+      "json_desc": "Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.",
+      "word_counter_title": "Đếm từ & Phân tích văn bản",
+      "word_counter_desc": "Đếm số từ, ký tự, câu, dòng và thời gian đọc. Phân tích tần suất từ khóa."
     },
     "cats": {
       "job": {
+        "title": "Việc làm & Lương thưởng",
         "corp_tax": "Tính thuế TNDN",
         "insurance": "Tính BHXH & Hưu trí",
         "salary": "Tiện ích Lương thưởng"
       },
       "finance": {
+        "title": "Tài chính & Ngân hàng",
         "loan": "Tính lãi vay",
+        "loan_desc": "Tính lãi suất vay vốn ngân hàng",
         "compound": "Tính lãi kép",
         "savings": "Lãi suất tiết kiệm",
         "currency": "Tỷ giá & Tín dụng"
       },
       "daily": {
+        "title": "Tiện ích đời sống",
         "pdf": "Xử lý PDF/Văn bản",
         "image": "Xử lý Ảnh",
         "qr": "Mã hóa & QR"
+      },
+      "text": {
+        "title": "Công cụ Văn bản",
+        "word_counter": "Đếm từ & Ký tự",
+        "case_converter": "Chuyển đổi Chữ hoa/thường",
+        "lorem": "Lorem Ipsum Generator"
       },
       "dev": {
         "encoder": "Encoder / Decoder",

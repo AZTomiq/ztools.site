@@ -1,0 +1,301 @@
+<!-- title: Tính Thuế Thu Nhập Doanh Nghiệp (TNDN) - ZTools -->
+
+<link rel="stylesheet" href="<%= rootPath %>assets/css/business-tax.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>💼 Tính Thuế Thu Nhập Doanh Nghiệp (TNDN)</h1>
+    <p>Công cụ tính thuế TNDN theo quy định mới nhất - Hỗ trợ cả 2 phương pháp tính</p>
+  </div>
+
+  <!-- Method Selection -->
+  <div class="calculator-card">
+    <div class="method-selector">
+      <h3>Chọn phương pháp tính thuế</h3>
+      <div class="radio-group-vertical">
+        <label class="radio-card">
+          <input type="radio" name="calculation-method" value="detailed" checked>
+          <div class="radio-content">
+            <strong>📊 Phương pháp chi tiết</strong>
+            <p>Dành cho doanh nghiệp xác định rõ chi phí (Phổ biến)</p>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="calculation-method" value="simple">
+          <div class="radio-content">
+            <strong>📈 Phương pháp đơn giản</strong>
+            <p>Tính theo % trên doanh thu (Không xác định được chi phí)</p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Detailed Method Form -->
+    <form id="detailed-form" class="tax-form">
+      <h3>Thông tin tính thuế chi tiết</h3>
+
+      <div class="form-group">
+        <label for="revenue">Tổng doanh thu (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="revenue" placeholder="Ví dụ: 10.000.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">Tổng giá trị lợi ích kinh tế từ bán hàng, dịch vụ</small>
+      </div>
+
+      <div class="form-group">
+        <label for="deductible-expenses">Chi phí được trừ (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="deductible-expenses" placeholder="Ví dụ: 7.000.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">Chi phí hợp lý, hợp lệ phục vụ sản xuất kinh doanh</small>
+      </div>
+
+      <div class="form-group">
+        <label for="other-income">Thu nhập khác (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="other-income" placeholder="0" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">Lãi tiền gửi, chuyển nhượng tài sản, bồi thường...</small>
+      </div>
+
+      <div class="form-group">
+        <label for="exempt-income">Thu nhập được miễn thuế (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="exempt-income" placeholder="0" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">Thu nhập từ nông nghiệp, nghiên cứu KH&CN...</small>
+      </div>
+
+      <div class="form-group">
+        <label for="previous-losses">Lỗ năm trước chuyển sang (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="previous-losses" placeholder="0" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">Lỗ được kết chuyển tối đa 5 năm</small>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="business-type">Loại hình doanh nghiệp</label>
+          <select id="business-type">
+            <option value="general">Doanh nghiệp phổ thông</option>
+            <option value="small">DN doanh thu ≤ 20 tỷ</option>
+            <option value="oil-gas">Dầu khí</option>
+            <option value="rare-resources">Tài nguyên quý hiếm</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="rd-fund">Quỹ KH&CN (%)</label>
+          <div class="input-group">
+            <input type="number" id="rd-fund" value="0" min="0" max="10" step="0.1">
+            <span class="input-suffix">%</span>
+          </div>
+          <small class="hint">Tối đa 10% thu nhập tính thuế</small>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate-detailed" class="btn-calculate">Tính thuế</button>
+        <button type="button" id="btn-reset-detailed" class="btn-reset">Nhập lại</button>
+      </div>
+    </form>
+
+    <!-- Simple Method Form -->
+    <form id="simple-form" class="tax-form" style="display: none;">
+      <h3>Thông tin tính thuế đơn giản</h3>
+
+      <div class="form-group">
+        <label for="simple-revenue">Doanh thu (VNĐ)</label>
+        <div class="input-group">
+          <input type="text" id="simple-revenue" placeholder="Ví dụ: 5.000.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="business-sector">Ngành nghề kinh doanh</label>
+        <select id="business-sector">
+          <option value="goods">Kinh doanh hàng hóa (1%)</option>
+          <option value="services">Hoạt động dịch vụ (5%)</option>
+          <option value="other">Hoạt động khác (2%)</option>
+        </select>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate-simple" class="btn-calculate">Tính thuế</button>
+        <button type="button" id="btn-reset-simple" class="btn-reset">Nhập lại</button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="result-section" class="result-section">
+      <h3 style="margin-bottom: 1.5rem; border-left: 4px solid var(--primary-color); padding-left: 0.5rem;">
+        Kết quả tính thuế
+      </h3>
+
+      <!-- Detailed Results -->
+      <div id="detailed-results" class="calculation-breakdown">
+        <div class="breakdown-item">
+          <span class="label">Doanh thu</span>
+          <span class="value" id="result-revenue">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Chi phí được trừ</span>
+          <span class="value negative" id="result-expenses">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Thu nhập khác</span>
+          <span class="value" id="result-other-income">0 đ</span>
+        </div>
+        <div class="breakdown-item separator">
+          <span class="label"><strong>Thu nhập chịu thuế</strong></span>
+          <span class="value" id="result-taxable-income">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Thu nhập miễn thuế</span>
+          <span class="value negative" id="result-exempt">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Lỗ năm trước</span>
+          <span class="value negative" id="result-losses">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Quỹ KH&CN</span>
+          <span class="value negative" id="result-rd-fund">0 đ</span>
+        </div>
+        <div class="breakdown-item separator">
+          <span class="label"><strong>Thu nhập tính thuế</strong></span>
+          <span class="value" id="result-income-for-tax">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Thuế suất</span>
+          <span class="value" id="result-tax-rate">20%</span>
+        </div>
+        <div class="breakdown-item highlight">
+          <span class="label"><strong>💰 Thuế TNDN phải nộp</strong></span>
+          <span class="value total" id="result-total-tax">0 đ</span>
+        </div>
+      </div>
+
+      <!-- Simple Results -->
+      <div id="simple-results" class="calculation-breakdown" style="display: none;">
+        <div class="breakdown-item">
+          <span class="label">Doanh thu</span>
+          <span class="value" id="simple-result-revenue">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">Tỷ lệ tính thuế</span>
+          <span class="value" id="simple-result-rate">0%</span>
+        </div>
+        <div class="breakdown-item highlight">
+          <span class="label"><strong>💰 Thuế TNDN phải nộp</strong></span>
+          <span class="value total" id="simple-result-total">0 đ</span>
+        </div>
+      </div>
+
+      <!-- Tax Rate Info -->
+      <div class="info-box">
+        <h4>📋 Thuế suất thuế TNDN hiện hành</h4>
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th>Loại hình doanh nghiệp</th>
+              <th>Thuế suất</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Doanh nghiệp phổ thông</td>
+              <td><strong>20%</strong></td>
+            </tr>
+            <tr>
+              <td>DN doanh thu ≤ 20 tỷ/năm</td>
+              <td><strong>20%</strong></td>
+            </tr>
+            <tr>
+              <td>Thăm dò, khai thác dầu khí</td>
+              <td><strong>32% - 50%</strong></td>
+            </tr>
+            <tr>
+              <td>Khai thác tài nguyên quý hiếm</td>
+              <td><strong>40% - 50%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content Section -->
+  <section class="card" style="padding: 2rem; margin-top: 3rem;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">📚 Hướng dẫn về Thuế Thu Nhập Doanh Nghiệp</h2>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">1. Thuế TNDN là gì?</h3>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      Thuế thu nhập doanh nghiệp (thuế TNDN) là loại thuế trực thu, tính trên phần thu nhập chịu thuế của
+      tổ chức, doanh nghiệp từ hoạt động sản xuất kinh doanh, chuyển nhượng và các hoạt động khác trong kỳ tính thuế.
+    </p>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Đối tượng nộp thuế TNDN</h3>
+    <ul style="margin-bottom: 1rem; color: var(--text-muted); padding-left: 1.5rem;">
+      <li>Doanh nghiệp thành lập trong nước theo pháp luật Việt Nam</li>
+      <li>Doanh nghiệp nước ngoài có cơ sở thường trú tại Việt Nam</li>
+      <li>Các tổ chức hành chính sự nghiệp, hợp tác xã</li>
+      <li>Các tổ chức khác có hoạt động sản xuất kinh doanh</li>
+    </ul>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">3. Cách tính thuế TNDN chi tiết</h3>
+    <div style="background: var(--bg-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+      <p style="margin-bottom: 0.5rem;"><strong>Bước 1:</strong> Tính thu nhập chịu thuế</p>
+      <code
+        style="display: block; padding: 0.5rem; background: var(--card-bg); border-radius: 4px; margin-bottom: 1rem;">
+        Thu nhập chịu thuế = Doanh thu - Chi phí được trừ + Thu nhập khác
+      </code>
+
+      <p style="margin-bottom: 0.5rem;"><strong>Bước 2:</strong> Tính thu nhập tính thuế</p>
+      <code
+        style="display: block; padding: 0.5rem; background: var(--card-bg); border-radius: 4px; margin-bottom: 1rem;">
+        Thu nhập tính thuế = Thu nhập chịu thuế - Thu nhập miễn thuế - Lỗ năm trước
+      </code>
+
+      <p style="margin-bottom: 0.5rem;"><strong>Bước 3:</strong> Tính thuế phải nộp</p>
+      <code style="display: block; padding: 0.5rem; background: var(--card-bg); border-radius: 4px;">
+        Thuế TNDN = (Thu nhập tính thuế - Quỹ KH&CN) × Thuế suất
+      </code>
+    </div>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">4. Thời hạn nộp thuế TNDN</h3>
+    <ul style="margin-bottom: 1rem; color: var(--text-muted); padding-left: 1.5rem;">
+      <li><strong>Tờ khai quyết toán:</strong> Chậm nhất ngày cuối cùng của tháng thứ 3 kể từ kết thúc năm tài chính
+      </li>
+      <li><strong>Tạm nộp hàng quý:</strong> Phải nộp đủ 75% số thuế phát sinh trong quý 3</li>
+      <li><strong>Nộp tiền thuế:</strong> Cùng thời hạn với nộp hồ sơ khai thuế</li>
+    </ul>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">5. Thu nhập được miễn thuế TNDN</h3>
+    <ul style="margin-bottom: 1rem; color: var(--text-muted); padding-left: 1.5rem;">
+      <li>Thu nhập từ sản xuất nông nghiệp, lâm nghiệp, ngư nghiệp</li>
+      <li>Thu nhập từ nghiên cứu khoa học và phát triển công nghệ</li>
+      <li>Thu nhập từ hoạt động giáo dục, y tế, văn hóa, từ thiện</li>
+      <li>Thu nhập từ góp vốn, mua cổ phần đã nộp thuế</li>
+      <li>Thu nhập từ dạy nghề cho người khuyết tật, dân tộc thiểu số</li>
+    </ul>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">6. Lưu ý quan trọng</h3>
+    <div class="warning-box"
+      style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; border-radius: 4px;">
+      <p style="margin: 0; color: #856404;">
+        ⚠️ <strong>Lưu ý:</strong> Công cụ này chỉ mang tính chất tham khảo. Để có kết quả chính xác nhất,
+        bạn nên tham khảo ý kiến của chuyên gia thuế hoặc cơ quan thuế địa phương.
+      </p>
+    </div>
+  </section>
+</section>
+
+<script src="<%= rootPath %>assets/js/business-tax.js"></script>

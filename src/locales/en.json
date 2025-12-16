@@ -27,30 +27,42 @@
     "hero_desc": "Simple, fast, secure, and completely free.",
     "tools": {
       "tax_title": "PIT Calculator",
-      "tax_desc": "Calculate 2025 tax, Gross/Net conversion, insurance...",
+      "tax_desc": "Calculate Personal Income Tax 2024, Net/Gross salary converter.",
       "bmi_title": "BMI Calculator",
-      "bmi_desc": "Check body mass index and health status.",
-      "json_title": "JSON Formatter",
-      "json_desc": "Beautify, validate, and convert JSON code.",
-      "soon_title": "Coming Soon",
-      "soon_desc": "More useful tools are under development."
+      "bmi_desc": "Calculate Body Mass Index (BMI) with IDI & WPRO standards.",
+      "loan_title": "Loan Calculator",
+      "loan_desc": "Calculate bank loan amortization schedule, reducing balance.",
+      "json_title": "JSON Toolkit",
+      "json_desc": "Format, validate, and convert JSON. Includes tree view and data tools.",
+      "word_counter_title": "Word Counter & Text Analyzer",
+      "word_counter_desc": "Count words, chars, sentences, lines. Analyze reading time and keywords."
     },
     "cats": {
       "job": {
+        "title": "Job & Income",
         "corp_tax": "Corporate Tax",
         "insurance": "Social Insurance",
-        "salary": "Salary Utilities"
+        "salary": "Salary Utils"
       },
       "finance": {
+        "title": "Finance & Banking",
         "loan": "Loan Calculator",
+        "loan_desc": "Mortgage & Loan repayment",
         "compound": "Compound Interest",
         "savings": "Savings Interest",
         "currency": "Currency & Credit"
       },
       "daily": {
+        "title": "Daily Utilities",
         "pdf": "PDF & Text Tools",
         "image": "Image Tools",
-        "qr": "Encryption & QR"
+        "qr": "Encoder & QR"
+      },
+      "text": {
+        "title": "Text Tools",
+        "word_counter": "Word Counter",
+        "case_converter": "Case Converter",
+        "lorem": "Lorem Ipsum Generator"
       },
       "dev": {
         "encoder": "Encoder / Decoder",

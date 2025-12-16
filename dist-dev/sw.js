@@ -20,7 +20,7 @@ self.addEventListener('install', (e) => {
       return cache.addAll(STATIC_ASSETS);
     })
   );
-  self.skipWaiting();
+  self.skipWaiting();    
 });
 
 // Activate Event: Clean old caches
