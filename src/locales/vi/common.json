@@ -20,6 +20,9 @@
     "menu_job": "Thuế & Lương",
     "menu_finance": "Tài chính",
     "menu_utils": "Tiện ích",
+    "menu_text": "Công cụ Văn bản",
+    "menu_generator": "Tạo mã (Generators)",
+    "menu_categories": "Danh mục",
     "menu_dev": "Dev Tools"
   },
   "home": {
@@ -58,10 +61,18 @@
         "uuid": "UUID Generator"
       },
       "dev": {
+        "title": "Công cụ Lập trình (Dev)",
         "encoder": "Encoder / Decoder",
         "generator": "Generators",
         "tester": "Testers & Formatters"
       }
+    },
+    "sort": {
+      "default": "Mặc định",
+      "az": "Tên (A-Z)",
+      "za": "Tên (Z-A)",
+      "recent": "Vừa xem gần đây",
+      "popular": "Phổ biến nhất"
     }
   },
   "footer": {

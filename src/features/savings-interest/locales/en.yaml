@@ -1,0 +1,22 @@
+savings:
+  title: Savings Interest Calculator
+  desc: >-
+    Calculate bank savings interest quickly. Supports term deposits with
+    end-of-term or monthly interest payout.
+  amount: Deposit Amount
+  rate: Interest Rate (%/year)
+  term: Term
+  months: Months
+  days: Days
+  calc_btn: Calculate
+  result_title: Calculation Result
+  total_interest: Total Interest
+  total_received: Total (Principal + Interest)
+  term_options:
+    '1': 1 Month
+    '3': 3 Months
+    '6': 6 Months
+    '12': 12 Months
+    '24': 24 Months
+    '36': 36 Months
+  custom_term: Or custom months

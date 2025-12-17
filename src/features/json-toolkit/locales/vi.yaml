@@ -1,0 +1,95 @@
+json:
+  title: JSON Toolkit
+  desc: Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.
+  tabs:
+    format: "✨ Định dạng & Kiểm tra"
+    convert: "🔄 Chuyển đổi"
+    tools: "🛠️ Công cụ"
+  toolbar:
+    format: "✨ Làm đẹp"
+    minify: "📦 Nén gọn"
+    validate: "✅ Kiểm tra"
+    copy: "📋 Copy"
+    clear: "🗑️ Xóa"
+    indent: "Thụt lề:"
+    indent_opts:
+      space2: "2 khoảng trắng"
+      space4: "4 khoảng trắng"
+      tab: "Tab"
+  input:
+    title: "Đầu vào"
+    load_sample: "Mẫu thử"
+  output:
+    title: "Kết quả"
+    view:
+      code: "Code"
+      tree: "Tree"
+    tree_placeholder: "Định dạng JSON để xem dạng cây"
+    path_hint: "Click vào key để xem đường dẫn"
+  convert:
+    label: "Chuyển sang:"
+    formats:
+      xml: "XML"
+      yaml: "YAML"
+      csv: "CSV"
+      ts: "TypeScript Interface"
+      go: "Go Struct"
+      java: "Java Class"
+      proto: "Protobuf (gRPC)"
+    btn_convert: "🔄 Chuyển đổi"
+    btn_copy: "📋 Copy Kết quả"
+    input_label: "JSON Đầu vào"
+    output_label: "Kết quả sau chuyển đổi"
+  tools_menu:
+    csv: "📊 CSV sang JSON"
+    js_obj: "💻 JS Obj sang JSON"
+    sql: "🗄️ SQL sang JSON"
+    path: "🔎 Tìm đường dẫn"
+    diff: "⚖️ So sánh JSON"
+    stats: "📊 Thống kê"
+    escape: "🔐 Escape/Unescape"
+  subtools:
+    csv:
+      title: "CSV sang JSON"
+      desc: "Chuyển dữ liệu CSV thành mảng JSON"
+      input: "Đầu vào CSV"
+      output: "Kết quả JSON"
+      btn: "Chuyển đổi"
+    js_obj:
+      title: "JS Object sang JSON"
+      desc: "Chuyển JS object (lỏng lẻo) thành JSON chuẩn"
+      input: "Đầu vào JS Object"
+      output: "Kết quả JSON"
+      btn: "Chuyển đổi"
+    sql:
+      title: "SQL sang JSON"
+      desc: "Chuyển lệnh INSERT thành JSON"
+      input: "Đầu vào SQL"
+      output: "Kết quả JSON"
+      btn: "Chuyển đổi"
+    path:
+      title: "Tìm đường dẫn JSON"
+      desc: "Tìm path dẫn đến một giá trị cụ thể"
+      placeholder: "Giá trị cần tìm (vd: Alice)"
+      btn: "Tìm kiếm"
+      input: "Đầu vào JSON"
+      output: "Các đường dẫn tìm thấy"
+    diff:
+      title: "So sánh JSON"
+      desc: "So sánh sự khác biệt giữa hai JSON"
+      btn: "So sánh"
+      json1: "JSON 1"
+      json2: "JSON 2"
+      result: "Kết quả so sánh"
+    stats:
+      title: "Thống kê JSON"
+      desc: "Phân tích cấu trúc và số liệu"
+      input: "Đầu vào JSON"
+      btn: "Phân tích"
+      result: "Kết quả phân tích"
+    escape:
+      title: "Escape / Unescape"
+      btn_esc: "Escape"
+      btn_unesc: "Unescape"
+      input: "Chuỗi đầu vào"
+      result: "Kết quả"

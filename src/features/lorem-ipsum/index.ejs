@@ -1,0 +1,62 @@
+<!-- title: <%= t('lorem.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>📝 <%= t('lorem.title') %>
+    </h1>
+    <p>
+      <%= t('lorem.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <div class="controls">
+      <div class="control-group">
+        <label>Count:</label>
+        <input type="number" id="count" value="5" min="1" max="100">
+      </div>
+
+      <div class="control-group">
+        <label>Type:</label>
+        <select id="type">
+          <option value="paragraphs">Paragraphs</option>
+          <option value="sentences">Sentences</option>
+          <option value="words">Words</option>
+          <option value="lists">Lists (ul)</option>
+        </select>
+      </div>
+
+      <div class="control-group checkbox">
+        <label>
+          <input type="checkbox" id="start-lorem" checked>
+          Start with "Lorem ipsum..."
+        </label>
+      </div>
+
+      <div class="control-group">
+        <button class="btn btn-primary" onclick="generateLorem()">Generate</button>
+      </div>
+    </div>
+
+    <div class="output-section">
+      <div class="toolbar">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('text')" id="btn-text">Text</button>
+          <button class="view-btn" onclick="setView('html')" id="btn-html">HTML</button>
+        </div>
+        <button class="btn btn-sm" onclick="copyLorem()">📋 Copy</button>
+      </div>
+
+      <textarea id="output" readonly></textarea>
+    </div>
+  </div>
+
+  <section class="info-section">
+    <h2>What is Lorem Ipsum?</h2>
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+      standard dummy text ever since the 1500s.</p>
+  </section>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>

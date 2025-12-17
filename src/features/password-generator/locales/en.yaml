@@ -1,0 +1,17 @@
+password:
+  title: Strong Password Generator
+  desc: Generate secure, random passwords instantly.
+  form:
+    quantity: Quantity
+    length: Length
+    chars_title: Character Sets
+    uppercase: Uppercase (A-Z)
+    lowercase: Lowercase (a-z)
+    numbers: Numbers (0-9)
+    symbols: Symbols (!@#)
+    options_title: Options
+    exclude_ambiguous: Exclude Ambiguous (l, I, 1, O, 0)
+    easy_say: Easy to Say (Avoid numbers/symbols)
+    btn_generate: Generate Passwords
+    btn_copy: Copy
+    output_placeholder: Your Secure Password(s)

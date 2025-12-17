@@ -1,0 +1,7 @@
+id: business-tax
+category: job
+icon: 💼
+translationKey: business_tax
+descOverride: Corporate Income Tax Calculator
+status: active
+link: /business-tax/

@@ -1,0 +1,43 @@
+loan:
+  title: Loan Calculator
+  desc: Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.
+  form:
+    amount: Loan Amount (VND)
+    amount_ph: "Ex: 1.000.000.000"
+    term: Loan Term (Months)
+    term_ph: "Ex: 12"
+    term_unit: Months
+    rate: Interest Rate (% / Year)
+    rate_ph: "Ex: 10.5"
+    start_date: Disbursement Date (for schedule)
+    method:
+      label: Repayment Method
+      reducing: Reducing Balance (Equal Principal) - Common
+      flat: Flat Rate (Original Principal) - Unsecured
+    note: "* Note: \"Equal Principal\" means monthly Principal payment is constant, Interest decreases over time."
+    btn_calc: Calculate
+    btn_reset: Reset
+  result:
+    title: Result
+    monthly: First Month Payment (Principal + Interest)
+    monthly_note: "(Decreases in subsequent months if Reducing Balance chosen)"
+    total_interest: Total Interest Payable
+    total_payment: Total Payment (Principal + Interest)
+  schedule:
+    title: Amortization Schedule
+    headers:
+      period: No.
+      date: Date
+      balance_start: Balance Start
+      principal: Principal
+      interest: Interest
+      total: Total Pay
+      balance_end: Balance End
+  guide:
+    title: Understanding Loan Interest Calculation
+    s1:
+      title: 1. What is Reducing Balance interest?
+      content: This method calculates interest based on the actual amount you still owe after paying off some principal in previous periods. The interest amount decreases over time as the principal balance goes down. This is beneficial for borrowers and is commonly used for mortgages (home, car loans).
+    s2:
+      title: 2. What is Flat Rate interest?
+      content: Interest is calculated based on the original loan amount throughout the entire loan term. Even if you have paid off some principal, the monthly interest remains the same. This is common in unsecured loans, personal loans, or installment plans.

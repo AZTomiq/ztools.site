@@ -1,0 +1,95 @@
+json:
+  title: JSON Toolkit
+  desc: Format, validate, and convert JSON. Includes Tree View and data processing tools.
+  tabs:
+    format: "✨ Format & Validate"
+    convert: "🔄 Convert"
+    tools: "🛠️ Tools"
+  toolbar:
+    format: "✨ Format / Beautify"
+    minify: "📦 Minify"
+    validate: "✅ Validate"
+    copy: "📋 Copy"
+    clear: "🗑️ Clear"
+    indent: "Indent:"
+    indent_opts:
+      space2: "2 spaces"
+      space4: "4 spaces"
+      tab: "Tab"
+  input:
+    title: "Input"
+    load_sample: "Load Sample"
+  output:
+    title: "Output"
+    view:
+      code: "Code"
+      tree: "Tree"
+    tree_placeholder: "Format JSON to see tree view"
+    path_hint: "Click on a key to see path"
+  convert:
+    label: "Convert to:"
+    formats:
+      xml: "XML"
+      yaml: "YAML"
+      csv: "CSV"
+      ts: "TypeScript Interface"
+      go: "Go Struct"
+      java: "Java Class"
+      proto: "Protobuf (gRPC)"
+    btn_convert: "🔄 Convert"
+    btn_copy: "📋 Copy Result"
+    input_label: "JSON Input"
+    output_label: "Converted Output"
+  tools_menu:
+    csv: "📊 CSV to JSON"
+    js_obj: "💻 JS Obj to JSON"
+    sql: "🗄️ SQL to JSON"
+    path: "🔎 Path Finder"
+    diff: "⚖️ JSON Diff"
+    stats: "📊 Statistics"
+    escape: "🔐 Escape/Unescape"
+  subtools:
+    csv:
+      title: "CSV to JSON"
+      desc: "Convert CSV data to JSON array"
+      input: "CSV Input"
+      output: "JSON Output"
+      btn: "Convert"
+    js_obj:
+      title: "JS Object to JSON"
+      desc: "Convert relaxed JS objects to strict JSON"
+      input: "JS Object Input"
+      output: "JSON Output"
+      btn: "Convert"
+    sql:
+      title: "SQL to JSON"
+      desc: "Convert INSERT statements to JSON"
+      input: "SQL Input"
+      output: "JSON Output"
+      btn: "Convert"
+    path:
+      title: "JSON Path Finder"
+      desc: "Find path to a value"
+      placeholder: "Value to search (e.g. Alice)"
+      btn: "Find Path"
+      input: "JSON Input"
+      output: "Paths Found"
+    diff:
+      title: "JSON Diff"
+      desc: "Compare two JSON objects"
+      btn: "Compare"
+      json1: "JSON 1"
+      json2: "JSON 2"
+      result: "Diff Result"
+    stats:
+      title: "JSON Statistics"
+      desc: "Analyze structure"
+      input: "JSON Input"
+      btn: "Analyze"
+      result: "Analysis"
+    escape:
+      title: "Escape / Unescape"
+      btn_esc: "Escape"
+      btn_unesc: "Unescape"
+      input: "Input String"
+      result: "Result"

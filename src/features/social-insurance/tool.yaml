@@ -1,0 +1,7 @@
+id: social-insurance
+category: job
+icon: 🏥
+translationKey: social_insurance
+descOverride: Social Insurance & Pension Calculator
+status: active
+link: /social-insurance/

@@ -1,0 +1,43 @@
+loan:
+  title: Tính lãi vay
+  desc: Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.
+  form:
+    amount: Số tiền vay (VNĐ)
+    amount_ph: "Ví dụ: 1.000.000.000"
+    term: Thời hạn vay (Tháng)
+    term_ph: "Ví dụ: 12"
+    term_unit: Tháng
+    rate: Lãi suất (% / Năm)
+    rate_ph: "Ví dụ: 10.5"
+    start_date: Ngày giải ngân (Để tính lịch trả nợ)
+    method:
+      label: Hình thức trả lãi
+      reducing: Dư nợ giảm dần (Gốc đều) - Phổ biến
+      flat: Dư nợ ban đầu (Lãi phẳng) - Vay tín chấp
+    note: "* Lưu ý: \"Gốc đều\" nghĩa là tiền Gốc trả hàng tháng bằng nhau, Lãi giảm dần."
+    btn_calc: Tính toán
+    btn_reset: Nhập lại
+  result:
+    title: Kết quả tính toán
+    monthly: Trả tháng đầu (Gốc + Lãi)
+    monthly_note: "(Giảm dần các tháng sau nếu chọn Dư nợ giảm dần)"
+    total_interest: Tổng tiền lãi phải trả
+    total_payment: Tổng số tiền trả (Gốc + Lãi)
+  schedule:
+    title: Lịch trả nợ chi tiết
+    headers:
+      period: Kỳ
+      date: Ngày trả
+      balance_start: Dư nợ đầu kỳ
+      principal: Gốc
+      interest: Lãi
+      total: Tổng trả
+      balance_end: Dư nợ cuối kỳ
+  guide:
+    title: Tìm hiểu về cách tính lãi suất vay
+    s1:
+      title: 1. Cách tính lãi dư nợ giảm dần là gì?
+      content: Đây là phương pháp tính lãi dựa trên số tiền thực tế bạn còn nợ sau khi đã trả một phần tiền gốc ở các kỳ trước đó. Số tiền lãi sẽ giảm dần theo thời gian vì tiền gốc giảm xuống. Đây là cách tính có lợi cho người vay và thường áp dụng cho vay thế chấp (mua nhà, mua xe).
+    s2:
+      title: 2. Cách tính lãi dư nợ ban đầu (Lãi phẳng) là gì?
+      content: Lãi suất được tính dựa trên số tiền gốc vay ban đầu trong suốt thời hạn vay. Dù bạn đã trả bớt gốc, tiền lãi hàng tháng vẫn giữ nguyên. Cách này thường thấy ở các khoản vay tín chấp, vay tiêu dùng hay trả góp điện thoại.

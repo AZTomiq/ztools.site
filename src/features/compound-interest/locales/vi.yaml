@@ -1,0 +1,37 @@
+compound:
+  title: Tính Lãi Kép
+  desc: >-
+    Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai
+    của khoản đầu tư với lãi suất gộp hàng tháng/năm.
+  initial: Số tiền gốc ban đầu
+  interest_rate: Lãi suất hàng năm
+  years: Số năm đầu tư
+  frequency: Tần suất ghép lãi
+  contribution: Đóng thêm hàng tháng
+  calc_btn: Tính lãi kép
+  result_title: Kết quả dự tính
+  future_value: Tổng giá trị tương lai
+  total_interest: Tổng tiền lãi
+  total_contribution: Tổng tiền gốc đã đóng
+  breakdown: Bảng chi tiết từng năm
+  year: Năm
+  balance: Số dư cuối kỳ
+  interest: Tiền lãi
+  freq_options:
+    monthly: Hàng tháng
+    quarterly: Hàng quý
+    semiannually: Mỗi 6 tháng
+    annually: Hàng năm
+  about:
+    title: 💡 Về Lãi Kép
+    desc: >-
+      Lãi suất kép là lãi suất được tính dựa trên cả số tiền gốc ban đầu và lãi suất tích lũy từ các kỳ trước,
+      giúp tài sản tăng trưởng theo cấp số nhân.
+    formula: "Công thức tính lãi kép hàng năm là: <code>A = P(1 + r/n)^(nt)</code>"
+    legend:
+      p: "<strong>P</strong>: Số tiền gốc ban đầu"
+      r: "<strong>r</strong>: Lãi suất hàng năm (dạng thập phân)"
+      n: "<strong>n</strong>: Số lần ghép lãi mỗi năm"
+      t: "<strong>t</strong>: Số năm đầu tư"
+    quote: >-
+      "Lãi suất kép là kỳ quan thứ tám của thế giới. Ai hiểu nó thì kiếm được tiền... ai không hiểu thì phải trả tiền cho nó." - Albert Einstein

@@ -1,0 +1,111 @@
+business_tax:
+  title: Tính thuế TNDN
+  desc: Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.
+  method:
+    title: Chọn phương pháp tính thuế
+    detailed: 
+      label: 📊 Phương pháp chi tiết
+      desc: Dành cho doanh nghiệp xác định rõ chi phí (Phổ biến)
+    simple:
+      label: 📈 Phương pháp đơn giản
+      desc: Tính theo % trên doanh thu (Không xác định được chi phí)
+  detailed_form:
+    title: Thông tin tính thuế chi tiết
+    revenue: 
+      label: Tổng doanh thu (VNĐ)
+      hint: Tổng giá trị lợi ích kinh tế từ bán hàng, dịch vụ
+    expenses:
+      label: Chi phí được trừ (VNĐ)
+      hint: Chi phí hợp lý, hợp lệ phục vụ sản xuất kinh doanh
+    other_income:
+      label: Thu nhập khác (VNĐ)
+      hint: Lãi tiền gửi, chuyển nhượng tài sản, bồi thường...
+    exempt_income:
+      label: Thu nhập được miễn thuế (VNĐ)
+      hint: Thu nhập từ nông nghiệp, nghiên cứu KH&CN...
+    previous_losses:
+      label: Lỗ năm trước chuyển sang (VNĐ)
+      hint: Lỗ được kết chuyển tối đa 5 năm
+    business_type:
+      label: Loại hình doanh nghiệp
+      options:
+        general: Doanh nghiệp phổ thông
+        small: DN doanh thu ≤ 20 tỷ
+        oil_gas: Dầu khí
+        rare: Tài nguyên quý hiếm
+    rd_fund:
+      label: Quỹ KH&CN (%)
+      hint: Tối đa 10% thu nhập tính thuế
+    btn_calc: Tính thuế
+    btn_reset: Nhập lại
+  simple_form:
+    title: Thông tin tính thuế đơn giản
+    revenue:
+      label: Doanh thu (VNĐ)
+    sector:
+      label: Ngành nghề kinh doanh
+      options:
+        goods: Kinh doanh hàng hóa (1%)
+        services: Hoạt động dịch vụ (5%)
+        other: Hoạt động khác (2%)
+    btn_calc: Tính thuế
+    btn_reset: Nhập lại
+  results:
+    title: Kết quả tính thuế
+    revenue: Doanh thu
+    expenses: Chi phí được trừ
+    other_income: Thu nhập khác
+    taxable_income: Thu nhập chịu thuế
+    exempt_income: Thu nhập miễn thuế
+    previous_losses: Lỗ năm trước
+    rd_fund: Quỹ KH&CN
+    income_for_tax: Thu nhập tính thuế
+    tax_rate: Thuế suất
+    tax_rate_label: Tỷ lệ tính thuế
+    total_tax: 💰 Thuế TNDN phải nộp
+  info:
+    title: 📋 Thuế suất thuế TNDN hiện hành
+    headers:
+      type: Loại hình doanh nghiệp
+      rate: Thuế suất
+    rows:
+      general: Doanh nghiệp phổ thông
+      small: DN doanh thu ≤ 20 tỷ/năm
+      oil: Thăm dò, khai thác dầu khí
+      rare: Khai thác tài nguyên quý hiếm
+  guide:
+    title: 📚 Hướng dẫn về Thuế Thu Nhập Doanh Nghiệp
+    s1:
+      title: 1. Thuế TNDN là gì?
+      content: Thuế thu nhập doanh nghiệp (thuế TNDN) là loại thuế trực thu, tính trên phần thu nhập chịu thuế của tổ chức, doanh nghiệp từ hoạt động sản xuất kinh doanh, chuyển nhượng và các hoạt động khác trong kỳ tính thuế.
+    s2:
+      title: 2. Đối tượng nộp thuế TNDN
+      items:
+        - Doanh nghiệp thành lập trong nước theo pháp luật Việt Nam
+        - Doanh nghiệp nước ngoài có cơ sở thường trú tại Việt Nam
+        - Các tổ chức hành chính sự nghiệp, hợp tác xã
+        - Các tổ chức khác có hoạt động sản xuất kinh doanh
+    s3:
+      title: 3. Cách tính thuế TNDN chi tiết
+      steps:
+        step1: "<strong>Bước 1:</strong> Tính thu nhập chịu thuế"
+        code1: "Thu nhập chịu thuế = Doanh thu - Chi phí được trừ + Thu nhập khác"
+        step2: "<strong>Bước 2:</strong> Tính thu nhập tính thuế"
+        code2: "Thu nhập tính thuế = Thu nhập chịu thuế - Thu nhập miễn thuế - Lỗ năm trước"
+        step3: "<strong>Bước 3:</strong> Tính thuế phải nộp"
+        code3: "Thuế TNDN = (Thu nhập tính thuế - Quỹ KH&CN) × Thuế suất"
+    s4:
+      title: 4. Thời hạn nộp thuế TNDN
+      items:
+        - "<strong>Tờ khai quyết toán:</strong> Chậm nhất ngày cuối cùng của tháng thứ 3 kể từ kết thúc năm tài chính"
+        - "<strong>Tạm nộp hàng quý:</strong> Phải nộp đủ 75% số thuế phát sinh trong quý 3"
+        - "<strong>Nộp tiền thuế:</strong> Cùng thời hạn với nộp hồ sơ khai thuế"
+    s5:
+      title: 5. Thu nhập được miễn thuế TNDN
+      items:
+        - Thu nhập từ sản xuất nông nghiệp, lâm nghiệp, ngư nghiệp
+        - Thu nhập từ nghiên cứu khoa học và phát triển công nghệ
+        - Thu nhập từ hoạt động giáo dục, y tế, văn hóa, từ thiện
+        - Thu nhập từ góp vốn, mua cổ phần đã nộp thuế
+        - Thu nhập từ dạy nghề cho người khuyết tật, dân tộc thiểu số
+    warning: "⚠️ <strong>Lưu ý:</strong> Công cụ này chỉ mang tính chất tham khảo. Để có kết quả chính xác nhất, bạn nên tham khảo ý kiến của chuyên gia thuế hoặc cơ quan thuế địa phương."

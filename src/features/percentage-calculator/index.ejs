@@ -1,0 +1,109 @@
+<!-- title: <%= t('percentage.title') %> - ZTools -->
+
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>📊 <%= t('percentage.title') %>
+    </h1>
+    <p>
+      <%= t('percentage.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="basic">
+        <%= t('percentage.tab_basic') %>
+      </button>
+      <button class="tab-btn" data-tab="change">
+        <%= t('percentage.tab_change') %>
+      </button>
+      <button class="tab-btn" data-tab="phrase">
+        <%= t('percentage.tab_phrase') %>
+      </button>
+    </div>
+
+    <!-- Tab 1: Basic (X% of Y) -->
+    <div id="tab-basic" class="tab-panel active">
+      <form class="calc-form" id="form-basic">
+        <div class="inline-inputs">
+          <label>
+            <%= t('percentage.lbl_what_is') %>
+          </label>
+          <input type="number" id="basic-percent" placeholder="20" step="any">
+          <label>
+            <%= t('percentage.lbl_of') %>
+          </label>
+          <input type="number" id="basic-num" placeholder="1000" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcBasic()">
+          <%= t('percentage.calc') %>
+        </button>
+
+        <div class="result-box" id="res-basic-box" style="display:none">
+          <span>
+            <%= t('percentage.result') %>:
+          </span>
+          <strong id="res-basic-val"></strong>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab 2: Change (From X to Y) -->
+    <div id="tab-change" class="tab-panel">
+      <form class="calc-form" id="form-change">
+        <div class="inline-inputs">
+          <label>
+            <%= t('percentage.lbl_from') %>
+          </label>
+          <input type="number" id="change-from" placeholder="100" step="any">
+          <label>
+            <%= t('percentage.lbl_to') %>
+          </label>
+          <input type="number" id="change-to" placeholder="150" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcChange()">
+          <%= t('percentage.calc') %>
+        </button>
+
+        <div class="result-box" id="res-change-box" style="display:none">
+          <span>
+            <%= t('percentage.lbl_result_change') %>:
+          </span>
+          <strong id="res-change-val"></strong>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tab 3: Phrase (X is what % of Y) -->
+    <div id="tab-phrase" class="tab-panel">
+      <form class="calc-form" id="form-phrase">
+        <div class="inline-inputs">
+          <label>
+            <%= t('percentage.lbl_is_what') %>
+          </label>
+          <input type="number" id="phrase-x" placeholder="25" step="any">
+          <label>
+            <%= t('percentage.lbl_of_total') %>
+          </label>
+          <input type="number" id="phrase-y" placeholder="100" step="any">
+        </div>
+        <button type="button" class="btn-calculate" onclick="calcPhrase()">
+          <%= t('percentage.calc') %>
+        </button>
+
+        <div class="result-box" id="res-phrase-box" style="display:none">
+          <span>
+            <%= t('percentage.result') %>:
+          </span>
+          <strong id="res-phrase-val"></strong>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>

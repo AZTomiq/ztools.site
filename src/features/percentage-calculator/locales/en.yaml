@@ -1,0 +1,18 @@
+percentage:
+  title: Percentage Calculator
+  desc: >-
+    Calculate percentages easily. Find percentage of a number, percentage
+    change, or what percentage one number is of another.
+  tab_basic: Basic
+  tab_change: Change
+  tab_phrase: Phrases
+  lbl_what_is: What is
+  lbl_of: '% of'
+  lbl_from: From
+  lbl_to: To
+  lbl_result_change: Change
+  lbl_is_what: Number
+  lbl_of_total: is what % of
+  calc: Calculate
+  result: Result
+  error_num: Please enter valid numbers

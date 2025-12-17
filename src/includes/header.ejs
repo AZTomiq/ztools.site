@@ -1,30 +1,60 @@
 <header class="site-header">
   <div class="header-inner container">
-    <a href="<%= rootPath %><%= locale %>/" class="logo">
-      <span class="logo-icon">🛠️</span>
-      <span class="logo-text">ZTools <span class="logo-sub">
-          <%= category %>
-        </span></span>
-    </a>
-    <nav class="main-nav">
-      <ul>
-        <li><a href="<%= rootPath %><%= locale %>/#job-income" class="<%= currentPath === 'tax' ? 'active' : '' %>">
-            <%= t('nav.menu_job') %>
-          </a></li>
-        <li><a href="<%= rootPath %><%= locale %>/#finance" class="<%= currentPath === 'finance' ? 'active' : '' %>">
-            <%= t('nav.menu_finance') %>
-          </a></li>
-        <li><a href="<%= rootPath %><%= locale %>/#daily-utilities"
-            class="<%= currentPath === 'bmi' ? 'active' : '' %>">
-            <%= t('nav.menu_utils') %>
-          </a></li>
-        <li><a href="<%= rootPath %><%= locale %>/#dev-tools"
-            class="<%= currentPath === 'json-toolkit' ? 'active' : '' %>">
-            <%= t('nav.menu_dev') %>
-          </a></li>
-      </ul>
-    </nav>
-    <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <div class="nav-item logo-wrapper">
+      <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
+        style="background: none; border: none; padding: 0; cursor: pointer;">
+        <span class="logo-icon">🛠️</span>
+        <span class="logo-text">ZTools</span>
+        <% if (category) { %>
+          <span class="logo-sub">
+            <%= category %>
+          </span>
+          <% } %>
+      </button>
+
+      <div class="dropdown-menu mega-menu">
+        <% const catOrder=['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const catMap={ 'job' : { title:
+          t('home.cats.job.title') || 'Job & Income' , icon: '🛠️' }, 'finance' : { title: t('home.cats.finance.title')
+          || 'Finance' , icon: '💰' }, 'text' : { title: t('home.cats.text.title') || 'Text Tools' , icon: '📝'
+          }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: '⚙️' }, 'daily' : { title:
+          t('home.cats.daily.title') || 'Daily Utilities' , icon: '☕' }, 'dev' : { title: t('home.cats.dev.title')
+          || 'Dev Tools' , icon: '💻' } }; %>
+
+          <% catOrder.forEach(catId=> {
+            const catTools = tools.filter(t => t.category === catId && t.status === 'active');
+            if (catTools.length === 0) return;
+            %>
+            <div class="mega-category-section">
+              <button class="mega-header collapsible" aria-expanded="true">
+                <div class="mega-title-wrap">
+                  <span class="mega-icon">
+                    <%= catMap[catId].icon %>
+                  </span>
+                  <%= catMap[catId].title %>
+                    <span class="mega-count-badge">
+                      <%= catTools.length %>
+                    </span>
+                </div>
+                <span class="mega-caret">▾</span>
+              </button>
+              <div class="mega-links-grid">
+                <% catTools.forEach(tool=> { %>
+                  <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="mega-link">
+                    <span class="link-icon">
+                      <%= tool.icon %>
+                    </span>
+                    <span class="link-text">
+                      <%= t(tool.translationKey + '.title' ) %>
+                    </span>
+                  </a>
+                  <% }); %>
+              </div>
+            </div>
+            <% }); %>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 0.5rem; align-items: center; margin-left: auto;">
       <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/<%= pageUrl %>"
         style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
         <%= locale==='vi' ? '🇺🇸' : '🇻🇳' %>

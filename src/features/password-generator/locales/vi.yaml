@@ -1,0 +1,17 @@
+password:
+  title: Tạo Mật Khẩu Mạnh
+  desc: Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.
+  form:
+    quantity: Số lượng
+    length: Độ dài
+    chars_title: Ký tự sử dụng
+    uppercase: Chữ hoa (A-Z)
+    lowercase: Chữ thường (a-z)
+    numbers: Số (0-9)
+    symbols: Ký tự đặc biệt (!@#)
+    options_title: Tùy chọn nâng cao
+    exclude_ambiguous: Loại bỏ ký tự dễ nhầm (l, I, 1, O, 0)
+    easy_say: Dễ đọc (Không số/ký tự đặc biệt)
+    btn_generate: Tạo mật khẩu
+    btn_copy: Sao chép
+    output_placeholder: Mật khẩu an toàn của bạn

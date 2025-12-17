@@ -1,0 +1,21 @@
+bmi:
+  title: BMI Calculator
+  desc: Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.
+  form:
+    height: Height (cm)
+    weight: Weight (kg)
+    calc_btn: Calculate
+    height_ph: "Ex: 170"
+    weight_ph: "Ex: 65"
+  result:
+    title: Your Result
+    bmi_index: BMI Index
+    classification: Classification
+  table:
+    title: Reference Information
+    classification: Classification
+    range: BMI (kg/m²)
+    underweight: Underweight
+    normal: Normal
+    overweight: Overweight
+    obese: Obese

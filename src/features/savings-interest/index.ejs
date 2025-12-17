@@ -1,0 +1,126 @@
+<!-- title: <%= t('savings.title') %> - ZTools -->
+
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+<!-- Reusing compound-interest styles as they are identical layout-wise -->
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>💰 <%= t('savings.title') %>
+    </h1>
+    <p>
+      <%= t('savings.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <form id="savings-form" class="finance-form">
+      <!-- Deposit Amount -->
+      <div class="form-group">
+        <label for="amount">
+          <%= t('savings.amount') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="amount" placeholder="100.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Interest Rate -->
+        <div class="form-group">
+          <label for="rate">
+            <%= t('savings.rate') %>
+          </label>
+          <div class="input-group">
+            <input type="number" id="rate" placeholder="5.5" step="0.01" min="0">
+            <span class="input-suffix">%</span>
+          </div>
+        </div>
+
+        <!-- Term -->
+        <div class="form-group">
+          <label for="term">
+            <%= t('savings.term') %>
+          </label>
+          <select id="term">
+            <option value="1">
+              <%= t('savings.term_options.1') %>
+            </option>
+            <option value="3">
+              <%= t('savings.term_options.3') %>
+            </option>
+            <option value="6" selected>
+              <%= t('savings.term_options.6') %>
+            </option>
+            <option value="12">
+              <%= t('savings.term_options.12') %>
+            </option>
+            <option value="24">
+              <%= t('savings.term_options.24') %>
+            </option>
+            <option value="36">
+              <%= t('savings.term_options.36') %>
+            </option>
+            <option value="custom">
+              <%= t('savings.custom_term') %>
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Custom Term Input (Hidden by default) -->
+      <div class="form-group" id="custom-term-group" style="display: none;">
+        <label for="custom-months">
+          <%= t('savings.custom_term') %>
+        </label>
+        <div class="input-group">
+          <input type="number" id="custom-months" placeholder="Enter months" min="1">
+          <span class="input-suffix">
+            <%= t('savings.months') %>
+          </span>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate" class="btn-calculate">
+          <%= t('savings.calc_btn') %>
+        </button>
+        <button type="button" id="btn-reset" class="btn-reset">
+          <%= t('common.reset') || 'Reset' %>
+        </button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div id="result-section" class="result-section">
+      <h3>
+        <%= t('savings.result_title') %>
+      </h3>
+
+      <div class="result-grid" style="grid-template-columns: 1fr 1fr;"> <!-- 2 columns only -->
+        <div class="result-card primary">
+          <span>
+            <%= t('savings.total_interest') %>
+          </span>
+          <strong id="res-interest">0 đ</strong>
+        </div>
+        <div class="result-card secondary">
+          <span>
+            <%= t('savings.total_received') %>
+          </span>
+          <strong id="res-total">0 đ</strong>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 8px;">
+        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
+          ℹ️ Interest is calculated based on simple interest formula:
+          <code>Interest = Principal × Rate% × (Months / 12)</code>.
+          <br>Assumes interest is paid at maturity (End of term).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>

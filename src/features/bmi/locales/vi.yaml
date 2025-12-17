@@ -1,0 +1,21 @@
+bmi:
+  title: Tính chỉ số BMI
+  desc: Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI & WPRO cho người Việt.
+  form:
+    height: Chiều cao (cm)
+    weight: Cân nặng (kg)
+    calc_btn: Tính toán ngay
+    height_ph: "Ví dụ: 170"
+    weight_ph: "Ví dụ: 65"
+  result:
+    title: Kết quả của bạn
+    bmi_index: Chỉ số BMI
+    classification: Phân loại
+  table:
+    title: Thông tin tham khảo
+    classification: Phân loại
+    range: BMI (kg/m²)
+    underweight: Nhẹ cân
+    normal: Bình thường
+    overweight: Thừa cân
+    obese: Béo phì

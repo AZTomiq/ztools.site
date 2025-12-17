@@ -20,6 +20,9 @@
     "menu_job": "Job & Income",
     "menu_finance": "Finance",
     "menu_utils": "Utilities",
+    "menu_text": "Text Tools",
+    "menu_generator": "Generators",
+    "menu_categories": "Categories",
     "menu_dev": "Dev Tools"
   },
   "home": {
@@ -58,10 +61,18 @@
         "uuid": "UUID Generator"
       },
       "dev": {
+        "title": "Dev Tools",
         "encoder": "Encoder / Decoder",
         "generator": "Generators",
         "tester": "Testers & Formatters"
       }
+    },
+    "sort": {
+      "default": "Default",
+      "az": "Name (A-Z)",
+      "za": "Name (Z-A)",
+      "recent": "Recently Used",
+      "popular": "Most Used"
     }
   },
   "footer": {

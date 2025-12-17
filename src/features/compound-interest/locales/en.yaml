@@ -1,0 +1,38 @@
+compound:
+  title: Compound Interest Calculator
+  desc: >-
+    Calculate the future value of your investment with compound interest.
+    Includes monthly contributions and customizable compounding frequency.
+  initial: Initial Investment
+  interest_rate: Annual Interest Rate
+  years: Investment Duration (Years)
+  frequency: Compounding Frequency
+  contribution: Monthly Contribution
+  calc_btn: Calculate
+  result_title: Projection Results
+  future_value: Future Value
+  total_interest: Total Interest Earned
+  total_contribution: Total Principal
+  breakdown: Yearly Breakdown
+  year: Year
+  balance: End Balance
+  interest: Interest
+  freq_options:
+    monthly: Monthly
+    quarterly: Quarterly
+    semiannually: Semi-Annually
+    annually: Annually
+  about:
+    title: 💡 About Compound Interest
+    desc: >-
+      Compound interest is the interest on a loan or deposit calculated based on both the initial principal and 
+      the accumulated interest from previous periods.
+    formula: "The formula for annual compound interest is: <code>A = P(1 + r/n)^(nt)</code>"
+    legend:
+      p: "<strong>P</strong>: Principal investment amount"
+      r: "<strong>r</strong>: Annual interest rate (decimal)"
+      n: "<strong>n</strong>: Number of times interest is compounded per year"
+      t: "<strong>t</strong>: Number of years"
+    quote: >-
+      "Compound interest is the eighth wonder of the world. He who understands it, earns it... he who doesn't...
+      pays it." - Albert Einstein

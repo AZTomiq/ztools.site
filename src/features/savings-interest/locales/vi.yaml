@@ -1,0 +1,22 @@
+savings:
+  title: Tính Lãi Suất Tiết Kiệm
+  desc: >-
+    Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối
+    kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.
+  amount: Số tiền gửi
+  rate: Lãi suất (%/năm)
+  term: Kỳ hạn gửi
+  months: Tháng
+  days: Ngày
+  calc_btn: Tính lãi
+  result_title: Kết quả tính lãi
+  total_interest: Tổng tiền lãi nhận được
+  total_received: Tổng tiền gốc + lãi
+  term_options:
+    '1': 1 Tháng
+    '3': 3 Tháng
+    '6': 6 Tháng
+    '12': 12 Tháng
+    '24': 24 Tháng
+    '36': 36 Tháng
+  custom_term: Hoặc nhập số tháng tùy chỉnh

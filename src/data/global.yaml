@@ -1,0 +1,45 @@
+site:
+  url: https://ztools.site
+  author: Anph
+build:
+  locales:
+    - vi
+    - en
+  default_locale: vi
+  deploy:
+    branch: gh-pages
+    remote: origin
+    dist_folder: dist
+    strategy: init
+categories:
+  job:
+    icon: 🛠️
+    key: job
+    translation_key: home.cats.job.title
+  finance:
+    icon: 💰
+    key: finance
+    translation_key: home.cats.finance.title
+  text:
+    icon: 📝
+    key: text
+    translation_key: home.cats.text.title
+  generator:
+    icon: ⚙️
+    key: generator
+    translation_key: home.cats.generator.title
+  daily:
+    icon: ☕
+    key: daily
+    translation_key: home.cats.daily.title
+  dev:
+    icon: 💻
+    key: dev
+    translation_key: home.cats.dev.title
+category_order:
+  - job
+  - finance
+  - text
+  - generator
+  - daily
+  - dev

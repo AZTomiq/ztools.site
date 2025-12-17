@@ -1,0 +1,108 @@
+<!-- title: <%= t('bmi.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>⚖️ <%= t('bmi.title') %>
+    </h1>
+    <p>
+      <%= t('bmi.desc') %>
+    </p>
+  </div>
+
+  <div class="card tool-card" style="margin-top: 2rem;">
+    <form id="bmi-form">
+      <div class="form-group">
+        <label for="height">
+          <%= t('bmi.form.height') %>
+        </label>
+        <input type="number" id="height" required placeholder="<%= t('bmi.form.height_ph') %>" min="50" max="250">
+      </div>
+
+      <div class="form-group">
+        <label for="weight">
+          <%= t('bmi.form.weight') %>
+        </label>
+        <input type="number" id="weight" required placeholder="<%= t('bmi.form.weight_ph') %>" min="20" max="300"
+          step="0.1">
+      </div>
+
+      <button type="submit" class="btn" style="width: 100%;">
+        <%= t('bmi.form.calc_btn') %>
+      </button>
+    </form>
+
+    <div id="result-box" class="result-box" style="display: none; margin-top: 2rem;">
+      <h2>
+        <%= t('bmi.result.title') %>
+      </h2>
+      <p>
+        <%= t('bmi.result.bmi_index') %>: <strong id="bmi-value" style="font-size: 1.5rem;">--</strong>
+      </p>
+      <p>
+        <%= t('bmi.result.classification') %>: <strong id="bmi-category">--</strong>
+      </p>
+      <p id="bmi-feedback" style="margin-top: 1rem; font-style: italic;"></p>
+    </div>
+  </div>
+
+  <div class="card info-card" style="margin-top: 2rem;">
+    <h3>
+      <%= t('bmi.table.title') %>
+    </h3>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+      <thead>
+        <tr style="background: var(--bg-color); text-align: left;">
+          <th style="padding: 0.5rem;">
+            <%= t('bmi.table.classification') %>
+          </th>
+          <th style="padding: 0.5rem;">
+            <%= t('bmi.table.range') %>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">
+            <%= t('bmi.table.underweight') %>
+          </td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">&lt; 18.5</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">
+            <%= t('bmi.table.normal') %>
+          </td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">18.5 - 22.9</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">
+            <%= t('bmi.table.overweight') %>
+          </td>
+          <td style="padding: 0.5rem; border-bottom: 1px solid var(--border-color);">23 - 24.9</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem;">
+            <%= t('bmi.table.obese') %>
+          </td>
+          <td style="padding: 0.5rem;">&ge; 25</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>
+
+<style>
+  .text-warning {
+    color: #fd7e14;
+  }
+
+  .text-success {
+    color: #198754;
+  }
+
+  .text-danger {
+    color: #dc3545;
+  }
+</style>

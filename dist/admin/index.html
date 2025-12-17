@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTools Admin</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside>
+      <div class="brand">
+        <i class="ri-command-fill" style="color: var(--accent-color);"></i>
+        ZTools <span>Admin</span>
+      </div>
+
+      <nav>
+        <div class="nav-item" :class="{ active: view === 'dashboard' || view === 'editor' }"
+          @click="navigateTo('dashboard')">
+          <i class="ri-dashboard-line"></i> Dashboard
+        </div>
+        <div class="nav-item" :class="{ active: view === 'settings' }" @click="navigateTo('settings')">
+          <i class="ri-settings-3-line"></i> Global Settings
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Header -->
+      <header>
+        <div>
+          <h1>
+            {{ view === 'dashboard' ? 'Overview' :
+            view === 'settings' ? 'Global Settings' :
+            ('Edit: ' + currentFeature?.id) }}
+          </h1>
+          <p class="header-meta" v-if="view === 'dashboard'">
+            Manage your tools and configurations.
+          </p>
+          <p class="header-meta" v-if="view === 'settings'">
+            Configure site metadata, build options, and categories.
+          </p>
+        </div>
+
+        <div v-if="view === 'dashboard'">
+          <div class="search-container">
+            <i class="ri-search-line"></i>
+            <input type="text" v-model="searchQuery" placeholder="Search tools...">
+          </div>
+        </div>
+
+        <div v-if="view === 'settings'">
+          <button class="btn btn-primary" @click="saveGlobal" :disabled="isSaving">
+            <i class="ri-save-line" v-if="!isSaving"></i>
+            <i class="ri-loader-4-line spin" v-else></i>
+            {{ isSaving ? 'Saving...' : 'Save Settings' }}
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard View -->
+      <div v-if="view === 'dashboard'" class="grid">
+        <div class="card" v-for="feat in filteredFeatures" :key="feat.id" @click="openEditor(feat)">
+          <div class="card-header">
+            <div class="card-icon">
+              <i class="ri-function-line"></i>
+            </div>
+            <span class="badge" :class="feat.config.draft ? 'badge-draft' : 'badge-active'">
+              {{ feat.config.draft ? 'Draft' : 'Active' }}
+            </span>
+          </div>
+          <div class="card-title">{{ feat.config.meta?.title_vi || feat.id }}</div>
+          <div class="card-desc">{{ feat.config.meta?.desc_vi || 'No description available.' }}</div>
+        </div>
+      </div>
+
+      <!-- Settings View -->
+      <div v-else-if="view === 'settings'" class="editor-container"
+        style="overflow-y: auto; background: transparent; border: none; box-shadow: none;">
+        <!-- We reuse editor-container styles but override for scrolling form -->
+
+        <!-- Site Info -->
+        <div
+          style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem;">
+          <div class="form-section-title"><i class="ri-global-line"></i> Site Information</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Site URL</label>
+              <input type="text" class="form-input-text" v-model="globalConfig.site.url"
+                placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Author Name</label>
+              <input type="text" class="form-input-text" v-model="globalConfig.site.author" placeholder="Your Name">
+            </div>
+          </div>
+        </div>
+
+        <!-- Build Config -->
+        <div
+          style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem;">
+          <div class="form-section-title"><i class="ri-building-line"></i> Build & Deploy</div>
+
+          <div class="form-group">
+            <label class="form-label">Supported Locales (comma separated)</label>
+            <!-- Simple array binding hack for MVP: input comma text -->
+            <!-- Using a getter/setter approach in v-model is hard in inline vue without computed. 
+                 Let's just bind to a temp variable or handle it differently? 
+                 Actually, let's just use text input and user manually types comma.
+                 Or better: list current tags? Too complex for single file. 
+                 We'll stick to simple text input for array [A, B] -> "A, B" visual 
+             -->
+            <input type="text" class="form-input-text" :value="globalConfig.build.locales.join(', ')"
+              @input="globalConfig.build.locales = $event.target.value.split(',').map(s => s.trim()).filter(x => x)">
+            <span style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; display: block;">Default: {{
+              globalConfig.build.default_locale }}</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Deployment Strategy</label>
+              <div class="radio-group">
+                <div class="radio-option" :class="{ selected: globalConfig.build.deploy.strategy === 'init' }"
+                  @click="globalConfig.build.deploy.strategy = 'init'">
+                  Init (Force Push)
+                </div>
+                <div class="radio-option" :class="{ selected: globalConfig.build.deploy.strategy === 'subtree' }"
+                  @click="globalConfig.build.deploy.strategy = 'subtree'">
+                  Subtree
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Remote Branch</label>
+              <input type="text" class="form-input-text" v-model="globalConfig.build.deploy.branch">
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div
+          style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem;">
+          <div class="form-section-title"><i class="ri-price-tag-3-line"></i> Tool Categories</div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+            <div v-for="(cat, key) in globalConfig.categories" :key="key"
+              style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+              <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                <div style="display: flex; flex-direction: column; width: 60px;">
+                  <label class="form-label">Icon</label>
+                  <input type="text" class="form-input-text" v-model="cat.icon"
+                    style="text-align: center; font-size: 1.5rem;">
+                </div>
+                <div style="flex: 1;">
+                  <label class="form-label">Key (ID)</label>
+                  <input type="text" class="form-input-text" v-model="cat.key" disabled style="opacity: 0.5;">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Translation Key</label>
+                <input type="text" class="form-input-text" v-model="cat.translation_key">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor View -->
+      <div v-else-if="view === 'editor'" class="editor-container"
+        style="overflow-y: auto; background: transparent; border: none; box-shadow: none;">
+        <div class="editor-header"
+          style="background: rgba(25,25,25,0.7); border: 1px solid var(--glass-border); border-radius: 12px; margin-bottom: 2rem;">
+          <button class="btn btn-secondary" @click="closeEditor">
+            <i class="ri-arrow-left-line"></i> Back
+          </button>
+          <div style="font-weight: 600; font-family: var(--font-heading);">
+            {{ currentFeature?.id }}/tool.yaml
+          </div>
+          <button class="btn btn-primary" @click="saveFeature" :disabled="isSaving">
+            <i class="ri-save-line" v-if="!isSaving"></i>
+            <i class="ri-loader-4-line spin" v-else></i>
+            {{ isSaving ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+
+        <div class="editor-body" style="padding: 0;">
+          <!-- Main Info -->
+          <div
+            style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; margin-bottom: 2rem;">
+            <div class="form-section-title"><i class="ri-article-line"></i> Tool Configuration</div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Tool ID (Folder Name)</label>
+                <input type="text" class="form-input-text opacity-50" v-model="currentFeature.config.id" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Status</label>
+                <!-- Status Toggle Logic: existing tools use 'status: active' or 'draft: true/false'? 
+                             User screenshot shows "status: active". 
+                             Let's bind to 'status' string. "active" vs "draft".
+                        -->
+                <div class="radio-group">
+                  <div class="radio-option"
+                    :class="{ selected: currentFeature.config.status === 'active' || (!currentFeature.config.status && !currentFeature.config.draft) }"
+                    @click="currentFeature.config.status = 'active'; delete currentFeature.config.draft">
+                    Active
+                  </div>
+                  <div class="radio-option"
+                    :class="{ selected: currentFeature.config.status === 'draft' || currentFeature.config.draft }"
+                    @click="currentFeature.config.status = 'draft'">
+                    Draft
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Category</label>
+                <select class="form-select" v-model="currentFeature.config.category">
+                  <option v-for="(cat, key) in globalConfig.categories" :key="key" :value="key">
+                    {{ cat.icon }} {{ cat.translation_key.split('.').pop().toUpperCase() }} ({{ key }})
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Icon (Emoji)</label>
+                <input type="text" class="form-input-text" v-model="currentFeature.config.icon"
+                  style="font-size: 1.5rem; width: 80px; text-align: center;">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Link Path</label>
+                <input type="text" class="form-input-text" v-model="currentFeature.config.link">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Translation Key</label>
+                <input type="text" class="form-input-text" v-model="currentFeature.config.translationKey">
+              </div>
+            </div>
+
+            <!-- JSON Fallback Toggle -->
+            <div style="margin-top: 2rem;">
+              <button class="btn btn-secondary" style="width: 100%; justify-content: center; opacity: 0.6;"
+                @click="editorContent = JSON.stringify(currentFeature.config, null, 2)">
+                <i class="ri-code-line"></i> View Raw Config (for debugging)
+              </button>
+              <textarea v-if="editorContent" class="json-editor" v-model="editorContent" spellcheck="false"
+                style="margin-top: 1rem; border-radius: 8px; border: 1px solid var(--glass-border); min-height: 200px;"
+                disabled></textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" :class="{ show: toast.show, success: toast.type === 'success', error: toast.type === 'error' }">
+      <i class="ri-checkbox-circle-fill" v-if="toast.type === 'success'" style="color: var(--success);"></i>
+      <i class="ri-error-warning-fill" v-if="toast.type === 'error'" style="color: var(--danger);"></i>
+      <span>{{ toast.message }}</span>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+  <style>
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</body>
+
+</html>

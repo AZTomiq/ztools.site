@@ -9,6 +9,54 @@
   </p>
 </section>
 
+</section>
+
+<!-- View Options Toolbar -->
+<div class="container view-toolbar"
+  style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
+  <div class="view-toggles"
+    style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
+    <button class="btn-icon" data-view="grid" title="Grid View">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+    </button>
+    <button class="btn-icon" data-view="list" title="List View">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sort-options">
+    <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;">
+      <option value="default">
+        <%= t('home.sort.default') || 'Default' %>
+      </option>
+      <option value="recent">
+        <%= t('home.sort.recent') || 'Recently Used' %>
+      </option>
+      <option value="popular">
+        <%= t('home.sort.popular') || 'Most Used' %>
+      </option>
+      <option value="az">
+        <%= t('home.sort.az') || 'Name (A-Z)' %>
+      </option>
+      <option value="za">
+        <%= t('home.sort.za') || 'Name (Z-A)' %>
+      </option>
+    </select>
+  </div>
+</div>
+
 <div class="category-section" id="job-income">
   <h2 class="category-title">🛠️ Job & Income</h2>
   <div class="tools-grid">
@@ -46,247 +94,177 @@
     </div>
   </div>
 </div>
-
-<div class="category-section" id="finance">
-  <h2 class="category-title">💰 Finance</h2>
-  <div class="tools-grid">
-    <!-- Coming Soon -->
-    <!-- Active Tools -->
-    <a href="<%= rootPath %><%= locale %>/loan-calculator/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
-      <h3>
-        <%= t('loan.title') %>
-      </h3>
-      <p>
-        <%= t('loan.desc') %>
-      </p>
-    </a>
-    <a href="<%= rootPath %><%= locale %>/compound-interest/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
-      <h3>
-        <%= t('compound.title') %>
-      </h3>
-      <p>
-        <%= t('compound.desc') %>
-      </p>
-    </a>
-    <a href="<%= rootPath %><%= locale %>/savings-interest/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏦</div>
-      <h3>
-        <%= t('savings.title') %>
-      </h3>
-      <p>
-        <%= t('savings.desc') %>
-      </p>
-    </a>
-    <a href="<%= rootPath %><%= locale %>/percentage-calculator/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">％</div>
-      <h3>
-        <%= t('percentage.title') %>
-      </h3>
-      <p>
-        <%= t('percentage.desc') %>
-      </p>
-    </a>
-    <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.finance.currency') || 'Tỷ giá & Tín dụng' %>
-      </h3>
-      <p class="desc-soon">Currency & Credit</p>
+<% const categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , emoji: '🛠️' }, {
+  id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , emoji: '💰' }, { id: 'text' ,
+  titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , emoji: '📝' }, { id: 'generator' ,
+  titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , emoji: '⚙️' }, { id: 'daily' ,
+  titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , emoji: '☕' }, { id: 'dev' ,
+  titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , emoji: '💻' } ]; categories.forEach(cat=> {
+  const catTools = tools.filter(t => t.category === cat.id);
+  if (catTools.length === 0) return;
+  %>
+  <div class="category-section" id="<%= cat.id %>-tools">
+    <h2 class="category-title">
+      <%= cat.emoji %>
+        <%= t(cat.titleKey) || cat.defaultTitle %>
+    </h2>
+    <div class="tools-grid">
+      <% catTools.forEach(tool=> { %>
+        <% if (tool.status==='active' ) { %>
+          <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="card tool-item">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">
+              <%= tool.icon %>
+            </div>
+            <h3>
+              <%= t(tool.translationKey + '.title' ) %>
+            </h3>
+            <p>
+              <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
+            </p>
+          </a>
+          <% } else { %>
+            <div class="card tool-item upcoming">
+              <div class="icon-soon">
+                <%= tool.icon %>
+              </div>
+              <h3>
+                <%= tool.titleOverrideKey ? t(tool.titleOverrideKey) : tool.defaultTitle %>
+              </h3>
+              <p class="desc-soon">
+                <%= tool.descOverride %>
+              </p>
+            </div>
+            <% } %>
+              <% }); %>
     </div>
   </div>
-</div>
+  <% }); %>
 
-<div class="category-section" id="text-tools">
-  <h2 class="category-title">📝 <%= t('home.cats.text.title') || 'Cong cu Van ban' %>
-  </h2>
-  <div class="tools-grid">
-    <!-- Active Tools -->
-    <a href="<%= rootPath %><%= locale %>/word-counter/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
-      <h3>
-        <%= t('word_counter.title') %>
-      </h3>
-      <p>
-        <%= t('word_counter.desc') %>
-      </p>
-    </a>
+    <script src="<%= rootPath %>assets/js/home.js"></script>
 
-    <a href="<%= rootPath %><%= locale %>/lorem-ipsum/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
-      <h3>
-        <%= t('lorem.title') %>
-      </h3>
-      <p>
-        <%= t('lorem.desc') %>
-      </p>
-    </a>
-  </div>
-</div>
+    <style>
+      .category-section {
+        margin-bottom: 4rem;
+      }
 
-<div class="category-section" id="generator-tools">
-  <h2 class="category-title">⚙️ <%= t('home.cats.generator.title') || 'Generators' %>
-  </h2>
-  <div class="tools-grid">
-    <!-- Active Tools -->
-    <a href="<%= rootPath %><%= locale %>/password-generator/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔐</div>
-      <h3>
-        <%= t('password.title') %>
-      </h3>
-      <p>
-        <%= t('password.desc') %>
-      </p>
-    </a>
+      .category-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 0.5rem;
+        display: inline-block;
+      }
 
-    <a href="<%= rootPath %><%= locale %>/uuid-generator/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🆔</div>
-      <h3>
-        <%= t('uuid.title') %>
-      </h3>
-      <p>
-        <%= t('uuid.desc') %>
-      </p>
-    </a>
-  </div>
-</div>
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+        transition: all 0.3s;
+      }
 
-<div class="category-section" id="daily-utilities">
-  <h2 class="category-title">☕ Daily Utilities</h2>
-  <div class="tools-grid">
-    <!-- Active Tools -->
-    <a href="<%= rootPath %><%= locale %>/bmi/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
-      <h3>
-        <%= t('bmi.title') %>
-      </h3>
-      <p>
-        <%= t('bmi.desc') %>
-      </p>
-    </a>
-    <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.daily.pdf') || 'Xử lý PDF/Văn bản' %>
-      </h3>
-      <p class="desc-soon">PDF to Word, Read Numbers</p>
-    </div>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.daily.image') || 'Xử lý Ảnh' %>
-      </h3>
-      <p class="desc-soon">Compress, Resize, Crop</p>
-    </div>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.daily.qr') || 'Mã hóa & QR' %>
-      </h3>
-      <p class="desc-soon">QR Code, Hash</p>
-    </div>
-  </div>
-</div>
+      /* List View Style */
+      .tools-grid.list-view {
+        grid-template-columns: 1fr !important;
+      }
 
-<div class="category-section" id="dev-tools">
-  <h2 class="category-title">💻 DEV Tools</h2>
-  <div class="tools-grid">
-    <!-- Active Tools -->
-    <a href="<%= rootPath %><%= locale %>/json-toolkit/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
-      <h3>
-        <%= t('json.title') %>
-      </h3>
-      <p>
-        <%= t('json.desc') %>
-      </p>
-    </a>
-    <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.dev.encoder') || 'Encoder / Decoder' %>
-      </h3>
-      <p class="desc-soon">Base64, JWT</p>
-    </div>
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.dev.tester') || 'Testers & Formatters' %>
-      </h3>
-      <p class="desc-soon">Regex, SQL, Cron</p>
-    </div>
-  </div>
-</div>
+      .tools-grid.list-view .tool-item {
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem;
+        gap: 1.5rem;
+      }
 
-<style>
-  .category-section {
-    margin-bottom: 4rem;
-  }
+      .tools-grid.list-view .tool-item div:first-child {
+        font-size: 1.5rem !important;
+        margin-bottom: 0 !important;
+      }
 
-  .category-title {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.5rem;
-    display: inline-block;
-  }
+      .tools-grid.list-view .tool-item h3 {
+        margin-bottom: 0;
+        min-width: 200px;
+      }
 
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
+      @media (min-width: 900px) {
+        .tools-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
 
-  .tool-item {
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s, box-shadow 0.2s;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+      @media (min-width: 1200px) {
+        .tools-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
 
-  .tool-item:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary-color);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
+      .tool-item {
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s, box-shadow 0.2s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
 
-  .tool-item h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-  }
+      .tool-item:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
 
-  .tool-item p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    flex-grow: 1;
-  }
+      .tools-grid.list-view .tool-item:hover {
+        transform: translateX(5px);
+      }
 
-  /* Upcoming tools style */
-  .tool-item.upcoming {
-    opacity: 0.7;
-    background-color: var(--bg-secondary);
-    border-style: dashed;
-    cursor: default;
-  }
+      .tool-item h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
 
-  .tool-item.upcoming:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: var(--border-color);
-  }
+      .tool-item p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        flex-grow: 1;
+      }
 
-  .icon-soon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
+      /* Toolbar Styles */
+      .btn-icon {
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        padding: 0.4rem;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
 
-  .desc-soon {
-    font-style: italic;
-  }
-</style>
+      .btn-icon:hover {
+        background: var(--bg-color);
+        color: var(--primary-color);
+      }
+
+      /* Upcoming tools style */
+      .tool-item.upcoming {
+        opacity: 0.7;
+        background-color: var(--bg-secondary);
+        border-style: dashed;
+        cursor: default;
+      }
+
+      .tool-item.upcoming:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: var(--border-color);
+      }
+
+      .icon-soon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .desc-soon {
+        font-style: italic;
+      }
+    </style>

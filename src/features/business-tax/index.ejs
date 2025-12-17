@@ -1,0 +1,420 @@
+<!-- title: <%= t('business_tax.title') %> - ZTools -->
+
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>💼 <%= t('business_tax.title') %>
+    </h1>
+    <p>
+      <%= t('business_tax.desc') %>
+    </p>
+  </div>
+
+  <!-- Method Selection -->
+  <div class="calculator-card">
+    <div class="method-selector">
+      <h3>
+        <%= t('business_tax.method.title') %>
+      </h3>
+      <div class="radio-group-vertical">
+        <label class="radio-card">
+          <input type="radio" name="calculation-method" value="detailed" checked>
+          <div class="radio-content">
+            <strong>
+              <%= t('business_tax.method.detailed.label') %>
+            </strong>
+            <p>
+              <%= t('business_tax.method.detailed.desc') %>
+            </p>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="calculation-method" value="simple">
+          <div class="radio-content">
+            <strong>
+              <%= t('business_tax.method.simple.label') %>
+            </strong>
+            <p>
+              <%= t('business_tax.method.simple.desc') %>
+            </p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Detailed Method Form -->
+    <form id="detailed-form" class="tax-form">
+      <h3>
+        <%= t('business_tax.detailed_form.title') %>
+      </h3>
+
+      <div class="form-group">
+        <label for="revenue">
+          <%= t('business_tax.detailed_form.revenue.label') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="revenue" placeholder="Ví dụ: 10.000.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">
+          <%= t('business_tax.detailed_form.revenue.hint') %>
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="deductible-expenses">
+          <%= t('business_tax.detailed_form.expenses.label') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="deductible-expenses" placeholder="Ví dụ: 7.000.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">
+          <%= t('business_tax.detailed_form.expenses.hint') %>
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="other-income">
+          <%= t('business_tax.detailed_form.other_income.label') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="other-income" placeholder="0" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">
+          <%= t('business_tax.detailed_form.other_income.hint') %>
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="exempt-income">
+          <%= t('business_tax.detailed_form.exempt_income.label') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="exempt-income" placeholder="0" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">
+          <%= t('business_tax.detailed_form.exempt_income.hint') %>
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="previous-losses">
+          <%= t('business_tax.detailed_form.previous_losses.label') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="previous-losses" placeholder="0" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+        <small class="hint">
+          <%= t('business_tax.detailed_form.previous_losses.hint') %>
+        </small>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="business-type">
+            <%= t('business_tax.detailed_form.business_type.label') %>
+          </label>
+          <select id="business-type">
+            <option value="general">
+              <%= t('business_tax.detailed_form.business_type.options.general') %>
+            </option>
+            <option value="small">
+              <%= t('business_tax.detailed_form.business_type.options.small') %>
+            </option>
+            <option value="oil-gas">
+              <%= t('business_tax.detailed_form.business_type.options.oil_gas') %>
+            </option>
+            <option value="rare-resources">
+              <%= t('business_tax.detailed_form.business_type.options.rare') %>
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="rd-fund">
+            <%= t('business_tax.detailed_form.rd_fund.label') %>
+          </label>
+          <div class="input-group">
+            <input type="number" id="rd-fund" value="0" min="0" max="10" step="0.1">
+            <span class="input-suffix">%</span>
+          </div>
+          <small class="hint">
+            <%= t('business_tax.detailed_form.rd_fund.hint') %>
+          </small>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate-detailed" class="btn-calculate">
+          <%= t('business_tax.detailed_form.btn_calc') %>
+        </button>
+        <button type="button" id="btn-reset-detailed" class="btn-reset">
+          <%= t('business_tax.detailed_form.btn_reset') %>
+        </button>
+      </div>
+    </form>
+
+    <!-- Simple Method Form -->
+    <form id="simple-form" class="tax-form" style="display: none;">
+      <h3>
+        <%= t('business_tax.simple_form.title') %>
+      </h3>
+
+      <div class="form-group">
+        <label for="simple-revenue">
+          <%= t('business_tax.simple_form.revenue.label') %>
+        </label>
+        <div class="input-group">
+          <input type="text" id="simple-revenue" placeholder="Ví dụ: 5.000.000.000" inputmode="numeric">
+          <span class="input-suffix">VNĐ</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="business-sector">
+          <%= t('business_tax.simple_form.sector.label') %>
+        </label>
+        <select id="business-sector">
+          <option value="goods">
+            <%= t('business_tax.simple_form.sector.options.goods') %>
+          </option>
+          <option value="services">
+            <%= t('business_tax.simple_form.sector.options.services') %>
+          </option>
+          <option value="other">
+            <%= t('business_tax.simple_form.sector.options.other') %>
+          </option>
+        </select>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="btn-calculate-simple" class="btn-calculate">
+          <%= t('business_tax.simple_form.btn_calc') %>
+        </button>
+        <button type="button" id="btn-reset-simple" class="btn-reset">
+          <%= t('business_tax.simple_form.btn_reset') %>
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="result-section" class="result-section">
+      <h3 style="margin-bottom: 1.5rem; border-left: 4px solid var(--primary-color); padding-left: 0.5rem;">
+        <%= t('business_tax.results.title') %>
+      </h3>
+
+      <!-- Detailed Results -->
+      <div id="detailed-results" class="calculation-breakdown">
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.revenue') %>
+          </span>
+          <span class="value" id="result-revenue">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.expenses') %>
+          </span>
+          <span class="value negative" id="result-expenses">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.other_income') %>
+          </span>
+          <span class="value" id="result-other-income">0 đ</span>
+        </div>
+        <div class="breakdown-item separator">
+          <span class="label"><strong>
+              <%= t('business_tax.results.taxable_income') %>
+            </strong></span>
+          <span class="value" id="result-taxable-income">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.exempt_income') %>
+          </span>
+          <span class="value negative" id="result-exempt">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.previous_losses') %>
+          </span>
+          <span class="value negative" id="result-losses">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.rd_fund') %>
+          </span>
+          <span class="value negative" id="result-rd-fund">0 đ</span>
+        </div>
+        <div class="breakdown-item separator">
+          <span class="label"><strong>
+              <%= t('business_tax.results.income_for_tax') %>
+            </strong></span>
+          <span class="value" id="result-income-for-tax">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.tax_rate') %>
+          </span>
+          <span class="value" id="result-tax-rate">20%</span>
+        </div>
+        <div class="breakdown-item highlight">
+          <span class="label"><strong>
+              <%= t('business_tax.results.total_tax') %>
+            </strong></span>
+          <span class="value total" id="result-total-tax">0 đ</span>
+        </div>
+      </div>
+
+      <!-- Simple Results -->
+      <div id="simple-results" class="calculation-breakdown" style="display: none;">
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.revenue') %>
+          </span>
+          <span class="value" id="simple-result-revenue">0 đ</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="label">
+            <%= t('business_tax.results.tax_rate_label') %>
+          </span>
+          <span class="value" id="simple-result-rate">0%</span>
+        </div>
+        <div class="breakdown-item highlight">
+          <span class="label"><strong>
+              <%= t('business_tax.results.total_tax') %>
+            </strong></span>
+          <span class="value total" id="simple-result-total">0 đ</span>
+        </div>
+      </div>
+
+      <!-- Tax Rate Info -->
+      <div class="info-box">
+        <h4>
+          <%= t('business_tax.info.title') %>
+        </h4>
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th>
+                <%= t('business_tax.info.headers.type') %>
+              </th>
+              <th>
+                <%= t('business_tax.info.headers.rate') %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <%= t('business_tax.info.rows.general') %>
+              </td>
+              <td><strong>20%</strong></td>
+            </tr>
+            <tr>
+              <td>
+                <%= t('business_tax.info.rows.small') %>
+              </td>
+              <td><strong>20%</strong></td>
+            </tr>
+            <tr>
+              <td>
+                <%= t('business_tax.info.rows.oil') %>
+              </td>
+              <td><strong>32% - 50%</strong></td>
+            </tr>
+            <tr>
+              <td>
+                <%= t('business_tax.info.rows.rare') %>
+              </td>
+              <td><strong>40% - 50%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content Section -->
+  <section class="card" style="padding: 2rem; margin-top: 3rem;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">
+      <%= t('business_tax.guide.title') %>
+    </h2>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+      <%= t('business_tax.guide.s1.title') %>
+    </h3>
+    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+      <%= t('business_tax.guide.s1.content') %>
+    </p>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+      <%= t('business_tax.guide.s2.title') %>
+    </h3>
+    <ul style="margin-bottom: 1rem; color: var(--text-muted); padding-left: 1.5rem;">
+      <% t('business_tax.guide.s2.items').forEach(function(item) { %>
+        <li>
+          <%= item %>
+        </li>
+        <% }); %>
+    </ul>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+      <%= t('business_tax.guide.s3.title') %>
+    </h3>
+    <div style="background: var(--bg-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+      <p style="margin-bottom: 0.5rem;"><%- t('business_tax.guide.s3.steps.step1') %></p>
+      <code
+        style="display: block; padding: 0.5rem; background: var(--card-bg); border-radius: 4px; margin-bottom: 1rem;">
+        <%= t('business_tax.guide.s3.steps.code1') %>
+      </code>
+
+      <p style="margin-bottom: 0.5rem;"><%- t('business_tax.guide.s3.steps.step2') %></p>
+      <code
+        style="display: block; padding: 0.5rem; background: var(--card-bg); border-radius: 4px; margin-bottom: 1rem;">
+        <%= t('business_tax.guide.s3.steps.code2') %>
+      </code>
+
+      <p style="margin-bottom: 0.5rem;"><%- t('business_tax.guide.s3.steps.step3') %></p>
+      <code style="display: block; padding: 0.5rem; background: var(--card-bg); border-radius: 4px;">
+        <%= t('business_tax.guide.s3.steps.code3') %>
+      </code>
+    </div>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+      <%= t('business_tax.guide.s4.title') %>
+    </h3>
+    <ul style="margin-bottom: 1rem; color: var(--text-muted); padding-left: 1.5rem;">
+      <% t('business_tax.guide.s4.items').forEach(function(item) { %>
+        <li><%- item %></li>
+        <% }); %>
+    </ul>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+      <%= t('business_tax.guide.s5.title') %>
+    </h3>
+    <ul style="margin-bottom: 1rem; color: var(--text-muted); padding-left: 1.5rem;">
+      <% t('business_tax.guide.s5.items').forEach(function(item) { %>
+        <li>
+          <%= item %>
+        </li>
+        <% }); %>
+    </ul>
+
+    <h3 style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">6. Lưu ý quan trọng</h3>
+    <div class="warning-box"
+      style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; border-radius: 4px;">
+      <p style="margin: 0; color: #856404;">
+        <%- t('business_tax.guide.warning') %>
+      </p>
+    </div>
+  </section>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>
