@@ -21,6 +21,9 @@
 
   --border-color: #e2e8f0;
   /* tax: --border */
+  
+  --primary-rgb: 8, 145, 178;
+  /* RGB values for primary color */
 
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --header-height: 60px;
@@ -50,6 +53,9 @@
 
   --border-color: #475569;
   /* tax: --border (Slate 600) */
+  
+  --primary-rgb: 34, 211, 238;
+  /* RGB values for primary color in dark mode */
 
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
