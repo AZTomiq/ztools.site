@@ -164,7 +164,7 @@ const TRANSLATIONS = {
 
   await buildAssets();
   await buildPages();
-  await buildAdmin();
+  // await buildAdmin(); // Temporarily disabled - admin panel not needed in build
   await createRootRedirect();
   await buildTemplates();
   await copyRootFiles(); // Retained from original build() function
