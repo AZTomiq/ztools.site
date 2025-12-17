@@ -185,7 +185,7 @@ async function buildTemplates() {
     const fileName = file.replace('.ejs', '');
 
     // Only build specific standalone templates
-    if (!['robots', 'sw', 'manifest'].includes(fileName)) {
+    if (!['robots', 'sw', 'manifest', 'sitemap'].includes(fileName)) {
       continue;
     }
 
@@ -193,6 +193,7 @@ async function buildTemplates() {
     if (fileName === 'robots') outputName = 'robots.txt';
     else if (fileName === 'sw') outputName = 'sw.js';
     else if (fileName === 'manifest') outputName = 'manifest.json';
+    else if (fileName === 'sitemap') outputName = 'sitemap.xml';
 
     const destPath = path.join(DIST_DIR, outputName);
 

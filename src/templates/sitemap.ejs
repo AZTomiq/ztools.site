@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <% var baseUrl=global.site.url; var allPages=[]; var i, j, k, loc, tool, page, alts, alt; for (i=0; i <
+    locales.length; i++) { loc=locales[i]; alts=[]; for (j=0; j < locales.length; j++) { alts.push({ hreflang:
+    locales[j]==='vi' ? 'vi-VN' : 'en-US' , href: baseUrl + '/' + locales[j] + '/' }); } allPages.push({ loc: baseUrl
+    + '/' + loc + '/' , priority: '1.0' , changefreq: 'weekly' , alternates: alts }); } for (i=0; i < tools.length; i++)
+    { tool=tools[i]; if (tool.status==='active' ) { for (k=0; k < locales.length; k++) { loc=locales[k]; alts=[]; for
+    (j=0; j < locales.length; j++) { alts.push({ hreflang: locales[j]==='vi' ? 'vi-VN' : 'en-US' , href: baseUrl + '/' +
+    locales[j] + '/' + tool.id + '/' }); } allPages.push({ loc: baseUrl + '/' + loc + '/' + tool.id + '/' ,
+    priority: '0.8' , changefreq: 'monthly' , alternates: alts }); } } } %>
+    <% for (i=0; i < allPages.length; i++) { page=allPages[i]; %>
+      <url>
+        <loc>
+          <%= page.loc %>
+        </loc>
+        <changefreq>
+          <%= page.changefreq %>
+        </changefreq>
+        <priority>
+          <%= page.priority %>
+        </priority>
+        <% for (j=0; j < page.alternates.length; j++) { alt=page.alternates[j]; %>
+          <xhtml:link rel="alternate" hreflang="<%= alt.hreflang %>" href="<%= alt.href %>" />
+          <% } %>
+      </url>
+      <% } %>
+</urlset>
