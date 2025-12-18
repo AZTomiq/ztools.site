@@ -82,12 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchOverlay = document.querySelector('.search-overlay');
 
   let toolsData = [];
+  let i18nData = {};
   try {
     const toolsScript = document.getElementById('tools-data');
-    if (toolsScript) {
-      toolsData = JSON.parse(toolsScript.textContent);
-    }
-  } catch (e) { console.error('Error loading search data', e); }
+    if (toolsScript) toolsData = JSON.parse(toolsScript.textContent);
+
+    const i18nScript = document.getElementById('i18n-data');
+    if (i18nScript) i18nData = JSON.parse(i18nScript.textContent);
+  } catch (e) { console.error('Error loading search/i18n data', e); }
 
   const openSearch = () => {
     searchModal.classList.add('show');
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).slice(0, 10);
 
     if (filtered.length === 0) {
-      const emptyMsg = document.documentElement.lang === 'vi' ? 'Không tìm thấy kết quả cho' : 'No results for';
+      const emptyMsg = i18nData.search_no_results || 'No results for';
       searchResults.innerHTML = `<div class="search-no-results">${emptyMsg} "${query}"</div>`;
       return;
     }
@@ -177,7 +179,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // --- End Search Modal Logic ---
+  // --- Changelog Modal Logic ---
+  const changelogBtn = document.getElementById('open-changelog');
+  const changelogModal = document.getElementById('changelog-modal');
+  const closeChangelog = document.getElementById('close-changelog');
+  const changelogOverlay = document.getElementById('close-changelog-overlay');
+
+  if (changelogBtn && changelogModal) {
+    changelogBtn.addEventListener('click', () => {
+      changelogModal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+
+    const hideChangelog = () => {
+      changelogModal.classList.remove('show');
+      document.body.style.overflow = '';
+    };
+
+    if (closeChangelog) closeChangelog.addEventListener('click', hideChangelog);
+    if (changelogOverlay) changelogOverlay.addEventListener('click', hideChangelog);
+  }
+
+  // --- End Search & Changelog Logic ---
 
   // Track clicks on tool items (both in Mega Menu and Homepage Grid)
   document.querySelectorAll('.tool-item, .mega-link, .search-result-item').forEach(link => {

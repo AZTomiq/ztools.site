@@ -5,3 +5,5 @@ translationKey: social_insurance
 descOverride: Social Insurance & Pension Calculator
 status: active
 link: /social-insurance/
+meta:
+  version: 1.0.0

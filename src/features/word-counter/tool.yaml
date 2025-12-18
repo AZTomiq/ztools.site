@@ -4,3 +4,5 @@ icon: 📊
 translationKey: word_counter
 status: active
 link: /word-counter/
+meta:
+  version: 1.0.0

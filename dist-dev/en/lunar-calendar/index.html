@@ -38,7 +38,7 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/global.css?h=71d32170">
   <link rel="icon" type="image/png"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
   <link rel="manifest" href="../../manifest.json">
@@ -423,6 +423,13 @@
     </div>
   </div>
 
+  <!-- Embed i18n data for client-side JS -->
+  <script id="i18n-data" type="application/json">
+    {
+      "search_no_results": "No results found for"
+    }
+  </script>
+
   <!-- Embed tools data for client-side search -->
   <script id="tools-data" type="application/json">
     
@@ -432,15 +439,17 @@
 
     <main class="container">
       <!-- title: Lunar Calendar - ZTools -->
-<link rel="stylesheet" href="../../assets/features/lunar-calendar/style.css">
+<link rel="stylesheet" href="../../assets/features/lunar-calendar/style.css?h=f45ed621">
 
 <section class="tool-container">
   <div class="page-header">
-    <h1>
-      Lunar Calendar Converter
+    <h1>📅 Lunar Calendar
+        
+          <span class="version-badge" id="open-changelog">v1.1.0</span>
+          
     </h1>
     <p>
-      Convert Solar ↔ Lunar calendar, view Can Chi and Good Hours
+      Convert Solar to Lunar calendar, view Can Chi and Good Hours
     </p>
   </div>
 
@@ -574,7 +583,7 @@ festivals, and important cultural events.
   </div>
 </section>
 
-<script src="../../assets/features/lunar-calendar/script.js"></script>
+<script src="../../assets/features/lunar-calendar/script.js?h=dfc800aa"></script>
     </main>
 
     <footer class="site-footer">
@@ -603,15 +612,47 @@ festivals, and important cultural events.
           </a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <p>
+    <div class="footer-copyright">
+      <span>
         © 2025 ZTools. Built with ❤️.
-      </p>
+      </span>
+      <span>ZTools v1.2.0</span>
     </div>
   </div>
 </footer>
 
-      <script src="../../assets/js/global.js"></script>
+      
+        <!-- Changelog Modal -->
+        <div id="changelog-modal" class="search-modal">
+          <div class="search-overlay" id="close-changelog-overlay"></div>
+          <div class="search-container">
+            <div class="search-header">
+              <span class="search-icon">📜</span>
+              <h2 style="flex: 1; margin: 0; font-size: 1.25rem;">
+                Version History
+              </h2>
+              <button id="close-changelog" class="close-search">&times;</button>
+            </div>
+            <div class="changelog-content">
+              <h1>Changelog - Lunar Calendar</h1>
+<h2>[1.1.0] - 2025-12-18</h2>
+<ul>
+<li><strong>Algorithm Upgrade</strong>: Integrated Ho Ngoc Duc&#39;s precision lunar algorithm.</li>
+<li><strong>Traditional Data</strong>: Added Good Hours (Giờ Hoàng Đạo) and Can Chi information.</li>
+<li><strong>Visual Improvements</strong>: Fixed Sunday coloring logic and added month navigation buttons.</li>
+<li><strong>Sync</strong>: Improved synchronization between Wall Calendar and Month View.</li>
+</ul>
+<h2>[1.0.0] - 2024-12-14</h2>
+<ul>
+<li>Initial release with solar to lunar conversion.</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+        
+
+          <script src="../../assets/js/global.js?h=d52e333a"></script>
 </body>
 
 </html>

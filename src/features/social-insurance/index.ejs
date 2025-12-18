@@ -1,11 +1,14 @@
 <!-- title: <%= t('social_insurance.title') %> - ZTools -->
 
-<link rel="stylesheet" href="<%= assetPath %>style.css">
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
   <div class="page-header">
     <h1>🏥 <%= t('social_insurance.title') %>
-    </h1>
+    
+      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+        <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+      <% } %></h1>
     <p>
       <%= t('social_insurance.desc') %>
     </p>
@@ -394,4 +397,4 @@
   </section>
 </section>
 
-<script src="<%= assetPath %>script.js"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

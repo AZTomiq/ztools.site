@@ -38,7 +38,7 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/global.css?h=71d32170">
   <link rel="icon" type="image/png"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
   <link rel="manifest" href="../../manifest.json">
@@ -423,6 +423,13 @@
     </div>
   </div>
 
+  <!-- Embed i18n data for client-side JS -->
+  <script id="i18n-data" type="application/json">
+    {
+      "search_no_results": "Không tìm thấy kết quả cho"
+    }
+  </script>
+
   <!-- Embed tools data for client-side search -->
   <script id="tools-data" type="application/json">
     
@@ -432,11 +439,14 @@
 
     <main class="container">
       <!-- title: Bookmark Creator - ZTools -->
-<link rel="stylesheet" href="../../assets/features/bookmark-creator/style.css">
+<link rel="stylesheet" href="../../assets/features/bookmark-creator/style.css?h=aedc8a4d">
 
 <section class="tool-container">
   <div class="page-header">
     <h1>🔖 Bookmark Creator
+        
+          <span class="version-badge" id="open-changelog">v1.0.0</span>
+          
     </h1>
     <p>
       Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.
@@ -760,7 +770,7 @@
         <div class="step-num">1</div>
         <div class="step-icon">⬇️</div>
         <p>
-          Nhấn nút &#34;Xuất file&#34; ở trên để tải file .html về máy.
+          Nhấn nút &#39;Xuất file&#39; ở trên để tải file .html về máy.
         </p>
       </div>
       <div class="step-card">
@@ -774,7 +784,7 @@
         <div class="step-num">3</div>
         <div class="step-icon">📥</div>
         <p>
-          Chọn &#34;Import Bookmarks&#34; (Nhập dấu trang) và chọn file vừa tải về.
+          Chọn &#39;Import Bookmarks&#39; (Nhập dấu trang) và chọn file vừa tải về.
         </p>
       </div>
     </div>
@@ -783,7 +793,7 @@
   
 </section>
 
-<script src="../../assets/features/bookmark-creator/script.js"></script>
+<script src="../../assets/features/bookmark-creator/script.js?h=4c7fe216"></script>
     </main>
 
     <footer class="site-footer">
@@ -812,15 +822,43 @@
           </a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <p>
+    <div class="footer-copyright">
+      <span>
         © 2025 ZTools. Built with ❤️.
-      </p>
+      </span>
+      <span>ZTools v1.2.0</span>
     </div>
   </div>
 </footer>
 
-      <script src="../../assets/js/global.js"></script>
+      
+        <!-- Changelog Modal -->
+        <div id="changelog-modal" class="search-modal">
+          <div class="search-overlay" id="close-changelog-overlay"></div>
+          <div class="search-container">
+            <div class="search-header">
+              <span class="search-icon">📜</span>
+              <h2 style="flex: 1; margin: 0; font-size: 1.25rem;">
+                Nhật ký thay đổi
+              </h2>
+              <button id="close-changelog" class="close-search">&times;</button>
+            </div>
+            <div class="changelog-content">
+              <h1>Changelog - Bookmark Creator</h1>
+<h2>[1.0.0] - 2025-12-18</h2>
+<ul>
+<li><strong>Initial Release</strong>: Create and export browser bookmarks for ZTools.</li>
+<li><strong>Features</strong>: Group by category, search filter, and bulk selection.</li>
+<li><strong>Export</strong>: Standard Netscape HTML format compatible with all major browsers.</li>
+<li><strong>UX</strong>: Added step-by-step visual guide for importing bookmarks.</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+        
+
+          <script src="../../assets/js/global.js?h=d52e333a"></script>
 </body>
 
 </html>

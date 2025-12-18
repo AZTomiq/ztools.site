@@ -38,7 +38,7 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/global.css?h=71d32170">
   <link rel="icon" type="image/png"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
   <link rel="manifest" href="../../manifest.json">
@@ -423,6 +423,13 @@
     </div>
   </div>
 
+  <!-- Embed i18n data for client-side JS -->
+  <script id="i18n-data" type="application/json">
+    {
+      "search_no_results": "Không tìm thấy kết quả cho"
+    }
+  </script>
+
   <!-- Embed tools data for client-side search -->
   <script id="tools-data" type="application/json">
     
@@ -432,12 +439,14 @@
 
     <main class="container">
       <!-- title: Định Dạng Văn Bản - Xóa Style - ZTools -->
-<link rel="stylesheet" href="../../assets/features/text-formatter/style.css">
+<link rel="stylesheet" href="../../assets/features/text-formatter/style.css?h=f412109f">
 
 <section class="formatter-container">
-  <div class="formatter-header">
-    <h1>
-      Định Dạng Văn Bản - Xóa Style
+  <div class="page-header">
+    <h1>📝 Định Dạng Văn Bản - Xóa Style
+        
+          <span class="version-badge" id="open-changelog">v1.1.0</span>
+          
     </h1>
     <p>
       Loại bỏ định dạng và làm sạch văn bản khi copy từ web.
@@ -593,7 +602,7 @@
     
 </section>
 
-<script src="../../assets/features/text-formatter/script.js"></script>
+<script src="../../assets/features/text-formatter/script.js?h=3648c00d"></script>
     </main>
 
     <footer class="site-footer">
@@ -622,15 +631,47 @@
           </a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <p>
+    <div class="footer-copyright">
+      <span>
         © 2025 ZTools. Built with ❤️.
-      </p>
+      </span>
+      <span>ZTools v1.2.0</span>
     </div>
   </div>
 </footer>
 
-      <script src="../../assets/js/global.js"></script>
+      
+        <!-- Changelog Modal -->
+        <div id="changelog-modal" class="search-modal">
+          <div class="search-overlay" id="close-changelog-overlay"></div>
+          <div class="search-container">
+            <div class="search-header">
+              <span class="search-icon">📜</span>
+              <h2 style="flex: 1; margin: 0; font-size: 1.25rem;">
+                Nhật ký thay đổi
+              </h2>
+              <button id="close-changelog" class="close-search">&times;</button>
+            </div>
+            <div class="changelog-content">
+              <h1>Changelog - Text Formatter</h1>
+<h2>[1.1.0] - 2025-12-18</h2>
+<ul>
+<li><strong>New UI</strong>: Redesigned with modern 2-column side-by-side layout.</li>
+<li><strong>Real-time Stats</strong>: Character count and reduction percentage displayed live.</li>
+<li><strong>Auto-format</strong>: Automatic processing on input or option changes.</li>
+<li><strong>Smart Cleanup</strong>: Improved quote normalization and whitespace removal.</li>
+</ul>
+<h2>[1.0.0] - 2024-12-12</h2>
+<ul>
+<li>Initial release with basic formatting options.</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+        
+
+          <script src="../../assets/js/global.js?h=d52e333a"></script>
 </body>
 
 </html>

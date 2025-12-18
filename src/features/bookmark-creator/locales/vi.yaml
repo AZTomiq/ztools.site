@@ -8,6 +8,11 @@ bookmarkCreator:
     select_all: "Chọn tất cả"
     deselect_all: "Bỏ chọn tất cả"
     search: "Tìm nhanh công cụ..."
+  steps_guide:
+    title: "Làm thế nào để sử dụng file Bookmark?"
+    step1: "Nhấn nút 'Xuất file' ở trên để tải file .html về máy."
+    step2: "Mở trình quản lý Bookmark trên trình duyệt (nhấn Ctrl+Shift+O hoặc Cmd+Option+B)."
+    step3: "Chọn 'Import Bookmarks' (Nhập dấu trang) và chọn file vừa tải về."
   guide:
     title: "Hướng dẫn sử dụng"
     items:

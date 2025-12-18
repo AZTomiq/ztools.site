@@ -26,7 +26,8 @@
     "menu_dev": "Dev Tools",
     "search_placeholder": "Search tools... (Ctrl + K)",
     "search_no_results": "No results found for",
-    "search_title": "Search Tools"
+    "search_title": "Search Tools",
+    "changelog_title": "Version History"
   },
   "home": {
     "hero_title": "Utility Tools for Everyone",

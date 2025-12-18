@@ -4,3 +4,5 @@ icon: 📈
 translationKey: compound
 status: active
 link: /compound-interest/
+meta:
+  version: 1.0.0

@@ -4,3 +4,5 @@ icon: 🏠
 translationKey: loan
 status: active
 link: /loan-calculator/
+meta:
+  version: 1.0.0

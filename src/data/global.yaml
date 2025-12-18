@@ -43,3 +43,7 @@ category_order:
   - generator
   - daily
   - dev
+deployment:
+  remote: "https://github.com/ph4n4n/ztools.site-public.git"
+  branch: "main"
+  folder: "dist"

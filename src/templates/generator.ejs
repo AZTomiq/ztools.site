@@ -6,6 +6,9 @@
       <h1>
         <%= toolConfig.icon %>
           <%= t(toolConfig.translationKey + '.title' ) %>
+            <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+              <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+              <% } %>
       </h1>
       <p>
         <%= t(toolConfig.translationKey + '.desc' ) %>
@@ -25,14 +28,14 @@
 
               <div class="display-actions">
                 <% if (toolConfig.actions.secondary) { %>
-                  <% toolConfig.actions.secondary.forEach(action=> { %>
-                    <button class="btn-icon" onclick="<%= action.function %>()" title="<%= t(action.title) %>">
+                  <% toolConfig.actions.secondary.forEach(function(action) { %>
+                    <button class="btn-icon" onclick="<%= action['function'] %>()" title="<%= t(action.title) %>">
                       <%= action.icon %>
                     </button>
                     <% }); %>
                       <% } %>
                         <!-- Regenerate Button -->
-                        <button class="btn-icon" onclick="<%= toolConfig.actions.primary.function %>()"
+                        <button class="btn-icon" onclick="<%= toolConfig.actions.primary['function'] %>()"
                           title="Regenerate">🔄</button>
               </div>
         </div>
@@ -58,7 +61,7 @@
                       <h3>
                         <%= t(input.label) %>
                       </h3>
-                      <% input.items.forEach(item=> { %>
+                      <% input.items.forEach(function(item) { %>
                         <label class="checkbox-container">
                           <input type="<%= item.type %>" id="<%= item.id %>" <%=item.default ? 'checked' : '' %>>
                           <span>
@@ -118,7 +121,7 @@
                             <%= t(input.label) %>
                           </label>
                           <select id="<%= input.id %>">
-                            <% input.options.forEach(opt=> { %>
+                            <% input.options.forEach(function(opt) { %>
                               <option value="<%= opt.value %>" <%=input.default===opt.value ? 'selected' : '' %>><%=
                                   t(opt.label) %>
                               </option>
@@ -133,7 +136,7 @@
                               <%= t(input.label) %>
                             </label>
                             <div class="icon-select-grid">
-                              <% input.options.forEach(opt=> { %>
+                              <% input.options.forEach(function(opt) { %>
                                 <label class="icon-option">
                                   <input type="radio" name="<%= input.id %>" value="<%= opt.value %>"
                                     <%=input.default===opt.value ? 'checked' : '' %>>
@@ -181,7 +184,7 @@
               </div>
 
               <!-- Primary Action -->
-              <button class="btn btn-primary btn-block" onclick="<%= toolConfig.actions.primary.function %>()"
+              <button class="btn btn-primary btn-block" onclick="<%= toolConfig.actions.primary['function'] %>()"
                 style="margin-top: 1.5rem;">
                 <%= t(toolConfig.actions.primary.label) %>
               </button>
@@ -196,7 +199,7 @@
         </h2>
         <% if (toolConfig.guide.items) { %>
           <ul>
-            <% toolConfig.guide.items.forEach(item=> { %>
+            <% toolConfig.guide.items.forEach(function(item) { %>
               <li>
                 <% if (item.title) { %><strong>
                     <%= t(item.title) %>:

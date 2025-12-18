@@ -22,12 +22,16 @@
         <li><a href="<%= rootPath %><%= locale %>/terms/">
             <%= t('footer.terms') %>
           </a></li>
+        <li><a href="https://github.com/ph4n4n/ztools.site-public" target="_blank" rel="noopener noreferrer">
+            GitHub Source
+          </a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <p>
+    <div class="footer-copyright">
+      <span>
         <%= t('footer.copyright') %>
-      </p>
+      </span>
+      <span>ZTools v<%= packageVersion || '1.2.0' %></span>
     </div>
   </div>
 </footer>

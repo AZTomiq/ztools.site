@@ -4,3 +4,5 @@ icon: 💻
 translationKey: json
 status: active
 link: /json-toolkit/
+meta:
+  version: 1.0.0

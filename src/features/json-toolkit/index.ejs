@@ -1,11 +1,14 @@
 <!-- title: <%= t('json.title') %> - ZTools -->
-<link rel="stylesheet" href="<%= assetPath %>style.css">
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.js"></script>
 
 <section class="tool-container">
   <div class="page-header">
     <h1>💻 <%= t('json.title') %>
-    </h1>
+    
+      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+        <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+      <% } %></h1>
     <p>
       <%= t('json.desc') %>
     </p>
@@ -450,4 +453,4 @@
   </div>
 </section>
 
-<script src="<%= assetPath %>script.js"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

@@ -8,6 +8,11 @@ bookmarkCreator:
     select_all: "Select All"
     deselect_all: "Deselect All"
     search: "Quick search tools..."
+  steps_guide:
+    title: "How to use the Bookmark file?"
+    step1: "Click 'Export file' above to download the .html file."
+    step2: "Open Bookmark Manager in your browser (Ctrl+Shift+O or Cmd+Option+B)."
+    step3: "Choose 'Import Bookmarks' and select the downloaded file."
   guide:
     title: "How to use"
     items:

@@ -4,15 +4,31 @@ const ejs = require('ejs');
 const { execSync } = require('child_process');
 const crypto = require('crypto');
 const yaml = require('js-yaml');
+const { marked } = require('marked');
 
 // Parse CLI args
 const isSecure = process.argv.includes('--obfuscate');
-const forceRebuild = process.argv.includes('--force');
+let forceRebuild = process.argv.includes('--force');
 
 const SRC_DIR = path.join(__dirname, 'src');
 const DIST_DIR = path.join(__dirname, isSecure ? 'dist' : 'dist-dev');
 const ASSETS_DIST = path.join(DIST_DIR, 'assets');
 const CACHE_FILE = path.join(__dirname, '.build-cache.yaml');
+
+// Automatic Rebuild detection
+if (fs.existsSync(CACHE_FILE)) {
+  const packageJson = fs.readJsonSync(path.join(__dirname, 'package.json'));
+  const cacheData = yaml.load(fs.readFileSync(CACHE_FILE, 'utf8')) || {};
+  if (cacheData._version !== packageJson.version) {
+    console.log(`🚀 Version changed to ${packageJson.version}, forcing full rebuild...`);
+    forceRebuild = true;
+  }
+}
+
+if (!fs.existsSync(DIST_DIR)) {
+  console.log("📂 Output directory missing, forcing full rebuild...");
+  forceRebuild = true;
+}
 
 // Load Tools from YAML
 // Load Tools from Atomic Feature Configs
@@ -45,6 +61,20 @@ function getHash(content) {
   return crypto.createHash('md5').update(content).digest('hex');
 }
 
+// Global Asset Hash Cache (to avoid re-reading files)
+const ASSET_HASHES = {};
+function getAssetHash(relPath) {
+  if (ASSET_HASHES[relPath]) return ASSET_HASHES[relPath];
+  const fullPath = path.join(DIST_DIR, relPath);
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath);
+    const hash = getHash(content).substring(0, 8);
+    ASSET_HASHES[relPath] = hash;
+    return hash;
+  }
+  return '';
+}
+
 // Helper: Load/Save Cache
 let buildCache = {};
 if (fs.existsSync(CACHE_FILE) && !forceRebuild) {
@@ -56,20 +86,22 @@ if (fs.existsSync(CACHE_FILE) && !forceRebuild) {
 }
 
 function saveCache() {
+  const packageJson = fs.readJsonSync(path.join(__dirname, 'package.json'));
+  buildCache._version = packageJson.version;
   fs.writeFileSync(CACHE_FILE, yaml.dump(buildCache), 'utf8');
 }
 
 // Helper: Check if file changed
-function hasChanged(filePath, keyPrefix = '') {
+function hasChanged(filePath, keyPrefix = '', update = true) {
   if (forceRebuild) return true;
-  if (!fs.existsSync(filePath)) return true; // Source missing (weird)
+  if (!fs.existsSync(filePath)) return true;
 
   const content = fs.readFileSync(filePath);
   const currentHash = getHash(content);
   const cacheKey = keyPrefix + path.relative(SRC_DIR, filePath);
 
   if (buildCache[cacheKey] !== currentHash) {
-    buildCache[cacheKey] = currentHash;
+    if (update) buildCache[cacheKey] = currentHash;
     return true;
   }
   return false;
@@ -185,7 +217,7 @@ async function buildTemplates() {
     const fileName = file.replace('.ejs', '');
 
     // Only build specific standalone templates
-    if (!['robots', 'sw', 'manifest', 'sitemap'].includes(fileName)) {
+    if (!['robots', 'sw', 'manifest', 'sitemap', 'readme-dist'].includes(fileName)) {
       continue;
     }
 
@@ -194,6 +226,7 @@ async function buildTemplates() {
     else if (fileName === 'sw') outputName = 'sw.js';
     else if (fileName === 'manifest') outputName = 'manifest.json';
     else if (fileName === 'sitemap') outputName = 'sitemap.xml';
+    else if (fileName === 'readme-dist') outputName = 'README.md';
 
     const destPath = path.join(DIST_DIR, outputName);
 
@@ -345,7 +378,35 @@ async function buildPages() {
   const featuresDir = path.join(SRC_DIR, 'features');
   const includesDir = path.join(SRC_DIR, 'includes');
 
-  // Check include changes
+  // Check Data & Locale changes
+  let globalDataChanged = false;
+
+  // 1. Global data
+  const dataDir = path.join(SRC_DIR, 'data');
+  if (fs.existsSync(dataDir)) {
+    const dataFiles = fs.readdirSync(dataDir);
+    for (const file of dataFiles) {
+      if (hasChanged(path.join(dataDir, file), 'data/')) globalDataChanged = true;
+    }
+  }
+
+  // 2. Main locales
+  const localesDir = path.join(SRC_DIR, 'locales');
+  const checkDirRecursive = (dir, prefix) => {
+    if (!fs.existsSync(dir)) return;
+    const items = fs.readdirSync(dir);
+    for (const item of items) {
+      const fullPath = path.join(dir, item);
+      if (fs.statSync(fullPath).isDirectory()) {
+        checkDirRecursive(fullPath, prefix + item + '/');
+      } else {
+        if (hasChanged(fullPath, prefix)) globalDataChanged = true;
+      }
+    }
+  };
+  checkDirRecursive(localesDir, 'locales/');
+
+  // 3. Includes (Global layouts)
   let includesChanged = false;
   if (fs.existsSync(includesDir)) {
     const includeFiles = fs.readdirSync(includesDir);
@@ -356,21 +417,33 @@ async function buildPages() {
     }
   }
 
-  // Check Data changes (Atomic tool.yaml)
+  // Check Data changes (Atomic tool.yaml & feature locales)
   let toolsChanged = false;
   if (fs.existsSync(featuresDir)) {
     const features = fs.readdirSync(featuresDir);
     for (const feature of features) {
+      // tool.yaml
       const configPath = path.join(featuresDir, feature, 'tool.yaml');
       if (fs.existsSync(configPath)) {
-        // We track this as 'config/[feature]' to isolate cache keys
         if (hasChanged(configPath, `config/${feature}/`)) {
           toolsChanged = true;
           console.log(`⚙️  Config changed for: ${feature}`);
         }
       }
+      // feature locales
+      const featLocalesDir = path.join(featuresDir, feature, 'locales');
+      if (fs.existsSync(featLocalesDir)) {
+        const featLocaleFiles = fs.readdirSync(featLocalesDir);
+        for (const file of featLocaleFiles) {
+          if (hasChanged(path.join(featLocalesDir, file), `feat-locales/${feature}/`)) {
+            toolsChanged = true;
+          }
+        }
+      }
     }
   }
+
+  const globalRebuild = globalDataChanged || includesChanged;
 
   // Helper to walk a directory and build pages
   // baseDir: root folder being walked (e.g. src/pages or src/features)
@@ -385,16 +458,20 @@ async function buildPages() {
       if (stat.isDirectory()) {
         await walk(filePath, baseDir);
       } else if (file.endsWith('.ejs')) {
-        const fileChanged = hasChanged(filePath, 'page/');
-        // Calculate relative path for index check logic? 
-        // Actually, we rebuild everything if global includes change.
-        // For features, index.ejs is the entry point.
-
-        const mustRebuild = fileChanged || includesChanged || toolsChanged;
+        const fileChanged = hasChanged(filePath, 'page/', false);
+        // Page dependency logic: rebuild if page itself, global includes, or tool configs change.
+        const mustRebuild = fileChanged || globalRebuild || toolsChanged;
 
         if (mustRebuild) {
+          let allSubPagesSuccess = true;
           for (const locale of LOCALES) {
-            await buildPage(filePath, locale, baseDir);
+            const success = await buildPage(filePath, locale, baseDir);
+            if (!success) allSubPagesSuccess = false;
+          }
+
+          // Only commit to cache if all locales built successfully
+          if (allSubPagesSuccess) {
+            hasChanged(filePath, 'page/', true);
           }
         }
       }
@@ -473,15 +550,46 @@ async function buildPage(filePath, locale, baseDir) {
   let assetPath = '';
 
   let toolConfig = {};
+  let changelogHtml = '';
 
   if (isFeature) {
     // relativePath example: "tax/index.ejs" -> featureName = "tax"
     featureName = relativePath.split(path.sep)[0];
-    assetPath = `${rootPath}assets/features/${featureName}/`;
+
+    // Phe Hiệu suất cao: Asset path for features with hashes
+    const featureBase = `assets/features/${featureName}/`;
+    const cssHash = getAssetHash(featureBase + 'style.css');
+    const jsHash = getAssetHash(featureBase + 'script.js');
+
+    // We add hashes as query strings to the base asset path logic
+    // But since index.ejs files often hardcode 'style.css' and 'script.js' 
+    // we'll update assetPath and also provide a helper if needed.
+    assetPath = rootPath + featureBase;
+
+    // Provide specific versioned paths for feature index.ejs to use
+    toolConfig._assets = {
+      css: assetPath + 'style.css' + (cssHash ? '?h=' + cssHash : ''),
+      js: assetPath + 'script.js' + (jsHash ? '?h=' + jsHash : '')
+    };
+
     // Find the specific tool config
-    toolConfig = TOOLS.find(t => t.id === featureName) || {};
+    toolConfig = { ...toolConfig, ...TOOLS.find(t => t.id === featureName) || {} };
+
+    // Read local CHANGELOG.md if exists
+    const changelogPath = path.join(baseDir, featureName, 'CHANGELOG.md');
+    if (fs.existsSync(changelogPath)) {
+      try {
+        const mdContent = fs.readFileSync(changelogPath, 'utf8');
+        changelogHtml = marked.parse(mdContent);
+      } catch (e) { console.error(`Error parsing changelog for ${featureName}`, e); }
+    }
+
     console.log(`Debug: Feature ${featureName}, found config: ${!!toolConfig.id}`);
   }
+
+  // Pass package version
+  const packageJson = require('./package.json');
+  const packageVersion = packageJson.version;
 
   // Mapping of tool.yaml categories to translation keys
   const catMapping = {
@@ -518,8 +626,16 @@ async function buildPage(filePath, locale, baseDir) {
     category,
     tools: TOOLS,
     toolConfig, // Auto-injected tool configuration
+    featureName, // Added featureName
+    changelogHtml, // Added changelogHtml
+    packageVersion, // Added packageVersion
     global: GLOBAL_CONFIG,
-    t
+    t,
+    asset: (relPath) => {
+      // relPath example: 'assets/css/global.css' or 'lunar-calendar/style.css'
+      const hash = getAssetHash(relPath);
+      return rootPath + relPath + (hash ? '?h=' + hash : '');
+    }
   };
 
   try {
@@ -540,8 +656,10 @@ async function buildPage(filePath, locale, baseDir) {
     await fs.ensureDir(path.dirname(distPath));
     await fs.writeFile(distPath, fullHtml);
     console.log(`📄 Built [${locale}]: ${outputRelPath}`);
+    return true;
   } catch (e) {
     console.error(`❌ Error building page ${filePath}:`, e);
+    return false;
   }
 }
 

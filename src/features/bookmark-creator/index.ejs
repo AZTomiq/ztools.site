@@ -1,9 +1,12 @@
 <!-- title: <%= t('bookmarkCreator.title') %> - ZTools -->
-<link rel="stylesheet" href="<%= assetPath %>style.css">
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
   <div class="page-header">
     <h1>🔖 <%= t('bookmarkCreator.title') %>
+        <% if (toolConfig.meta && toolConfig.meta.version) { %>
+          <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+          <% } %>
     </h1>
     <p>
       <%= t('bookmarkCreator.desc') %>
@@ -64,32 +67,28 @@
 
   <!-- Visual Step-by-Step Guide -->
   <div class="export-guide-container">
-    <h2 class="guide-main-title">🛠️ <%= locale==='vi' ? 'Làm thế nào để sử dụng file Bookmark?'
-        : 'How to use the Bookmark file?' %>
+    <h2 class="guide-main-title">🛠️ <%= t('bookmarkCreator.steps_guide.title') %>
     </h2>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-icon">⬇️</div>
         <p>
-          <%= locale==='vi' ? 'Nhấn nút "Xuất file" ở trên để tải file .html về máy.'
-            : 'Click "Export file" above to download the .html file.' %>
+          <%= t('bookmarkCreator.steps_guide.step1') %>
         </p>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-icon">📂</div>
         <p>
-          <%= locale==='vi' ? 'Mở trình quản lý Bookmark trên trình duyệt (nhấn Ctrl+Shift+O hoặc Cmd+Option+B).'
-            : 'Open Bookmark Manager in your browser (Ctrl+Shift+O or Cmd+Option+B).' %>
+          <%= t('bookmarkCreator.steps_guide.step2') %>
         </p>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-icon">📥</div>
         <p>
-          <%= locale==='vi' ? 'Chọn "Import Bookmarks" (Nhập dấu trang) và chọn file vừa tải về.'
-            : 'Choose "Import Bookmarks" and select the downloaded file.' %>
+          <%= t('bookmarkCreator.steps_guide.step3') %>
         </p>
       </div>
     </div>
@@ -116,4 +115,4 @@
     <% } %>
 </section>
 
-<script src="<%= assetPath %>script.js"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

@@ -14,7 +14,26 @@
 
     <%- include('footer.ejs') %>
 
-      <script src="<%= rootPath %>assets/js/global.js"></script>
+      <% if (typeof changelogHtml !=='undefined' && changelogHtml) { %>
+        <!-- Changelog Modal -->
+        <div id="changelog-modal" class="search-modal">
+          <div class="search-overlay" id="close-changelog-overlay"></div>
+          <div class="search-container">
+            <div class="search-header">
+              <span class="search-icon">📜</span>
+              <h2 style="flex: 1; margin: 0; font-size: 1.25rem;">
+                <%= t('nav.changelog_title') %>
+              </h2>
+              <button id="close-changelog" class="close-search">&times;</button>
+            </div>
+            <div class="changelog-content">
+              <%- changelogHtml %>
+            </div>
+          </div>
+        </div>
+        <% } %>
+
+          <script src="<%= asset('assets/js/global.js') %>"></script>
 </body>
 
 </html>

@@ -4,3 +4,5 @@ icon: 🏦
 translationKey: savings
 status: active
 link: /savings-interest/
+meta:
+  version: 1.0.0

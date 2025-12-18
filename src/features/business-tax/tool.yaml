@@ -5,3 +5,5 @@ translationKey: business_tax
 descOverride: Corporate Income Tax Calculator
 status: active
 link: /business-tax/
+meta:
+  version: 1.0.0

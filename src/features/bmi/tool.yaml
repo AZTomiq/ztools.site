@@ -4,3 +4,5 @@ icon: ⚖️
 translationKey: bmi
 status: active
 link: /bmi/
+meta:
+  version: 1.0.0
