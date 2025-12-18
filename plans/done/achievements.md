@@ -2,13 +2,13 @@
 
 ## ✅ Recent Achievements (Updated 2025-12-18)
 
-- ✅ **Lighthouse Score (Mobile)**: Đạt ngưỡng vàng với **Performance: 99**, **SEO: 100**, Best Practices: 96.
-- ✅ **Asset Hashing (Phe Hiệu suất cao)**: Triển khai thành công Content Hash cho toàn bộ CSS/JS giúp cache tối ưu.
+- ✅ **Build Engine**: Removed full rebuild on version change; implemented granular hashing for faster builds.
+- ✅ **Accessibility**: Converted all version badges to semantic buttons; fixed missing labels in all forms.
 - ✅ **Full i18n Refactor**: Migrated to modular JSON resources for all tools.
 - ✅ **New Generators**: Password Generator, UUID Generator.
 - ✅ **Text Tools**: Lorem Ipsum, Word Counter, **Text Formatter with Modern 2-column Side-by-Side UI**.
-- ✅ **Job & Income**: Business Tax, Social Insurance.
-- ✅ **Finance Tools**: Loan Calculator, Compound Interest, Savings Interest, Percentage Calculator.
+- ✅ **Job & Income**: Business Tax, Social Insurance, **OT Calculator**, **Freelancer Tax**.
+- ✅ **Finance Tools**: Loan Calculator, Compound Interest, Savings Interest, Percentage Calculator, **Inflation Calculator**, **Investment ROI**.
 - ✅ **Data Processing**: JSON Toolkit (11 tools unified).
 - ✅ **Health & Lifestyle**: BMI Calculator, **Lunar Calendar Converter** 🌙.
 - ✅ **SEO Enhancement**: Dynamic sitemap, schema markup, canonical tags.

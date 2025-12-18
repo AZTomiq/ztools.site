@@ -1,0 +1,103 @@
+<!-- title: <%= t('freelancer_tax.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>Account Balance 🧾 <%= t('freelancer_tax.title') %>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('freelancer_tax.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="withholding" onclick="switchMode('withholding')">
+        <%= t('freelancer_tax.modes.withholding') %>
+      </button>
+      <button class="mode-btn" data-mode="household" onclick="switchMode('household')">
+        <%= t('freelancer_tax.modes.household') %>
+      </button>
+    </div>
+
+    <div class="card main-form">
+      <div class="form-group">
+        <label for="tax-amount">
+          <%= t('freelancer_tax.form.amount') %>
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="tax-amount" placeholder="<%= t('freelancer_tax.form.amount_ph') %>"
+            inputmode="numeric">
+          <span class="currency-tag">VNĐ</span>
+        </div>
+      </div>
+
+      <div id="sector-group" class="form-group" style="display: none;">
+        <label for="tax-sector">
+          <%= t('freelancer_tax.form.sector') %>
+        </label>
+        <select id="tax-sector">
+          <option value="dist">
+            <%= t('freelancer_tax.sectors.dist') %>
+          </option>
+          <option value="service">
+            <%= t('freelancer_tax.sectors.service') %>
+          </option>
+          <option value="comm">
+            <%= t('freelancer_tax.sectors.comm') %>
+          </option>
+          <option value="other">
+            <%= t('freelancer_tax.sectors.other') %>
+          </option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="calculateTax()">
+        <%= t('freelancer_tax.form.calculate') %>
+      </button>
+    </div>
+
+    <div id="result-box" class="result-display" style="display: none; margin-top: 2rem;">
+      <div class="card result-card">
+        <div class="result-main">
+          <label>
+            <%= t('freelancer_tax.results.net') %>
+          </label>
+          <div class="net-value" id="net-amount">0 đ</div>
+        </div>
+
+        <div class="tax-breakdown">
+          <div class="breakdown-row total-row">
+            <span>
+              <%= t('freelancer_tax.results.tax_total') %>
+            </span>
+            <span id="tax-total">0 đ</span>
+          </div>
+          <div id="pit-row" class="breakdown-row">
+            <span class="label-muted">
+              <%= t('freelancer_tax.results.pit') %>
+            </span>
+            <span id="tax-pit">0 đ</span>
+          </div>
+          <div id="vat-row" class="breakdown-row" style="display: none;">
+            <span class="label-muted">
+              <%= t('freelancer_tax.results.vat') %>
+            </span>
+            <span id="tax-vat">0 đ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-note"
+        style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); padding: 1rem; background: var(--bg-color); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+        <p id="mode-note"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

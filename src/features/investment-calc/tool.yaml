@@ -1,0 +1,10 @@
+id: investment-calc
+link: /investment-calc/
+icon: 💸
+category: finance
+status: active
+translationKey: investment
+meta:
+  version: 1.0.0
+  author: ph4n4n
+  description: Investment Yield & ROI Calculator.

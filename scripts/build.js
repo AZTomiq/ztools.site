@@ -18,12 +18,8 @@ const CACHE_FILE = path.join(ROOT_DIR, '.build-cache.yaml');
 
 // Automatic Rebuild detection
 if (fs.existsSync(CACHE_FILE)) {
-  const packageJson = fs.readJsonSync(path.join(ROOT_DIR, 'package.json'));
-  const cacheData = yaml.load(fs.readFileSync(CACHE_FILE, 'utf8')) || {};
-  if (cacheData._version !== packageJson.version) {
-    console.log(`🚀 Version changed to ${packageJson.version}, forcing full rebuild...`);
-    forceRebuild = true;
-  }
+  // Removed global package version check to rely on granular file hashing
+  // User feedback: Should not force full rebuild just on package version
 }
 
 if (!fs.existsSync(DIST_DIR)) {
@@ -187,10 +183,15 @@ const TRANSLATIONS = {
 
 // Main Execution
 (async () => {
+  console.time('🚀 Build Duration');
   console.log(`🚀 Starting build (Secure Mode: ${isSecure ? 'ON' : 'OFF'})...`);
 
   if (forceRebuild) {
-    try { await fs.emptyDir(DIST_DIR); console.log("🧹 Cleaned dist folder"); } catch (e) { }
+    try {
+      console.time("🧹 Cleaned dist folder");
+      await fs.emptyDir(DIST_DIR);
+      console.timeEnd("🧹 Cleaned dist folder");
+    } catch (e) { }
   } else {
     await fs.ensureDir(DIST_DIR);
   }
@@ -204,11 +205,13 @@ const TRANSLATIONS = {
 
   saveCache();
   console.log('✅ Build complete!');
+  console.timeEnd('🚀 Build Duration');
 })();
 
 async function buildTemplates() {
   const templatesDir = path.join(SRC_DIR, 'templates');
   if (!fs.existsSync(templatesDir)) return;
+  console.time('📝 Templates Build');
 
   const files = fs.readdirSync(templatesDir);
   for (const file of files) {
@@ -253,6 +256,7 @@ async function buildTemplates() {
       console.error(`❌ Error building template ${file}:`, e);
     }
   }
+  console.timeEnd('📝 Templates Build');
 }
 
 async function copyRootFiles() {
@@ -285,6 +289,8 @@ async function buildAssets() {
   await fs.ensureDir(jsDist);
   await fs.ensureDir(featuresDist);
 
+  console.time('🎨 Assets Build');
+
   // 1. Global CSS
   if (await fs.pathExists(cssSrc)) {
     const files = await fs.readdir(cssSrc);
@@ -294,12 +300,14 @@ async function buildAssets() {
       const destPath = path.join(cssDist, file);
       if (hasChanged(srcPath) || !fs.existsSync(destPath)) {
         if (isSecure) {
-          console.log(`🎨 Minifying Global CSS: ${file}`);
+          console.time(`🎨 Minifying Global CSS: ${file}`);
           try { execSync(`npx clean-css-cli -o "${destPath}" "${srcPath}"`); }
           catch (e) { await fs.copy(srcPath, destPath); }
+          console.timeEnd(`🎨 Minifying Global CSS: ${file}`);
         } else {
-          console.log(`📄 Copying Global CSS: ${file}`);
+          console.time(`🎨 Copying Global CSS: ${file}`);
           await fs.copy(srcPath, destPath);
+          console.timeEnd(`🎨 Copying Global CSS: ${file}`);
         }
       }
     }
@@ -332,12 +340,14 @@ async function buildAssets() {
         const destPath = path.join(featDistDir, 'style.css');
         if (hasChanged(cssPath) || !fs.existsSync(destPath)) {
           if (isSecure) {
-            console.log(`🎨 Minifying Feature CSS: ${feature}/style.css`);
+            console.time(`🎨 Minifying Feature CSS: ${feature}/style.css`);
             try { execSync(`npx clean-css-cli -o "${destPath}" "${cssPath}"`); }
             catch (e) { await fs.copy(cssPath, destPath); }
+            console.timeEnd(`🎨 Minifying Feature CSS: ${feature}/style.css`);
           } else {
-            console.log(`📄 Copying Feature CSS: ${feature}/style.css`);
+            console.time(`🎨 Copying Feature CSS: ${feature}/style.css`);
             await fs.copy(cssPath, destPath);
+            console.timeEnd(`🎨 Copying Feature CSS: ${feature}/style.css`);
           }
         }
       }
@@ -350,12 +360,13 @@ async function buildAssets() {
       }
     }
   }
+  console.timeEnd('🎨 Assets Build');
 }
 
 function processJs(srcPath, destPath, fileName) {
   if (hasChanged(srcPath) || !fs.existsSync(destPath)) {
     if (isSecure) {
-      console.log(`📦 Obfuscating JS: ${fileName}`);
+      console.time(`📦 Obfuscating JS: ${fileName}`);
       try {
         const cmd = `npx javascript-obfuscator "${srcPath}" --output "${destPath}" \
             --compact true --control-flow-flattening true --control-flow-flattening-threshold 0.5 \
@@ -367,9 +378,11 @@ function processJs(srcPath, destPath, fileName) {
         console.error(`Obfuscation failed for ${fileName}, fallback to minify.`);
         minifyJs(srcPath, destPath);
       }
+      console.timeEnd(`📦 Obfuscating JS: ${fileName}`);
     } else {
-      console.log(`📄 Copying JS: ${fileName}`);
+      console.time(`📄 Copying JS: ${fileName}`);
       fs.copySync(srcPath, destPath);
+      console.timeEnd(`📄 Copying JS: ${fileName}`);
     }
   }
 }
@@ -389,6 +402,7 @@ async function buildPages() {
   const includesDir = path.join(SRC_DIR, 'includes');
 
   // Check Data & Locale changes
+  console.time('📄 Pages Build');
   let globalDataChanged = false;
 
   // 1. Global data
@@ -490,6 +504,7 @@ async function buildPages() {
 
   await walk(pagesDir, pagesDir);
   await walk(featuresDir, featuresDir);
+  console.timeEnd('📄 Pages Build');
 }
 
 function getTranslation(key, locale) {
@@ -669,6 +684,7 @@ async function buildPage(filePath, locale, baseDir) {
   };
 
   try {
+    console.time(`📄 Built [${locale}]: ${outputRelPath}`);
     const renderedBody = ejs.render(pageContent, pageData, {
       views: [path.join(SRC_DIR, 'includes')],
       filename: filePath
@@ -685,7 +701,7 @@ async function buildPage(filePath, locale, baseDir) {
     const distPath = path.join(DIST_DIR, outputRelPath);
     await fs.ensureDir(path.dirname(distPath));
     await fs.writeFile(distPath, fullHtml);
-    console.log(`📄 Built [${locale}]: ${outputRelPath}`);
+    console.timeEnd(`📄 Built [${locale}]: ${outputRelPath}`);
     return true;
   } catch (e) {
     console.error(`❌ Error building page ${filePath}:`, e);

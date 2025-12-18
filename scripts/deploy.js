@@ -48,6 +48,7 @@ try {
 const config = { ...defaults, ...yamlConfig, ...args };
 const { branch, remote, dist_folder, strategy } = config;
 
+console.time('🚀 Deployment Duration');
 console.log('🚀 Starting Deployment...');
 console.log(`📡 Target: ${remote}/${branch}`);
 console.log(`📂 Folder: ${dist_folder}`);
@@ -123,6 +124,7 @@ try {
   }
 
   console.log('✅ Deployed Successfully!');
+  console.timeEnd('🚀 Deployment Duration');
 
 } catch (e) {
   console.error('❌ Deployment Failed:', e.message);

@@ -2,21 +2,27 @@
 
 **Current Status**: 🚀 Phase 2 (Quick Wins) In Progress
 
-## ♿ Next Milestone: Accessibility Refactor
+## ♿ Milestone: Accessibility Refactor (Complete ✅)
 - [x] **Accessibility Score**: Nâng cấp từ 88 lên 95+ (Lighthouse đạt 100 on Home).
 - [x] **Fix Aria-labels**: Đảm bảo mọi icon/nút đều có mô tả.
 - [x] **Contrast Check**: Tăng độ tương phản cho text muted.
 
-## 🛠️ Phase 2: Quick Wins (Ưu tiên cao - 3 tháng)
+## 🛠️ Phase 2: Quick Wins (Ưu tiên cao - Job & Finance Focus)
 
-**Priority 1 - Text Tools** (20 tools)
-- [x] Character Counter, Sentence Counter... (Done via `word-counter`)
-- [x] Text Diff Checker (Done via `text-diff`)
+**Priority 1 - Job & Income** (Tối ưu cho người lao động)
+- [x] Tính thuế TNCN (Upgrade 2026 logic)
+- [x] Tính thuế TNDN (Business Tax)
+- [x] Tính BHXH & Hưu trí
+- [x] **OT Calculator** (Tính lương làm thêm giờ - Done)
+- [x] Freelancer Tax Calculator (Thuế hộ kinh doanh/vãng lai - Done)
 
-**Priority 2 - Conversion Tools** (15 tools)
-- [x] Unit Converters (Done)
-- [x] Timestamp, URL Encoder/Decoder (Done via `timestamp-converter`, `url-toolkit`)
-- [x] Random Number/String (Done via `random-toolkit`)
+**Priority 2 - Finance** (Quản lý tài sản)
+- [x] Tính lãi vay (Loan Calculator)
+- [x] Compound Interest Calculator
+- [x] Lãi suất tiết kiệm
+- [x] Percentage Calculator
+- [x] **Inflation Calculator** (Tính trượt giá tiền tệ - Done)
+- [x] Stock/Investment Yield (Tính tỷ suất lợi nhuận đầu tư - Done)
 
 ## 🚀 Deployment & Security (Active)
 - [x] **2-Repo Separation**: Source private, Dist public.
@@ -26,7 +32,19 @@
     - [x] Implement unit tests for core logic (75+ tests across 19 core features: Tax, BMI, Loan, Word, Unit, Compound Interest, Savings, Percentage, Social Insurance, Text Formatter, Lunar Calendar, Password Gen, Timestamp, URL, JSON, Lorem Ipsum, Random, UUID, Business Tax).
     - [x] Document testing strategy in `plans/testing.md` and `DEVELOPMENT.md`.
 
-## 🎨 UI/UX Guidelines (Active)
-- [ ] Minimalist interfaces
-- [ ] WCAG 2.1 AA compliance
-- [ ] Load Time < 0.5s
+## 🚀 Phase 3: Expanding Ecosystem (Sắp tới)
+
+**Priority 1 - Developer Utilities**
+- [ ] JWT Debugger & Decoder
+- [ ] Base64 / Hash (MD5, SHA256) Toolkit
+- [ ] QR Code Generator (Offline)
+- [ ] Cron Expression Parser
+
+**Priority 2 - Image & PDF Tools**
+- [ ] Image Compressor (Client-side)
+- [ ] Image Resizer / Format Converter
+- [ ] PDF Viewer & Basic Metadata Editor
+
+**Priority 3 - Content & Engagement**
+- [ ] Deep-dive Guides (Blog style) for complex finance topics.
+- [ ] Interactive Charts for Inflation and Investment tools.

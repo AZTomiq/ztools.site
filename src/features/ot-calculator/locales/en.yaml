@@ -1,0 +1,21 @@
+ot:
+  title: Overtime Calculator
+  desc: Calculate accurately your overtime pay based on Vietnam Labor Law
+  form:
+    salary: Base Salary (Monthly)
+    salary_ph: e.g. 20,000,000
+    working_days: Working days per month
+    working_hours: Hours per day
+    ot_hours: OT Hours
+    day: Day
+    night: Night
+    calculate: Calculate
+  categories:
+    weekday: Weekdays (150%)
+    weekend: Weekends (200%)
+    holiday: Holidays/Tet (300%)
+  results:
+    hourly_rate: Hourly rate
+    total_ot: Total OT Pay
+    total_income: Total (Salary + OT)
+    breakdown: Detailed Breakdown

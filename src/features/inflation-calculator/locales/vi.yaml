@@ -1,0 +1,14 @@
+inflation:
+  title: Tính lạm phát (Việt Nam)
+  desc: Tính toán trượt giá tiền tệ và sức mua của đồng tiền qua các năm.
+  form:
+    amount: Số tiền ban đầu
+    amount_ph: 'Ví dụ: 100,000,000'
+    from_year: Từ năm
+    to_year: Đến năm
+    calculate: Tính trượt giá
+  results:
+    equivalent: Giá trị tương đương năm {year}
+    cumulative: Lạm phát tích lũy
+    explanation: Sức mua thay đổi {percent}%
+  data_source: Dữ liệu dựa trên chỉ số CPI của Tổng cục Thống kê Việt Nam.

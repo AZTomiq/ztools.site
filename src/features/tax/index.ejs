@@ -4,10 +4,12 @@
 <section class="tool-container">
   <div class="page-header">
     <h1>💸 <%= t('tax.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
-      <% } %></h1>
+
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('tax.desc') %>
     </p>
@@ -23,7 +25,7 @@
     <section class="input-section">
       <div class="input-stack">
         <div class="form-group">
-          <label id="incomeLabel">Thu nhập Gross (VNĐ/tháng)</label>
+          <label id="incomeLabel" for="incomeInput">Thu nhập Gross (VNĐ/tháng)</label>
           <div class="input-with-toggle">
             <input type="text" id="incomeInput" placeholder="50,000,000" inputmode="numeric">
             <div class="toggle-group">

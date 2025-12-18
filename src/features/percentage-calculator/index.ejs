@@ -7,7 +7,7 @@
     <h1>📊 <%= t('percentage.title') %>
     
       <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+        <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
       <% } %></h1>
     <p>
       <%= t('percentage.desc') %>

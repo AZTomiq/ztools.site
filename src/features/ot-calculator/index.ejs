@@ -1,0 +1,145 @@
+<!-- title: <%= t('ot.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>⏰ <%= t('ot.title') %>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('ot.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-grid">
+    <div class="card input-card">
+      <div class="form-group">
+        <label for="base-salary">
+          <%= t('ot.form.salary') %>
+        </label>
+        <input type="text" id="base-salary" placeholder="<%= t('ot.form.salary_ph') %>" inputmode="numeric">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="working-days">
+            <%= t('ot.form.working_days') %>
+          </label>
+          <input type="number" id="working-days" value="26" min="1" max="31">
+        </div>
+        <div class="form-group">
+          <label for="working-hours">
+            <%= t('ot.form.working_hours') %>
+          </label>
+          <input type="number" id="working-hours" value="8" min="1" max="12">
+        </div>
+      </div>
+
+      <div class="ot-sections">
+        <h3>
+          <%= t('ot.form.ot_hours') %>
+        </h3>
+
+        <div class="ot-category">
+          <h4>
+            <%= t('ot.categories.weekday') %>
+          </h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="weekday-day">
+                <%= t('ot.form.day') %>
+              </label>
+              <input type="number" id="weekday-day" value="0" min="0" step="0.5">
+            </div>
+            <div class="form-group">
+              <label for="weekday-night">
+                <%= t('ot.form.night') %>
+              </label>
+              <input type="number" id="weekday-night" value="0" min="0" step="0.5">
+            </div>
+          </div>
+        </div>
+
+        <div class="ot-category">
+          <h4>
+            <%= t('ot.categories.weekend') %>
+          </h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="weekend-day">
+                <%= t('ot.form.day') %>
+              </label>
+              <input type="number" id="weekend-day" value="0" min="0" step="0.5">
+            </div>
+            <div class="form-group">
+              <label for="weekend-night">
+                <%= t('ot.form.night') %>
+              </label>
+              <input type="number" id="weekend-night" value="0" min="0" step="0.5">
+            </div>
+          </div>
+        </div>
+
+        <div class="ot-category">
+          <h4>
+            <%= t('ot.categories.holiday') %>
+          </h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="holiday-day">
+                <%= t('ot.form.day') %>
+              </label>
+              <input type="number" id="holiday-day" value="0" min="0" step="0.5">
+            </div>
+            <div class="form-group">
+              <label for="holiday-night">
+                <%= t('ot.form.night') %>
+              </label>
+              <input type="number" id="holiday-night" value="0" min="0" step="0.5">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="calculateOT()">
+        <%= t('ot.form.calculate') %>
+      </button>
+    </div>
+
+    <div class="result-container">
+      <div id="result-box" class="card result-card" style="display: none;">
+        <h3>
+          <%= t('ot.results.total_ot') %>
+        </h3>
+        <div class="total-value" id="total-ot-pay">0 đ</div>
+        <p>
+          <%= t('ot.results.hourly_rate') %>: <span id="hourly-rate">0 đ</span>
+        </p>
+
+        <div class="breakdown-section" style="margin-top: 1.5rem;">
+          <h4>
+            <%= t('ot.results.breakdown') %>
+          </h4>
+          <table class="breakdown-table">
+            <tbody id="breakdown-body"></tbody>
+          </table>
+        </div>
+
+        <div class="total-income-box"
+          style="margin-top: 1.5rem; padding-top: 1rem; border-top: 2px dashed var(--border-color);">
+          <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem;">
+            <span>
+              <%= t('ot.results.total_income') %>
+            </span>
+            <span id="final-total" style="color: var(--success-color);">0 đ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

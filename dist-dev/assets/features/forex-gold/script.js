@@ -108,10 +108,62 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadGold() {
     goldTableBody.innerHTML = `<tr><td colspan="3" class="text-center loading-state">Đang tải dữ liệu thực tế...</td></tr>`;
     try {
-      // Use AllOrigins proxy to fetch official SJC XML to bypass CORS
+      // Use AllOrigins proxy to fetch official SJC REST API to bypass CORS
+      const targetUrl = 'https://sjc.com.vn/GoldPrice/Services/PriceService.ashx';
+      // We need to pass POST data: method=GetCurrentGoldPricesByBranch&BranchId=1
+      // AllOrigins mostly supports GET. For POST with specific bodies, we might need a more capable proxy or just GET if SJC supports it?
+      // Actually, SJC might support GET for this endpoint or we can try a different proxy like corsproxy.io or just try a simple GET via AllOrigins first.
+
+      // Attempt generic GET first or stick to the verified XML one if this complex POST fails?
+      // User specifically asked for this POST endpoint.
+      // Since it's x-www-form-urlencoded POST, passing it through simple GET proxies is hard.
+      // Let's try to fetch it via a proxy that supports forwarding body, or fallback to the previous XML method if too complex for client-side static site without backend.
+
+      // WAIT: The curl user sent is XHR but effectively just fetching data.
+      // Many older ASP.NET services accept GET params too. Let's try GET first: ?method=GetCurrentGoldPricesByBranch&BranchId=1
+      const getUrl = `https://sjc.com.vn/GoldPrice/Services/PriceService.ashx?method=GetCurrentGoldPricesByBranch&BranchId=1`;
+      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(getUrl)}`;
+
+      const resp = await fetch(proxyUrl);
+      const jsonAuth = await resp.json(); // AllOrigins wrapper
+
+      if (jsonAuth && jsonAuth.contents) {
+        let realData;
+        try {
+          realData = JSON.parse(jsonAuth.contents);
+        } catch (e) {
+          // SJC sometimes returns BOM or weird charset
+          console.error("Parse JSON content failed", e);
+          throw e;
+        }
+
+        if (realData.success && realData.data) {
+          goldData = realData.data.map(item => ({
+            type: item.TypeName,
+            buy: item.BuyValue,
+            sell: item.SellValue,
+            updated: realData.latestDate
+          }));
+
+          if (goldData.length > 0) {
+            goldTime.textContent = realData.latestDate || new Date().toLocaleString('vi-VN');
+            renderGold();
+            return;
+          }
+        }
+      }
+      throw new Error('Invalid Data Structure');
+    } catch (e) {
+      console.warn('Gold API new endpoint failed, trying fallback XML...', e);
+      // Fallback to the XML endpoint we had before which knows to work via simple GET
+      loadGoldXmlFallback();
+    }
+  }
+
+  async function loadGoldXmlFallback() {
+    try {
       const targetUrl = 'https://sjc.com.vn/xml/tygiagold.xml';
       const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-
       const resp = await fetch(proxyUrl);
       const json = await resp.json();
 
@@ -134,9 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
       }
-      throw new Error('Failed to parse XML');
     } catch (e) {
-      console.warn('Gold API failed, using fallback mock data', e);
+      console.warn('Fallback XML also failed.', e);
       goldData = getMockGold().data;
       renderGold();
     }

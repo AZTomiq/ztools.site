@@ -1,0 +1,14 @@
+inflation:
+  title: Inflation Calculator (Vietnam)
+  desc: See how much your money has lost or gained value over time.
+  form:
+    amount: Original Amount
+    amount_ph: e.g. 100,000,000
+    from_year: From Year
+    to_year: To Year
+    calculate: Calculate Impact
+  results:
+    equivalent: Equity Value in {year}
+    cumulative: Cumulative Inflation
+    explanation: Buying power changed by {percent}%
+  data_source: Data based on Vietnam CPI (General Statistics Office).

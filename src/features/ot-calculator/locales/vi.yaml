@@ -1,0 +1,21 @@
+ot:
+  title: Tính lương tăng ca (OT)
+  desc: Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất
+  form:
+    salary: Mức lương tháng (Gross)
+    salary_ph: 'Ví dụ: 15,000,000'
+    working_days: Số ngày làm việc/tháng
+    working_hours: Số giờ làm việc/ngày
+    ot_hours: Số giờ tăng ca
+    day: Ban ngày
+    night: Ban đêm
+    calculate: Tính lương OT
+  categories:
+    weekday: Ngày thường (150%)
+    weekend: Ngày nghỉ hàng tuần (200%)
+    holiday: Lễ, Tết (300%)
+  results:
+    hourly_rate: Lương giờ cơ bản
+    total_ot: Tổng tiền tăng ca
+    total_income: Tổng thu nhập (Lương + OT)
+    breakdown: Chi tiết tính toán

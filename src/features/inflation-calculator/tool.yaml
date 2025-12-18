@@ -1,0 +1,10 @@
+id: inflation-calculator
+link: /inflation-calculator/
+icon: 📈
+category: finance
+status: active
+translationKey: inflation
+meta:
+  version: 1.0.0
+  author: ph4n4n
+  description: Calculate the impact of inflation over time in Vietnam.

@@ -1,0 +1,10 @@
+id: ot-calculator
+link: /ot-calculator/
+icon: ⏰
+category: job
+status: active
+translationKey: ot
+meta:
+  version: 1.0.0
+  author: ph4n4n
+  description: Overtime Salary Calculator (Vietnam Labor Law)

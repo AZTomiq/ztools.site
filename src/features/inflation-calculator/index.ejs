@@ -1,0 +1,71 @@
+<!-- title: <%= t('inflation.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>📈 <%= t('inflation.title') %>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('inflation.desc') %>
+    </p>
+  </div>
+
+  <div class="card inflation-card">
+    <div class="form-group">
+      <label for="amount">
+        <%= t('inflation.form.amount') %>
+      </label>
+      <input type="text" id="amount" placeholder="<%= t('inflation.form.amount_ph') %>" inputmode="numeric">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="from-year">
+          <%= t('inflation.form.from_year') %>
+        </label>
+        <select id="from-year"></select>
+      </div>
+      <div class="form-group">
+        <label for="to-year">
+          <%= t('inflation.form.to_year') %>
+        </label>
+        <select id="to-year"></select>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="calculateInflation()">
+      <%= t('inflation.form.calculate') %>
+    </button>
+  </div>
+
+  <div id="result-box" class="result-box-container" style="display: none; margin-top: 2rem;">
+    <div class="card result-content">
+      <h3 id="result-title"></h3>
+      <div class="equivalent-value" id="equivalent-value">0 đ</div>
+      <div id="result-explanation" class="explanation-text"></div>
+
+      <div class="chart-container" style="margin-top: 2rem;">
+        <!-- Table for data breakdown instead of heavy chart libs for SSR speed -->
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Năm</th>
+              <th>CPI (%)</th>
+              <th>Tích lũy (%)</th>
+            </tr>
+          </thead>
+          <tbody id="inflation-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="source-hint" style="margin-top: 1rem; color: var(--text-muted); font-size: 0.8rem; text-align: center;">
+      💡 <%= t('inflation.data_source') %>
+    </p>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

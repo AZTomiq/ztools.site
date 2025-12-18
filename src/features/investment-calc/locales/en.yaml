@@ -1,0 +1,15 @@
+investment:
+  title: Investment ROI Calculator
+  desc: Calculate your Return on Investment (ROI) and Annual Yield.
+  form:
+    initial: Initial Investment
+    initial_ph: e.g. 500,000,000
+    final: Final Value (Sell Price)
+    final_ph: e.g. 750,000,000
+    duration: Holding Period (Years)
+    calculate: Calculate ROI
+  results:
+    roi: Total ROI (%)
+    annualized: Annualized Return (CAGR)
+    profit: Total Profit
+    explanation: Your investment grew by {percent}% in {years} years.

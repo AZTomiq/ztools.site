@@ -1,0 +1,15 @@
+investment:
+  title: Tính hiệu quả đầu tư (ROI)
+  desc: Tính toán lợi nhuận (ROI) và tỷ suất sinh lời hàng năm (CAGR).
+  form:
+    initial: Vốn đầu tư ban đầu
+    initial_ph: 'Ví dụ: 500,000,000'
+    final: Giá trị hiện tại/Giá bán
+    final_ph: 'Ví dụ: 750,000,000'
+    duration: Khoảng thời gian (Năm)
+    calculate: Tính lợi nhuận
+  results:
+    roi: Tổng lợi nhuận (ROI)
+    annualized: Tỷ suất sinh lời năm (CAGR)
+    profit: Tổng tiền lãi
+    explanation: Khoản đầu tư của bạn đã tăng trưởng {percent}% trong {years} năm.

@@ -3,11 +3,11 @@
 ## 📊 Trạng thái hiện tại
 | Category            | Tools Count   | Status           |
 | ------------------- | ------------- | ---------------- |
-| Job & Income        | 10            | 3/10 ✅           |
-| Finance             | 15            | 5/15 ✅           |
+| Job & Income        | 10            | 5/10 ✅           |
+| Finance             | 15            | 6/15 ✅           |
 | Health & Lifestyle  | 9             | 2/9 ✅            |
 | Text Tools          | 36            | 4/36 ✅           |
-| Conversion Tools    | 33            | 0/33             |
+| Conversion Tools    | 33            | 1/33 ✅           |
 | Real-time Data      | 5             | 0/5              |
 | Encoding/Security   | 25            | 1/25 ✅           |
 | Data Processing     | 39            | 11/39 ✅          |
@@ -16,7 +16,7 @@
 | Number & Math       | 32            | 0/32             |
 | Utility & Dev Tools | 29            | 0/29             |
 | PDF Tools           | 14            | 0/14             |
-| **TOTAL**           | **334 tools** | **28/334 (8.4%)** |
+| **TOTAL**           | **334 tools** | **32/334 (9.5%)** |
 
 ---
 
@@ -26,15 +26,17 @@
 - [x] Tính thuế TNCN
 - [x] Tính thuế TNDN
 - [x] Tính BHXH & Hưu trí
-- [ ] Tiện ích Lương thưởng (OT, KPI...)
+- [x] **OT Calculator** (Tiền lương làm thêm giờ)
+- [x] **Freelancer Tax** (Thuế vãng lai & HKD)
+- [ ] Tiện ích KPI & Thưởng doanh số
 
 ### 💰 Group 2: Finance
 - [x] Tính lãi vay (Loan Calculator)
 - [x] Compound Interest Calculator
 - [x] Lãi suất tiết kiệm
 - [x] Percentage Calculator
-- [x] Real-time Foreign Exchange (Tỷ giá ngoại tệ)
-- [x] Real-time Gold Prices (Giá vàng)
+- [x] **Inflation Calculator** (Trượt giá tiền tệ VN)
+- [x] **Investment ROI** (Tỷ suất lợi nhuận & CAGR)
 
 ### 📏 Group 3: Conversion Tools
 - [x] Unit Converters: Length, Weight, Volume, Area, Speed, Temperature (Tất tần tật)

@@ -4,10 +4,12 @@
 <section class="tool-container">
   <div class="page-header">
     <h1>📝 <%= t('lorem.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
-      <% } %></h1>
+
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('lorem.desc') %>
     </p>
@@ -16,12 +18,12 @@
   <div class="calculator-card">
     <div class="controls">
       <div class="control-group">
-        <label>Count:</label>
+        <label for="count">Count:</label>
         <input type="number" id="count" value="5" min="1" max="100">
       </div>
 
       <div class="control-group">
-        <label>Type:</label>
+        <label for="type">Type:</label>
         <select id="type">
           <option value="paragraphs">Paragraphs</option>
           <option value="sentences">Sentences</option>

@@ -1,0 +1,10 @@
+id: freelancer-tax
+link: /freelancer-tax/
+icon: 🧾
+category: job
+status: active
+translationKey: freelancer_tax
+meta:
+  version: 1.0.0
+  author: ph4n4n
+  description: Tax calculator for Freelancers and Business Households in Vietnam.
