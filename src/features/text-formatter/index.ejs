@@ -1,6 +1,145 @@
 <!-- title: <%= t('textFormatter.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= assetPath %>style.css">
 
-<%- include('../../templates/generator.ejs') %>
+<section class="formatter-container">
+  <div class="formatter-header">
+    <h1>
+      <%= t('textFormatter.title') %>
+    </h1>
+    <p>
+      <%= t('textFormatter.desc') %>
+    </p>
+  </div>
 
-  <script src="<%= assetPath %>script.js"></script>
+  <div class="formatter-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="section-header">
+        <h2>📝 <%= t('textFormatter.form.input_label') %>
+        </h2>
+        <span class="char-count">
+          <%= locale==='vi' ? 'Gốc' : 'Original' %>: <span id="stats-original">0</span>
+        </span>
+      </div>
+      <textarea id="input-text" placeholder="<%= t('textFormatter.form.input_placeholder') %>"></textarea>
+    </div>
+
+    <!-- Output Section -->
+    <div class="output-section">
+      <div class="section-header">
+        <h2>✨ <%= locale==='vi' ? 'Kết quả' : 'Result' %>
+        </h2>
+        <span class="char-count">
+          <%= locale==='vi' ? 'Mới' : 'Modified' %>: <span id="stats-formatted">0</span>
+        </span>
+      </div>
+      <textarea id="formatted-output" readonly
+        placeholder="<%= t('textFormatter.form.output_placeholder') %>"></textarea>
+    </div>
+  </div>
+
+  <!-- Actions & Stats Row -->
+  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="formatText()">
+        🚀 <%= t('textFormatter.form.btn_format') %>
+      </button>
+      <button class="btn btn-secondary" onclick="copyFormatted()">
+        📋 <%= t('textFormatter.form.btn_copy') %>
+      </button>
+      <button class="btn btn-secondary" onclick="clearText()">
+        🔄 <%= t('textFormatter.form.btn_clear') %>
+      </button>
+    </div>
+
+    <!-- Quick Stats -->
+    <div id="format-stats" class="stats"
+      style="display: flex; flex-direction: column; justify-content: center; padding: 1rem;">
+      <div style="font-size: 0.9rem; color: var(--text-muted);">
+        <%= locale==='vi' ? 'Giảm bớt' : 'Reduced' %>: <strong id="stats-reduction"
+            style="color: var(--success-color);">0</strong> chars
+          (<span id="stats-percent">0%</span>)
+      </div>
+    </div>
+  </div>
+
+  <!-- Options Grid -->
+  <div class="options-section">
+    <h3>
+      <%= t('textFormatter.form.options_title') %>
+    </h3>
+    <div class="options-grid">
+      <label class="checkbox-container">
+        <input type="checkbox" id="remove_extra_spaces" checked>
+        <span>
+          <%= t('textFormatter.form.remove_extra_spaces') %>
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="remove_line_breaks">
+        <span>
+          <%= t('textFormatter.form.remove_line_breaks') %>
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="trim_lines" checked>
+        <span>
+          <%= t('textFormatter.form.trim_lines') %>
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="normalize_quotes" checked>
+        <span>
+          <%= t('textFormatter.form.normalize_quotes') %>
+        </span>
+      </label>
+    </div>
+
+    <div class="case-transform">
+      <label for="case_transform">
+        <%= t('textFormatter.form.case_transform') %>
+      </label>
+      <select id="case_transform">
+        <option value="none">
+          <%= t('textFormatter.form.case_none') %>
+        </option>
+        <option value="lowercase">
+          <%= t('textFormatter.form.case_lowercase') %>
+        </option>
+        <option value="uppercase">
+          <%= t('textFormatter.form.case_uppercase') %>
+        </option>
+        <option value="capitalize">
+          <%= t('textFormatter.form.case_capitalize') %>
+        </option>
+        <option value="title">
+          <%= t('textFormatter.form.case_title') %>
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Guide Section -->
+  <% if (toolConfig.guide) { %>
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        📘 <%= t(toolConfig.guide.title) %>
+      </h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        <% toolConfig.guide.items.forEach(item=> { %>
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              <%= t(item.title) %>
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              <%= t(item.content) %>
+            </p>
+          </div>
+          <% }); %>
+      </div>
+    </div>
+    <% } %>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>

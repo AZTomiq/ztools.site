@@ -122,6 +122,10 @@
         <span class="logo-icon">🛠️</span>
         <span class="logo-text">ZTools</span>
         
+          <span class="logo-sub">
+            Công cụ Văn bản
+          </span>
+          
       </button>
 
       <div class="dropdown-menu mega-menu">
@@ -390,194 +394,166 @@
       <!-- title: Định Dạng Văn Bản - Xóa Style - ZTools -->
 <link rel="stylesheet" href="../../assets/features/text-formatter/style.css">
 
-<!-- Auto-generated UI -->
+<section class="formatter-container">
+  <div class="formatter-header">
+    <h1>
+      Định Dạng Văn Bản - Xóa Style
+    </h1>
+    <p>
+      Loại bỏ định dạng và làm sạch văn bản khi copy từ web.
+    </p>
+  </div>
 
-
-  <section class="tool-container">
-    <div class="page-header">
-      <h1>
-        🧹
-          Định Dạng Văn Bản - Xóa Style
-      </h1>
-      <p>
-        Loại bỏ định dạng và làm sạch văn bản khi copy từ web.
-      </p>
-    </div>
-
-    <div class="calculator-card">
-
-      <!-- Output Section -->
-      
-        <div class="password-display">
-          
-            <textarea id="formatted-output" readonly
-            placeholder="Văn bản đã định dạng sẽ hiển thị ở đây..." 
-            rows="10"></textarea>
-            
-
-              <div class="display-actions">
-                
-                  
-                    <button class="btn-icon" onclick="copyFormatted()" title="Sao Chép">
-                      📋
-                    </button>
-                    
-                    <button class="btn-icon" onclick="clearText()" title="Xóa">
-                      🔄
-                    </button>
-                    
-                      
-                        <!-- Regenerate Button -->
-                        <button class="btn-icon" onclick="formatText()"
-                          title="Regenerate">🔄</button>
-              </div>
-        </div>
-        
-
-          <!-- Strength Meter -->
-          
-
-              <!-- Inputs Section -->
-              <div class="controls-grid">
-                
-
-                  
-                            <!-- Textarea Input -->
-                            <div class="control-box full-width">
-                              <label for="input-text" class="control-label">
-                                Văn bản gốc
-                              </label>
-                              <textarea id="input-text" rows="8"
-                                placeholder="Dán văn bản của bạn vào đây..." class="form-input"
-                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: var(--bg-card); color: var(--text-primary); font-family: inherit; resize: vertical;"></textarea>
-                            </div>
-
-                            
-
-                                
-
-                  
-                    <!-- Group -->
-                    <div class="control-box">
-                      <h3>
-                        Tùy Chọn Định Dạng
-                      </h3>
-                      
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="remove_extra_spaces" checked>
-                          <span>
-                            Xóa Khoảng Trắng Thừa
-                          </span>
-                        </label>
-                        
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="remove_line_breaks" >
-                          <span>
-                            Xóa Xuống Dòng
-                          </span>
-                        </label>
-                        
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="trim_lines" checked>
-                          <span>
-                            Cắt Khoảng Trắng Đầu/Cuối Dòng
-                          </span>
-                        </label>
-                        
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="normalize_quotes" checked>
-                          <span>
-                            Chuẩn Hóa Dấu Ngoặc &amp; Ký Tự
-                          </span>
-                        </label>
-                        
-                    </div>
-
-                    
-
-                                
-
-                  
-                        <!-- Select Input -->
-                        <div class="control-box">
-                          <label for="case_transform">
-                            Chuyển Đổi Chữ
-                          </label>
-                          <select id="case_transform">
-                            
-                              <option value="none" selected>Không Thay Đổi
-                              </option>
-                              
-                              <option value="lowercase" >chữ thường
-                              </option>
-                              
-                              <option value="uppercase" >CHỮ HOA
-                              </option>
-                              
-                              <option value="capitalize" >Viết hoa chữ đầu
-                              </option>
-                              
-                              <option value="title" >Viết Hoa Đầu Từ
-                              </option>
-                              
-                          </select>
-                        </div>
-
-                        
-
-                                
-              </div>
-
-              <!-- Primary Action -->
-              <button class="btn btn-primary btn-block" onclick="formatText()"
-                style="margin-top: 1.5rem;">
-                Định Dạng
-              </button>
-
-    </div>
-
-    <!-- Content Guide Section -->
-    
-      <section class="info-section">
-        <h2>
-          Hướng Dẫn Sử Dụng
+  <div class="formatter-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="section-header">
+        <h2>📝 Văn bản gốc
         </h2>
-        
-          <ul>
-            
-              <li>
-                <strong>
-                    Dán Văn Bản:
-                  </strong>
-                  
-                    Copy văn bản từ bất kỳ trang web nào và dán vào ô nhập liệu. Công cụ sẽ tự động định dạng.
-              </li>
-              
-              <li>
-                <strong>
-                    Chọn Tùy Chọn:
-                  </strong>
-                  
-                    Chọn các tùy chọn định dạng như xóa khoảng trắng thừa, chuẩn hóa dấu ngoặc, hoặc thay đổi kiểu chữ.
-              </li>
-              
-              <li>
-                <strong>
-                    Sao Chép Kết Quả:
-                  </strong>
-                  
-                    Nhấn nút sao chép để copy văn bản đã làm sạch vào clipboard.
-              </li>
-              
-          </ul>
-          
-      </section>
-      
+        <span class="char-count">
+          Gốc: <span id="stats-original">0</span>
+        </span>
+      </div>
+      <textarea id="input-text" placeholder="Dán văn bản của bạn vào đây..."></textarea>
+    </div>
 
-  </section>
+    <!-- Output Section -->
+    <div class="output-section">
+      <div class="section-header">
+        <h2>✨ Kết quả
+        </h2>
+        <span class="char-count">
+          Mới: <span id="stats-formatted">0</span>
+        </span>
+      </div>
+      <textarea id="formatted-output" readonly
+        placeholder="Văn bản đã định dạng sẽ hiển thị ở đây..."></textarea>
+    </div>
+  </div>
+
+  <!-- Actions & Stats Row -->
+  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="formatText()">
+        🚀 Định Dạng
+      </button>
+      <button class="btn btn-secondary" onclick="copyFormatted()">
+        📋 Sao Chép
+      </button>
+      <button class="btn btn-secondary" onclick="clearText()">
+        🔄 Xóa
+      </button>
+    </div>
+
+    <!-- Quick Stats -->
+    <div id="format-stats" class="stats"
+      style="display: flex; flex-direction: column; justify-content: center; padding: 1rem;">
+      <div style="font-size: 0.9rem; color: var(--text-muted);">
+        Giảm bớt: <strong id="stats-reduction"
+            style="color: var(--success-color);">0</strong> chars
+          (<span id="stats-percent">0%</span>)
+      </div>
+    </div>
+  </div>
+
+  <!-- Options Grid -->
+  <div class="options-section">
+    <h3>
+      Tùy Chọn Định Dạng
+    </h3>
+    <div class="options-grid">
+      <label class="checkbox-container">
+        <input type="checkbox" id="remove_extra_spaces" checked>
+        <span>
+          Xóa Khoảng Trắng Thừa
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="remove_line_breaks">
+        <span>
+          Xóa Xuống Dòng
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="trim_lines" checked>
+        <span>
+          Cắt Khoảng Trắng Đầu/Cuối Dòng
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="normalize_quotes" checked>
+        <span>
+          Chuẩn Hóa Dấu Ngoặc &amp; Ký Tự
+        </span>
+      </label>
+    </div>
+
+    <div class="case-transform">
+      <label for="case_transform">
+        Chuyển Đổi Chữ
+      </label>
+      <select id="case_transform">
+        <option value="none">
+          Không Thay Đổi
+        </option>
+        <option value="lowercase">
+          chữ thường
+        </option>
+        <option value="uppercase">
+          CHỮ HOA
+        </option>
+        <option value="capitalize">
+          Viết hoa chữ đầu
+        </option>
+        <option value="title">
+          Viết Hoa Đầu Từ
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Guide Section -->
   
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        📘 Hướng Dẫn Sử Dụng
+      </h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              Dán Văn Bản
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              Copy văn bản từ bất kỳ trang web nào và dán vào ô nhập liệu. Công cụ sẽ tự động định dạng.
+            </p>
+          </div>
+          
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              Chọn Tùy Chọn
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              Chọn các tùy chọn định dạng như xóa khoảng trắng thừa, chuẩn hóa dấu ngoặc, hoặc thay đổi kiểu chữ.
+            </p>
+          </div>
+          
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              Sao Chép Kết Quả
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              Nhấn nút sao chép để copy văn bản đã làm sạch vào clipboard.
+            </p>
+          </div>
+          
+      </div>
+    </div>
+    
+</section>
 
-  <script src="../../assets/features/text-formatter/script.js"></script>
+<script src="../../assets/features/text-formatter/script.js"></script>
     </main>
 
     <footer class="site-footer">

@@ -122,6 +122,10 @@
         <span class="logo-icon">🛠️</span>
         <span class="logo-text">ZTools</span>
         
+          <span class="logo-sub">
+            Text Tools
+          </span>
+          
       </button>
 
       <div class="dropdown-menu mega-menu">
@@ -390,194 +394,166 @@
       <!-- title: Text Formatter - Clear Style - ZTools -->
 <link rel="stylesheet" href="../../assets/features/text-formatter/style.css">
 
-<!-- Auto-generated UI -->
+<section class="formatter-container">
+  <div class="formatter-header">
+    <h1>
+      Text Formatter - Clear Style
+    </h1>
+    <p>
+      Remove formatting and clean up text copied from web pages.
+    </p>
+  </div>
 
-
-  <section class="tool-container">
-    <div class="page-header">
-      <h1>
-        🧹
-          Text Formatter - Clear Style
-      </h1>
-      <p>
-        Remove formatting and clean up text copied from web pages.
-      </p>
-    </div>
-
-    <div class="calculator-card">
-
-      <!-- Output Section -->
-      
-        <div class="password-display">
-          
-            <textarea id="formatted-output" readonly
-            placeholder="Formatted text will appear here..." 
-            rows="10"></textarea>
-            
-
-              <div class="display-actions">
-                
-                  
-                    <button class="btn-icon" onclick="copyFormatted()" title="Copy">
-                      📋
-                    </button>
-                    
-                    <button class="btn-icon" onclick="clearText()" title="Clear">
-                      🔄
-                    </button>
-                    
-                      
-                        <!-- Regenerate Button -->
-                        <button class="btn-icon" onclick="formatText()"
-                          title="Regenerate">🔄</button>
-              </div>
-        </div>
-        
-
-          <!-- Strength Meter -->
-          
-
-              <!-- Inputs Section -->
-              <div class="controls-grid">
-                
-
-                  
-                            <!-- Textarea Input -->
-                            <div class="control-box full-width">
-                              <label for="input-text" class="control-label">
-                                Input Text
-                              </label>
-                              <textarea id="input-text" rows="8"
-                                placeholder="Paste your text here..." class="form-input"
-                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: var(--bg-card); color: var(--text-primary); font-family: inherit; resize: vertical;"></textarea>
-                            </div>
-
-                            
-
-                                
-
-                  
-                    <!-- Group -->
-                    <div class="control-box">
-                      <h3>
-                        Formatting Options
-                      </h3>
-                      
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="remove_extra_spaces" checked>
-                          <span>
-                            Remove Extra Spaces
-                          </span>
-                        </label>
-                        
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="remove_line_breaks" >
-                          <span>
-                            Remove Line Breaks
-                          </span>
-                        </label>
-                        
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="trim_lines" checked>
-                          <span>
-                            Trim Lines
-                          </span>
-                        </label>
-                        
-                        <label class="checkbox-container">
-                          <input type="checkbox" id="normalize_quotes" checked>
-                          <span>
-                            Normalize Quotes &amp; Symbols
-                          </span>
-                        </label>
-                        
-                    </div>
-
-                    
-
-                                
-
-                  
-                        <!-- Select Input -->
-                        <div class="control-box">
-                          <label for="case_transform">
-                            Text Case
-                          </label>
-                          <select id="case_transform">
-                            
-                              <option value="none" selected>No Change
-                              </option>
-                              
-                              <option value="lowercase" >lowercase
-                              </option>
-                              
-                              <option value="uppercase" >UPPERCASE
-                              </option>
-                              
-                              <option value="capitalize" >Capitalize first letter
-                              </option>
-                              
-                              <option value="title" >Title Case
-                              </option>
-                              
-                          </select>
-                        </div>
-
-                        
-
-                                
-              </div>
-
-              <!-- Primary Action -->
-              <button class="btn btn-primary btn-block" onclick="formatText()"
-                style="margin-top: 1.5rem;">
-                Format Text
-              </button>
-
-    </div>
-
-    <!-- Content Guide Section -->
-    
-      <section class="info-section">
-        <h2>
-          How to Use
+  <div class="formatter-content">
+    <!-- Input Section -->
+    <div class="input-section">
+      <div class="section-header">
+        <h2>📝 Input Text
         </h2>
-        
-          <ul>
-            
-              <li>
-                <strong>
-                    Paste Your Text:
-                  </strong>
-                  
-                    Copy text from any website and paste it into the input area. The tool will automatically format it.
-              </li>
-              
-              <li>
-                <strong>
-                    Choose Options:
-                  </strong>
-                  
-                    Select formatting options like removing extra spaces, normalizing quotes, or changing text case.
-              </li>
-              
-              <li>
-                <strong>
-                    Copy Result:
-                  </strong>
-                  
-                    Click the copy button to copy the cleaned text to your clipboard.
-              </li>
-              
-          </ul>
-          
-      </section>
-      
+        <span class="char-count">
+          Original: <span id="stats-original">0</span>
+        </span>
+      </div>
+      <textarea id="input-text" placeholder="Paste your text here..."></textarea>
+    </div>
 
-  </section>
+    <!-- Output Section -->
+    <div class="output-section">
+      <div class="section-header">
+        <h2>✨ Result
+        </h2>
+        <span class="char-count">
+          Modified: <span id="stats-formatted">0</span>
+        </span>
+      </div>
+      <textarea id="formatted-output" readonly
+        placeholder="Formatted text will appear here..."></textarea>
+    </div>
+  </div>
+
+  <!-- Actions & Stats Row -->
+  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="formatText()">
+        🚀 Format Text
+      </button>
+      <button class="btn btn-secondary" onclick="copyFormatted()">
+        📋 Copy
+      </button>
+      <button class="btn btn-secondary" onclick="clearText()">
+        🔄 Clear
+      </button>
+    </div>
+
+    <!-- Quick Stats -->
+    <div id="format-stats" class="stats"
+      style="display: flex; flex-direction: column; justify-content: center; padding: 1rem;">
+      <div style="font-size: 0.9rem; color: var(--text-muted);">
+        Reduced: <strong id="stats-reduction"
+            style="color: var(--success-color);">0</strong> chars
+          (<span id="stats-percent">0%</span>)
+      </div>
+    </div>
+  </div>
+
+  <!-- Options Grid -->
+  <div class="options-section">
+    <h3>
+      Formatting Options
+    </h3>
+    <div class="options-grid">
+      <label class="checkbox-container">
+        <input type="checkbox" id="remove_extra_spaces" checked>
+        <span>
+          Remove Extra Spaces
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="remove_line_breaks">
+        <span>
+          Remove Line Breaks
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="trim_lines" checked>
+        <span>
+          Trim Lines
+        </span>
+      </label>
+      <label class="checkbox-container">
+        <input type="checkbox" id="normalize_quotes" checked>
+        <span>
+          Normalize Quotes &amp; Symbols
+        </span>
+      </label>
+    </div>
+
+    <div class="case-transform">
+      <label for="case_transform">
+        Text Case
+      </label>
+      <select id="case_transform">
+        <option value="none">
+          No Change
+        </option>
+        <option value="lowercase">
+          lowercase
+        </option>
+        <option value="uppercase">
+          UPPERCASE
+        </option>
+        <option value="capitalize">
+          Capitalize first letter
+        </option>
+        <option value="title">
+          Title Case
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Guide Section -->
   
+    <div class="card" style="margin-top: 2rem;">
+      <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        📘 How to Use
+      </h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              Paste Your Text
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              Copy text from any website and paste it into the input area. The tool will automatically format it.
+            </p>
+          </div>
+          
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              Choose Options
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              Select formatting options like removing extra spaces, normalizing quotes, or changing text case.
+            </p>
+          </div>
+          
+          <div style="background: var(--bg-hover); padding: 1rem; border-radius: 8px;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">
+              Copy Result
+            </h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+              Click the copy button to copy the cleaned text to your clipboard.
+            </p>
+          </div>
+          
+      </div>
+    </div>
+    
+</section>
 
-  <script src="../../assets/features/text-formatter/script.js"></script>
+<script src="../../assets/features/text-formatter/script.js"></script>
     </main>
 
     <footer class="site-footer">

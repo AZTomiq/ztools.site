@@ -6,26 +6,30 @@ let inputText = '';
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   const inputArea = document.getElementById('input-text');
-
   if (inputArea) {
-    // Add input event listener
-    inputArea.addEventListener('input', (e) => {
-      inputText = e.target.value;
-    });
+    inputArea.addEventListener('input', formatText);
+    inputArea.addEventListener('paste', () => setTimeout(formatText, 100));
 
-    // Auto-format on paste
-    inputArea.addEventListener('paste', (e) => {
-      setTimeout(() => {
-        formatText();
-      }, 100);
-    });
-
-    // Auto-format if there's initial text
     if (inputArea.value) {
-      inputText = inputArea.value;
       formatText();
     }
   }
+
+  // Add listeners to all option inputs for real-time update
+  const optionInputs = [
+    'remove_extra_spaces',
+    'remove_line_breaks',
+    'trim_lines',
+    'normalize_quotes'
+  ];
+
+  optionInputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', formatText);
+  });
+
+  const caseSelect = document.getElementById('case_transform');
+  if (caseSelect) caseSelect.addEventListener('change', formatText);
 });
 
 // Main formatting function
@@ -109,30 +113,31 @@ function formatText() {
 
 // Update statistics
 function updateStats(original, formatted) {
-  const statsEl = document.getElementById('format-stats');
-  if (!statsEl) {
-    // Create stats element if it doesn't exist
-    const output = document.getElementById('formatted-output');
-    if (output && output.parentElement) {
-      const stats = document.createElement('div');
-      stats.id = 'format-stats';
-      stats.style.cssText = 'margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); display: flex; gap: 1rem;';
-      output.parentElement.appendChild(stats);
-      updateStats(original, formatted);
-    }
-    return;
-  }
+  // Update display stats if elements exist
+  const statsOriginal = document.getElementById('stats-original');
+  const statsFormatted = document.getElementById('stats-formatted');
+  const statsReduction = document.getElementById('stats-reduction');
+  const statsPercent = document.getElementById('stats-percent');
 
   const originalChars = original.length;
   const formattedChars = formatted.length;
   const reduction = originalChars - formattedChars;
   const reductionPercent = originalChars > 0 ? ((reduction / originalChars) * 100).toFixed(1) : 0;
 
-  statsEl.innerHTML = `
-    <span>Original: <strong>${originalChars}</strong> chars</span>
-    <span>Formatted: <strong>${formattedChars}</strong> chars</span>
-    ${reduction > 0 ? `<span style="color: var(--success);">Reduced by <strong>${reduction}</strong> chars (${reductionPercent}%)</span>` : ''}
-  `;
+  if (statsOriginal) statsOriginal.textContent = originalChars;
+  if (statsFormatted) statsFormatted.textContent = formattedChars;
+  if (statsReduction) statsReduction.textContent = reduction > 0 ? reduction : 0;
+  if (statsPercent) statsPercent.textContent = reductionPercent + '%';
+
+  // Fallback for generic generator layout
+  const genericStats = document.getElementById('format-stats');
+  if (genericStats) {
+    genericStats.innerHTML = `
+      <span>Original: <strong>${originalChars}</strong> chars</span>
+      <span>Formatted: <strong>${formattedChars}</strong> chars</span>
+      ${reduction > 0 ? `<span style="color: var(--success-color);">Reduced by <strong>${reduction}</strong> chars (${reductionPercent}%)</span>` : ''}
+    `;
+  }
 }
 
 // Copy formatted text
@@ -163,27 +168,19 @@ function clearText() {
 
 // Toast notification
 function showToast(message) {
-  const toast = document.createElement('div');
-  toast.textContent = message;
-  toast.style.cssText = `
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--success);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 10000;
-    animation: slideIn 0.3s ease;
-  `;
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
 
-  document.body.appendChild(toast);
+  toast.textContent = message;
+  toast.classList.add('show');
 
   setTimeout(() => {
-    toast.style.animation = 'slideOut 0.3s ease';
-    setTimeout(() => toast.remove(), 300);
-  }, 2000);
+    toast.classList.remove('show');
+  }, 2500);
 }
 
 // Add CSS animations

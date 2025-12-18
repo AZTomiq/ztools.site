@@ -25,7 +25,7 @@ features/social-insurance/script.js: 54bb2904dba128debd7c2c0a3226d6db
 features/tax/style.css: e813bdc10f0aff092ae969f37cd00c83
 features/tax/script.js: b850e49c830cb05d6322195a957a71e8
 features/text-formatter/style.css: df5e107dc7d228735591b55e7f01e601
-features/text-formatter/script.js: 9c26f86dda373132ad008f938724ed80
+features/text-formatter/script.js: a411c86da445f0abcb7e42f8a9b3728d
 features/uuid-generator/style.css: f08ff4cf4e34a15bc202e686af5929a7
 features/uuid-generator/script.js: 6b92895a617742eec5d5babf97bbd27e
 features/word-counter/style.css: 0c4dc4c0471e938630ff068c1946e607
@@ -41,13 +41,13 @@ config/compound-interest/features/compound-interest/tool.yaml: 0987c07bcd28b781a
 config/json-toolkit/features/json-toolkit/tool.yaml: 8dc8dcbf4d85668e1632f991309a6a4b
 config/loan-calculator/features/loan-calculator/tool.yaml: 930bc87272c06ac91b17db2a85f4bbc4
 config/lorem-ipsum/features/lorem-ipsum/tool.yaml: 745a6884276735de77db7a74a2065e19
-config/lunar-calendar/features/lunar-calendar/tool.yaml: 061ece22d06edcf07db9e9e09c6bfc7a
+config/lunar-calendar/features/lunar-calendar/tool.yaml: 3835b023734d574fd27a70324779e185
 config/password-generator/features/password-generator/tool.yaml: e09ac492c18a63f3fec482eb345f9b4f
 config/percentage-calculator/features/percentage-calculator/tool.yaml: cd8d6c4a6f55138ce4da7451b1099856
 config/savings-interest/features/savings-interest/tool.yaml: d137cdd3dcc7dd0e75c79511712c1ae6
 config/social-insurance/features/social-insurance/tool.yaml: 70c6fc0e37b2989a4469fce3a177a266
 config/tax/features/tax/tool.yaml: 159e18c8c56c6b3705657693147e7893
-config/text-formatter/features/text-formatter/tool.yaml: 18f30698fb4a002f3d76b8f7dad68408
+config/text-formatter/features/text-formatter/tool.yaml: 53b34355e1eabbe8f4c44b9e4510beaf
 config/uuid-generator/features/uuid-generator/tool.yaml: 66bbb558bf8832ff160d05c2314b1a94
 config/word-counter/features/word-counter/tool.yaml: dcbed665e8bfdea5c054a03f2b785987
 page/pages/404.ejs: e33bdf8c602155a5beafa541520a3911
@@ -67,6 +67,6 @@ page/features/percentage-calculator/index.ejs: 94512a5d51906d32e6304ed75ae9fd90
 page/features/savings-interest/index.ejs: 257d8f66cd987266e4d19dc4f4b2c441
 page/features/social-insurance/index.ejs: ee0747d75f2991eabcd1d8704f840181
 page/features/tax/index.ejs: 9ab670676d054cf6e40c8bc6ae56bc3a
-page/features/text-formatter/index.ejs: b78b95b6b0cf453a6e704a46e4348fa5
+page/features/text-formatter/index.ejs: 514299d80afacc90ee1b329882f4dc82
 page/features/uuid-generator/index.ejs: 8e777ddb3ce5c5756bbfd988c529c817
 page/features/word-counter/index.ejs: 7f25ab098badadebd7e2317bfc804ab5

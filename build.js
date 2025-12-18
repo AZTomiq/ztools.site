@@ -466,7 +466,6 @@ async function buildPage(filePath, locale, baseDir) {
 
   // Determine Category for Header
   let categoryKey = '';
-  const dirName = path.dirname(relativePath);
 
   // Feature Detection & Asset Path
   const isFeature = baseDir.endsWith('features');
@@ -484,12 +483,28 @@ async function buildPage(filePath, locale, baseDir) {
     console.log(`Debug: Feature ${featureName}, found config: ${!!toolConfig.id}`);
   }
 
-  if (['tax', 'business-tax', 'social-insurance'].includes(dirName)) categoryKey = 'nav.menu_job';
-  else if (['loan-calculator', 'compound-interest', 'savings-interest', 'percentage-calculator'].includes(dirName)) categoryKey = 'nav.menu_finance';
-  else if (['word-counter', 'lorem-ipsum'].includes(dirName)) categoryKey = 'nav.menu_text';
-  else if (['password-generator', 'uuid-generator'].includes(dirName)) categoryKey = 'nav.menu_generator';
-  else if (['bmi'].includes(dirName)) categoryKey = 'nav.menu_utils';
-  else if (['json-toolkit'].includes(dirName)) categoryKey = 'nav.menu_dev';
+  // Mapping of tool.yaml categories to translation keys
+  const catMapping = {
+    'job': 'nav.menu_job',
+    'finance': 'nav.menu_finance',
+    'text': 'nav.menu_text',
+    'generator': 'nav.menu_generator',
+    'daily': 'nav.menu_utils',
+    'dev': 'nav.menu_dev'
+  };
+
+  if (toolConfig && toolConfig.category) {
+    categoryKey = catMapping[toolConfig.category] || '';
+  } else {
+    // Fallback for legacy pages or if not explicitly in a feature folder
+    const dirName = path.dirname(relativePath);
+    if (['tax', 'business-tax', 'social-insurance'].includes(dirName)) categoryKey = 'nav.menu_job';
+    else if (['loan-calculator', 'compound-interest', 'savings-interest', 'percentage-calculator'].includes(dirName)) categoryKey = 'nav.menu_finance';
+    else if (['word-counter', 'lorem-ipsum', 'text-formatter'].includes(dirName)) categoryKey = 'nav.menu_text';
+    else if (['password-generator', 'uuid-generator'].includes(dirName)) categoryKey = 'nav.menu_generator';
+    else if (['bmi', 'lunar-calendar'].includes(dirName)) categoryKey = 'nav.menu_utils';
+    else if (['json-toolkit'].includes(dirName)) categoryKey = 'nav.menu_dev';
+  }
 
   const category = categoryKey ? t(categoryKey) : '';
 
