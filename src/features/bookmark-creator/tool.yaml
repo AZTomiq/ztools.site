@@ -1,0 +1,9 @@
+id: bookmark-creator
+category: daily
+icon: 🔖
+translationKey: bookmarkCreator
+status: active
+link: /bookmark-creator/
+meta:
+  version: 1.0.0
+  type: utility

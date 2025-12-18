@@ -320,7 +320,7 @@
                   </span>
                   Daily Utilities
                     <span class="mega-count-badge">
-                      2
+                      3
                     </span>
                 </div>
                 <span class="mega-caret">▾</span>
@@ -333,6 +333,15 @@
                     </span>
                     <span class="link-text">
                       BMI Calculator
+                    </span>
+                  </a>
+                  
+                  <a href="../../en/bookmark-creator/" class="mega-link">
+                    <span class="link-icon">
+                      🔖
+                    </span>
+                    <span class="link-text">
+                      Bookmark Creator
                     </span>
                   </a>
                   
@@ -378,16 +387,46 @@
       </div>
     </div>
 
-    <div style="display: flex; gap: 0.5rem; align-items: center; margin-left: auto;">
-      <a href="../../vi/savings-interest/"
-        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
-        🇻🇳
-      </a>
-      <button id="theme-toggle" aria-label="Toggle Dark Mode">
-        🌙
-      </button>
+    <button id="search-btn" class="btn-icon" title="Search Tools" aria-label="Search">
+      🔍
+    </button>
+    <a href="../../vi/savings-interest/"
+      style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+      🇻🇳
+    </a>
+    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+      🌙
+    </button>
+  </div>
+  </div>
+
+  <!-- Search Overlay / Modal -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-overlay"></div>
+    <div class="search-container">
+      <div class="search-header">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search tools... (Ctrl + K)" autocomplete="off">
+        <button id="close-search" class="close-search">&times;</button>
+      </div>
+      <div id="search-results" class="search-results">
+        <!-- Results will be injected here -->
+      </div>
+      <div class="search-footer">
+        <div class="search-hints">
+          <span><kbd>↵</kbd> Select</span>
+          <span><kbd>↑↓</kbd> Navigate</span>
+          <span><kbd>esc</kbd> Close</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Embed tools data for client-side search -->
+  <script id="tools-data" type="application/json">
+    
+    [{"id":"bmi","link":"../../en/bmi/","icon":"⚖️","title":"BMI Calculator","desc":"Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.","category":"Daily Utilities"},{"id":"bookmark-creator","link":"../../en/bookmark-creator/","icon":"🔖","title":"Bookmark Creator","desc":"Create a personal bookmark set for your browser with your favorite ZTools.","category":"Daily Utilities"},{"id":"business-tax","link":"../../en/business-tax/","icon":"💼","title":"Corporate Income Tax (CIT) Calc","desc":"Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.","category":"Job & Income"},{"id":"compound-interest","link":"../../en/compound-interest/","icon":"📈","title":"Compound Interest Calculator","desc":"Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.","category":"Finance & Banking"},{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"loan-calculator","link":"../../en/loan-calculator/","icon":"🏠","title":"Loan Calculator","desc":"Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.","category":"Finance & Banking"},{"id":"lorem-ipsum","link":"../../en/lorem-ipsum/","icon":"📝","title":"Lorem Ipsum Generator","desc":"Generate placeholder text for designs and mockups.","category":"Text Tools"},{"id":"lunar-calendar","link":"../../en/lunar-calendar/","icon":"🌙","title":"Lunar Calendar","desc":"Convert Solar to Lunar calendar, view Can Chi and Good Hours","category":"Daily Utilities"},{"id":"password-generator","link":"../../en/password-generator/","icon":"🔐","title":"Strong Password Generator","desc":"Generate secure, random passwords instantly.","category":"Generator Tools"},{"id":"percentage-calculator","link":"../../en/percentage-calculator/","icon":"％","title":"Percentage Calculator","desc":"Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.","category":"Finance & Banking"},{"id":"savings-interest","link":"../../en/savings-interest/","icon":"🏦","title":"Savings Interest Calculator","desc":"Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.","category":"Finance & Banking"},{"id":"social-insurance","link":"../../en/social-insurance/","icon":"🏥","title":"Social Insurance","desc":"Social Insurance & Pension Calculator.","category":"Job & Income"},{"id":"tax","link":"../../en/tax/","icon":"💸","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"text-formatter","link":"../../en/text-formatter/","icon":"🧹","title":"Text Formatter - Clear Style","desc":"Remove formatting and clean up text copied from web pages.","category":"Text Tools"},{"id":"uuid-generator","link":"../../en/uuid-generator/","icon":"🆔","title":"UUID Generator","desc":"Generate random UUIDs/GUIDs (V1, V4, V7) instantly.","category":"Generator Tools"},{"id":"word-counter","link":"../../en/word-counter/","icon":"📊","title":"Word Counter & Analyzer","desc":"Count words, analyze frequency, and convert case (Case Converter).","category":"Text Tools"}]
+  </script>
 </header>
 
     <main class="container">

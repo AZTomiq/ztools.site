@@ -615,4 +615,6 @@
 - ✅ **Health & Lifestyle**: BMI Calculator, **Lunar Calendar Converter** 🌙.
 - ✅ **SEO Enhancement**: Dynamic sitemap, schema markup, canonical tags.
 - ✅ **UI/UX**: Text Formatter redesigned with 2nd column layout, gradients, and **Dynamic Sub-logo (Category Sync)**.
-**Next Milestone**: Implement Search Feature & Bookmark Creator (High Priority UX Enhancements).
+- ✅ **Search Feature**: Hỗ trợ tìm kiếm nhanh (Ctrl+K), auto-complete và navigation bằng bàn phím.
+- ✅ **Bookmark Creator**: Cho phép người dùng tạo và xuất file bookmark cá nhân (.html) để import vào trình duyệt.
+**Next Milestone**: Triển khai các công cụ trong Group 5 (Conversion Tools) và Group 6 (Security).

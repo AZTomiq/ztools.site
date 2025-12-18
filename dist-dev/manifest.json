@@ -53,6 +53,19 @@
       ]
     },
     {
+      "name": "Bookmark Creator",
+      "short_name": "Bookmark Creator",
+      "description": "Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.",
+      "url": "/vi/bookmark-creator/?source=pwa",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext\n  y='.9em' font-size='90'%3E🔖%3C/text%3E%3C/svg%3E",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
       "name": "Tính thuế TNDN",
       "short_name": "Tính thuế TNDN",
       "description": "Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.",
@@ -73,19 +86,6 @@
       "icons": [
         {
           "src": "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext\n  y='.9em' font-size='90'%3E📈%3C/text%3E%3C/svg%3E",
-          "sizes": "192x192",
-          "type": "image/svg+xml"
-        }
-      ]
-    },
-    {
-      "name": "JSON Toolkit",
-      "short_name": "JSON Toolkit",
-      "description": "Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.",
-      "url": "/vi/json-toolkit/?source=pwa",
-      "icons": [
-        {
-          "src": "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext\n  y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E",
           "sizes": "192x192",
           "type": "image/svg+xml"
         }

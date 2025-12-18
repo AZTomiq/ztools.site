@@ -1,0 +1,86 @@
+<!-- title: <%= t('bookmarkCreator.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>🔖 <%= t('bookmarkCreator.title') %>
+    </h1>
+    <p>
+      <%= t('bookmarkCreator.desc') %>
+    </p>
+  </div>
+
+  <div class="calculator-card">
+    <div class="bookmark-actions">
+      <div class="search-box">
+        <input type="text" id="tool-search" placeholder="<%= t('bookmarkCreator.form.search') %>">
+      </div>
+      <div class="bulk-actions">
+        <button class="btn btn-secondary btn-sm" id="select-all-btn">
+          <%= t('bookmarkCreator.form.select_all') %>
+        </button>
+        <button class="btn btn-secondary btn-sm" id="deselect-all-btn">
+          <%= t('bookmarkCreator.form.deselect_all') %>
+        </button>
+      </div>
+    </div>
+
+    <div class="bookmark-grid" id="bookmark-list">
+      <% const catOrder=global.category_order || ['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const
+        catMap=global.categories; catOrder.forEach(catId=> {
+        const catTools = tools.filter(t => t.category === catId && t.status === 'active');
+        if (catTools.length === 0) return;
+        %>
+        <div class="category-group" data-category="<%= catId %>">
+          <h3 class="category-title">
+            <%= catMap[catId].icon %>
+              <%= t(catMap[catId].translation_key) %>
+          </h3>
+          <div class="tools-selection">
+            <% catTools.forEach(tool=> { %>
+              <label class="tool-checkbox-item" data-title="<%= t(tool.translationKey + '.title') %>">
+                <input type="checkbox" name="tool-choice" value="<%= tool.id %>"
+                  data-url="<%= rootPath %><%= locale %><%= tool.link %>"
+                  data-name="<%= t(tool.translationKey + '.title') %>"
+                  data-cat-name="<%= t(catMap[catId].translation_key) %>" checked>
+                <span class="checkbox-custom"></span>
+                <span class="tool-icon">
+                  <%= tool.icon %>
+                </span>
+                <span class="tool-name">
+                  <%= t(tool.translationKey + '.title' ) %>
+                </span>
+              </label>
+              <% }); %>
+          </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <button id="export-btn" class="btn btn-primary btn-block" style="margin-top: 2rem; font-size: 1.1rem;">
+      🚀 <%= t('bookmarkCreator.form.btn_export') %>
+    </button>
+  </div>
+
+  <% if (toolConfig.guide) { %>
+    <section class="info-section">
+      <h2>
+        <%= t(toolConfig.guide.title) %>
+      </h2>
+      <div class="guide-grid">
+        <% toolConfig.guide.items.forEach(item=> { %>
+          <div class="guide-item">
+            <h4>
+              <%= t(item.title) %>
+            </h4>
+            <p>
+              <%= t(item.content) %>
+            </p>
+          </div>
+          <% }); %>
+      </div>
+    </section>
+    <% } %>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>

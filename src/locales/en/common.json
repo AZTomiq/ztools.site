@@ -23,7 +23,10 @@
     "menu_text": "Text Tools",
     "menu_generator": "Generators",
     "menu_categories": "Categories",
-    "menu_dev": "Dev Tools"
+    "menu_dev": "Dev Tools",
+    "search_placeholder": "Search tools... (Ctrl + K)",
+    "search_no_results": "No results found for",
+    "search_title": "Search Tools"
   },
   "home": {
     "hero_title": "Utility Tools for Everyone",

@@ -291,7 +291,7 @@
                   </span>
                   Tiện ích đời sống
                     <span class="mega-count-badge">
-                      2
+                      3
                     </span>
                 </div>
                 <span class="mega-caret">▾</span>
@@ -304,6 +304,15 @@
                     </span>
                     <span class="link-text">
                       Tính chỉ số BMI
+                    </span>
+                  </a>
+                  
+                  <a href="../vi/bookmark-creator/" class="mega-link">
+                    <span class="link-icon">
+                      🔖
+                    </span>
+                    <span class="link-text">
+                      Bookmark Creator
                     </span>
                   </a>
                   
@@ -349,16 +358,46 @@
       </div>
     </div>
 
-    <div style="display: flex; gap: 0.5rem; align-items: center; margin-left: auto;">
-      <a href="../en/"
-        style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
-        🇺🇸
-      </a>
-      <button id="theme-toggle" aria-label="Toggle Dark Mode">
-        🌙
-      </button>
+    <button id="search-btn" class="btn-icon" title="Tìm kiếm công cụ" aria-label="Search">
+      🔍
+    </button>
+    <a href="../en/"
+      style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
+      🇺🇸
+    </a>
+    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+      🌙
+    </button>
+  </div>
+  </div>
+
+  <!-- Search Overlay / Modal -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-overlay"></div>
+    <div class="search-container">
+      <div class="search-header">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Tìm kiếm công cụ... (Ctrl + K)" autocomplete="off">
+        <button id="close-search" class="close-search">&times;</button>
+      </div>
+      <div id="search-results" class="search-results">
+        <!-- Results will be injected here -->
+      </div>
+      <div class="search-footer">
+        <div class="search-hints">
+          <span><kbd>↵</kbd> Select</span>
+          <span><kbd>↑↓</kbd> Navigate</span>
+          <span><kbd>esc</kbd> Close</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Embed tools data for client-side search -->
+  <script id="tools-data" type="application/json">
+    
+    [{"id":"bmi","link":"../vi/bmi/","icon":"⚖️","title":"Tính chỉ số BMI","desc":"Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI & WPRO cho người Việt.","category":"Tiện ích đời sống"},{"id":"bookmark-creator","link":"../vi/bookmark-creator/","icon":"🔖","title":"Bookmark Creator","desc":"Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.","category":"Tiện ích đời sống"},{"id":"business-tax","link":"../vi/business-tax/","icon":"💼","title":"Tính thuế TNDN","desc":"Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.","category":"Việc làm & Lương thưởng"},{"id":"compound-interest","link":"../vi/compound-interest/","icon":"📈","title":"Tính Lãi Kép","desc":"Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.","category":"Tài chính & Ngân hàng"},{"id":"json-toolkit","link":"../vi/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.","category":"Công cụ Lập trình (Dev)"},{"id":"loan-calculator","link":"../vi/loan-calculator/","icon":"🏠","title":"Tính lãi vay","desc":"Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.","category":"Tài chính & Ngân hàng"},{"id":"lorem-ipsum","link":"../vi/lorem-ipsum/","icon":"📝","title":"Lorem Ipsum Generator","desc":"Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.","category":"Công cụ Văn bản"},{"id":"lunar-calendar","link":"../vi/lunar-calendar/","icon":"🌙","title":"Xem Âm Lịch","desc":"Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo","category":"Tiện ích đời sống"},{"id":"password-generator","link":"../vi/password-generator/","icon":"🔐","title":"Tạo Mật Khẩu Mạnh","desc":"Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.","category":"Generators (Tạo mã)"},{"id":"percentage-calculator","link":"../vi/percentage-calculator/","icon":"％","title":"Tính Phần Trăm (%)","desc":"Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.","category":"Tài chính & Ngân hàng"},{"id":"savings-interest","link":"../vi/savings-interest/","icon":"🏦","title":"Tính Lãi Suất Tiết Kiệm","desc":"Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.","category":"Tài chính & Ngân hàng"},{"id":"social-insurance","link":"../vi/social-insurance/","icon":"🏥","title":"Tính BHXH & Hưu trí","desc":"Tính BHXH bắt buộc vs Tự nguyện.","category":"Việc làm & Lương thưởng"},{"id":"tax","link":"../vi/tax/","icon":"💸","title":"Tính thuế TNCN","desc":"Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.","category":"Việc làm & Lương thưởng"},{"id":"text-formatter","link":"../vi/text-formatter/","icon":"🧹","title":"Định Dạng Văn Bản - Xóa Style","desc":"Loại bỏ định dạng và làm sạch văn bản khi copy từ web.","category":"Công cụ Văn bản"},{"id":"uuid-generator","link":"../vi/uuid-generator/","icon":"🆔","title":"UUID Generator","desc":"Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.","category":"Generators (Tạo mã)"},{"id":"word-counter","link":"../vi/word-counter/","icon":"📊","title":"Đếm từ & Phân tích văn bản","desc":"Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).","category":"Công cụ Văn bản"}]
+  </script>
 </header>
 
     <main class="container">
@@ -684,6 +723,20 @@
             </h3>
             <p>
               Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI &amp; WPRO cho người Việt.
+            </p>
+          </a>
+          
+              
+        
+          <a href="../vi/bookmark-creator/" class="card tool-item">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">
+              🔖
+            </div>
+            <h3>
+              Bookmark Creator
+            </h3>
+            <p>
+              Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.
             </p>
           </a>
           

@@ -73,9 +73,114 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- Tool Usage Tracking ---
+  // --- Search Modal Logic ---
+  const searchBtn = document.getElementById('search-btn');
+  const searchModal = document.getElementById('search-modal');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  const closeSearch = document.getElementById('close-search');
+  const searchOverlay = document.querySelector('.search-overlay');
+
+  let toolsData = [];
+  try {
+    const toolsScript = document.getElementById('tools-data');
+    if (toolsScript) {
+      toolsData = JSON.parse(toolsScript.textContent);
+    }
+  } catch (e) { console.error('Error loading search data', e); }
+
+  const openSearch = () => {
+    searchModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => searchInput.focus(), 50);
+    renderResults('');
+  };
+
+  const hideSearch = () => {
+    searchModal.classList.remove('show');
+    document.body.style.overflow = '';
+    searchInput.value = '';
+  };
+
+  if (searchBtn) searchBtn.addEventListener('click', openSearch);
+  if (closeSearch) closeSearch.addEventListener('click', hideSearch);
+  if (searchOverlay) searchOverlay.addEventListener('click', hideSearch);
+
+  // Keyboard Shortcuts
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === 'Escape') hideSearch();
+  });
+
+  // Search Logic
+  searchInput.addEventListener('input', (e) => {
+    renderResults(e.target.value.trim());
+  });
+
+  function renderResults(query) {
+    if (!searchResults) return;
+
+    const q = query.toLowerCase();
+    const filtered = toolsData.filter(tool => {
+      if (!q) return true;
+      return tool.title.toLowerCase().includes(q) ||
+        tool.desc.toLowerCase().includes(q) ||
+        tool.id.toLowerCase().includes(q);
+    }).slice(0, 10);
+
+    if (filtered.length === 0) {
+      const emptyMsg = document.documentElement.lang === 'vi' ? 'Không tìm thấy kết quả cho' : 'No results for';
+      searchResults.innerHTML = `<div class="search-no-results">${emptyMsg} "${query}"</div>`;
+      return;
+    }
+
+    searchResults.innerHTML = filtered.map((tool, index) => `
+      <a href="${tool.link}" class="search-result-item ${index === 0 ? 'selected' : ''}" data-index="${index}">
+        <div class="result-icon">${tool.icon}</div>
+        <div class="result-info">
+          <span class="result-title">${tool.title}</span>
+          <span class="result-desc">${tool.desc}</span>
+        </div>
+        <span class="result-cat">${tool.category}</span>
+      </a>
+    `).join('');
+
+    // Handle Keyboard Navigation within results
+    setupResultNavigation();
+  }
+
+  function setupResultNavigation() {
+    let selectedIndex = 0;
+    const items = searchResults.querySelectorAll('.search-result-item');
+
+    searchInput.onkeydown = (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        items[selectedIndex].classList.remove('selected');
+        selectedIndex = (selectedIndex + 1) % items.length;
+        items[selectedIndex].classList.add('selected');
+        items[selectedIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        items[selectedIndex].classList.remove('selected');
+        selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+        items[selectedIndex].classList.add('selected');
+        items[selectedIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const selected = searchResults.querySelector('.search-result-item.selected');
+        if (selected) selected.click();
+      }
+    };
+  }
+
+  // --- End Search Modal Logic ---
+
   // Track clicks on tool items (both in Mega Menu and Homepage Grid)
-  document.querySelectorAll('.tool-item, .mega-link').forEach(link => {
+  document.querySelectorAll('.tool-item, .mega-link, .search-result-item').forEach(link => {
     link.addEventListener('click', (e) => {
       const url = link.getAttribute('href');
       trackUsage(url);

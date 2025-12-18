@@ -1,0 +1,19 @@
+bookmarkCreator:
+  title: "Bookmark Creator"
+  desc: "Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools."
+  form:
+    title: "Tạo danh sách Bookmark"
+    subtitle: "Chọn các công cụ bạn muốn thêm vào bộ Bookmark"
+    btn_export: "Xuất file Bookmark (.html)"
+    select_all: "Chọn tất cả"
+    deselect_all: "Bỏ chọn tất cả"
+    search: "Tìm nhanh công cụ..."
+  guide:
+    title: "Hướng dẫn sử dụng"
+    items:
+      - title: "Chọn công cụ"
+        content: "Duyệt qua danh sách và tích chọn các công cụ bạn thường xuyên sử dụng."
+      - title: "Xuất file"
+        content: "Nhấn nút 'Xuất file Bookmark' để tải về file .html chuẩn."
+      - title: "Nhập vào trình duyệt"
+        content: "Mở trình quản lý Bookmark của trình duyệt (Chrome/Safari/Edge), chọn 'Import Bookmark' và chọn file vừa tải về."

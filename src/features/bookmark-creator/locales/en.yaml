@@ -1,0 +1,19 @@
+bookmarkCreator:
+  title: "Bookmark Creator"
+  desc: "Create a personal bookmark set for your browser with your favorite ZTools."
+  form:
+    title: "Generate Bookmark List"
+    subtitle: "Select the tools you want to add to your bookmarks"
+    btn_export: "Export Bookmark (.html)"
+    select_all: "Select All"
+    deselect_all: "Deselect All"
+    search: "Quick search tools..."
+  guide:
+    title: "How to use"
+    items:
+      - title: "Select Tools"
+        content: "Browse the list and check the tools you use frequently."
+      - title: "Export File"
+        content: "Click 'Export Bookmark' to download a standard .html file."
+      - title: "Import to Browser"
+        content: "Open your browser's Bookmark Manager, choose 'Import Bookmarks' and select the downloaded file."

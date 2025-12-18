@@ -5,6 +5,15 @@ Tất cả các thay đổi quan trọng đối với dự án **ZTools** sẽ �
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 và dự án này tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-12-18
+
+### Added
+- **Global Search**: Tính năng tìm kiếm công cụ toàn diện với phím tắt `Ctrl + K`, tự động gợi ý và điều hướng bằng bàn phím.
+- **Bookmark Creator**: Công cụ mới cho phép tùy chỉnh và xuất danh sách bookmark cá nhân (.html) để sử dụng trên mọi trình duyệt.
+
+### Fixed
+- **EJS Rendering**: Sửa lỗi scope biến `t` (translation function) khi render danh sách JSON trong templates.
+
 ## [1.1.0] - 2025-12-18
 
 ### Added
