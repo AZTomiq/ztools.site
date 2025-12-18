@@ -1,0 +1,20 @@
+random_toolkit:
+  title: "Bộ công cụ Ngẫu nhiên"
+  desc: "Tạo số ngẫu nhiên, tung xúc xắc và chọn ngẫu nhiên từ danh sách."
+  tabs:
+    number: "Số ngẫu nhiên"
+    list: "Chọn từ danh sách"
+    dice: "Tung xúc xắc"
+  labels:
+    min: "Từ số (Min)"
+    max: "Đến số (Max)"
+    count: "Số lượng kết quả"
+    generate: "Tạo kết quả"
+    items: "Danh sách mục (mỗi dòng 1 mục)"
+    pick: "Chọn ngẫu nhiên"
+    result: "Kết quả:"
+    clear: "Xóa"
+  placeholder_list: |
+    Mục 1
+    Mục 2
+    Mục 3

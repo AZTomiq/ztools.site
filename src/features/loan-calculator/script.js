@@ -62,109 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const monthlyRate = yearlyRate / 100 / 12;
-    let schedule = [];
-    let totalInterest = 0;
-    let totalPayment = 0;
-    let firstMonthPayment = 0;
-
-    let currentPrincipal = principal;
-    const startDate = startDateInput ? new Date(startDateInput.value) : new Date();
-
-    if (method === 'reducing') {
-      // Dư nợ giảm dần (Reducing Balance)
-      // PMT = P * r * (1+r)^n / ((1+r)^n - 1)
-      // But usually in VN banks, "Dư nợ giảm dần" implies fixed principal payment + variable interest
-      // Wait, there are TWO types of "reducing balance":
-      // 1. Annuity (EMI): Fixed monthly payment. Interest decreases, Principal increases.
-      // 2. Linear (Fixed Principal): Principal/Propotion is fixed. Interest decreases. Monthly payment decreases.
-
-      // "Dư nợ giảm dần" in VN usually refers to Type 2 (Fixed Principal), 
-      // but "Trả góp" usually implies Type 1 (EMI).
-      // Let's implement Type 1 (EMI) as Standard Reducing Balance, 
-      // and Type 2 as "Dư nợ giảm dần (Gốc đều)".
-      // Actually, based on typical demand, let's look at the label in UI.
-      // Usually simpler:
-      // - Dư nợ giảm dần (Paying debt on reducing balance) -> usually means Interest is calculated on remaining balance. Payment can be fixed or decreasing.
-      // - Dư nợ ban đầu (Flat rate) -> Interest calculated on original principal.
-
-      // Let's implement typical bank style:
-      // Method 1: Dư nợ giảm dần (Gốc chia đều) - Most common in VN commercial loans.
-      // Monthly Principal = Principal / Months
-      // Monthly Interest = Remaining Principal * Monthly Rate
-      // Total Monthly = Principal + Interest (Decreasing over time)
-
-      const principalPerMonth = principal / termMonths;
-
-      for (let i = 1; i <= termMonths; i++) {
-        const interestPayment = currentPrincipal * monthlyRate;
-        const principalPayment = i === termMonths ? currentPrincipal : principalPerMonth; // Adjust last month
-        const totalMonthPayment = principalPayment + interestPayment;
-
-        totalInterest += interestPayment;
-        totalPayment += totalMonthPayment;
-
-        // For "First Month Payment" display
-        if (i === 1) firstMonthPayment = totalMonthPayment;
-
-        // Date Calculation
-        const date = new Date(startDate);
-        date.setMonth(startDate.getMonth() + i);
-
-        schedule.push({
-          month: i,
-          date: date.toLocaleDateString('vi-VN'),
-          principal: principalPayment,
-          interest: interestPayment,
-          payment: totalMonthPayment,
-          remaining: currentPrincipal - principalPayment
-        });
-
-        currentPrincipal -= principalPayment;
-      }
-
-    } else {
-      // Dư nợ ban đầu (Flat Rate)
-      // Monthly Principal = Principal / Months
-      // Monthly Interest = Principal (Original) * Monthly Rate
-      // Monthly Payment = Fixed
-
-      const principalPerMonth = principal / termMonths;
-      const interestPayment = principal * monthlyRate;
-      const totalMonthPayment = principalPerMonth + interestPayment;
-
-      firstMonthPayment = totalMonthPayment; // It's constant actually
-
-      for (let i = 1; i <= termMonths; i++) {
-        // Adjust last month principal round off
-        const principalPayment = i === termMonths ? currentPrincipal : principalPerMonth;
-        const totalCurrent = principalPayment + interestPayment;
-
-        totalInterest += interestPayment;
-        totalPayment += totalCurrent;
-
-        const date = new Date(startDate);
-        date.setMonth(startDate.getMonth() + i);
-
-        schedule.push({
-          month: i,
-          date: date.toLocaleDateString('vi-VN'),
-          principal: principalPayment,
-          interest: interestPayment,
-          payment: totalCurrent,
-          remaining: currentPrincipal - principalPayment
-        });
-
-        currentPrincipal -= principalPayment;
-      }
-    }
+    const result = calculateLoanDetails(principal, termMonths, yearlyRate, method, startDateInput ? startDateInput.value : null);
 
     // Render Results
-    resultMonthly.textContent = formatCurrency(firstMonthPayment);
-    resultTotalInterest.textContent = formatCurrency(totalInterest);
-    resultTotalPayment.textContent = formatCurrency(totalPayment);
+    resultMonthly.textContent = formatCurrency(result.firstMonthPayment);
+    resultTotalInterest.textContent = formatCurrency(result.totalInterest);
+    resultTotalPayment.textContent = formatCurrency(result.totalPayment);
 
-    renderSchedule(schedule);
+    renderSchedule(result.schedule);
     resultSection.classList.add('show');
     resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -196,3 +101,73 @@ document.addEventListener('DOMContentLoaded', () => {
     methodInputs[0].checked = true;
   }
 });
+
+function calculateLoanDetails(principal, termMonths, yearlyRate, method, startDateStr) {
+  const monthlyRate = yearlyRate / 100 / 12;
+  let schedule = [];
+  let totalInterest = 0;
+  let totalPayment = 0;
+  let firstMonthPayment = 0;
+
+  let currentPrincipal = principal;
+  const startDate = startDateStr ? new Date(startDateStr) : new Date();
+
+  if (method === 'reducing') {
+    const principalPerMonth = principal / termMonths;
+    for (let i = 1; i <= termMonths; i++) {
+      const interestPayment = currentPrincipal * monthlyRate;
+      const principalPayment = i === termMonths ? currentPrincipal : principalPerMonth;
+      const totalMonthPayment = principalPayment + interestPayment;
+
+      totalInterest += interestPayment;
+      totalPayment += totalMonthPayment;
+      if (i === 1) firstMonthPayment = totalMonthPayment;
+
+      const date = new Date(startDate);
+      date.setMonth(startDate.getMonth() + i);
+
+      schedule.push({
+        month: i,
+        date: date.toLocaleDateString('vi-VN'),
+        principal: principalPayment,
+        interest: interestPayment,
+        payment: totalMonthPayment,
+        remaining: currentPrincipal - principalPayment
+      });
+      currentPrincipal -= principalPayment;
+    }
+  } else {
+    const principalPerMonth = principal / termMonths;
+    const interestPayment = principal * monthlyRate;
+    const totalMonthPayment = principalPerMonth + interestPayment;
+    firstMonthPayment = totalMonthPayment;
+
+    for (let i = 1; i <= termMonths; i++) {
+      const principalPayment = i === termMonths ? currentPrincipal : principalPerMonth;
+      const totalCurrent = principalPayment + interestPayment;
+
+      totalInterest += interestPayment;
+      totalPayment += totalCurrent;
+
+      const date = new Date(startDate);
+      date.setMonth(startDate.getMonth() + i);
+
+      schedule.push({
+        month: i,
+        date: date.toLocaleDateString('vi-VN'),
+        principal: principalPayment,
+        interest: interestPayment,
+        payment: totalCurrent,
+        remaining: currentPrincipal - principalPayment
+      });
+      currentPrincipal -= principalPayment;
+    }
+  }
+
+  return { schedule, totalInterest, totalPayment, firstMonthPayment };
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { calculateLoanDetails };
+}

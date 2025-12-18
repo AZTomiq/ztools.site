@@ -2,20 +2,23 @@
   "name": "ztools-site",
   "version": "1.2.0",
   "description": "Multi-tool utility site",
-  "main": "build.js",
+  "main": "scripts/build.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "node build.js",
-    "build": "node build.js --obfuscate",
-    "dev": "node build.js && node server.js",
-    "serve": "npx serve dist",
-    "serve:dev": "npx serve dist-dev",
-    "deploy": "node deploy.js"
+    "test": "npm run test:integrity && npm run test:unit",
+    "test:integrity": "node tests/integrity.js",
+    "test:unit": "vitest run",
+    "build:dev": "node scripts/build.js",
+    "build": "node scripts/build.js --obfuscate",
+    "dev": "node scripts/build.js && node server.js",
+    "deploy": "node scripts/deploy.js"
   },
   "keywords": [
     "tools",
     "utility",
-    "calculator"
+    "calculator",
+    "vtools",
+    "ztools",
+    "ztools.site"
   ],
   "author": "Anph",
   "license": "ISC",
@@ -33,7 +36,8 @@
     "clean-css-cli": "^5.0.0",
     "html-minifier-terser": "^7.0.0",
     "javascript-obfuscator": "^4.0.0",
-    "serve": "^14.2.1",
-    "terser": "^5.0.0"
+    "jsdom": "^27.3.0",
+    "terser": "^5.0.0",
+    "vitest": "^4.0.16"
   }
 }

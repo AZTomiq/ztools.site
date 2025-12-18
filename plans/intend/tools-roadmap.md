@@ -8,6 +8,7 @@
 | Health & Lifestyle  | 9             | 2/9 ✅            |
 | Text Tools          | 36            | 4/36 ✅           |
 | Conversion Tools    | 33            | 0/33             |
+| Real-time Data      | 5             | 0/5              |
 | Encoding/Security   | 25            | 1/25 ✅           |
 | Data Processing     | 39            | 11/39 ✅          |
 | Generators          | 49            | 2/49 ✅           |
@@ -32,6 +33,9 @@
 - [x] Compound Interest Calculator
 - [x] Lãi suất tiết kiệm
 - [x] Percentage Calculator
+- [x] Real-time Foreign Exchange (Tỷ giá ngoại tệ)
+- [x] Real-time Gold Prices (Giá vàng)
 
----
-*(Xem chi tiết danh sách tool đầy đủ trong [plan.md](../../plan.md))*
+### 📏 Group 3: Conversion Tools
+- [x] Unit Converters: Length, Weight, Volume, Area, Speed, Temperature (Tất tần tật)
+- [ ] Time/Date Converters

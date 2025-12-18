@@ -1,0 +1,20 @@
+random_toolkit:
+  title: "Random Toolkit"
+  desc: "Generate random numbers, pick items from list, and roll dice."
+  tabs:
+    number: "Random Number"
+    list: "List Picker"
+    dice: "Roll Dice"
+  labels:
+    min: "Min Value"
+    max: "Max Value"
+    count: "Result Count"
+    generate: "Generate"
+    items: "List of items (one per line)"
+    pick: "Pick Randomly"
+    result: "Result:"
+    clear: "Clear"
+  placeholder_list: |
+    Item 1
+    Item 2
+    Item 3

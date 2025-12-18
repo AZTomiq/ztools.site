@@ -1,0 +1,8 @@
+id: url-toolkit
+category: dev
+icon: 🔗
+translationKey: url_toolkit
+status: active
+link: /url-toolkit/
+meta:
+  version: 1.0.0

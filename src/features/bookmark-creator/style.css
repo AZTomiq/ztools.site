@@ -79,7 +79,12 @@
 
 .checkbox-custom {
   width: 20px;
+  min-width: 20px;
+  /* Prevent shrink */
   height: 20px;
+  min-height: 20px;
+  /* Prevent shrink */
+  flex-shrink: 0;
   border: 2px solid var(--text-muted);
   border-radius: 4px;
   display: inline-block;

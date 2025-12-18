@@ -708,109 +708,116 @@ function calculate() {
   document.getElementById('resultSection').classList.add('show');
 }
 
-// Toggle Gross/Net/Net-as-Gross
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-  btn.addEventListener('click', function () {
-    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    incomeType = this.dataset.type;
-
-    const label = document.getElementById('incomeLabel');
-    const labels = {
-      'gross': 'Thu nhập Gross (VNĐ/tháng)',
-      'net': 'Thu nhập Net (VNĐ/tháng)',
-      'net-as-gross': 'Net làm Gross (VNĐ/tháng)',
-    };
-    label.textContent = labels[incomeType];
-
-    // Show/hide scenario toggle for Net mode
-    const scenarioToggle = document.getElementById('scenarioToggle');
-    if (scenarioToggle) {
-      scenarioToggle.style.display = incomeType === 'net' ? 'flex' : 'none';
-    }
-  });
-});
-
-// Scenario toggle (keep-gross vs keep-net)
-document.querySelectorAll('.scenario-btn').forEach(btn => {
-  btn.addEventListener('click', function () {
-    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    netScenario = this.dataset.scenario;
-
-    // Re-calculate if result is showing
-    if (document.getElementById('resultSection').classList.contains('show')) {
-      calculate();
-    }
-  });
-});
-
-// Format input on type
-document.getElementById('incomeInput').addEventListener('input', function () {
-  const raw = this.value.replace(/[^\d]/g, '');
-  if (raw) {
-    this.value = parseInt(raw, 10).toLocaleString('vi-VN');
-  }
-});
-
-// Format compare input on change (live formatting)
-document.getElementById('compareInput').addEventListener('input', function () {
-  const val = this.value;
-
-  // Don't format if empty or user is typing separator
-  if (!val || val.endsWith(';') || val.endsWith(',') || val.endsWith(' ')) return;
-
-  // Split by ; or , and format each part
-  const parts = val.split(/\s*[;,]\s*/);
-  const lastPart = parts[parts.length - 1];
-
-  // Only format completed parts, leave last part as-is for typing
-  const formatted = parts.slice(0, -1).map(p => {
-    const num = parseInt(p.replace(/[^\d]/g, ''), 10);
-    return isNaN(num) ? '' : num.toLocaleString('vi-VN');
-  }).filter(p => p);
-
-  // Format last part only if it has digits
-  const lastRaw = lastPart.replace(/[^\d]/g, '');
-  if (lastRaw) {
-    formatted.push(parseInt(lastRaw, 10).toLocaleString('vi-VN'));
-  }
-
-  if (formatted.length > 0) {
-    this.value = formatted.join(' ; ');
-  }
-});
-
-// Enter to calculate
-document.querySelectorAll('input').forEach(input => {
-  input.addEventListener('keypress', e => {
-    if (e.key === 'Enter') calculate();
-  });
-});
-
 // Update BHTN cap display when region changes
 function updateBhtnCapDisplay() {
   const region = getRegion();
   const cap = TAX_CONFIG.bhtnCaps[region];
   const capStr = (cap / 1_000_000).toFixed(1) + 'M';
-  document.getElementById('bhtnCapDisplay').textContent = capStr;
+  const el = document.getElementById('bhtnCapDisplay');
+  if (el) el.textContent = capStr;
 }
 
-document.getElementById('region').addEventListener('change', updateBhtnCapDisplay);
-updateBhtnCapDisplay(); // init
+function initEvents() {
+  // Toggle Gross/Net/Net-as-Gross
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      incomeType = this.dataset.type;
+
+      const label = document.getElementById('incomeLabel');
+      const labels = {
+        'gross': 'Thu nhập Gross (VNĐ/tháng)',
+        'net': 'Thu nhập Net (VNĐ/tháng)',
+        'net-as-gross': 'Net làm Gross (VNĐ/tháng)',
+      };
+      if (label) label.textContent = labels[incomeType];
+
+      // Show/hide scenario toggle for Net mode
+      const scenarioToggle = document.getElementById('scenarioToggle');
+      if (scenarioToggle) {
+        scenarioToggle.style.display = incomeType === 'net' ? 'flex' : 'none';
+      }
+    });
+  });
+
+  // Scenario toggle (keep-gross vs keep-net)
+  document.querySelectorAll('.scenario-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      netScenario = this.dataset.scenario;
+
+      // Re-calculate if result is showing
+      const resultSection = document.getElementById('resultSection');
+      if (resultSection && resultSection.classList.contains('show')) {
+        calculate();
+      }
+    });
+  });
+
+  // Format input on type
+  const incomeInput = document.getElementById('incomeInput');
+  if (incomeInput) {
+    incomeInput.addEventListener('input', function () {
+      const raw = this.value.replace(/[^\d]/g, '');
+      if (raw) {
+        this.value = parseInt(raw, 10).toLocaleString('vi-VN');
+      }
+    });
+  }
+
+  // Format compare input on change (live formatting)
+  const compareInput = document.getElementById('compareInput');
+  if (compareInput) {
+    compareInput.addEventListener('input', function () {
+      const val = this.value;
+      if (!val || val.endsWith(';') || val.endsWith(',') || val.endsWith(' ')) return;
+      const parts = val.split(/\s*[;,]\s*/);
+      const lastPart = parts[parts.length - 1];
+      const formatted = parts.slice(0, -1).map(p => {
+        const num = parseInt(p.replace(/[^\d]/g, ''), 10);
+        return isNaN(num) ? '' : num.toLocaleString('vi-VN');
+      }).filter(p => p);
+      const lastRaw = lastPart.replace(/[^\d]/g, '');
+      if (lastRaw) {
+        formatted.push(parseInt(lastRaw, 10).toLocaleString('vi-VN'));
+      }
+      if (formatted.length > 0) {
+        this.value = formatted.join(' ; ');
+      }
+    });
+  }
+
+  // Enter to calculate
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') calculate();
+    });
+  });
+
+  // Update BHTN cap display when region changes
+  const regionEl = document.getElementById('region');
+  if (regionEl) {
+    regionEl.addEventListener('change', updateBhtnCapDisplay);
+  }
+
+  // Close modal on backdrop click
+  const regionModal = document.getElementById('regionModal');
+  if (regionModal) {
+    regionModal.addEventListener('click', function (e) {
+      if (e.target === this) {
+        this.classList.remove('show');
+      }
+    });
+  }
+}
 
 // Toggle region note modal
 function toggleRegionNote() {
   const modal = document.getElementById('regionModal');
-  modal.classList.toggle('show');
+  if (modal) modal.classList.toggle('show');
 }
-
-// Close modal on backdrop click
-document.getElementById('regionModal').addEventListener('click', function (e) {
-  if (e.target === this) {
-    this.classList.remove('show');
-  }
-});
 
 // URL params handling
 function getUrlParams() {
@@ -1014,20 +1021,21 @@ function renderCompareTable(results, dependents) {
   document.getElementById('compareSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Init from URL on page load
-initFromUrl();
-
-// Expose to global for onclick handlers
-window.calculate = calculate;
-window.toggleRegionNote = toggleRegionNote;
-window.copyShareUrl = copyShareUrl;
-window.switchTab = switchTab;
-window.compareMultiple = compareMultiple;
-window.loadFromHistory = loadFromHistory;
-window.setHistoryEnabled = setHistoryEnabled;
-window.clearHistory = clearHistory;
-window.confirmClearHistory = confirmClearHistory;
-window.exportAsImage = exportAsImage;
-
-// Init history on load
-document.addEventListener('DOMContentLoaded', renderHistory);
+// Init everything on load
+document.addEventListener('DOMContentLoaded', () => {
+  initEvents();
+  updateBhtnCapDisplay();
+  initFromUrl();
+  renderHistory();
+});
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    TAX_CONFIG,
+    calculatePIT,
+    calculateProgressiveTax,
+    netToGross,
+    calcInsurance,
+    calculateYearlyPIT
+  };
+}

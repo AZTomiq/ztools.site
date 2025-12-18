@@ -1,1 +1,1041 @@
-const TAX_CONFIG={bhxh:{rate:.08,cap:468e5},bhyt:{rate:.015,cap:468e5},bhtn:{rate:.01},bhtnCaps:{1:992e5,2:882e5,3:772e5,4:69e6},bhxhCompany:{rate:.17,cap:468e5},bhnnCompany:{rate:.005,cap:468e5},bhytCompany:{rate:.03,cap:468e5},bhtnCompany:{rate:.01},personalDeduction:{old:11e6,new:155e5},dependentDeduction:{old:44e5,new:62e5},bracketsOld:[[5e6,.05],[1e7,.1],[18e6,.15],[32e6,.2],[52e6,.25],[8e7,.3],[1/0,.35]],bracketsNew:[[1e7,.05],[3e7,.15],[6e7,.25],[1e8,.3],[1/0,.35]]};let incomeType="gross",netScenario="keep-gross";const HISTORY_KEY="pit_calc_history",HISTORY_ENABLED_KEY="pit_calc_history_enabled",MAX_HISTORY=10;function isHistoryEnabled(){return"false"!==localStorage.getItem(HISTORY_ENABLED_KEY)}function setHistoryEnabled(e){localStorage.setItem(HISTORY_ENABLED_KEY,e?"true":"false"),renderHistory()}function getHistory(){try{return JSON.parse(localStorage.getItem(HISTORY_KEY))||[]}catch{return[]}}function saveToHistory(e){if(!isHistoryEnabled())return;const t=getHistory(),n={...e,timestamp:Date.now(),id:Date.now().toString(36)},o=t.filter(t=>!(t.income===e.income&&t.type===e.type&&t.dependents===e.dependents&&t.bonus===e.bonus));o.unshift(n),localStorage.setItem(HISTORY_KEY,JSON.stringify(o.slice(0,10))),renderHistory()}function loadFromHistory(e){const t=getHistory().find(t=>t.id===e);t&&(document.getElementById("incomeInput").value=parseInt(t.income,10).toLocaleString("vi-VN"),document.getElementById("dependents").value=t.dependents,document.getElementById("bonusMonths").value=t.bonus||0,document.getElementById("region").value=t.region,t.type&&["gross","net"].includes(t.type)&&(incomeType=t.type,document.querySelectorAll(".toggle-btn").forEach(e=>{e.classList.toggle("active",e.dataset.type===t.type)})),updateBhtnCapDisplay(),calculate())}function clearHistory(){localStorage.removeItem(HISTORY_KEY),renderHistory()}function confirmClearHistory(){confirm("Xóa toàn bộ lịch sử tính thuế?")&&clearHistory()}function renderHistory(){const e=document.getElementById("historyList");if(!e)return;const t=isHistoryEnabled(),n=document.getElementById("historyEnabled");n&&(n.checked=t);const o=document.getElementById("historyPrivacy"),a=document.getElementById("historyWrapper"),l=document.getElementById("historyClearBtn");if(o&&(o.style.display=t?"block":"none"),a&&(a.style.display=t?"flex":"none"),!t)return void(e.innerHTML="");const r=getHistory();l&&(l.style.display=r.length>0?"block":"none"),0!==r.length?e.innerHTML=r.map(e=>{const t=parseInt(e.income,10).toLocaleString("vi-VN"),n="net"===e.type?"Net":"Gross",o=e.dependents>0?`, ${e.dependents} NPT`:"",a=e.bonus>0?`, +${e.bonus}th`:"";return`\n      <button class="history-item" onclick="loadFromHistory('${e.id}')">\n        <span class="history-value">${t}đ</span>\n        <span class="history-meta">${n}${o}${a}</span>\n      </button>\n    `}).join(""):e.innerHTML='<p class="history-empty">Chưa có lịch sử</p>'}function calculateProgressiveTax(e,t){if(e<=0)return 0;let n=0,o=0;for(const[a,l]of t){const t=Math.min(e,a)-o;if(t<=0)break;n+=t*l,o=a}return n}function calculateTaxBreakdown(e,t){const n=[];let o=0;for(const[a,l]of t){const t=Math.min(e,a)-o,r=t>0?t*l:0;if(n.push({from:o,to:a===1/0?null:a,rate:l,taxable:Math.max(0,t),tax:r}),o=a,e<=a)break}return n}function calcInsurance(e,t,n){return Math.min(e,n)*t}function getRegion(){const e=document.getElementById("region");return e?parseInt(e.value,10):1}function getBhtnCap(){return TAX_CONFIG.bhtnCaps[getRegion()]}function calculatePIT(e,t){const n=TAX_CONFIG,o=getBhtnCap(),a=calcInsurance(e,n.bhxh.rate,n.bhxh.cap),l=calcInsurance(e,n.bhyt.rate,n.bhyt.cap),r=calcInsurance(e,n.bhtn.rate,o),c=a+l+r,s=e-c,d=n.personalDeduction.old+n.dependentDeduction.old*t,i=n.personalDeduction.new+n.dependentDeduction.new*t,u=Math.max(0,s-d),y=Math.max(0,s-i),h=calculateProgressiveTax(u,n.bracketsOld),m=calculateProgressiveTax(y,n.bracketsNew),g=calculateTaxBreakdown(u,n.bracketsOld),p=calculateTaxBreakdown(y,n.bracketsNew),f=Math.max(0,s-n.personalDeduction.old),b=Math.max(0,s-n.personalDeduction.new);return{grossIncome:e,dependents:t,bhxh:a,bhyt:l,bhtn:r,insurance:c,incomeAfterInsurance:s,deductionOld:d,deductionNew:i,taxableOld:u,taxableNew:y,taxOld:h,taxNew:m,breakdownOld:g,breakdownNew:p,taxSelfOnlyOld:calculateProgressiveTax(f,n.bracketsOld),taxSelfOnlyNew:calculateProgressiveTax(b,n.bracketsNew),taxSaved:h-m,netOld:e-c-h,netNew:e-c-m}}function calculateYearlyPIT(e,t,n){const o=TAX_CONFIG,a=getBhtnCap(),l=e*n,r=12*e+l,c=12*(calcInsurance(e,o.bhxh.rate,o.bhxh.cap)+calcInsurance(e,o.bhyt.rate,o.bhyt.cap)+calcInsurance(e,o.bhtn.rate,a)),s=r-c,d=12*(o.personalDeduction.old+o.dependentDeduction.old*t),i=12*(o.personalDeduction.new+o.dependentDeduction.new*t),u=Math.max(0,s-d),y=Math.max(0,s-i),h=calculateProgressiveTax(u,o.bracketsOld),m=calculateProgressiveTax(y,o.bracketsNew);return{yearlyGross:r,bonusGross:l,yearlyInsurance:c,yearlyIncomeAfterInsurance:s,yearlyDeductionOld:d,yearlyDeductionNew:i,yearlyTaxableOld:u,yearlyTaxableNew:y,yearlyTaxOld:h,yearlyTaxNew:m,yearlyNetOld:r-c-h,yearlyNetNew:r-c-m,yearlySaved:h-m}}function netToGross(e,t,n=!1){let o=e,a=2*e;for(let l=0;l<100;l++){const l=Math.floor((o+a)/2),r=calculatePIT(l,t),c=n?r.netNew:r.netOld;if(Math.abs(c-e)<1)return l;c<e?o=l:a=l}return Math.floor((o+a)/2)}function formatMoney(e){return Math.round(e).toLocaleString("vi-VN")+" ₫"}function calcCompanyInsuranceDetail(e){const t=TAX_CONFIG,n=getBhtnCap(),o=calcInsurance(e,t.bhxhCompany.rate,t.bhxhCompany.cap),a=calcInsurance(e,t.bhnnCompany.rate,t.bhnnCompany.cap),l=calcInsurance(e,t.bhytCompany.rate,t.bhytCompany.cap),r=calcInsurance(e,t.bhtnCompany.rate,n);return{bhxh:o,bhnn:a,bhyt:l,bhtn:r,total:o+a+l+r}}function renderNetAsGross(e,t){const n=calculatePIT(e,t),o=netToGross(e,t),a=calculatePIT(o,t),l=calcCompanyInsuranceDetail(e).total,r=e+l+n.taxOld,c=calcCompanyInsuranceDetail(o).total,s=o+c,d=s-r;let i=[{label:"Net thực nhận",wrong:formatMoney(e),correct:formatMoney(e)},{label:"Gross để tính thuế",wrong:formatMoney(e),correct:formatMoney(o),highlight:!0},{label:"Thuế TNCN (CT trả)",wrong:formatMoney(n.taxOld),correct:formatMoney(a.taxOld),highlight:!0},{label:"BH công ty đóng (21.5%)",wrong:formatMoney(l),correct:formatMoney(c),info:!0},{label:"Tổng CT chi/tháng",wrong:formatMoney(r),correct:formatMoney(s)}].map(e=>`\n    <tr class="${e.info?"info-row":""} ${e.highlight?"diff-row":""}">\n      <td class="col-label">${e.label}</td>\n      <td class="col-old">${e.wrong}</td>\n      <td class="col-new">${e.correct}</td>\n    </tr>\n  `).join("");i+=`\n    <tr class="highlight-row">\n      <td class="col-label">💸 CT TIẾT KIỆM (sai cách)/THÁNG</td>\n      <td colspan="2" class="saved-value" style="text-align: center;">\n        ${formatMoney(d)}\n      </td>\n    </tr>\n    <tr class="highlight-row">\n      <td class="col-label">📅 CT TIẾT KIỆM (sai cách)/NĂM</td>\n      <td colspan="2" class="saved-value" style="text-align: center;">\n        ${formatMoney(12*d)}\n      </td>\n    </tr>\n  `,document.getElementById("resultBody").innerHTML=i,document.querySelector("#resultSection .result-header h2").textContent="📊 So sánh: N→G vs Tính đúng",document.querySelector("#resultSection thead").innerHTML="\n    <tr>\n      <th>Mục</th>\n      <th>N→G (sai cách)</th>\n      <th>Tính đúng (Net)</th>\n    </tr>\n  ",document.getElementById("resultSection").classList.add("show"),document.getElementById("refundSection").classList.remove("show")}function parseMoneyInput(e){return parseInt(e.replace(/[^\d]/g,""),10)||0}function calculate(){const e=parseMoneyInput(document.getElementById("incomeInput").value),t=parseInt(document.getElementById("dependents").value,10)||0,n=getRegion(),o=parseInt(document.getElementById("bonusMonths").value,10)||0;if(e<=0)return void alert("Vui lòng nhập thu nhập hợp lệ");if(setUrlParams(e,incomeType,t,n,o),saveToHistory({income:e,type:incomeType,dependents:t,region:n,bonus:o}),"net-as-gross"===incomeType)return void renderNetAsGross(e,t);let a,l,r,c;const s=document.getElementById("resultNote");if("net"===incomeType)if("keep-gross"===netScenario)a=netToGross(e,t,!1),l=a,r=calculatePIT(a,t),c=r,s.innerHTML=`\n        <div class="note-info">\n          <strong>📈 Kịch bản: DN giữ nguyên Gross</strong><br>\n          Nếu DN không điều chỉnh lương, NLĐ sẽ được hưởng lợi từ thuế giảm.<br>\n          Net 2026 cao hơn <strong>${formatMoney(r.netNew-r.netOld)}</strong>/tháng so với 2025.\n        </div>\n      `,s.style.display="block";else{a=netToGross(e,t,!1),l=netToGross(e,t,!0),r=calculatePIT(a,t),c=calculatePIT(l,t);const n=a-l,o=calcCompanyInsuranceDetail(a),d=calcCompanyInsuranceDetail(l),i=a+o.total-(l+d.total);s.innerHTML=`\n        <div class="note-warning">\n          <strong>💼 Kịch bản: DN giữ nguyên Net</strong><br>\n          DN có thể giảm Gross xuống để giữ Net như cũ, tiết kiệm <strong>${formatMoney(i)}</strong>/tháng chi phí.<br>\n          <small>Gross giảm: ${formatMoney(n)} · BH DN giảm: ${formatMoney(o.total-d.total)}</small>\n        </div>\n      `,s.style.display="block"}else a=e,l=e,r=calculatePIT(a,t),c=r,s.style.display="none";document.querySelector("#resultSection .result-header h2").textContent="📊 Kết quả tính thuế",document.querySelector("#resultSection thead").innerHTML="\n    <tr>\n      <th>Mục</th>\n      <th>2025</th>\n      <th>2026</th>\n    </tr>\n  ";const d="keep-net"===netScenario&&"net"===incomeType,i=d?{old:a,new:l}:{old:r.grossIncome,new:r.grossIncome},u=d?{old:r.netOld,new:c.netNew}:{old:r.netOld,new:r.netNew},y=d?{old:r.taxOld,new:c.taxNew}:{old:r.taxOld,new:r.taxNew},h=[{label:"Thu nhập Gross",old:formatMoney(i.old),new:formatMoney(i.new),highlight:i.old!==i.new},{label:"└ BHXH (8%)",old:formatMoney(r.bhxh),new:formatMoney(d?c.bhxh:r.bhxh),info:!0},{label:"└ BHYT (1.5%)",old:formatMoney(r.bhyt),new:formatMoney(d?c.bhyt:r.bhyt),info:!0},{label:"└ BHTN (1%)",old:formatMoney(r.bhtn),new:formatMoney(d?c.bhtn:r.bhtn),info:!0},{label:"Tổng BH bắt buộc (10.5%)",old:formatMoney(r.insurance),new:formatMoney(d?c.insurance:r.insurance)},{label:"Thu nhập chịu thuế",old:formatMoney(r.incomeAfterInsurance),new:formatMoney(d?c.incomeAfterInsurance:r.incomeAfterInsurance)},{label:"└ Giảm trừ bản thân",old:formatMoney(TAX_CONFIG.personalDeduction.old),new:formatMoney(TAX_CONFIG.personalDeduction.new),info:!0},{label:`└ Giảm trừ NPT (×${t})`,old:formatMoney(TAX_CONFIG.dependentDeduction.old*t),new:formatMoney(TAX_CONFIG.dependentDeduction.new*t),info:!0},{label:"Tổng giảm trừ",old:formatMoney(r.deductionOld),new:formatMoney(d?c.deductionNew:r.deductionNew)},{label:"Thu nhập tính thuế",old:formatMoney(r.taxableOld),new:formatMoney(d?c.taxableNew:r.taxableNew)},{label:"Thuế TNCN phải nộp",old:formatMoney(y.old),new:formatMoney(y.new)},{label:"Thu nhập NET",old:formatMoney(u.old),new:formatMoney(u.new),highlight:d}],m=y.old-y.new;let g=h.map(e=>`\n    <tr class="${e.info?"info-row":""} ${e.highlight?"diff-row":""}">\n      <td class="col-label">${e.label}</td>\n      <td class="col-old">${e.old}</td>\n      <td class="col-new">${e.new}</td>\n    </tr>\n  `).join("");g+=`\n    <tr class="highlight-row">\n      <td class="col-label">💰 TIỀN THUẾ GIẢM/THÁNG</td>\n      <td colspan="2" class="saved-value" style="text-align: center;">\n        ${m>=0?"+":""}${formatMoney(m)}\n      </td>\n    </tr>\n    <tr class="highlight-row">\n      <td class="col-label">📅 TIỀN THUẾ GIẢM/NĂM</td>\n      <td colspan="2" class="saved-value" style="text-align: center;">\n        ${m>=0?"+":""}${formatMoney(12*m)}\n      </td>\n    </tr>\n  `,document.getElementById("resultBody").innerHTML=g;const p=12*(r.taxSelfOnlyOld-r.taxOld),f=12*(r.taxSelfOnlyNew-r.taxNew);document.getElementById("refundBody").innerHTML=`\n    <tr>\n      <td class="col-label">Thuế khấu trừ/tháng (chỉ trừ bản thân)</td>\n      <td class="col-old">${formatMoney(r.taxSelfOnlyOld)}</td>\n      <td class="col-new">${formatMoney(r.taxSelfOnlyNew)}</td>\n    </tr>\n    <tr>\n      <td class="col-label">Thuế khấu trừ cả năm</td>\n      <td class="col-old">${formatMoney(12*r.taxSelfOnlyOld)}</td>\n      <td class="col-new">${formatMoney(12*r.taxSelfOnlyNew)}</td>\n    </tr>\n    <tr>\n      <td class="col-label">Thuế thực tế (có NPT ×${r.dependents})</td>\n      <td class="col-old">${formatMoney(12*r.taxOld)}</td>\n      <td class="col-new">${formatMoney(12*r.taxNew)}</td>\n    </tr>\n    <tr class="highlight-row refund-row">\n      <td class="col-label">🔄 HOÀN THUẾ (nhờ NPT)</td>\n      <td class="saved-value">${formatMoney(p)}</td>\n      <td class="saved-value">${formatMoney(f)}</td>\n    </tr>\n  `;const b=(e,t)=>{const n=t?TAX_CONFIG.bracketsNew:TAX_CONFIG.bracketsOld;return n.map((t,o)=>{const a=e[o]||{tax:0,taxable:0},l=0===o?"Đến":`Trên ${formatMoney(n[o-1][0]).replace(" ₫","")} đến`,r=t[0]===1/0?"":` ${formatMoney(t[0]).replace(" ₫","")}`,c=t[0]===1/0?`Trên ${formatMoney(n[o-1][0]).replace(" ₫","")}`:`${l}${r}`;return`\n        <tr class="${a.tax>0?"has-tax":"no-tax"}">\n          <td>${c}</td>\n          <td>${formatMoney(a.taxable)}</td>\n          <td>${Math.round(100*t[1])}%</td>\n          <td>${formatMoney(a.tax)}</td>\n        </tr>\n      `}).join("")};document.getElementById("breakdownOldBody").innerHTML=b(r.breakdownOld,!1),document.getElementById("breakdownNewBody").innerHTML=b(r.breakdownNew,!0);const w=calcCompanyInsuranceDetail(r.grossIncome),T=r.grossIncome+w.total;if(document.getElementById("employerBody").innerHTML=`\n    <tr>\n      <td class="col-label">Lương GROSS</td>\n      <td class="col-new">${formatMoney(r.grossIncome)}</td>\n    </tr>\n    <tr class="info-row">\n      <td class="col-label">└ BHXH (17%)</td>\n      <td>${formatMoney(w.bhxh)}</td>\n    </tr>\n    <tr class="info-row">\n      <td class="col-label">└ BH tai nạn LĐ - Bệnh nghề nghiệp (0.5%)</td>\n      <td>${formatMoney(w.bhnn)}</td>\n    </tr>\n    <tr class="info-row">\n      <td class="col-label">└ BHYT (3%)</td>\n      <td>${formatMoney(w.bhyt)}</td>\n    </tr>\n    <tr class="info-row">\n      <td class="col-label">└ BHTN (1%)</td>\n      <td>${formatMoney(w.bhtn)}</td>\n    </tr>\n    <tr>\n      <td class="col-label">Tổng BH doanh nghiệp (21.5%)</td>\n      <td class="col-new">${formatMoney(w.total)}</td>\n    </tr>\n    <tr class="highlight-row">\n      <td class="col-label">💼 TỔNG CHI PHÍ DN/THÁNG</td>\n      <td class="saved-value">${formatMoney(T)}</td>\n    </tr>\n    <tr class="highlight-row">\n      <td class="col-label">📅 TỔNG CHI PHÍ DN/NĂM</td>\n      <td class="saved-value">${formatMoney(12*T)}</td>\n    </tr>\n  `,o>0){const e=calculateYearlyPIT(grossIncome,t,o);document.getElementById("yearlyBody").innerHTML=`\n      <tr>\n        <td class="col-label">Lương 12 tháng</td>\n        <td class="col-old">${formatMoney(12*grossIncome)}</td>\n        <td class="col-new">${formatMoney(12*grossIncome)}</td>\n      </tr>\n      <tr>\n        <td class="col-label">Bonus (${o} tháng lương)</td>\n        <td class="col-old">${formatMoney(e.bonusGross)}</td>\n        <td class="col-new">${formatMoney(e.bonusGross)}</td>\n      </tr>\n      <tr>\n        <td class="col-label">Tổng thu nhập Gross/năm</td>\n        <td class="col-old">${formatMoney(e.yearlyGross)}</td>\n        <td class="col-new">${formatMoney(e.yearlyGross)}</td>\n      </tr>\n      <tr class="info-row">\n        <td class="col-label">└ Tổng BH bắt buộc/năm</td>\n        <td>${formatMoney(e.yearlyInsurance)}</td>\n        <td>${formatMoney(e.yearlyInsurance)}</td>\n      </tr>\n      <tr class="info-row">\n        <td class="col-label">└ Tổng giảm trừ/năm</td>\n        <td>${formatMoney(e.yearlyDeductionOld)}</td>\n        <td>${formatMoney(e.yearlyDeductionNew)}</td>\n      </tr>\n      <tr>\n        <td class="col-label">Thu nhập tính thuế/năm</td>\n        <td class="col-old">${formatMoney(e.yearlyTaxableOld)}</td>\n        <td class="col-new">${formatMoney(e.yearlyTaxableNew)}</td>\n      </tr>\n      <tr>\n        <td class="col-label">Thuế TNCN cả năm</td>\n        <td class="col-old">${formatMoney(e.yearlyTaxOld)}</td>\n        <td class="col-new">${formatMoney(e.yearlyTaxNew)}</td>\n      </tr>\n      <tr>\n        <td class="col-label">Thu nhập NET cả năm</td>\n        <td class="col-old">${formatMoney(e.yearlyNetOld)}</td>\n        <td class="col-new">${formatMoney(e.yearlyNetNew)}</td>\n      </tr>\n      <tr class="highlight-row">\n        <td class="col-label">💰 TIỀN THUẾ GIẢM/NĂM</td>\n        <td colspan="2" class="saved-value" style="text-align: center;">\n          ${e.yearlySaved>=0?"+":""}${formatMoney(e.yearlySaved)}\n        </td>\n      </tr>\n    `,document.getElementById("yearlySection").classList.add("show")}else document.getElementById("yearlySection").classList.remove("show");document.getElementById("employerSection").classList.add("show"),document.getElementById("breakdownSection").classList.add("show"),document.getElementById("refundSection").classList.add("show"),document.getElementById("resultSection").classList.add("show")}function updateBhtnCapDisplay(){const e=getRegion(),t=(TAX_CONFIG.bhtnCaps[e]/1e6).toFixed(1)+"M";document.getElementById("bhtnCapDisplay").textContent=t}function toggleRegionNote(){document.getElementById("regionModal").classList.toggle("show")}function getUrlParams(){const e=new URLSearchParams(window.location.search);return{income:e.get("income"),type:e.get("type")||"gross",dependents:e.get("dep"),region:e.get("region"),bonus:e.get("bonus")}}function setUrlParams(e,t,n,o,a){const l=new URLSearchParams;l.set("income",e),l.set("type",t),l.set("dep",n),l.set("region",o),a>0&&l.set("bonus",a);const r=`${window.location.pathname}?${l.toString()}`;window.history.replaceState({},"",r)}function copyShareUrl(){navigator.clipboard.writeText(window.location.href).then(()=>{const e=document.getElementById("shareBtn"),t=e.textContent;e.textContent="✓ Đã copy!",e.classList.add("copied"),setTimeout(()=>{e.textContent=t,e.classList.remove("copied")},2e3)})}async function exportAsImage(){if(document.getElementById("resultSection").classList.contains("show"))try{const e=document.createElement("div");e.style.cssText="background: #0f172a; padding: 20px; width: fit-content;";["resultSection","breakdownSection","yearlySection"].forEach(t=>{const n=document.getElementById(t);n&&n.classList.contains("show")&&e.appendChild(n.cloneNode(!0))}),document.body.appendChild(e);const t=await html2canvas(e,{backgroundColor:"#0f172a",scale:2});document.body.removeChild(e);const n=document.createElement("a");n.download=`thue-tncn-${(new Date).toISOString().slice(0,10)}.png`,n.href=t.toDataURL("image/png"),n.click()}catch(e){console.error("Export failed:",e),alert("Xuất ảnh thất bại. Vui lòng thử lại.")}else alert("Vui lòng tính thuế trước khi xuất ảnh")}function initFromUrl(){const e=getUrlParams();if(e.income){if(document.getElementById("incomeInput").value=parseInt(e.income,10).toLocaleString("vi-VN"),e.type&&["gross","net"].includes(e.type)){incomeType=e.type,document.querySelectorAll(".toggle-btn").forEach(t=>{t.classList.toggle("active",t.dataset.type===e.type)});const t={gross:"Thu nhập Gross (VNĐ/tháng)",net:"Thu nhập Net (VNĐ/tháng)"};document.getElementById("incomeLabel").textContent=t[e.type]}e.dependents&&(document.getElementById("dependents").value=e.dependents),e.region&&(document.getElementById("region").value=e.region,updateBhtnCapDisplay()),e.bonus&&(document.getElementById("bonusMonths").value=e.bonus),setTimeout(calculate,100)}}function switchTab(e){document.querySelectorAll(".tab-btn").forEach(t=>{t.classList.toggle("active",t.dataset.tab===e)}),document.querySelectorAll(".tab-panel").forEach(t=>{t.classList.toggle("active",t.id===`tab-${e}`)})}function compareMultiple(){const e=document.getElementById("compareInput").value,t=parseInt(document.getElementById("compareDependents").value,10)||0,n=e.split(/[;,]/).map(e=>parseInt(e.replace(/[^\d]/g,""),10)).filter(e=>e>0).slice(0,5);if(n.length<2)return void alert("Vui lòng nhập ít nhất 2 mức lương để so sánh");renderCompareTable(n.map(e=>({gross:e,...calculatePIT(e,t)})),t)}function renderCompareTable(e,t){const n=`\n    <tr>\n      <th>Mục</th>\n      ${e.map(e=>`<th>${formatMoney(e.gross).replace(" ₫","")}</th>`).join("")}\n    </tr>\n  `;document.getElementById("compareHead").innerHTML=n;let o=[{label:"Thu nhập Gross",key:"grossIncome"},{label:"Tổng BH (10.5%)",key:"insurance"},{label:"Giảm trừ bản thân",getValue:()=>TAX_CONFIG.personalDeduction.new},{label:`Giảm trừ NPT (×${t})`,getValue:()=>TAX_CONFIG.dependentDeduction.new*t},{label:"Thu nhập tính thuế",key:"taxableNew"},{label:"Thuế TNCN (2026)",key:"taxNew",highlight:!0},{label:"Thu nhập NET",key:"netNew",highlight:!0}].map(t=>{const n=e.map(e=>{const n=t.key?e[t.key]:t.getValue(e);return`<td class="${t.highlight?"col-new":""}">${formatMoney(n)}</td>`}).join("");return`\n      <tr class="${t.highlight?"highlight-row":""}">\n        <td class="col-label">${t.label}</td>\n        ${n}\n      </tr>\n    `}).join("");const a=e[0].netNew;o+=`\n    <tr class="highlight-row">\n      <td class="col-label">💰 Chênh lệch NET</td>\n      ${e.map((e,t)=>{if(0===t)return"<td>—</td>";const n=e.netNew-a;return`<td class="saved-value">${n>=0?"+":""}${formatMoney(n)}</td>`}).join("")}\n    </tr>\n  `,document.getElementById("compareBody2").innerHTML=o,document.getElementById("compareSection").classList.add("show"),document.getElementById("compareSection").scrollIntoView({behavior:"smooth",block:"start"})}document.querySelectorAll(".toggle-btn").forEach(e=>{e.addEventListener("click",function(){document.querySelectorAll(".toggle-btn").forEach(e=>e.classList.remove("active")),this.classList.add("active"),incomeType=this.dataset.type;document.getElementById("incomeLabel").textContent={gross:"Thu nhập Gross (VNĐ/tháng)",net:"Thu nhập Net (VNĐ/tháng)","net-as-gross":"Net làm Gross (VNĐ/tháng)"}[incomeType];const e=document.getElementById("scenarioToggle");e&&(e.style.display="net"===incomeType?"flex":"none")})}),document.querySelectorAll(".scenario-btn").forEach(e=>{e.addEventListener("click",function(){document.querySelectorAll(".scenario-btn").forEach(e=>e.classList.remove("active")),this.classList.add("active"),netScenario=this.dataset.scenario,document.getElementById("resultSection").classList.contains("show")&&calculate()})}),document.getElementById("incomeInput").addEventListener("input",function(){const e=this.value.replace(/[^\d]/g,"");e&&(this.value=parseInt(e,10).toLocaleString("vi-VN"))}),document.getElementById("compareInput").addEventListener("input",function(){const e=this.value;if(!e||e.endsWith(";")||e.endsWith(",")||e.endsWith(" "))return;const t=e.split(/\s*[;,]\s*/),n=t[t.length-1],o=t.slice(0,-1).map(e=>{const t=parseInt(e.replace(/[^\d]/g,""),10);return isNaN(t)?"":t.toLocaleString("vi-VN")}).filter(e=>e),a=n.replace(/[^\d]/g,"");a&&o.push(parseInt(a,10).toLocaleString("vi-VN")),o.length>0&&(this.value=o.join(" ; "))}),document.querySelectorAll("input").forEach(e=>{e.addEventListener("keypress",e=>{"Enter"===e.key&&calculate()})}),document.getElementById("region").addEventListener("change",updateBhtnCapDisplay),updateBhtnCapDisplay(),document.getElementById("regionModal").addEventListener("click",function(e){e.target===this&&this.classList.remove("show")}),initFromUrl(),window.calculate=calculate,window.toggleRegionNote=toggleRegionNote,window.copyShareUrl=copyShareUrl,window.switchTab=switchTab,window.compareMultiple=compareMultiple,window.loadFromHistory=loadFromHistory,window.setHistoryEnabled=setHistoryEnabled,window.clearHistory=clearHistory,window.confirmClearHistory=confirmClearHistory,window.exportAsImage=exportAsImage,document.addEventListener("DOMContentLoaded",renderHistory);
+const TAX_CONFIG = {
+  // Employee insurance rates
+  bhxh: { rate: 0.08, cap: 46_800_000 },  // BHXH 8%, cap 20 × 2.34M (từ 7/2024)
+  bhyt: { rate: 0.015, cap: 46_800_000 }, // BHYT 1.5%, cap 20 × 2.34M
+  bhtn: { rate: 0.01 },                    // BHTN 1%, cap depends on region
+
+  // BHTN caps by region (20 × minimum wage)
+  bhtnCaps: {
+    1: 99_200_000,  // Vùng I: 20 × 4,960,000
+    2: 88_200_000,  // Vùng II: 20 × 4,410,000
+    3: 77_200_000,  // Vùng III: 20 × 3,860,000
+    4: 69_000_000,  // Vùng IV: 20 × 3,450,000
+  },
+
+  // Employer insurance rates
+  bhxhCompany: { rate: 0.17, cap: 46_800_000 },  // BHXH 17%
+  bhnnCompany: { rate: 0.005, cap: 46_800_000 }, // BH tai nạn LĐ - Bệnh nghề nghiệp 0.5%
+  bhytCompany: { rate: 0.03, cap: 46_800_000 },  // BHYT 3%
+  bhtnCompany: { rate: 0.01 },  // BHTN 1%, cap depends on region
+
+  personalDeduction: { old: 11_000_000, new: 15_500_000 },
+  dependentDeduction: { old: 4_400_000, new: 6_200_000 },
+  bracketsOld: [
+    [5_000_000, 0.05],
+    [10_000_000, 0.10],
+    [18_000_000, 0.15],
+    [32_000_000, 0.20],
+    [52_000_000, 0.25],
+    [80_000_000, 0.30],
+    [Infinity, 0.35],
+  ],
+  bracketsNew: [
+    [10_000_000, 0.05],
+    [30_000_000, 0.15],
+    [60_000_000, 0.25],
+    [100_000_000, 0.30],
+    [Infinity, 0.35],
+  ],
+};
+
+let incomeType = 'gross';
+let netScenario = 'keep-gross'; // 'keep-gross' or 'keep-net'
+
+// History management
+const HISTORY_KEY = 'pit_calc_history';
+const HISTORY_ENABLED_KEY = 'pit_calc_history_enabled';
+const MAX_HISTORY = 10;
+
+function isHistoryEnabled() {
+  return localStorage.getItem(HISTORY_ENABLED_KEY) !== 'false';
+}
+
+function setHistoryEnabled(enabled) {
+  localStorage.setItem(HISTORY_ENABLED_KEY, enabled ? 'true' : 'false');
+  renderHistory();
+}
+
+function getHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToHistory(params) {
+  if (!isHistoryEnabled()) return;
+
+  const history = getHistory();
+  const entry = {
+    ...params,
+    timestamp: Date.now(),
+    id: Date.now().toString(36),
+  };
+
+  // Remove duplicate (same params)
+  const filtered = history.filter(h =>
+    !(h.income === params.income && h.type === params.type &&
+      h.dependents === params.dependents && h.bonus === params.bonus)
+  );
+
+  filtered.unshift(entry);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(filtered.slice(0, MAX_HISTORY)));
+  renderHistory();
+}
+
+function loadFromHistory(id) {
+  const history = getHistory();
+  const entry = history.find(h => h.id === id);
+  if (!entry) return;
+
+  document.getElementById('incomeInput').value = parseInt(entry.income, 10).toLocaleString('vi-VN');
+  document.getElementById('dependents').value = entry.dependents;
+  document.getElementById('bonusMonths').value = entry.bonus || 0;
+  document.getElementById('region').value = entry.region;
+
+  if (entry.type && ['gross', 'net'].includes(entry.type)) {
+    incomeType = entry.type;
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.type === entry.type);
+    });
+  }
+
+  updateBhtnCapDisplay();
+  calculate();
+}
+
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+}
+
+function confirmClearHistory() {
+  if (confirm('Xóa toàn bộ lịch sử tính thuế?')) {
+    clearHistory();
+  }
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyList');
+  if (!container) return;
+
+  const enabled = isHistoryEnabled();
+  const checkbox = document.getElementById('historyEnabled');
+  if (checkbox) checkbox.checked = enabled;
+
+  // Show/hide privacy note and wrapper
+  const privacyNote = document.getElementById('historyPrivacy');
+  const wrapper = document.getElementById('historyWrapper');
+  const clearBtn = document.getElementById('historyClearBtn');
+
+  if (privacyNote) privacyNote.style.display = enabled ? 'block' : 'none';
+  if (wrapper) wrapper.style.display = enabled ? 'flex' : 'none';
+
+  if (!enabled) {
+    container.innerHTML = '';
+    return;
+  }
+
+  // Show/hide clear button based on history length
+  const history = getHistory();
+  if (clearBtn) clearBtn.style.display = history.length > 0 ? 'block' : 'none';
+
+  if (history.length === 0) {
+    container.innerHTML = '<p class="history-empty">Chưa có lịch sử</p>';
+    return;
+  }
+
+  container.innerHTML = history.map(h => {
+    const income = parseInt(h.income, 10).toLocaleString('vi-VN');
+    const type = h.type === 'net' ? 'Net' : 'Gross';
+    const dep = h.dependents > 0 ? `, ${h.dependents} NPT` : '';
+    const bonus = h.bonus > 0 ? `, +${h.bonus}th` : '';
+    return `
+      <button class="history-item" onclick="loadFromHistory('${h.id}')">
+        <span class="history-value">${income}đ</span>
+        <span class="history-meta">${type}${dep}${bonus}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function calculateProgressiveTax(taxableIncome, brackets) {
+  if (taxableIncome <= 0) return 0;
+  let tax = 0, prev = 0;
+  for (const [threshold, rate] of brackets) {
+    const taxable = Math.min(taxableIncome, threshold) - prev;
+    if (taxable <= 0) break;
+    tax += taxable * rate;
+    prev = threshold;
+  }
+  return tax;
+}
+
+// Calculate tax breakdown by bracket
+function calculateTaxBreakdown(taxableIncome, brackets) {
+  const breakdown = [];
+  let prev = 0;
+  for (const [threshold, rate] of brackets) {
+    const taxable = Math.min(taxableIncome, threshold) - prev;
+    const tax = taxable > 0 ? taxable * rate : 0;
+    breakdown.push({
+      from: prev,
+      to: threshold === Infinity ? null : threshold,
+      rate,
+      taxable: Math.max(0, taxable),
+      tax
+    });
+    prev = threshold;
+    if (taxableIncome <= threshold) break;
+  }
+  return breakdown;
+}
+
+function calcInsurance(income, rate, cap) {
+  return Math.min(income, cap) * rate;
+}
+
+function getRegion() {
+  const el = document.getElementById('region');
+  return el ? parseInt(el.value, 10) : 1;
+}
+
+function getBhtnCap() {
+  return TAX_CONFIG.bhtnCaps[getRegion()];
+}
+
+function calculatePIT(grossIncome, dependents) {
+  const cfg = TAX_CONFIG;
+  const bhtnCap = getBhtnCap();
+
+  // Employee insurance (detailed)
+  const bhxh = calcInsurance(grossIncome, cfg.bhxh.rate, cfg.bhxh.cap);
+  const bhyt = calcInsurance(grossIncome, cfg.bhyt.rate, cfg.bhyt.cap);
+  const bhtn = calcInsurance(grossIncome, cfg.bhtn.rate, bhtnCap);
+  const insurance = bhxh + bhyt + bhtn;
+
+  const incomeAfterInsurance = grossIncome - insurance;
+
+  const deductionOld = cfg.personalDeduction.old + cfg.dependentDeduction.old * dependents;
+  const deductionNew = cfg.personalDeduction.new + cfg.dependentDeduction.new * dependents;
+
+  const taxableOld = Math.max(0, incomeAfterInsurance - deductionOld);
+  const taxableNew = Math.max(0, incomeAfterInsurance - deductionNew);
+
+  const taxOld = calculateProgressiveTax(taxableOld, cfg.bracketsOld);
+  const taxNew = calculateProgressiveTax(taxableNew, cfg.bracketsNew);
+
+  // Tax breakdown by bracket
+  const breakdownOld = calculateTaxBreakdown(taxableOld, cfg.bracketsOld);
+  const breakdownNew = calculateTaxBreakdown(taxableNew, cfg.bracketsNew);
+
+  // Tax with only personal deduction (no dependent deduction) - monthly withholding
+  // Company MUST deduct personal deduction, only dependent deduction can be claimed at year-end
+  const taxableSelfOnlyOld = Math.max(0, incomeAfterInsurance - cfg.personalDeduction.old);
+  const taxableSelfOnlyNew = Math.max(0, incomeAfterInsurance - cfg.personalDeduction.new);
+  const taxSelfOnlyOld = calculateProgressiveTax(taxableSelfOnlyOld, cfg.bracketsOld);
+  const taxSelfOnlyNew = calculateProgressiveTax(taxableSelfOnlyNew, cfg.bracketsNew);
+
+  return {
+    grossIncome,
+    dependents,
+    bhxh,
+    bhyt,
+    bhtn,
+    insurance,
+    incomeAfterInsurance,
+    deductionOld,
+    deductionNew,
+    taxableOld,
+    taxableNew,
+    taxOld,
+    taxNew,
+    breakdownOld,
+    breakdownNew,
+    taxSelfOnlyOld,
+    taxSelfOnlyNew,
+    taxSaved: taxOld - taxNew,
+    netOld: grossIncome - insurance - taxOld,
+    netNew: grossIncome - insurance - taxNew,
+  };
+}
+
+// Calculate yearly PIT with bonus (bonus taxed progressively with yearly income)
+function calculateYearlyPIT(monthlyGross, dependents, bonusMonths) {
+  const cfg = TAX_CONFIG;
+  const bhtnCap = getBhtnCap();
+
+  // Monthly insurance
+  const monthlyBhxh = calcInsurance(monthlyGross, cfg.bhxh.rate, cfg.bhxh.cap);
+  const monthlyBhyt = calcInsurance(monthlyGross, cfg.bhyt.rate, cfg.bhyt.cap);
+  const monthlyBhtn = calcInsurance(monthlyGross, cfg.bhtn.rate, bhtnCap);
+  const monthlyInsurance = monthlyBhxh + monthlyBhyt + monthlyBhtn;
+
+  // Bonus doesn't have insurance deduction (already paid on monthly salary)
+  const bonusGross = monthlyGross * bonusMonths;
+
+  // Yearly totals
+  const yearlyGross = monthlyGross * 12 + bonusGross;
+  const yearlyInsurance = monthlyInsurance * 12;
+  const yearlyIncomeAfterInsurance = yearlyGross - yearlyInsurance;
+
+  // Yearly deductions
+  const yearlyDeductionOld = (cfg.personalDeduction.old + cfg.dependentDeduction.old * dependents) * 12;
+  const yearlyDeductionNew = (cfg.personalDeduction.new + cfg.dependentDeduction.new * dependents) * 12;
+
+  const yearlyTaxableOld = Math.max(0, yearlyIncomeAfterInsurance - yearlyDeductionOld);
+  const yearlyTaxableNew = Math.max(0, yearlyIncomeAfterInsurance - yearlyDeductionNew);
+
+  const yearlyTaxOld = calculateProgressiveTax(yearlyTaxableOld, cfg.bracketsOld);
+  const yearlyTaxNew = calculateProgressiveTax(yearlyTaxableNew, cfg.bracketsNew);
+
+  return {
+    yearlyGross,
+    bonusGross,
+    yearlyInsurance,
+    yearlyIncomeAfterInsurance,
+    yearlyDeductionOld,
+    yearlyDeductionNew,
+    yearlyTaxableOld,
+    yearlyTaxableNew,
+    yearlyTaxOld,
+    yearlyTaxNew,
+    yearlyNetOld: yearlyGross - yearlyInsurance - yearlyTaxOld,
+    yearlyNetNew: yearlyGross - yearlyInsurance - yearlyTaxNew,
+    yearlySaved: yearlyTaxOld - yearlyTaxNew,
+  };
+}
+
+// Binary search: find Gross from Net
+function netToGross(targetNet, dependents, useNewTax = false) {
+  let low = targetNet;
+  let high = targetNet * 2;
+  const tolerance = 1; // Precise to 1 VND
+
+  for (let i = 0; i < 100; i++) {
+    const mid = Math.floor((low + high) / 2);
+    const result = calculatePIT(mid, dependents);
+    const net = useNewTax ? result.netNew : result.netOld;
+
+    if (Math.abs(net - targetNet) < tolerance) {
+      return mid;
+    }
+
+    if (net < targetNet) {
+      low = mid;
+    } else {
+      high = mid;
+    }
+  }
+
+  return Math.floor((low + high) / 2);
+}
+
+function formatMoney(n) {
+  return Math.round(n).toLocaleString('vi-VN') + ' ₫';
+}
+
+// Calculate company insurance (detailed)
+function calcCompanyInsuranceDetail(income) {
+  const cfg = TAX_CONFIG;
+  const bhtnCap = getBhtnCap();
+  const bhxh = calcInsurance(income, cfg.bhxhCompany.rate, cfg.bhxhCompany.cap);
+  const bhnn = calcInsurance(income, cfg.bhnnCompany.rate, cfg.bhnnCompany.cap);
+  const bhyt = calcInsurance(income, cfg.bhytCompany.rate, cfg.bhytCompany.cap);
+  const bhtn = calcInsurance(income, cfg.bhtnCompany.rate, bhtnCap);
+  return {
+    bhxh,
+    bhnn,
+    bhyt,
+    bhtn,
+    total: bhxh + bhnn + bhyt + bhtn
+  };
+}
+
+// N→G mode: Net thực nhận = input, thuế tính trên input (thay vì Gross thực)
+function renderNetAsGross(netAmount, dependents) {
+  // Cách tính sai: lấy Net làm Gross
+  const wrong = calculatePIT(netAmount, dependents);
+
+  // Cách tính đúng: tìm Gross thực từ Net
+  const realGross = netToGross(netAmount, dependents);
+  const correct = calculatePIT(realGross, dependents);
+
+  // Chi phí công ty (Gross + BH công ty)
+  const wrongCompanyBH = calcCompanyInsuranceDetail(netAmount).total;
+  const wrongCompanyCost = netAmount + wrongCompanyBH + wrong.taxOld;
+
+  const correctCompanyBH = calcCompanyInsuranceDetail(realGross).total;
+  const correctCompanyCost = realGross + correctCompanyBH;
+
+  const companySaved = correctCompanyCost - wrongCompanyCost;
+
+  const rows = [
+    { label: 'Net thực nhận', wrong: formatMoney(netAmount), correct: formatMoney(netAmount) },
+    { label: 'Gross để tính thuế', wrong: formatMoney(netAmount), correct: formatMoney(realGross), highlight: true },
+    { label: 'Thuế TNCN (CT trả)', wrong: formatMoney(wrong.taxOld), correct: formatMoney(correct.taxOld), highlight: true },
+    { label: 'BH công ty đóng (21.5%)', wrong: formatMoney(wrongCompanyBH), correct: formatMoney(correctCompanyBH), info: true },
+    { label: 'Tổng CT chi/tháng', wrong: formatMoney(wrongCompanyCost), correct: formatMoney(correctCompanyCost) },
+  ];
+
+  let html = rows.map(row => `
+    <tr class="${row.info ? 'info-row' : ''} ${row.highlight ? 'diff-row' : ''}">
+      <td class="col-label">${row.label}</td>
+      <td class="col-old">${row.wrong}</td>
+      <td class="col-new">${row.correct}</td>
+    </tr>
+  `).join('');
+
+  html += `
+    <tr class="highlight-row">
+      <td class="col-label">💸 CT TIẾT KIỆM (sai cách)/THÁNG</td>
+      <td colspan="2" class="saved-value" style="text-align: center;">
+        ${formatMoney(companySaved)}
+      </td>
+    </tr>
+    <tr class="highlight-row">
+      <td class="col-label">📅 CT TIẾT KIỆM (sai cách)/NĂM</td>
+      <td colspan="2" class="saved-value" style="text-align: center;">
+        ${formatMoney(companySaved * 12)}
+      </td>
+    </tr>
+  `;
+
+  document.getElementById('resultBody').innerHTML = html;
+
+  // Update header for this mode
+  document.querySelector('#resultSection .result-header h2').textContent = '📊 So sánh: N→G vs Tính đúng';
+  document.querySelector('#resultSection thead').innerHTML = `
+    <tr>
+      <th>Mục</th>
+      <th>N→G (sai cách)</th>
+      <th>Tính đúng (Net)</th>
+    </tr>
+  `;
+
+  document.getElementById('resultSection').classList.add('show');
+  document.getElementById('refundSection').classList.remove('show');
+}
+
+function parseMoneyInput(str) {
+  return parseInt(str.replace(/[^\d]/g, ''), 10) || 0;
+}
+
+function calculate() {
+  const inputValue = parseMoneyInput(document.getElementById('incomeInput').value);
+  const dependents = parseInt(document.getElementById('dependents').value, 10) || 0;
+  const region = getRegion();
+  const bonusMonths = parseInt(document.getElementById('bonusMonths').value, 10) || 0;
+
+  if (inputValue <= 0) {
+    alert('Vui lòng nhập thu nhập hợp lệ');
+    return;
+  }
+
+  // Update URL params for sharing
+  setUrlParams(inputValue, incomeType, dependents, region, bonusMonths);
+
+  // Save to history
+  saveToHistory({ income: inputValue, type: incomeType, dependents, region, bonus: bonusMonths });
+
+  // Handle N→G mode separately
+  if (incomeType === 'net-as-gross') {
+    renderNetAsGross(inputValue, dependents);
+    return;
+  }
+
+  // Convert based on income type and scenario
+  let grossOld, grossNew, r, rNew;
+  const noteEl = document.getElementById('resultNote');
+
+  if (incomeType === 'net') {
+    if (netScenario === 'keep-gross') {
+      // Scenario A: DN giữ nguyên Gross → NLĐ hưởng lợi từ thuế giảm
+      grossOld = netToGross(inputValue, dependents, false);
+      grossNew = grossOld; // Same Gross for both years
+      r = calculatePIT(grossOld, dependents);
+      rNew = r; // Same calculation
+
+      // Show note
+      noteEl.innerHTML = `
+        <div class="note-info">
+          <strong>📈 Kịch bản: DN giữ nguyên Gross</strong><br>
+          Nếu DN không điều chỉnh lương, NLĐ sẽ được hưởng lợi từ thuế giảm.<br>
+          Net 2026 cao hơn <strong>${formatMoney(r.netNew - r.netOld)}</strong>/tháng so với 2025.
+        </div>
+      `;
+      noteEl.style.display = 'block';
+    } else {
+      // Scenario B: DN giữ nguyên Net → DN tiết kiệm chi phí
+      grossOld = netToGross(inputValue, dependents, false);
+      grossNew = netToGross(inputValue, dependents, true);
+      r = calculatePIT(grossOld, dependents);
+      rNew = calculatePIT(grossNew, dependents);
+
+      const grossSaved = grossOld - grossNew;
+      const employerOld = calcCompanyInsuranceDetail(grossOld);
+      const employerNew = calcCompanyInsuranceDetail(grossNew);
+      const totalSaved = (grossOld + employerOld.total) - (grossNew + employerNew.total);
+
+      // Show note
+      noteEl.innerHTML = `
+        <div class="note-warning">
+          <strong>💼 Kịch bản: DN giữ nguyên Net</strong><br>
+          DN có thể giảm Gross xuống để giữ Net như cũ, tiết kiệm <strong>${formatMoney(totalSaved)}</strong>/tháng chi phí.<br>
+          <small>Gross giảm: ${formatMoney(grossSaved)} · BH DN giảm: ${formatMoney(employerOld.total - employerNew.total)}</small>
+        </div>
+      `;
+      noteEl.style.display = 'block';
+    }
+  } else {
+    grossOld = inputValue;
+    grossNew = inputValue;
+    r = calculatePIT(grossOld, dependents);
+    rNew = r;
+    noteEl.style.display = 'none';
+  }
+
+  // Reset header for normal modes
+  document.querySelector('#resultSection .result-header h2').textContent = '📊 Kết quả tính thuế';
+  document.querySelector('#resultSection thead').innerHTML = `
+    <tr>
+      <th>Mục</th>
+      <th>2025</th>
+      <th>2026</th>
+    </tr>
+  `;
+
+  // Use different values for keep-net scenario
+  const isKeepNet = netScenario === 'keep-net' && incomeType === 'net';
+
+  const grossDisplay = isKeepNet ? { old: grossOld, new: grossNew } : { old: r.grossIncome, new: r.grossIncome };
+  const netDisplay = isKeepNet ? { old: r.netOld, new: rNew.netNew } : { old: r.netOld, new: r.netNew };
+  const taxDisplay = isKeepNet ? { old: r.taxOld, new: rNew.taxNew } : { old: r.taxOld, new: r.taxNew };
+
+  const rows = [
+    { label: 'Thu nhập Gross', old: formatMoney(grossDisplay.old), new: formatMoney(grossDisplay.new), highlight: grossDisplay.old !== grossDisplay.new },
+    { label: '└ BHXH (8%)', old: formatMoney(r.bhxh), new: formatMoney(isKeepNet ? rNew.bhxh : r.bhxh), info: true },
+    { label: '└ BHYT (1.5%)', old: formatMoney(r.bhyt), new: formatMoney(isKeepNet ? rNew.bhyt : r.bhyt), info: true },
+    { label: '└ BHTN (1%)', old: formatMoney(r.bhtn), new: formatMoney(isKeepNet ? rNew.bhtn : r.bhtn), info: true },
+    { label: 'Tổng BH bắt buộc (10.5%)', old: formatMoney(r.insurance), new: formatMoney(isKeepNet ? rNew.insurance : r.insurance) },
+    { label: 'Thu nhập chịu thuế', old: formatMoney(r.incomeAfterInsurance), new: formatMoney(isKeepNet ? rNew.incomeAfterInsurance : r.incomeAfterInsurance) },
+    { label: '└ Giảm trừ bản thân', old: formatMoney(TAX_CONFIG.personalDeduction.old), new: formatMoney(TAX_CONFIG.personalDeduction.new), info: true },
+    { label: `└ Giảm trừ NPT (×${dependents})`, old: formatMoney(TAX_CONFIG.dependentDeduction.old * dependents), new: formatMoney(TAX_CONFIG.dependentDeduction.new * dependents), info: true },
+    { label: 'Tổng giảm trừ', old: formatMoney(r.deductionOld), new: formatMoney(isKeepNet ? rNew.deductionNew : r.deductionNew) },
+    { label: 'Thu nhập tính thuế', old: formatMoney(r.taxableOld), new: formatMoney(isKeepNet ? rNew.taxableNew : r.taxableNew) },
+    { label: 'Thuế TNCN phải nộp', old: formatMoney(taxDisplay.old), new: formatMoney(taxDisplay.new) },
+    { label: 'Thu nhập NET', old: formatMoney(netDisplay.old), new: formatMoney(netDisplay.new), highlight: isKeepNet },
+  ];
+
+  const taxSaved = taxDisplay.old - taxDisplay.new;
+
+  let html = rows.map(row => `
+    <tr class="${row.info ? 'info-row' : ''} ${row.highlight ? 'diff-row' : ''}">
+      <td class="col-label">${row.label}</td>
+      <td class="col-old">${row.old}</td>
+      <td class="col-new">${row.new}</td>
+    </tr>
+  `).join('');
+
+  html += `
+    <tr class="highlight-row">
+      <td class="col-label">💰 TIỀN THUẾ GIẢM/THÁNG</td>
+      <td colspan="2" class="saved-value" style="text-align: center;">
+        ${taxSaved >= 0 ? '+' : ''}${formatMoney(taxSaved)}
+      </td>
+    </tr>
+    <tr class="highlight-row">
+      <td class="col-label">📅 TIỀN THUẾ GIẢM/NĂM</td>
+      <td colspan="2" class="saved-value" style="text-align: center;">
+        ${taxSaved >= 0 ? '+' : ''}${formatMoney(taxSaved * 12)}
+      </td>
+    </tr>
+  `;
+
+  document.getElementById('resultBody').innerHTML = html;
+
+  // Refund section - only dependent deduction can be claimed at year-end
+  // Company already deducts personal deduction monthly
+  const refundOld = (r.taxSelfOnlyOld - r.taxOld) * 12;
+  const refundNew = (r.taxSelfOnlyNew - r.taxNew) * 12;
+
+  document.getElementById('refundBody').innerHTML = `
+    <tr>
+      <td class="col-label">Thuế khấu trừ/tháng (chỉ trừ bản thân)</td>
+      <td class="col-old">${formatMoney(r.taxSelfOnlyOld)}</td>
+      <td class="col-new">${formatMoney(r.taxSelfOnlyNew)}</td>
+    </tr>
+    <tr>
+      <td class="col-label">Thuế khấu trừ cả năm</td>
+      <td class="col-old">${formatMoney(r.taxSelfOnlyOld * 12)}</td>
+      <td class="col-new">${formatMoney(r.taxSelfOnlyNew * 12)}</td>
+    </tr>
+    <tr>
+      <td class="col-label">Thuế thực tế (có NPT ×${r.dependents})</td>
+      <td class="col-old">${formatMoney(r.taxOld * 12)}</td>
+      <td class="col-new">${formatMoney(r.taxNew * 12)}</td>
+    </tr>
+    <tr class="highlight-row refund-row">
+      <td class="col-label">🔄 HOÀN THUẾ (nhờ NPT)</td>
+      <td class="saved-value">${formatMoney(refundOld)}</td>
+      <td class="saved-value">${formatMoney(refundNew)}</td>
+    </tr>
+  `;
+
+  // Render tax breakdown
+  const renderBreakdown = (breakdown, isNew) => {
+    const brackets = isNew ? TAX_CONFIG.bracketsNew : TAX_CONFIG.bracketsOld;
+    return brackets.map((b, i) => {
+      const item = breakdown[i] || { tax: 0, taxable: 0 };
+      const fromLabel = i === 0 ? 'Đến' : `Trên ${formatMoney(brackets[i - 1][0]).replace(' ₫', '')} đến`;
+      const toLabel = b[0] === Infinity ? '' : ` ${formatMoney(b[0]).replace(' ₫', '')}`;
+      const label = b[0] === Infinity ? `Trên ${formatMoney(brackets[i - 1][0]).replace(' ₫', '')}` : `${fromLabel}${toLabel}`;
+      const hasTax = item.tax > 0;
+      return `
+        <tr class="${hasTax ? 'has-tax' : 'no-tax'}">
+          <td>${label}</td>
+          <td>${formatMoney(item.taxable)}</td>
+          <td>${Math.round(b[1] * 100)}%</td>
+          <td>${formatMoney(item.tax)}</td>
+        </tr>
+      `;
+    }).join('');
+  };
+
+  document.getElementById('breakdownOldBody').innerHTML = renderBreakdown(r.breakdownOld, false);
+  document.getElementById('breakdownNewBody').innerHTML = renderBreakdown(r.breakdownNew, true);
+
+  // Employer cost section
+  const employer = calcCompanyInsuranceDetail(r.grossIncome);
+  const totalEmployerCost = r.grossIncome + employer.total;
+
+  document.getElementById('employerBody').innerHTML = `
+    <tr>
+      <td class="col-label">Lương GROSS</td>
+      <td class="col-new">${formatMoney(r.grossIncome)}</td>
+    </tr>
+    <tr class="info-row">
+      <td class="col-label">└ BHXH (17%)</td>
+      <td>${formatMoney(employer.bhxh)}</td>
+    </tr>
+    <tr class="info-row">
+      <td class="col-label">└ BH tai nạn LĐ - Bệnh nghề nghiệp (0.5%)</td>
+      <td>${formatMoney(employer.bhnn)}</td>
+    </tr>
+    <tr class="info-row">
+      <td class="col-label">└ BHYT (3%)</td>
+      <td>${formatMoney(employer.bhyt)}</td>
+    </tr>
+    <tr class="info-row">
+      <td class="col-label">└ BHTN (1%)</td>
+      <td>${formatMoney(employer.bhtn)}</td>
+    </tr>
+    <tr>
+      <td class="col-label">Tổng BH doanh nghiệp (21.5%)</td>
+      <td class="col-new">${formatMoney(employer.total)}</td>
+    </tr>
+    <tr class="highlight-row">
+      <td class="col-label">💼 TỔNG CHI PHÍ DN/THÁNG</td>
+      <td class="saved-value">${formatMoney(totalEmployerCost)}</td>
+    </tr>
+    <tr class="highlight-row">
+      <td class="col-label">📅 TỔNG CHI PHÍ DN/NĂM</td>
+      <td class="saved-value">${formatMoney(totalEmployerCost * 12)}</td>
+    </tr>
+  `;
+
+  // Yearly calculation with bonus
+  if (bonusMonths > 0) {
+    const yearly = calculateYearlyPIT(grossIncome, dependents, bonusMonths);
+
+    document.getElementById('yearlyBody').innerHTML = `
+      <tr>
+        <td class="col-label">Lương 12 tháng</td>
+        <td class="col-old">${formatMoney(grossIncome * 12)}</td>
+        <td class="col-new">${formatMoney(grossIncome * 12)}</td>
+      </tr>
+      <tr>
+        <td class="col-label">Bonus (${bonusMonths} tháng lương)</td>
+        <td class="col-old">${formatMoney(yearly.bonusGross)}</td>
+        <td class="col-new">${formatMoney(yearly.bonusGross)}</td>
+      </tr>
+      <tr>
+        <td class="col-label">Tổng thu nhập Gross/năm</td>
+        <td class="col-old">${formatMoney(yearly.yearlyGross)}</td>
+        <td class="col-new">${formatMoney(yearly.yearlyGross)}</td>
+      </tr>
+      <tr class="info-row">
+        <td class="col-label">└ Tổng BH bắt buộc/năm</td>
+        <td>${formatMoney(yearly.yearlyInsurance)}</td>
+        <td>${formatMoney(yearly.yearlyInsurance)}</td>
+      </tr>
+      <tr class="info-row">
+        <td class="col-label">└ Tổng giảm trừ/năm</td>
+        <td>${formatMoney(yearly.yearlyDeductionOld)}</td>
+        <td>${formatMoney(yearly.yearlyDeductionNew)}</td>
+      </tr>
+      <tr>
+        <td class="col-label">Thu nhập tính thuế/năm</td>
+        <td class="col-old">${formatMoney(yearly.yearlyTaxableOld)}</td>
+        <td class="col-new">${formatMoney(yearly.yearlyTaxableNew)}</td>
+      </tr>
+      <tr>
+        <td class="col-label">Thuế TNCN cả năm</td>
+        <td class="col-old">${formatMoney(yearly.yearlyTaxOld)}</td>
+        <td class="col-new">${formatMoney(yearly.yearlyTaxNew)}</td>
+      </tr>
+      <tr>
+        <td class="col-label">Thu nhập NET cả năm</td>
+        <td class="col-old">${formatMoney(yearly.yearlyNetOld)}</td>
+        <td class="col-new">${formatMoney(yearly.yearlyNetNew)}</td>
+      </tr>
+      <tr class="highlight-row">
+        <td class="col-label">💰 TIỀN THUẾ GIẢM/NĂM</td>
+        <td colspan="2" class="saved-value" style="text-align: center;">
+          ${yearly.yearlySaved >= 0 ? '+' : ''}${formatMoney(yearly.yearlySaved)}
+        </td>
+      </tr>
+    `;
+    document.getElementById('yearlySection').classList.add('show');
+  } else {
+    document.getElementById('yearlySection').classList.remove('show');
+  }
+
+  document.getElementById('employerSection').classList.add('show');
+  document.getElementById('breakdownSection').classList.add('show');
+  document.getElementById('refundSection').classList.add('show');
+  document.getElementById('resultSection').classList.add('show');
+}
+
+// Update BHTN cap display when region changes
+function updateBhtnCapDisplay() {
+  const region = getRegion();
+  const cap = TAX_CONFIG.bhtnCaps[region];
+  const capStr = (cap / 1_000_000).toFixed(1) + 'M';
+  const el = document.getElementById('bhtnCapDisplay');
+  if (el) el.textContent = capStr;
+}
+
+function initEvents() {
+  // Toggle Gross/Net/Net-as-Gross
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      incomeType = this.dataset.type;
+
+      const label = document.getElementById('incomeLabel');
+      const labels = {
+        'gross': 'Thu nhập Gross (VNĐ/tháng)',
+        'net': 'Thu nhập Net (VNĐ/tháng)',
+        'net-as-gross': 'Net làm Gross (VNĐ/tháng)',
+      };
+      if (label) label.textContent = labels[incomeType];
+
+      // Show/hide scenario toggle for Net mode
+      const scenarioToggle = document.getElementById('scenarioToggle');
+      if (scenarioToggle) {
+        scenarioToggle.style.display = incomeType === 'net' ? 'flex' : 'none';
+      }
+    });
+  });
+
+  // Scenario toggle (keep-gross vs keep-net)
+  document.querySelectorAll('.scenario-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      netScenario = this.dataset.scenario;
+
+      // Re-calculate if result is showing
+      const resultSection = document.getElementById('resultSection');
+      if (resultSection && resultSection.classList.contains('show')) {
+        calculate();
+      }
+    });
+  });
+
+  // Format input on type
+  const incomeInput = document.getElementById('incomeInput');
+  if (incomeInput) {
+    incomeInput.addEventListener('input', function () {
+      const raw = this.value.replace(/[^\d]/g, '');
+      if (raw) {
+        this.value = parseInt(raw, 10).toLocaleString('vi-VN');
+      }
+    });
+  }
+
+  // Format compare input on change (live formatting)
+  const compareInput = document.getElementById('compareInput');
+  if (compareInput) {
+    compareInput.addEventListener('input', function () {
+      const val = this.value;
+      if (!val || val.endsWith(';') || val.endsWith(',') || val.endsWith(' ')) return;
+      const parts = val.split(/\s*[;,]\s*/);
+      const lastPart = parts[parts.length - 1];
+      const formatted = parts.slice(0, -1).map(p => {
+        const num = parseInt(p.replace(/[^\d]/g, ''), 10);
+        return isNaN(num) ? '' : num.toLocaleString('vi-VN');
+      }).filter(p => p);
+      const lastRaw = lastPart.replace(/[^\d]/g, '');
+      if (lastRaw) {
+        formatted.push(parseInt(lastRaw, 10).toLocaleString('vi-VN'));
+      }
+      if (formatted.length > 0) {
+        this.value = formatted.join(' ; ');
+      }
+    });
+  }
+
+  // Enter to calculate
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') calculate();
+    });
+  });
+
+  // Update BHTN cap display when region changes
+  const regionEl = document.getElementById('region');
+  if (regionEl) {
+    regionEl.addEventListener('change', updateBhtnCapDisplay);
+  }
+
+  // Close modal on backdrop click
+  const regionModal = document.getElementById('regionModal');
+  if (regionModal) {
+    regionModal.addEventListener('click', function (e) {
+      if (e.target === this) {
+        this.classList.remove('show');
+      }
+    });
+  }
+}
+
+// Toggle region note modal
+function toggleRegionNote() {
+  const modal = document.getElementById('regionModal');
+  if (modal) modal.classList.toggle('show');
+}
+
+// URL params handling
+function getUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    income: params.get('income'),
+    type: params.get('type') || 'gross',
+    dependents: params.get('dep'),
+    region: params.get('region'),
+    bonus: params.get('bonus'),
+  };
+}
+
+function setUrlParams(income, type, dependents, region, bonus) {
+  const params = new URLSearchParams();
+  params.set('income', income);
+  params.set('type', type);
+  params.set('dep', dependents);
+  params.set('region', region);
+  if (bonus > 0) params.set('bonus', bonus);
+  const newUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState({}, '', newUrl);
+}
+
+function copyShareUrl() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = document.getElementById('shareBtn');
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Đã copy!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+async function exportAsImage() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection.classList.contains('show')) {
+    alert('Vui lòng tính thuế trước khi xuất ảnh');
+    return;
+  }
+
+  try {
+    // Capture result + breakdown sections
+    const container = document.createElement('div');
+    container.style.cssText = 'background: #0f172a; padding: 20px; width: fit-content;';
+
+    const sections = ['resultSection', 'breakdownSection', 'yearlySection'];
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.classList.contains('show')) {
+        container.appendChild(el.cloneNode(true));
+      }
+    });
+
+    document.body.appendChild(container);
+
+    const canvas = await html2canvas(container, {
+      backgroundColor: '#0f172a',
+      scale: 2,
+    });
+
+    document.body.removeChild(container);
+
+    // Download
+    const link = document.createElement('a');
+    link.download = `thue-tncn-${new Date().toISOString().slice(0, 10)}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (err) {
+    console.error('Export failed:', err);
+    alert('Xuất ảnh thất bại. Vui lòng thử lại.');
+  }
+}
+
+function initFromUrl() {
+  const params = getUrlParams();
+  if (params.income) {
+    document.getElementById('incomeInput').value = parseInt(params.income, 10).toLocaleString('vi-VN');
+
+    // Set income type
+    if (params.type && ['gross', 'net'].includes(params.type)) {
+      incomeType = params.type;
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === params.type);
+      });
+      const labels = {
+        'gross': 'Thu nhập Gross (VNĐ/tháng)',
+        'net': 'Thu nhập Net (VNĐ/tháng)',
+      };
+      document.getElementById('incomeLabel').textContent = labels[params.type];
+    }
+
+    if (params.dependents) {
+      document.getElementById('dependents').value = params.dependents;
+    }
+    if (params.region) {
+      document.getElementById('region').value = params.region;
+      updateBhtnCapDisplay();
+    }
+    if (params.bonus) {
+      document.getElementById('bonusMonths').value = params.bonus;
+    }
+
+    // Auto calculate
+    setTimeout(calculate, 100);
+  }
+}
+
+// Tab switching
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tabName);
+  });
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    panel.classList.toggle('active', panel.id === `tab-${tabName}`);
+  });
+}
+
+// Compare multiple salaries
+function compareMultiple() {
+  const input = document.getElementById('compareInput').value;
+  const dependents = parseInt(document.getElementById('compareDependents').value, 10) || 0;
+
+  // Parse input: support both ";" and "," as separators
+  const salaries = input
+    .split(/[;,]/)
+    .map(s => parseInt(s.replace(/[^\d]/g, ''), 10))
+    .filter(n => n > 0)
+    .slice(0, 5); // Max 5 salaries
+
+  if (salaries.length < 2) {
+    alert('Vui lòng nhập ít nhất 2 mức lương để so sánh');
+    return;
+  }
+
+  // Calculate for each salary
+  const results = salaries.map(gross => {
+    const r = calculatePIT(gross, dependents);
+    return { gross, ...r };
+  });
+
+  // Render comparison table
+  renderCompareTable(results, dependents);
+}
+
+function renderCompareTable(results, dependents) {
+  const headRow = `
+    <tr>
+      <th>Mục</th>
+      ${results.map(r => `<th>${formatMoney(r.gross).replace(' ₫', '')}</th>`).join('')}
+    </tr>
+  `;
+  document.getElementById('compareHead').innerHTML = headRow;
+
+  const rows = [
+    { label: 'Thu nhập Gross', key: 'grossIncome' },
+    { label: 'Tổng BH (10.5%)', key: 'insurance' },
+    { label: 'Giảm trừ bản thân', getValue: () => TAX_CONFIG.personalDeduction.new },
+    { label: `Giảm trừ NPT (×${dependents})`, getValue: () => TAX_CONFIG.dependentDeduction.new * dependents },
+    { label: 'Thu nhập tính thuế', key: 'taxableNew' },
+    { label: 'Thuế TNCN (2026)', key: 'taxNew', highlight: true },
+    { label: 'Thu nhập NET', key: 'netNew', highlight: true },
+  ];
+
+  let html = rows.map(row => {
+    const cells = results.map(r => {
+      const value = row.key ? r[row.key] : row.getValue(r);
+      return `<td class="${row.highlight ? 'col-new' : ''}">${formatMoney(value)}</td>`;
+    }).join('');
+    return `
+      <tr class="${row.highlight ? 'highlight-row' : ''}">
+        <td class="col-label">${row.label}</td>
+        ${cells}
+      </tr>
+    `;
+  }).join('');
+
+  // Add difference row (compared to first salary)
+  const firstNet = results[0].netNew;
+  const diffCells = results.map((r, i) => {
+    if (i === 0) return '<td>—</td>';
+    const diff = r.netNew - firstNet;
+    const sign = diff >= 0 ? '+' : '';
+    return `<td class="saved-value">${sign}${formatMoney(diff)}</td>`;
+  }).join('');
+
+  html += `
+    <tr class="highlight-row">
+      <td class="col-label">💰 Chênh lệch NET</td>
+      ${diffCells}
+    </tr>
+  `;
+
+  document.getElementById('compareBody2').innerHTML = html;
+  document.getElementById('compareSection').classList.add('show');
+
+  // Scroll to results
+  document.getElementById('compareSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Init everything on load
+document.addEventListener('DOMContentLoaded', () => {
+  initEvents();
+  updateBhtnCapDisplay();
+  initFromUrl();
+  renderHistory();
+});
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    TAX_CONFIG,
+    calculatePIT,
+    calculateProgressiveTax,
+    netToGross,
+    calcInsurance,
+    calculateYearlyPIT
+  };
+}

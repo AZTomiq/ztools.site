@@ -1,0 +1,14 @@
+features:
+  textDiff:
+    title: So Sánh Văn Bản
+    desc: So sánh sự khác biệt giữa hai đoạn văn bản, làm nổi bật các phần thêm, xóa, sửa.
+    label_old: Văn bản gốc
+    placeholder_old: Dán văn bản gốc vào đây...
+    label_new: Văn bản mới
+    placeholder_new: Dán văn bản đã sửa vào đây...
+    btn_compare: So Sánh
+    btn_clear: Xóa Hết
+    view_side: Song Song
+    view_inline: Nối Tiếp
+    result_title: Kết Quả So Sánh
+    summary_changes: "Tìm thấy {{changes}} điểm khác biệt"

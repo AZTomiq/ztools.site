@@ -1,0 +1,16 @@
+timestamp_converter:
+  title: "Chuyển đổi Timestamp"
+  desc: "Chuyển đổi thời gian giữa định dạng Unix Timestamp và ngày tháng thực tế."
+  current_time: "Thời gian hiện tại"
+  unix_to_date: "Chuyển Unix sang Ngày"
+  date_to_unix: "Chuyển Ngày sang Unix"
+  labels:
+    seconds: "Giây (s)"
+    milliseconds: "Mili giây (ms)"
+    local_time: "Giờ địa phương"
+    utc_time: "Giờ quốc tế (UTC)"
+    iso_time: "Định dạng ISO 8601"
+    convert: "Chuyển đổi"
+    clear: "Xóa"
+    now: "Hiện tại"
+  placeholder: "Nhập Unix Timestamp (vd: 1734500000)"

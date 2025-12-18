@@ -1,0 +1,35 @@
+forex_gold:
+  title: Tỷ giá & Giá vàng
+  desc: Xem tỷ giá ngoại tệ và giá vàng SJC cập nhật trực tuyến.
+  tabs:
+    forex: Ngoại tệ
+    gold: Giá vàng
+  forex:
+    base_currency: Đơn vị gốc
+    search: Tìm kiếm mã...
+    headers:
+      code: Mã
+      name: Tên ngoại tệ
+      buy: Mua vào
+      sell: Bán ra
+      change: Thay đổi
+  gold:
+    headers:
+      type: Loại vàng
+      buy: Mua vào
+      sell: Bán ra
+    last_updated: Cập nhật lúc
+  messages:
+    loading: Đang tải dữ liệu...
+    error: Không thể tải dữ liệu. Vui lòng thử lại sau.
+  currency_names:
+    USD: Đô la Mỹ
+    EUR: Euro
+    JPY: Yên Nhật
+    GBP: Bảng Anh
+    AUD: Đô la Úc
+    CAD: Đô la Canada
+    SGD: Đô la Singapore
+    CNY: Nhân dân tệ
+    KRW: Won Hàn Quốc
+    VND: Việt Nam Đồng

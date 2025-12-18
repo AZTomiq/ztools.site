@@ -1,1 +1,123 @@
-function validateQuantity(t){t.value>1e3&&(t.value=1e3),t.value<1&&(t.value=1)}function generateUUIDs(){const t=document.getElementById("uuid-version").value,e=parseInt(document.getElementById("uuid-quantity").value)||1,n=document.getElementById("uppercase").checked,o=document.getElementById("hyphens").checked,a=document.getElementById("braces").checked,r=document.getElementById("uuid-output"),c=[];for(let r=0;r<e;r++){let e="";"v4"===t||"guid"===t?e=generateV4():"v1"===t?e=generateV1():"v7"===t&&(e=generateV7()),n&&(e=e.toUpperCase()),o||(e=e.replace(/-/g,"")),a&&(e=`{${e}}`),c.push(e)}r.value=c.join("\n"),document.getElementById("output-stats").textContent=`Generated ${e} UUID${e>1?"s":""}`}function copyUUIDs(){const t=document.getElementById("uuid-output");t.select(),navigator.clipboard&&navigator.clipboard.writeText(t.value).then(()=>{const t=document.querySelector(".btn-sm"),e=t.textContent;t.textContent="✅ Copied!",setTimeout(()=>t.textContent=e,2e3)})}function generateV4(){return crypto&&crypto.randomUUID?crypto.randomUUID():"10000000-1000-4000-8000-100000000000".replace(/[018]/g,t=>(t^crypto.getRandomValues(new Uint8Array(1))[0]&15>>t/4).toString(16))}let _nodeId=null,_clockSeq=null,_lastMsecs=0,_lastNsecs=0;function generateV1(){const t=1e4*(Date.now()-122192928e5)+0,e=((4294967295&t)>>>0).toString(16).padStart(8,"0"),n=((t/4294967296&65535)>>>0).toString(16).padStart(4,"0"),o=(t/281474976710656&4095|4096).toString(16).padStart(4,"0");_clockSeq||(_clockSeq=16383*Math.random()|0);const a=(32768|_clockSeq).toString(16).padStart(4,"0");if(!_nodeId){const t=crypto.getRandomValues(new Uint8Array(6));t[0]|=1,_nodeId=Array.from(t).map(t=>t.toString(16).padStart(2,"0")).join("")}return`${e}-${n}-${o}-${a}-${_nodeId}`}function generateV7(){const t=Date.now().toString(16).padStart(12,"0"),e=crypto.getRandomValues(new Uint8Array(10)),n=Array.from(e).map(t=>t.toString(16).padStart(2,"0")).join(""),o=(t.slice(0,8),t.slice(8,12),n.slice(0,3),(63&e[2]|128).toString(16).padStart(2,"0")[0],n.slice(4,7),n.slice(8,20),n.slice(3),t),a=crypto.getRandomValues(new Uint16Array(5)),r=(28672|4095&a[0]).toString(16).padStart(4,"0"),c=(32768|16383&a[1]).toString(16).padStart(4,"0"),d=Array.from(a.slice(2)).map(t=>t.toString(16).padStart(4,"0")).join("");return`${o.substring(0,8)}-${o.substring(8,12)}-${r}-${c}-${d}`}generateUUIDs();
+/**
+ * UUID Generator Logic
+ */
+
+// Node.js crypto polyfill for testing
+let cryptoObj = typeof crypto !== 'undefined' ? crypto : null;
+if (!cryptoObj && typeof require === 'function') {
+  try {
+    cryptoObj = require('node:crypto').webcrypto;
+  } catch (e) {
+    // Fallback if node:crypto fails
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnGen = document.querySelector('button[onclick="generateUUIDs()"]');
+  if (btnGen) {
+    btnGen.onclick = null;
+    btnGen.addEventListener('click', handleGenerate);
+  }
+
+  const btnCopy = document.querySelector('button[onclick="copyUUIDs()"]');
+  if (btnCopy) {
+    btnCopy.onclick = null;
+    btnCopy.addEventListener('click', copyUUIDs);
+  }
+
+  const inputs = document.querySelectorAll('input, select');
+  inputs.forEach(input => input.addEventListener('change', handleGenerate));
+
+  handleGenerate();
+});
+
+function handleGenerate() {
+  const options = {
+    version: document.getElementById('uuid-version').value,
+    count: parseInt(document.getElementById('uuid-quantity').value) || 1,
+    uppercase: document.getElementById('uppercase').checked,
+    hyphens: document.getElementById('hyphens').checked,
+    braces: document.getElementById('braces').checked
+  };
+
+  if (options.count > 1000) options.count = 1000;
+
+  const results = generateUUIDsLogic(options);
+  const output = document.getElementById('uuid-output');
+  if (output) output.value = results.join('\n');
+
+  const stats = document.getElementById('output-stats');
+  if (stats) stats.textContent = `Generated ${results.length} UUID${results.length > 1 ? 's' : ''}`;
+}
+
+function copyUUIDs() {
+  const output = document.getElementById('uuid-output');
+  if (!output) return;
+  output.select();
+  navigator.clipboard.writeText(output.value).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    if (btn) {
+      const original = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = original, 2000);
+    }
+  });
+}
+
+function generateUUIDsLogic(options) {
+  const list = [];
+  for (let i = 0; i < options.count; i++) {
+    let uuid = '';
+    if (options.version === 'v4' || options.version === 'guid') uuid = generateV4();
+    else if (options.version === 'v1') uuid = generateV1();
+    else if (options.version === 'v7') uuid = generateV7();
+
+    if (options.uppercase) uuid = uuid.toUpperCase();
+    if (!options.hyphens) uuid = uuid.replace(/-/g, '');
+    if (options.braces) uuid = `{${uuid}}`;
+    list.push(uuid);
+  }
+  return list;
+}
+
+function generateV4() {
+  if (cryptoObj?.randomUUID) return cryptoObj.randomUUID();
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (c ^ cryptoObj.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+let _clockSeq = null, _nodeId = null;
+function generateV1() {
+  const msecs = Date.now();
+  const dt = (msecs - 0xb1d069b5400) * 10000;
+  const time_low = ((dt & 0xffffffff) >>> 0).toString(16).padStart(8, '0');
+  const time_mid = ((dt / 0x100000000 & 0xffff) >>> 0).toString(16).padStart(4, '0');
+  const time_hi = ((dt / 0x1000000000000 & 0xfff) | 0x1000).toString(16).padStart(4, '0');
+  if (!_clockSeq) _clockSeq = (Math.random() * 0x3fff) | 0;
+  const clock_seq = (_clockSeq | 0x8000).toString(16).padStart(4, '0');
+  if (!_nodeId) {
+    const rnd = cryptoObj.getRandomValues(new Uint8Array(6));
+    rnd[0] |= 0x01;
+    _nodeId = Array.from(rnd).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  return `${time_low}-${time_mid}-${time_hi}-${clock_seq}-${_nodeId}`;
+}
+
+function generateV7() {
+  const msecs = Date.now();
+  const hexTs = msecs.toString(16).padStart(12, '0');
+  const r = cryptoObj.getRandomValues(new Uint16Array(5));
+  const ver_part = (0x7000 | (r[0] & 0x0FFF)).toString(16).padStart(4, '0');
+  const var_part = (0x8000 | (r[1] & 0x3FFF)).toString(16).padStart(4, '0');
+  const rest = Array.from(r.slice(2)).map(x => x.toString(16).padStart(4, '0')).join('');
+  return `${hexTs.substring(0, 8)}-${hexTs.substring(8, 12)}-${ver_part}-${var_part}-${rest}`;
+}
+
+window.generateUUIDs = handleGenerate;
+window.copyUUIDs = copyUUIDs;
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { generateUUIDsLogic };
+}

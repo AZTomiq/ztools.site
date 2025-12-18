@@ -1,0 +1,14 @@
+features:
+  textDiff:
+    title: Text Diff Checker
+    desc: Compare two texts and highlight differences (additions, deletions, changes).
+    label_old: Original Text
+    placeholder_old: Paste original text here...
+    label_new: New Text
+    placeholder_new: Paste modified text here...
+    btn_compare: Compare Text
+    btn_clear: Clear
+    view_side: Side by Side
+    view_inline: Inline View
+    result_title: Comparison Result
+    summary_changes: "{{changes}} differences found"

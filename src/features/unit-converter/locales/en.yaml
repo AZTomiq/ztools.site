@@ -1,0 +1,67 @@
+unit_converter:
+  title: Unit Converter
+  desc: Convert length, weight, volume, area, temperature, and more.
+  tabs:
+    length: Length
+    weight: Weight
+    volume: Volume
+    area: Area
+    temperature: Temperature
+    speed: Speed
+    digital: Storage
+  labels:
+    from: From
+    to: To
+    result: Result
+    swap: Swap
+  placeholder: Enter value...
+  units:
+    length:
+      m: Meter (m)
+      km: Kilometer (km)
+      cm: Centimeter (cm)
+      mm: Millimeter (mm)
+      inch: Inch (in)
+      ft: Foot (ft)
+      yd: Yard (yd)
+      mi: Mile (mi)
+    weight:
+      kg: Kilogram (kg)
+      g: Gram (g)
+      mg: Milligram (mg)
+      lb: Pound (lb)
+      oz: Ounce (oz)
+      ton: Ton
+    volume:
+      l: Liter (l)
+      ml: Milliliter (ml)
+      m3: Cubic Meter (m³)
+      gal: Gallon (gal)
+      floz: Fluid Ounce (fl oz)
+      cup: Cup
+      pt: Pint (pt)
+      qt: Quart (qt)
+      tsp: Teaspoon (tsp)
+      tbsp: Tablespoon (tbsp)
+    area:
+      m2: Square Meter (m²)
+      km2: Square Kilometer (km²)
+      ha: Hectare (ha)
+      acre: Acre
+    speed:
+      mps: m/s
+      kph: km/h
+      mph: mph
+      knot: Knot
+    temperature:
+      c: Celsius (°C)
+      f: Fahrenheit (°F)
+      k: Kelvin (K)
+    digital:
+      bit: Bit (b)
+      byte: Byte (B)
+      kb: Kilobyte (KB)
+      mb: Megabyte (MB)
+      gb: Gigabyte (GB)
+      tb: Terabyte (TB)
+      pb: Petabyte (PB)

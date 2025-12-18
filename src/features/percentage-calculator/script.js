@@ -1,72 +1,91 @@
+/**
+ * Percentage Calculator
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   // Tabs
   const tabs = document.querySelectorAll('.tab-btn');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Deactive all
       tabs.forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
 
-      // Active current
       tab.classList.add('active');
       const target = tab.getAttribute('data-tab');
-      document.getElementById('tab-' + target).classList.add('active');
+      const panel = document.getElementById('tab-' + target);
+      if (panel) panel.classList.add('active');
     });
   });
 });
 
 function prettify(num) {
-  // Remove trailing zeros, max 4 decimals
+  if (isNaN(num) || num === Infinity || num === -Infinity) return num.toString();
   return parseFloat(num.toFixed(4)).toString();
 }
 
 function showResult(boxId, valId, result) {
   const box = document.getElementById(boxId);
   const valEl = document.getElementById(valId);
-  valEl.textContent = result;
-  box.style.display = 'flex';
-  box.style.animation = 'fadeIn 0.3s';
+  if (valEl) valEl.textContent = result;
+  if (box) {
+    box.style.display = 'flex';
+    box.style.animation = 'fadeIn 0.3s';
+  }
 }
 
-// 1. Basic: X% of Y
-function calcBasic() {
+// Global functions for onclick handlers
+window.calcBasic = function () {
   const pct = parseFloat(document.getElementById('basic-percent').value);
   const num = parseFloat(document.getElementById('basic-num').value);
   if (isNaN(pct) || isNaN(num)) return;
 
-  const res = (pct / 100) * num;
+  const res = calculateBasicPercentage(pct, num);
   showResult('res-basic-box', 'res-basic-val', prettify(res));
-}
+};
 
-// 2. Change: From X to Y
-function calcChange() {
+window.calcChange = function () {
   const from = parseFloat(document.getElementById('change-from').value);
   const to = parseFloat(document.getElementById('change-to').value);
   if (isNaN(from) || isNaN(to)) return;
 
-  if (from === 0) {
-    showResult('res-change-box', 'res-change-val', "Infinity%");
-    return;
-  }
+  const result = calculatePercentageChange(from, to);
+  let sign = result > 0 ? "+" : "";
+  let display = (result === Infinity || result === -Infinity) ? result.toString() : (sign + prettify(result) + "%");
 
-  const diff = to - from;
-  const pct = (diff / from) * 100;
+  showResult('res-change-box', 'res-change-val', display);
+};
 
-  let sign = pct > 0 ? "+" : "";
-  showResult('res-change-box', 'res-change-val', sign + prettify(pct) + "%");
-}
-
-// 3. Phrase: X is what % of Y
-function calcPhrase() {
+window.calcPhrase = function () {
   const x = parseFloat(document.getElementById('phrase-x').value);
   const y = parseFloat(document.getElementById('phrase-y').value);
   if (isNaN(x) || isNaN(y)) return;
 
-  if (y === 0) {
-    showResult('res-phrase-box', 'res-phrase-val', "Infinity%");
-    return;
-  }
+  const result = calculateWhatPercentage(x, y);
+  let display = (result === Infinity || result === -Infinity) ? result.toString() : (prettify(result) + "%");
 
-  const res = (x / y) * 100;
-  showResult('res-phrase-box', 'res-phrase-val', prettify(res) + "%");
+  showResult('res-phrase-box', 'res-phrase-val', display);
+};
+
+// Pure logic functions
+function calculateBasicPercentage(percent, number) {
+  return (percent / 100) * number;
+}
+
+function calculatePercentageChange(from, to) {
+  if (from === 0) return to > 0 ? Infinity : (to < 0 ? -Infinity : 0);
+  return ((to - from) / from) * 100;
+}
+
+function calculateWhatPercentage(x, y) {
+  if (y === 0) return x > 0 ? Infinity : (x < 0 ? -Infinity : 0);
+  return (x / y) * 100;
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    calculateBasicPercentage,
+    calculatePercentageChange,
+    calculateWhatPercentage
+  };
 }

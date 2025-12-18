@@ -1,1 +1,90 @@
-document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("export-btn"),t=document.getElementById("select-all-btn"),o=document.getElementById("deselect-all-btn"),n=document.getElementById("tool-search"),l=document.querySelectorAll('input[name="tool-choice"]');t.addEventListener("click",()=>{l.forEach(e=>e.checked=!0)}),o.addEventListener("click",()=>{l.forEach(e=>e.checked=!1)}),n.addEventListener("input",e=>{const t=e.target.value.toLowerCase();document.querySelectorAll(".tool-checkbox-item").forEach(e=>{const o=e.getAttribute("data-title").toLowerCase();e.style.display=o.includes(t)?"flex":"none"}),document.querySelectorAll(".category-group").forEach(e=>{const t=e.querySelectorAll('.tool-checkbox-item[style="display: flex;"], .tool-checkbox-item:not([style])');e.style.display=t.length>0?"block":"none"})}),e.addEventListener("click",()=>{const e=Array.from(l).filter(e=>e.checked);if(0===e.length)return void alert("Vui lòng chọn ít nhất một công cụ!");!function(e,t,o){const n=new Blob([e],{type:o}),l=URL.createObjectURL(n),c=document.createElement("a");c.href=l,c.download=t,c.click(),URL.revokeObjectURL(l)}(function(e){const t={};e.forEach(e=>{const o=e.getAttribute("data-cat-name");t[o]||(t[o]=[]),t[o].push({name:e.getAttribute("data-name"),url:window.location.origin+e.getAttribute("data-url")})});let o=`<!DOCTYPE NETSCAPE-Bookmark-file-1>\n\x3c!-- This is an automatically generated file.\n     It will be read and overwritten.\n     DO NOT EDIT! --\x3e\n<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n<TITLE>Bookmarks</TITLE>\n<H1>Bookmarks</H1>\n<DL><p>\n    <DT><H3 ADD_DATE="${Math.floor(Date.now()/1e3)}" LAST_MODIFIED="${Math.floor(Date.now()/1e3)}">ZTools</H3>\n    <DL><p>\n`;for(const[e,n]of Object.entries(t))o+=`        <DT><H3 ADD_DATE="${Math.floor(Date.now()/1e3)}">${e}</H3>\n        <DL><p>\n`,n.forEach(e=>{o+=`            <DT><A HREF="${e.url}" ADD_DATE="${Math.floor(Date.now()/1e3)}">${e.name}</A>\n`}),o+="        </DL><p>\n";return o+="    </DL><p>\n</DL><p>",o}(e),"ztools-bookmarks.html","text/html")})});
+document.addEventListener('DOMContentLoaded', () => {
+  const exportBtn = document.getElementById('export-btn');
+  const selectAllBtn = document.getElementById('select-all-btn');
+  const deselectAllBtn = document.getElementById('deselect-all-btn');
+  const toolSearch = document.getElementById('tool-search');
+  const checkboxes = document.querySelectorAll('input[name="tool-choice"]');
+
+  // Multi-select logic
+  selectAllBtn.addEventListener('click', () => {
+    checkboxes.forEach(cb => cb.checked = true);
+  });
+
+  deselectAllBtn.addEventListener('click', () => {
+    checkboxes.forEach(cb => cb.checked = false);
+  });
+
+  // Search filter logic
+  toolSearch.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('.tool-checkbox-item').forEach(item => {
+      const title = item.getAttribute('data-title').toLowerCase();
+      item.style.display = title.includes(q) ? 'flex' : 'none';
+    });
+
+    // Hide empty categories
+    document.querySelectorAll('.category-group').forEach(group => {
+      const visibleTools = group.querySelectorAll('.tool-checkbox-item[style="display: flex;"], .tool-checkbox-item:not([style])');
+      group.style.display = visibleTools.length > 0 ? 'block' : 'none';
+    });
+  });
+
+  // Export Logic
+  exportBtn.addEventListener('click', () => {
+    const selected = Array.from(checkboxes).filter(cb => cb.checked);
+    if (selected.length === 0) {
+      alert('Vui lòng chọn ít nhất một công cụ!');
+      return;
+    }
+
+    const bookmarkHtml = generateBookmarkHtml(selected);
+    downloadBlob(bookmarkHtml, 'ztools-bookmarks.html', 'text/html');
+  });
+
+  function generateBookmarkHtml(selectedTools) {
+    // Group tools by category name for a better folder structure
+    const folders = {};
+    selectedTools.forEach(cb => {
+      const cat = cb.getAttribute('data-cat-name');
+      if (!folders[cat]) folders[cat] = [];
+      folders[cat].push({
+        name: cb.getAttribute('data-name'),
+        url: window.location.origin + cb.getAttribute('data-url')
+      });
+    });
+
+    let html = `<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Bookmarks</TITLE>
+<H1>Bookmarks</H1>
+<DL><p>
+    <DT><H3 ADD_DATE="${Math.floor(Date.now() / 1000)}" LAST_MODIFIED="${Math.floor(Date.now() / 1000)}">ZTools</H3>
+    <DL><p>
+`;
+
+    for (const [catName, tools] of Object.entries(folders)) {
+      html += `        <DT><H3 ADD_DATE="${Math.floor(Date.now() / 1000)}">${catName}</H3>\n        <DL><p>\n`;
+      tools.forEach(tool => {
+        html += `            <DT><A HREF="${tool.url}" ADD_DATE="${Math.floor(Date.now() / 1000)}">${tool.name}</A>\n`;
+      });
+      html += `        </DL><p>\n`;
+    }
+
+    html += `    </DL><p>\n</DL><p>`;
+
+    return html;
+  }
+
+  function downloadBlob(content, filename, contentType) {
+    const blob = new Blob([content], { type: contentType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+});

@@ -1,0 +1,78 @@
+<!-- title: <%= t('url_toolkit.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>🔗 <%= t('url_toolkit.title') %>
+        <% if (toolConfig.meta && toolConfig.meta.version) { %>
+          <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('url_toolkit.desc') %>
+    </p>
+  </div>
+
+  <nav class="category-tabs">
+    <button class="cat-tab active" data-tab="url">
+      <%= t('url_toolkit.tabs.url') %>
+    </button>
+    <button class="cat-tab" data-tab="base64">
+      <%= t('url_toolkit.tabs.base64') %>
+    </button>
+    <button class="cat-tab" data-tab="parser">
+      <%= t('url_toolkit.tabs.parser') %>
+    </button>
+  </nav>
+
+  <div class="converter-card card">
+    <div class="main-editor">
+      <div class="form-group">
+        <label for="input-text">
+          <%= t('url_toolkit.labels.input') %>
+        </label>
+        <textarea id="input-text" placeholder="<%= t('url_toolkit.placeholder') %>" autofocus></textarea>
+      </div>
+
+      <div class="action-bar" id="url-actions">
+        <button class="btn btn-primary" onclick="urlAction('encode')">
+          <%= t('url_toolkit.labels.encode') %>
+        </button>
+        <button class="btn btn-secondary" onclick="urlAction('decode')">
+          <%= t('url_toolkit.labels.decode') %>
+        </button>
+      </div>
+
+      <div class="action-bar" id="base64-actions" style="display: none;">
+        <button class="btn btn-primary" onclick="base64Action('encode')">
+          <%= t('url_toolkit.labels.encode_base64') %>
+        </button>
+        <button class="btn btn-secondary" onclick="base64Action('decode')">
+          <%= t('url_toolkit.labels.decode_base64') %>
+        </button>
+      </div>
+
+      <div class="action-bar" id="parser-actions" style="display: none;">
+        <button class="btn btn-primary" onclick="parseURL()">
+          <%= t('url_toolkit.labels.parse') %>
+        </button>
+      </div>
+
+      <div class="form-group result-section" id="result-text-group">
+        <label for="output-text">
+          <%= t('url_toolkit.labels.output') %>
+        </label>
+        <div class="output-wrap">
+          <textarea id="output-text" readonly placeholder="..."></textarea>
+          <button class="btn-copy" onclick="copyResult()" aria-label="Copy result">📋</button>
+        </div>
+      </div>
+
+      <div id="parser-results" class="parser-grid" style="display: none;">
+        <!-- Parser result rows will be injected here -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

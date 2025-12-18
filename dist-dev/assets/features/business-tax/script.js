@@ -1,1 +1,144 @@
-const TAX_RATES={general:.2,small:.2,"oil-gas-min":.32,"oil-gas-max":.5,"rare-resources":.4},SIMPLE_RATES={goods:.01,services:.05,other:.02},methodRadios=document.querySelectorAll('input[name="calculation-method"]'),detailedForm=document.getElementById("detailed-form"),simpleForm=document.getElementById("simple-form"),resultSection=document.getElementById("result-section"),detailedResults=document.getElementById("detailed-results"),simpleResults=document.getElementById("simple-results"),revenueInput=document.getElementById("revenue"),expensesInput=document.getElementById("deductible-expenses"),otherIncomeInput=document.getElementById("other-income"),exemptIncomeInput=document.getElementById("exempt-income"),previousLossesInput=document.getElementById("previous-losses"),businessTypeSelect=document.getElementById("business-type"),rdFundInput=document.getElementById("rd-fund"),simpleRevenueInput=document.getElementById("simple-revenue"),businessSectorSelect=document.getElementById("business-sector"),btnCalculateDetailed=document.getElementById("btn-calculate-detailed"),btnResetDetailed=document.getElementById("btn-reset-detailed"),btnCalculateSimple=document.getElementById("btn-calculate-simple"),btnResetSimple=document.getElementById("btn-reset-simple");function parseNumber(e){return e&&parseFloat(e.toString().replace(/\./g,"").replace(",","."))||0}function formatCurrency(e){if(0===e)return"0 đ";return(e<0?"-":"")+Math.abs(e).toLocaleString("vi-VN")+" đ"}function formatPercent(e){return(100*e).toFixed(1)+"%"}function formatNumberInput(e){e.addEventListener("input",function(e){let t=e.target.value.replace(/[^\d]/g,"");t&&(e.target.value=parseInt(t).toLocaleString("vi-VN"))}),e.addEventListener("blur",function(e){e.target.value||(e.target.value="0")})}function calculateDetailedTax(){const e=parseNumber(revenueInput.value),t=parseNumber(expensesInput.value),n=parseNumber(otherIncomeInput.value),l=parseNumber(exemptIncomeInput.value),s=parseNumber(previousLossesInput.value),u=businessTypeSelect.value,o=parseFloat(rdFundInput.value)/100;if(0===e)return alert("Vui lòng nhập doanh thu!"),void revenueInput.focus();const r=e-t+n;let a=r-l-s;a<0&&(a=0);let m=0;o>0&&a>0&&(m=a*Math.min(o,.1));let c=TAX_RATES.general;"small"===u?c=TAX_RATES.small:"oil-gas"===u?c=TAX_RATES["oil-gas-min"]:"rare-resources"===u&&(c=TAX_RATES["rare-resources"]);displayDetailedResults({revenue:e,expenses:t,otherIncome:n,taxableIncome:r,exemptIncome:l,previousLosses:s,rdFund:m,incomeForTax:a,taxRate:c,totalTax:(a-m)*c})}function displayDetailedResults(e){document.getElementById("result-revenue").textContent=formatCurrency(e.revenue),document.getElementById("result-expenses").textContent=formatCurrency(e.expenses),document.getElementById("result-other-income").textContent=formatCurrency(e.otherIncome),document.getElementById("result-taxable-income").textContent=formatCurrency(e.taxableIncome),document.getElementById("result-exempt").textContent=formatCurrency(e.exemptIncome),document.getElementById("result-losses").textContent=formatCurrency(e.previousLosses),document.getElementById("result-rd-fund").textContent=formatCurrency(e.rdFund),document.getElementById("result-income-for-tax").textContent=formatCurrency(e.incomeForTax),document.getElementById("result-tax-rate").textContent=formatPercent(e.taxRate),document.getElementById("result-total-tax").textContent=formatCurrency(e.totalTax),detailedResults.style.display="block",simpleResults.style.display="none",resultSection.classList.add("show"),resultSection.scrollIntoView({behavior:"smooth",block:"nearest"})}function calculateSimpleTax(){const e=parseNumber(simpleRevenueInput.value),t=businessSectorSelect.value;if(0===e)return alert("Vui lòng nhập doanh thu!"),void simpleRevenueInput.focus();const n=SIMPLE_RATES[t];displaySimpleResults({revenue:e,rate:n,totalTax:e*n})}function displaySimpleResults(e){document.getElementById("simple-result-revenue").textContent=formatCurrency(e.revenue),document.getElementById("simple-result-rate").textContent=formatPercent(e.rate),document.getElementById("simple-result-total").textContent=formatCurrency(e.totalTax),detailedResults.style.display="none",simpleResults.style.display="block",resultSection.classList.add("show"),resultSection.scrollIntoView({behavior:"smooth",block:"nearest"})}function resetDetailedForm(){revenueInput.value="",expensesInput.value="",otherIncomeInput.value="",exemptIncomeInput.value="",previousLossesInput.value="",businessTypeSelect.value="general",rdFundInput.value="0",resultSection.classList.remove("show")}function resetSimpleForm(){simpleRevenueInput.value="",businessSectorSelect.value="goods",resultSection.classList.remove("show")}[revenueInput,expensesInput,otherIncomeInput,exemptIncomeInput,previousLossesInput,simpleRevenueInput].forEach(formatNumberInput),methodRadios.forEach(e=>{e.addEventListener("change",function(){"detailed"===this.value?(detailedForm.style.display="block",simpleForm.style.display="none",resultSection.classList.remove("show")):(detailedForm.style.display="none",simpleForm.style.display="block",resultSection.classList.remove("show"))})}),btnCalculateDetailed.addEventListener("click",calculateDetailedTax),btnResetDetailed.addEventListener("click",resetDetailedForm),btnCalculateSimple.addEventListener("click",calculateSimpleTax),btnResetSimple.addEventListener("click",resetSimpleForm),detailedForm.addEventListener("keypress",function(e){"Enter"===e.key&&(e.preventDefault(),calculateDetailedTax())}),simpleForm.addEventListener("keypress",function(e){"Enter"===e.key&&(e.preventDefault(),calculateSimpleTax())});
+/**
+ * Business Tax Calculator Logic
+ */
+
+const TAX_RATES = {
+  general: 0.20,
+  small: 0.20,
+  'oil-gas-min': 0.32,
+  'oil-gas-max': 0.50,
+  'rare-resources': 0.40
+};
+
+const SIMPLE_RATES = {
+  goods: 0.01,
+  services: 0.05,
+  other: 0.02
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  const methodRadios = document.querySelectorAll('input[name="calculation-method"]');
+  const detailedForm = document.getElementById('detailed-form');
+  const simpleForm = document.getElementById('simple-form');
+  const resultSection = document.getElementById('result-section');
+
+  if (!detailedForm) return;
+
+  methodRadios.forEach(radio => {
+    radio.addEventListener('change', function () {
+      if (this.value === 'detailed') {
+        detailedForm.style.display = 'block';
+        simpleForm.style.display = 'none';
+      } else {
+        detailedForm.style.display = 'none';
+        simpleForm.style.display = 'block';
+      }
+      resultSection.classList.remove('show');
+    });
+  });
+
+  const btnCalculateDetailed = document.getElementById('btn-calculate-detailed');
+  if (btnCalculateDetailed) {
+    btnCalculateDetailed.addEventListener('click', () => {
+      const inputs = {
+        revenue: parseNumber(document.getElementById('revenue').value),
+        expenses: parseNumber(document.getElementById('deductible-expenses').value),
+        otherIncome: parseNumber(document.getElementById('other-income').value),
+        exemptIncome: parseNumber(document.getElementById('exempt-income').value),
+        previousLosses: parseNumber(document.getElementById('previous-losses').value),
+        businessType: document.getElementById('business-type').value,
+        rdFundPercent: parseFloat(document.getElementById('rd-fund').value) / 100
+      };
+
+      if (inputs.revenue === 0) return alert('Vui lòng nhập doanh thu!');
+      const res = calculateDetailedTaxLogic(inputs);
+      displayDetailedResults(res);
+    });
+  }
+
+  const btnCalculateSimple = document.getElementById('btn-calculate-simple');
+  if (btnCalculateSimple) {
+    btnCalculateSimple.addEventListener('click', () => {
+      const revenue = parseNumber(document.getElementById('simple-revenue').value);
+      const sector = document.getElementById('business-sector').value;
+      if (revenue === 0) return alert('Vui lòng nhập doanh thu!');
+      const res = calculateSimpleTaxLogic(revenue, sector);
+      displaySimpleResults(res);
+    });
+  }
+
+  // Format all number inputs
+  document.querySelectorAll('input[type="text"]').forEach(input => {
+    if (input.id !== 'rd-fund') {
+      input.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/[^\d]/g, '');
+        if (value) e.target.value = parseInt(value).toLocaleString('vi-VN');
+      });
+    }
+  });
+
+  function displayDetailedResults(data) {
+    document.getElementById('result-revenue').textContent = formatCurrency(data.revenue);
+    document.getElementById('result-expenses').textContent = formatCurrency(data.expenses);
+    document.getElementById('result-other-income').textContent = formatCurrency(data.otherIncome);
+    document.getElementById('result-taxable-income').textContent = formatCurrency(data.taxableIncome);
+    document.getElementById('result-exempt').textContent = formatCurrency(data.exemptIncome);
+    document.getElementById('result-losses').textContent = formatCurrency(data.previousLosses);
+    document.getElementById('result-rd-fund').textContent = formatCurrency(data.rdFund);
+    document.getElementById('result-income-for-tax').textContent = formatCurrency(data.incomeForTax);
+    document.getElementById('result-tax-rate').textContent = (data.taxRate * 100).toFixed(1) + '%';
+    document.getElementById('result-total-tax').textContent = formatCurrency(data.totalTax);
+    document.getElementById('detailed-results').style.display = 'block';
+    document.getElementById('simple-results').style.display = 'none';
+    resultSection.classList.add('show');
+  }
+
+  function displaySimpleResults(data) {
+    document.getElementById('simple-result-revenue').textContent = formatCurrency(data.revenue);
+    document.getElementById('simple-result-rate').textContent = (data.rate * 100).toFixed(1) + '%';
+    document.getElementById('simple-result-total').textContent = formatCurrency(data.totalTax);
+    document.getElementById('detailed-results').style.display = 'none';
+    document.getElementById('simple-results').style.display = 'block';
+    resultSection.classList.add('show');
+  }
+
+  function parseNumber(str) {
+    if (!str) return 0;
+    return parseFloat(str.toString().replace(/\./g, '').replace(',', '.')) || 0;
+  }
+
+  function formatCurrency(num) {
+    return Math.round(num).toLocaleString('vi-VN') + ' đ';
+  }
+});
+
+function calculateDetailedTaxLogic(inputs) {
+  const taxableIncome = inputs.revenue - inputs.expenses + inputs.otherIncome;
+  let incomeForTax = Math.max(0, taxableIncome - inputs.exemptIncome - inputs.previousLosses);
+  const rdFund = incomeForTax * Math.min(inputs.rdFundPercent || 0, 0.10);
+  const finalIncomeForTax = incomeForTax - rdFund;
+
+  let taxRate = TAX_RATES.general;
+  if (inputs.businessType === 'small') taxRate = TAX_RATES.small;
+  else if (inputs.businessType === 'oil-gas') taxRate = TAX_RATES['oil-gas-min'];
+  else if (inputs.businessType === 'rare-resources') taxRate = TAX_RATES['rare-resources'];
+
+  return {
+    ...inputs,
+    taxableIncome,
+    incomeForTax,
+    rdFund,
+    taxRate,
+    totalTax: finalIncomeForTax * taxRate
+  };
+}
+
+function calculateSimpleTaxLogic(revenue, sector) {
+  const rate = SIMPLE_RATES[sector] || 0.01;
+  return { revenue, rate, totalTax: revenue * rate };
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { calculateDetailedTaxLogic, calculateSimpleTaxLogic };
+}

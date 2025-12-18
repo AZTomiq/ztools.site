@@ -1,0 +1,16 @@
+timestamp_converter:
+  title: Timestamp Converter
+  desc: Convert between Unix timestamps and human-readable dates.
+  current_time: Current Time
+  unix_to_date: Unix to Date
+  date_to_unix: Date to Unix
+  labels:
+    seconds: Seconds (s)
+    milliseconds: Milliseconds (ms)
+    local_time: Local Time
+    utc_time: UTC Time
+    iso_time: ISO 8601
+    convert: Convert
+    clear: Clear
+    now: Now
+  placeholder: Enter Unix Timestamp (e.g., 1734500000)

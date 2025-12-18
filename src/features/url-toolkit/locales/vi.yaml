@@ -1,0 +1,24 @@
+url_toolkit:
+  title: URL & Base64 Toolkit
+  desc: Mã hóa/Giải mã URL, Base64 và phân tích cấu trúc URL nhanh chóng.
+  tabs:
+    url: URL Encoder
+    base64: Base64
+    parser: URL Parser
+  labels:
+    input: Nhập nội dung...
+    output: Kết quả
+    encode: Mã hóa URL
+    decode: Giải mã URL
+    encode_base64: Mã hóa Base64
+    decode_base64: Giải mã Base64
+    parse: Phân tích URL
+    copy: Sao chép
+    clear: Xóa
+  parser:
+    protocol: Giao thức (Protocol)
+    host: Hostname
+    path: Đường dẫn (Path)
+    query: Tham số (Query)
+    hash: Hash/Fragment
+  placeholder: Dán URL hoặc đoạn mã vào đây...

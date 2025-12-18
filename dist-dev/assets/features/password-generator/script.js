@@ -1,1 +1,152 @@
-const CHARS={upper:"ABCDEFGHIJKLMNOPQRSTUVWXYZ",lower:"abcdefghijklmnopqrstuvwxyz",numbers:"0123456789",symbols:"!@#$%^&*()_+~`|}{[]:;?><,./-="},AMBIGUOUS=["l","I","1","O","0","o"];function updateLength(e){const t=document.getElementById("length-val");t&&(t.textContent=e),generatePassword()}function generatePassword(){const e=document.getElementById("length"),t=document.getElementById("quantity");if(!e||!t)return;const n=parseInt(e.value),d=parseInt(t.value)||1,s=document.getElementById("uppercase")?.checked||!1,a=document.getElementById("lowercase")?.checked||!1,o=document.getElementById("numbers")?.checked||!1,l=document.getElementById("symbols")?.checked||!1,c=document.getElementById("exclude_ambiguous")?.checked||!1,r=document.getElementById("easy_say")?.checked||!1,u=!r&&o,g=!r&&l;let m="",i=[];const h=e=>{let t=e;c&&(t=t.split("").filter(e=>!AMBIGUOUS.includes(e)).join("")),m+=t,t.length>0&&i.push(t[Math.floor(Math.random()*t.length)])};s&&h(CHARS.upper),a&&h(CHARS.lower),u&&h(CHARS.numbers),g&&h(CHARS.symbols);const y=document.getElementById("password-output"),E=document.getElementById("strength-bar"),p=document.getElementById("strength-text");if(!y)return;if(0===m.length)return y.value="",E&&(E.style.width="0%"),void(p&&(p.textContent="Strength: ..."));const I=[];for(let e=0;e<d;e++){let e=i.join("");for(let t=e.length;t<n;t++)e+=m[Math.floor(Math.random()*m.length)];e=e.split("").sort(()=>.5-Math.random()).join(""),I.push(e)}y.value=I.join("\n"),y.rows=Math.min(Math.max(d,1),10),I.length>0&&calculateStrength(I[0])}function calculateStrength(e){let t=0;e.length>8&&(t+=1),e.length>12&&(t+=1),e.length>=16&&(t+=1),/[A-Z]/.test(e)&&(t+=1),/[a-z]/.test(e)&&(t+=1),/[0-9]/.test(e)&&(t+=1),/[^A-Za-z0-9]/.test(e)&&(t+=1);let n=Math.min(t/7*100,100);const d=document.getElementById("strength-bar"),s=document.getElementById("strength-text");if(!d||!s)return;d.className="strength-bar";let a="Weak";n<30?(d.classList.add("weak"),a="Weak"):n<60?(d.classList.add("medium"),a="Medium"):n<80?(d.classList.add("strong"),a="Strong"):(d.classList.add("very-strong"),a="Very Strong"),d.style.width=n+"%",s.textContent=`Strength: ${a}`}function copyPassword(){const e=document.getElementById("password-output");e&&(e.select(),e.setSelectionRange(0,99999),navigator.clipboard&&navigator.clipboard.writeText(e.value).then(()=>{alert("Copied to clipboard!")}))}document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll('input[type="checkbox"]').forEach(e=>{e.addEventListener("change",generatePassword)});const e=document.getElementById("quantity");e&&(e.addEventListener("change",generatePassword),e.addEventListener("input",generatePassword));const t=document.getElementById("length");t&&(t.addEventListener("input",function(){updateLength(this.value)}),t.addEventListener("change",generatePassword));const n=document.getElementById("easy_say");n&&n.addEventListener("change",e=>{const t=document.getElementById("numbers"),n=document.getElementById("symbols");e.target.checked?(t&&(t.checked=!1,t.disabled=!0),n&&(n.checked=!1,n.disabled=!0)):(t&&(t.disabled=!1),n&&(n.disabled=!1)),generatePassword()}),generatePassword()});
+/**
+ * Password Generator Logic
+ */
+
+const CHARS = {
+  upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  lower: 'abcdefghijklmnopqrstuvwxyz',
+  numbers: '0123456789',
+  symbols: '!@#$%^&*()_+~`|}{[]:;?><,./-='
+};
+
+const AMBIGUOUS = ['l', 'I', '1', 'O', '0', 'o'];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lengthInput = document.getElementById('length');
+  if (!lengthInput) return;
+
+  const updateAll = () => {
+    const options = {
+      length: parseInt(lengthInput.value),
+      quantity: parseInt(document.getElementById('quantity').value) || 1,
+      useUpper: document.getElementById('uppercase')?.checked ?? false,
+      useLower: document.getElementById('lowercase')?.checked ?? false,
+      useNumbers: document.getElementById('numbers')?.checked ?? false,
+      useSymbols: document.getElementById('symbols')?.checked ?? false,
+      excludeAmbiguous: document.getElementById('exclude_ambiguous')?.checked ?? false,
+      easySay: document.getElementById('easy_say')?.checked ?? false
+    };
+
+    const results = generatePasswordsLogic(options);
+    const output = document.getElementById('password-output');
+    if (output) {
+      output.value = results.join('\n');
+      output.rows = Math.min(Math.max(options.quantity, 1), 10);
+    }
+
+    if (results.length > 0) {
+      const strength = calculateStrength(results[0]);
+      updateStrengthDisplay(strength);
+    }
+
+    const lengthVal = document.getElementById('length-val');
+    if (lengthVal) lengthVal.textContent = options.length;
+  };
+
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach(input => input.addEventListener('change', updateAll));
+  lengthInput.addEventListener('input', updateAll);
+
+  const easySay = document.getElementById('easy_say');
+  if (easySay) {
+    easySay.addEventListener('change', (e) => {
+      const nums = document.getElementById('numbers');
+      const syms = document.getElementById('symbols');
+      if (e.target.checked) {
+        if (nums) { nums.checked = false; nums.disabled = true; }
+        if (syms) { syms.checked = false; syms.disabled = true; }
+      } else {
+        if (nums) nums.disabled = false;
+        if (syms) syms.disabled = false;
+      }
+      updateAll();
+    });
+  }
+
+  updateAll();
+
+  window.copyPassword = () => {
+    const output = document.getElementById('password-output');
+    if (!output || !output.value) return;
+    output.select();
+    navigator.clipboard.writeText(output.value).then(() => alert('Copied to clipboard!'));
+  };
+
+  window.generatePassword = updateAll;
+});
+
+function generatePasswordsLogic(options) {
+  const { length, quantity, useUpper, useLower, useNumbers, useSymbols, excludeAmbiguous, easySay } = options;
+  const includeNumbers = easySay ? false : useNumbers;
+  const includeSymbols = easySay ? false : useSymbols;
+
+  let validChars = '';
+  let mustInclude = [];
+
+  const addSet = (set) => {
+    let s = set;
+    if (excludeAmbiguous) s = s.split('').filter(c => !AMBIGUOUS.includes(c)).join('');
+    validChars += s;
+    if (s.length > 0) mustInclude.push(s[Math.floor(Math.random() * s.length)]);
+  };
+
+  if (useUpper) addSet(CHARS.upper);
+  if (useLower) addSet(CHARS.lower);
+  if (includeNumbers) addSet(CHARS.numbers);
+  if (includeSymbols) addSet(CHARS.symbols);
+
+  if (validChars.length === 0) return [];
+
+  const generatedList = [];
+  for (let q = 0; q < quantity; q++) {
+    let password = [];
+    // Ensure one char from each selected set
+    mustInclude.forEach(c => password.push(c));
+
+    while (password.length < length) {
+      password.push(validChars[Math.floor(Math.random() * validChars.length)]);
+    }
+
+    // Shuffle
+    const shuffled = password.sort(() => 0.5 - Math.random()).join('');
+    generatedList.push(shuffled);
+  }
+  return generatedList;
+}
+
+function calculateStrength(password) {
+  let score = 0;
+  if (password.length > 8) score += 1;
+  if (password.length > 12) score += 1;
+  if (password.length >= 16) score += 1;
+  if (/[A-Z]/.test(password)) score += 1;
+  if (/[a-z]/.test(password)) score += 1;
+  if (/[0-9]/.test(password)) score += 1;
+  if (/[^A-Za-z0-9]/.test(password)) score += 1;
+
+  const percentage = Math.min((score / 7) * 100, 100);
+  let label = 'Weak';
+  let className = 'weak';
+
+  if (percentage < 30) { label = 'Weak'; className = 'weak'; }
+  else if (percentage < 60) { label = 'Medium'; className = 'medium'; }
+  else if (percentage < 80) { label = 'Strong'; className = 'strong'; }
+  else { label = 'Very Strong'; className = 'very-strong'; }
+
+  return { percentage, label, className };
+}
+
+function updateStrengthDisplay(strength) {
+  const bar = document.getElementById('strength-bar');
+  const text = document.getElementById('strength-text');
+  if (bar) {
+    bar.className = 'strength-bar ' + strength.className;
+    bar.style.width = strength.percentage + '%';
+  }
+  if (text) text.textContent = `Strength: ${strength.label}`;
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { generatePasswordsLogic, calculateStrength };
+}

@@ -68,10 +68,15 @@ ztools.site/
 │       └── 404.ejs
 ├── dist/                         # Production build output
 ├── dist-dev/                     # Development build output
-├── build.js                      # Build script
-├── manifest.json                 # PWA manifest
-├── sw.js                         # Service worker
-├── robots.txt                    # SEO robots file
+├── scripts/                      # System scripts
+│   ├── build.js                  # Custom Static Site Generator
+│   ├── deploy.js                 # Deployment orchestrator
+│   └── server.js                 # Dev server
+├── plans/                        # Roadmap & planning documents
+│   ├── in-progress/
+│   ├── plan.md
+│   ├── SEO.plan.md
+│   └── roadmap-to-CMS.md
 └── package.json
 
 ```
@@ -124,7 +129,7 @@ The production build:
 
 ## 📦 Build Process
 
-The custom build script (`build.js`) performs:
+The custom build script (`scripts/build.js`) performs:
 
 1. **Asset Processing**
    - Minifies all CSS files

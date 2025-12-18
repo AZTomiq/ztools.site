@@ -6,7 +6,7 @@ This document establishes the strict rules and workflows for developing features
 
 ## 1. Project Architecture (SSG)
 
-ZTools uses a custom Static Site Generator (`build.js`) based on Node.js and EJS.
+ZTools uses a custom Static Site Generator (`scripts/build.js`) based on Node.js and EJS.
 - **Source**: `src/` (All editable code goes here).
 - **Output**: `dist/` (Production) or `dist-dev/` (Development).
 - **Core Principles**:
@@ -18,47 +18,44 @@ ZTools uses a custom Static Site Generator (`build.js`) based on Node.js and EJS
 
 ## 2. File Structure for New Tools
 
-Every new tool must follow this isolated structure. Example: `new-tool`
+Every tool must be self-contained within the `src/features/` directory.
 
 ```
-src/
-├── pages/
-│   └── new-tool/
-│       └── index.ejs       # Tool markup (using EJS for i18n)
-├── assets/
-│   ├── css/
-│   │   └── new-tool.css    # Tool-specific styles
-│   └── js/
-│       └── new-tool.js     # Tool specific logic
-└── locales/
-    ├── vi/
-    │   └── new-tool.json   # VI Translations (Modular)
-    └── en/
-        └── new-tool.json   # EN Translations (Modular)
+src/features/new-tool/
+├── tool.yaml           # Metadata (ID, Category, Icon, Version)
+├── index.ejs           # Tool markup (EJS template)
+├── style.css           # Tool-specific styles
+├── script.js           # Tool-specific logic
+├── CHANGELOG.md        # Update history (Markdown)
+└── locales/            # Atomic translations
+    ├── vi.yaml
+    └── en.yaml
 ```
+
+- **Avoid**: Putting tool-specific files in global `assets/` or `pages/` folders.
+- **tool.yaml**: Must define `id`, `category`, `translationKey`, and `meta.version`.
 
 ---
 
 ## 3. Localization (i18n) Rules 🌍
 
-We use a **Modular Localization System**.
-1.  **Do NOT** edit `common.json` for tool-specific keys.
-2.  **Create a new file**: `src/locales/{lang}/{tool-name}.json`.
-3.  **Namespace Keys**: Use the tool name as the root key.
-    ```json
-    // src/locales/en/new-tool.json
-    {
-      "new_tool": {
-        "title": "New Tool Title",
-        "desc": "Description..."
-      }
-    }
+We use an **Atomic YAML Localization System**.
+1.  **Scope**: Translations are stored inside the feature folder: `src/features/{tool}/locales/{lang}.yaml`.
+2.  **Namespace**: Use the `translationKey` defined in `tool.yaml` as the root key.
+    ```yaml
+    # src/features/new-tool/locales/en.yaml
+    new_tool:
+      title: "New Tool Title"
+      desc: "Detailed description..."
     ```
-4.  **Usage in EJS**:
+3.  **Global Keys**: Global/shared text remains in `src/locales/{lang}.json` (legacy) or `src/locales/{lang}/`.
+4.  **Strict Rule**: No hardcoded text. Use `<%= t('key') %>`.
+5.  **Data Injections**: Tool-specific JS often needs locale data. Use high-performance JSON injection:
     ```ejs
-    <h1><%= t('new_tool.title') %></h1>
+    <script id="tool-locales" type="application/json">
+      <%- JSON.stringify(t('new_tool.data')) %>
+    </script>
     ```
-5.  **Strict Rule**: No hardcoded text in `.ejs` files. All user-facing text must be Internationalized.
 
 ---
 
@@ -76,31 +73,55 @@ We use a **Modular Localization System**.
 - **Responsiveness**: Mobile-first. Use `minmax` grids and Flexbox.
 
 ### JavaScript
-- **Performance**: Minimize DOM access.
-- **Security**: No `innerHTML` with user input. Use `textContent`.
-- **Obfuscation**: The build script automatically obfuscates JS in production. Do not rely on variable names being preserved.
+### JavaScript & APIs
+- **Secure Mode**: `npm run build` minifies and obfuscates JS. `npm run dev` copies raw files for easier debugging.
+- **CORS Mitigation**: When fetching from 3rd-party APIs (like SJC Gold), use a proxy like `api.allorigins.win` to bypass browser restrictions.
+- **No innerHTML**: Use `textContent` or use `DOMParser` for XML/HTML parsing from trusted sources.
+
+### Versioning & Changelog
+- **Version**: Defined in `tool.yaml` -> `meta.version`.
+- **Badge**: Every tool should display its version: `<span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>`.
+- **Changelog**: Place `CHANGELOG.md` in the feature folder. It is automatically parsed and displayed in a modal when the version badge is clicked.
 
 ---
 
 ## 5. Deployment & SEO
 
-1.  **Homepage Update**:
-    -   Add the new tool card to `src/pages/index.ejs` in the appropriate category.
-    -   Use the correct modular translation key for the card title/desc.
-2.  **Service Worker**:
-    -   Update `sw.js`: Add `'./vi/new-tool/'` to `STATIC_ASSETS`.
-    -   Increment `CACHE_NAME`.
-3.  **Documentation**:
-    -   Update `plan.md`: Mark the tool as completed.
-    -   Update `SEO.plan.md`: Add target keywords.
+1.  **Homepage Integration**:
+    -   The homepage (`src/pages/index.ejs`) is dynamic. Simply set `status: active` in `tool.yaml` and the tool will automatically appear in its category.
+2.  **Static Assets**:
+    -   `sw.js`, `manifest.json`, `sitemap.xml`, and `robots.txt` are **automatically generated**. Do not edit them in `dist/`.
+3.  **Deployment**:
+    -   Run `npm run build` to generate the production `dist/` folder.
+    -   Run `npm run deploy` to push to the production repository.
 
 ---
 
-## 6. Pre-Commit Checklist
+---
 
+## 7. Quality Assurance & Testing 🧪
+
+We use a two-tier testing system to ensure stability and accuracy.
+
+### 1. Integrity Tests (`npm run test:integrity`)
+- Automatically verifies all `tool.yaml` files have required fields.
+- Checks `dist-dev/` for unrendered EJS tags or missing assets.
+- Use this to ensure the project structure is healthy.
+
+### 2. Unit Tests (`npm run test:unit`)
+- Uses **Vitest** with `jsdom` environment.
+- **Requirement**: Any tool with complex logic (Math, Converters, Parsers) MUST have a corresponding test file in `tests/`.
+- **Exporting Logic**: To make tool scripts testable, export the core logic at the bottom of `script.js`:
+  ```javascript
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { calculateSomething, CORE_CONFIG };
+  }
+  ```
+
+### 3. Pre-Commit Checklist (Updated)
 Before finishing a task, verify:
 - [ ] Tool page renders correctly in both VI and EN.
 - [ ] CSS is responsive on mobile (320px+).
 - [ ] JS works without console errors.
-- [ ] `npm run build` runs successfully.
+- [ ] `npm test` passes (Integrity + Unit tests).
 - [ ] Service Worker caches the new page.

@@ -1,0 +1,64 @@
+<div class="tool-container">
+  <div class="tool-header" style="margin-bottom: 2rem;">
+    <div class="tool-title" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+      <span class="tool-icon" style="font-size: 2.5rem;">↔️</span>
+      <h1 style="margin: 0; font-size: 2rem;">
+        <%= t('features.textDiff.title') %>
+      </h1>
+    </div>
+    <p class="tool-desc" style="color: var(--text-muted); font-size: 1.1rem;">
+      <%= t('features.textDiff.desc') %>
+    </p>
+  </div>
+
+  <div class="diff-inputs">
+    <div class="input-group">
+      <label for="text-old">
+        <%= t('features.textDiff.label_old') %>
+      </label>
+      <textarea id="text-old" placeholder="<%= t('features.textDiff.placeholder_old') %>"></textarea>
+    </div>
+    <div class="input-group">
+      <label for="text-new">
+        <%= t('features.textDiff.label_new') %>
+      </label>
+      <textarea id="text-new" placeholder="<%= t('features.textDiff.placeholder_new') %>"></textarea>
+    </div>
+  </div>
+
+  <div class="tool-actions">
+    <div class="action-left">
+      <button class="btn btn-primary" onclick="compareText()">
+        <%= t('features.textDiff.btn_compare') %>
+      </button>
+      <button class="btn btn-secondary" onclick="clearAll()">
+        <%= t('features.textDiff.btn_clear') %>
+      </button>
+    </div>
+    <div class="action-right">
+      <div class="toggle-group">
+        <button id="view-side" class="btn-tab active" onclick="setDiffView('side')">
+          <%= t('features.textDiff.view_side') %>
+        </button>
+        <button id="view-inline" class="btn-tab" onclick="setDiffView('inline')">
+          <%= t('features.textDiff.view_inline') %>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="diff-result-container" class="diff-result-wrapper" style="display: none;">
+    <div class="result-header">
+      <h3>
+        <%= t('features.textDiff.result_title') %>
+      </h3>
+      <div class="diff-summary" id="diff-summary"></div>
+    </div>
+    <div id="diff-output" class="diff-output side-by-side">
+      <!-- Diff results will be injected here -->
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+<script src="<%= toolConfig._assets.js %>"></script>

@@ -16,16 +16,18 @@
   style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
   <div class="view-toggles"
     style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
-    <button class="btn-icon" data-view="grid" title="Grid View">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
         <rect x="3" y="3" width="7" height="7"></rect>
         <rect x="14" y="3" width="7" height="7"></rect>
         <rect x="14" y="14" width="7" height="7"></rect>
         <rect x="3" y="14" width="7" height="7"></rect>
       </svg>
     </button>
-    <button class="btn-icon" data-view="list" title="List View">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
         <line x1="8" y1="6" x2="21" y2="6"></line>
         <line x1="8" y1="12" x2="21" y2="12"></line>
         <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -37,7 +39,8 @@
   </div>
 
   <div class="sort-options">
-    <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;">
+    <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
+      aria-label="Sort tools by">
       <option value="default">
         <%= t('home.sort.default') || 'Default' %>
       </option>
@@ -57,214 +60,178 @@
   </div>
 </div>
 
-<div class="category-section" id="job-income">
-  <h2 class="category-title">🛠️ Job & Income</h2>
-  <div class="tools-grid">
-    <!-- Active Tools -->
-    <a href="<%= rootPath %><%= locale %>/tax/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💸</div>
-      <h3>
-        <%= t('tax.title') %>
-      </h3>
-      <p>
-        <%= t('tax.desc') %>
-      </p>
-    </a>
-    <a href="<%= rootPath %><%= locale %>/business-tax/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
-      <h3>
-        <%= t('business_tax.title') %>
-      </h3>
-      <p>Corporate Income Tax Calculator</p>
-    </a>
-    <a href="<%= rootPath %><%= locale %>/social-insurance/" class="card tool-item">
-      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏥</div>
-      <h3>
-        <%= t('social_insurance.title') %>
-      </h3>
-      <p>Social Insurance & Pension Calculator</p>
-    </a>
-    <!-- Coming Soon -->
-    <div class="card tool-item upcoming">
-      <div class="icon-soon">🔜</div>
-      <h3>
-        <%= t('home.cats.job.salary') || 'Tiện ích Lương thưởng' %>
-      </h3>
-      <p class="desc-soon">OT, KPI, 13th Month Salary</p>
-    </div>
-  </div>
-</div>
-<% const categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , emoji: '🛠️' }, {
-  id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , emoji: '💰' }, { id: 'text' ,
-  titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , emoji: '📝' }, { id: 'generator' ,
-  titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , emoji: '⚙️' }, { id: 'daily' ,
-  titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , emoji: '☕' }, { id: 'dev' ,
-  titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , emoji: '💻' } ]; categories.forEach(cat=> {
-  const catTools = tools.filter(t => t.category === cat.id);
-  if (catTools.length === 0) return;
-  %>
-  <div class="category-section" id="<%= cat.id %>-tools">
-    <h2 class="category-title">
-      <%= cat.emoji %>
-        <%= t(cat.titleKey) || cat.defaultTitle %>
-    </h2>
-    <div class="tools-grid">
-      <% catTools.forEach(tool=> { %>
-        <% if (tool.status==='active' ) { %>
-          <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="card tool-item">
-            <div style="font-size: 2rem; margin-bottom: 0.5rem;">
-              <%= tool.icon %>
-            </div>
-            <h3>
-              <%= t(tool.translationKey + '.title' ) %>
-            </h3>
-            <p>
-              <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
-            </p>
-          </a>
-          <% } else { %>
-            <div class="card tool-item upcoming">
-              <div class="icon-soon">
+<% /* The manual job-income block was removed to avoid duplication. The dynamic loop below handles all categories. */ %>
+  <% const categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , emoji: '🛠️' }, {
+    id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , emoji: '💰' }, { id: 'text' ,
+    titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , emoji: '📝' }, { id: 'generator' ,
+    titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , emoji: '⚙️' }, { id: 'daily' ,
+    titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , emoji: '☕' }, { id: 'dev' ,
+    titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , emoji: '💻' } ]; categories.forEach(cat=> {
+    const catTools = tools.filter(t => t.category === cat.id);
+    if (catTools.length === 0) return;
+    %>
+    <div class="category-section" id="<%= cat.id %>-tools">
+      <h2 class="category-title">
+        <%= cat.emoji %>
+          <%= t(cat.titleKey) || cat.defaultTitle %>
+      </h2>
+      <div class="tools-grid">
+        <% catTools.forEach(tool=> { %>
+          <% if (tool.status==='active' ) { %>
+            <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="card tool-item">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;" aria-hidden="true">
                 <%= tool.icon %>
               </div>
               <h3>
-                <%= tool.titleOverrideKey ? t(tool.titleOverrideKey) : tool.defaultTitle %>
+                <%= t(tool.translationKey + '.title' ) %>
               </h3>
-              <p class="desc-soon">
-                <%= tool.descOverride %>
+              <p>
+                <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
               </p>
-            </div>
-            <% } %>
-              <% }); %>
+            </a>
+            <% } else { %>
+              <div class="card tool-item upcoming">
+                <div class="icon-soon">
+                  <%= tool.icon %>
+                </div>
+                <h3>
+                  <%= tool.titleOverrideKey ? t(tool.titleOverrideKey) : tool.defaultTitle %>
+                </h3>
+                <p class="desc-soon">
+                  <%= tool.descOverride %>
+                </p>
+              </div>
+              <% } %>
+                <% }); %>
+      </div>
     </div>
-  </div>
-  <% }); %>
+    <% }); %>
 
-    <script src="<%= asset('assets/js/home.js') %>"></script>
+      <script src="<%= asset('assets/js/home.js') %>"></script>
 
-    <style>
-      .category-section {
-        margin-bottom: 4rem;
-      }
-
-      .category-title {
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-        border-bottom: 2px solid var(--border-color);
-        padding-bottom: 0.5rem;
-        display: inline-block;
-      }
-
-      .tools-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 1.5rem;
-        transition: all 0.3s;
-      }
-
-      /* List View Style */
-      .tools-grid.list-view {
-        grid-template-columns: 1fr !important;
-      }
-
-      .tools-grid.list-view .tool-item {
-        flex-direction: row;
-        align-items: center;
-        padding: 1rem;
-        gap: 1.5rem;
-      }
-
-      .tools-grid.list-view .tool-item div:first-child {
-        font-size: 1.5rem !important;
-        margin-bottom: 0 !important;
-      }
-
-      .tools-grid.list-view .tool-item h3 {
-        margin-bottom: 0;
-        min-width: 200px;
-      }
-
-      @media (min-width: 900px) {
-        .tools-grid {
-          grid-template-columns: repeat(3, 1fr);
+      <style>
+        .category-section {
+          margin-bottom: 4rem;
         }
-      }
 
-      @media (min-width: 1200px) {
-        .tools-grid {
-          grid-template-columns: repeat(4, 1fr);
+        .category-title {
+          font-size: 1.8rem;
+          margin-bottom: 1.5rem;
+          border-bottom: 2px solid var(--border-color);
+          padding-bottom: 0.5rem;
+          display: inline-block;
         }
-      }
 
-      .tool-item {
-        text-decoration: none;
-        color: inherit;
-        transition: transform 0.2s, box-shadow 0.2s;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
+        .tools-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 1.5rem;
+          transition: all 0.3s;
+        }
 
-      .tool-item:hover {
-        transform: translateY(-5px);
-        border-color: var(--primary-color);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      }
+        /* List View Style */
+        .tools-grid.list-view {
+          grid-template-columns: 1fr !important;
+        }
 
-      .tools-grid.list-view .tool-item:hover {
-        transform: translateX(5px);
-      }
+        .tools-grid.list-view .tool-item {
+          flex-direction: row;
+          align-items: center;
+          padding: 1rem;
+          gap: 1.5rem;
+        }
 
-      .tool-item h3 {
-        margin-bottom: 0.5rem;
-        font-size: 1.2rem;
-      }
+        .tools-grid.list-view .tool-item div:first-child {
+          font-size: 1.5rem !important;
+          margin-bottom: 0 !important;
+        }
 
-      .tool-item p {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        flex-grow: 1;
-      }
+        .tools-grid.list-view .tool-item h3 {
+          margin-bottom: 0;
+          min-width: 200px;
+        }
 
-      /* Toolbar Styles */
-      .btn-icon {
-        background: transparent;
-        border: none;
-        color: var(--text-color);
-        padding: 0.4rem;
-        border-radius: 6px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-      }
+        @media (min-width: 900px) {
+          .tools-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
 
-      .btn-icon:hover {
-        background: var(--bg-color);
-        color: var(--primary-color);
-      }
+        @media (min-width: 1200px) {
+          .tools-grid {
+            grid-template-columns: repeat(4, 1fr);
+          }
+        }
 
-      /* Upcoming tools style */
-      .tool-item.upcoming {
-        opacity: 0.7;
-        background-color: var(--bg-secondary);
-        border-style: dashed;
-        cursor: default;
-      }
+        .tool-item {
+          text-decoration: none;
+          color: inherit;
+          transition: transform 0.2s, box-shadow 0.2s;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
 
-      .tool-item.upcoming:hover {
-        transform: none;
-        box-shadow: none;
-        border-color: var(--border-color);
-      }
+        .tool-item:hover {
+          transform: translateY(-5px);
+          border-color: var(--primary-color);
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
 
-      .icon-soon {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-      }
+        .tools-grid.list-view .tool-item:hover {
+          transform: translateX(5px);
+        }
 
-      .desc-soon {
-        font-style: italic;
-      }
-    </style>
+        .tool-item h3 {
+          margin-bottom: 0.5rem;
+          font-size: 1.2rem;
+        }
+
+        .tool-item p {
+          color: var(--text-muted);
+          font-size: 0.9rem;
+          flex-grow: 1;
+        }
+
+        /* Toolbar Styles */
+        .btn-icon {
+          background: transparent;
+          border: none;
+          color: var(--text-color);
+          padding: 0.4rem;
+          border-radius: 6px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+        }
+
+        .btn-icon:hover {
+          background: var(--bg-color);
+          color: var(--primary-color);
+        }
+
+        /* Upcoming tools style */
+        .tool-item.upcoming {
+          opacity: 0.7;
+          background-color: var(--bg-secondary);
+          border-style: dashed;
+          cursor: default;
+        }
+
+        .tool-item.upcoming:hover {
+          transform: none;
+          box-shadow: none;
+          border-color: var(--border-color);
+        }
+
+        .icon-soon {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .desc-soon {
+          font-style: italic;
+        }
+      </style>

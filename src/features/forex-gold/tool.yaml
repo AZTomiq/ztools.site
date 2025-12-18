@@ -1,0 +1,8 @@
+id: forex-gold
+category: finance
+icon: 📈
+translationKey: forex_gold
+status: active
+link: /forex-gold/
+meta:
+  version: 1.0.1

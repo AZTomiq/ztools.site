@@ -1,1 +1,111 @@
-document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelectorAll(".tools-grid"),t=document.querySelectorAll("[data-view]"),o=document.getElementById("sort-select");if(0===e.length)return;const r=localStorage.getItem("ztools_view_mode")||"grid",a=localStorage.getItem("ztools_sort_mode")||"default";function n(o){e.forEach(e=>{"list"===o?e.classList.add("list-view"):e.classList.remove("list-view")}),t.forEach(e=>{e.dataset.view===o?(e.classList.add("active"),e.style.backgroundColor="var(--primary-color)",e.style.color="white"):(e.classList.remove("active"),e.style.backgroundColor="transparent",e.style.color="var(--text-color)")})}function l(t){const o=JSON.parse(localStorage.getItem("ztools_recent")||"{}"),r=JSON.parse(localStorage.getItem("ztools_usage")||"{}");e.forEach(e=>{const a=Array.from(e.children);e.dataset.indexed||(a.forEach((e,t)=>e.dataset.originalIndex=t),e.dataset.indexed="true"),a.sort((e,a)=>{const n=e=>{const t=e.getAttribute("href");if(!t)return"";const o=t.split("/").filter(Boolean);return o[o.length-1]},l=n(e),s=n(a);if("az"===t){const t=e.querySelector("h3")?.innerText.trim()||"",o=a.querySelector("h3")?.innerText.trim()||"";return t.localeCompare(o)}if("za"===t){const t=e.querySelector("h3")?.innerText.trim()||"";return(a.querySelector("h3")?.innerText.trim()||"").localeCompare(t)}if("recent"===t){const e=o[l]||0;return(o[s]||0)-e}if("popular"===t){const e=r[l]||0;return(r[s]||0)-e}return parseInt(e.dataset.originalIndex)-parseInt(a.dataset.originalIndex)}),a.forEach(t=>e.appendChild(t))})}n(r),o&&(o.value=a,l(a)),t.forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.view;n(t),localStorage.setItem("ztools_view_mode",t)})}),o&&o.addEventListener("change",e=>{const t=e.target.value;l(t),localStorage.setItem("ztools_sort_mode",t)})});
+document.addEventListener("DOMContentLoaded", () => {
+  // Main Homepage Logic (View Toggle & Sorting)
+  const toolGrids = document.querySelectorAll(".tools-grid");
+  const viewToggleBtns = document.querySelectorAll("[data-view]");
+  const sortSelect = document.getElementById("sort-select");
+
+  // Only proceed if we are on the homepage (elements exist)
+  if (toolGrids.length === 0) return;
+
+
+  // --- 3. View Toggle Logic ---
+  const savedView = localStorage.getItem("ztools_view_mode") || "grid";
+  const savedSort = localStorage.getItem("ztools_sort_mode") || "default";
+
+  applyView(savedView);
+  if (sortSelect) {
+    sortSelect.value = savedSort;
+    applySort(savedSort);
+  }
+
+  viewToggleBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const view = btn.dataset.view;
+      applyView(view);
+      localStorage.setItem("ztools_view_mode", view);
+    });
+  });
+
+  function applyView(viewMode) {
+    toolGrids.forEach((grid) => {
+      if (viewMode === "list") grid.classList.add("list-view");
+      else grid.classList.remove("list-view");
+    });
+    viewToggleBtns.forEach((btn) => {
+      if (btn.dataset.view === viewMode) {
+        btn.classList.add("active");
+        btn.style.backgroundColor = "var(--primary-color)";
+        btn.style.color = "white";
+      } else {
+        btn.classList.remove("active");
+        btn.style.backgroundColor = "transparent";
+        btn.style.color = "var(--text-color)";
+      }
+    });
+  }
+
+  // --- 4. Sort Logic ---
+  if (sortSelect) {
+    sortSelect.addEventListener("change", (e) => {
+      const sortMode = e.target.value;
+      applySort(sortMode);
+      localStorage.setItem("ztools_sort_mode", sortMode);
+    });
+  }
+
+  function applySort(sortMode) {
+    const recent = JSON.parse(localStorage.getItem('ztools_recent') || '{}');
+    const usage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
+    // Mock global popularity if provided in DOM later, for now defaults to 0
+    // We can assume static popularity is not yet available in DOM dataset.
+
+    toolGrids.forEach((grid) => {
+      const items = Array.from(grid.children);
+
+      // Save original index
+      if (!grid.dataset.indexed) {
+        items.forEach((item, index) => item.dataset.originalIndex = index);
+        grid.dataset.indexed = "true";
+      }
+
+      items.sort((a, b) => {
+        // Extract ID for usage lookup
+        // Href is safe bet if we can parse it, or we rely on text content for AZ
+        // Better: let's try to infer ID from href
+        const getID = (el) => {
+          const href = el.getAttribute('href');
+          if (!href) return '';
+          const parts = href.split('/').filter(Boolean);
+          return parts[parts.length - 1];
+        };
+
+        const idA = getID(a);
+        const idB = getID(b);
+
+        if (sortMode === "az") {
+          const titleA = a.querySelector("h3")?.innerText.trim() || "";
+          const titleB = b.querySelector("h3")?.innerText.trim() || "";
+          return titleA.localeCompare(titleB);
+        } else if (sortMode === "za") {
+          const titleA = a.querySelector("h3")?.innerText.trim() || "";
+          const titleB = b.querySelector("h3")?.innerText.trim() || "";
+          return titleB.localeCompare(titleA);
+        } else if (sortMode === "recent") {
+          // Descending timestamp
+          const timeA = recent[idA] || 0;
+          const timeB = recent[idB] || 0;
+          return timeB - timeA;
+        } else if (sortMode === "popular") {
+          // Descending count
+          const countA = usage[idA] || 0;
+          const countB = usage[idB] || 0;
+          return countB - countA;
+        } else {
+          // Default
+          return parseInt(a.dataset.originalIndex) - parseInt(b.dataset.originalIndex);
+        }
+      });
+      items.forEach((item) => grid.appendChild(item));
+    });
+  }
+});

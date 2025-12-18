@@ -1,0 +1,5 @@
+id: text-diff
+category: text
+icon: ↔️
+translationKey: features.textDiff
+status: active

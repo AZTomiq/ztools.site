@@ -1,0 +1,67 @@
+unit_converter:
+  title: Quy đổi đơn vị
+  desc: Công cụ quy đổi chiều dài, khối lượng, thể tích, diện tích và nhiều đơn vị khác.
+  tabs:
+    length: Chiều dài
+    weight: Khối lượng
+    volume: Thể tích
+    area: Diện tích
+    temperature: Nhiệt độ
+    speed: Tốc độ
+    digital: Dung lượng
+  labels:
+    from: Từ
+    to: Sang
+    result: Kết quả
+    swap: Đảo ngược
+  placeholder: Nhập giá trị...
+  units:
+    length:
+      m: Mét (m)
+      km: Kilomét (km)
+      cm: Centimét (cm)
+      mm: Milimét (mm)
+      inch: Inch (in)
+      ft: Foot (ft)
+      yd: Yard (yd)
+      mi: Mile (mi)
+    weight:
+      kg: Kilôgam (kg)
+      g: Gam (g)
+      mg: Miligam (mg)
+      lb: Pound (lb)
+      oz: Ounce (oz)
+      ton: Tấn
+    volume:
+      l: Lít (l)
+      ml: Mililít (ml)
+      m3: Mét khối (m³)
+      gal: Gallon (gal)
+      floz: Ounce lỏng (fl oz)
+      cup: Cúp (cup)
+      pt: Pint (pt)
+      qt: Quart (qt)
+      tsp: Muỗng cà phê (tsp)
+      tbsp: Muỗng canh (tbsp)
+    area:
+      m2: Mét vuông (m²)
+      km2: Kilômét vuông (km²)
+      ha: Hecta (ha)
+      acre: Mẫu (acre)
+    speed:
+      mps: m/s
+      kph: km/h
+      mph: mph
+      knot: Hải lý/giờ
+    temperature:
+      c: Celsius (°C)
+      f: Fahrenheit (°F)
+      k: Kelvin (K)
+    digital:
+      bit: Bit (b)
+      byte: Byte (B)
+      kb: Kilobyte (KB)
+      mb: Megabyte (MB)
+      gb: Gigabyte (GB)
+      tb: Terabyte (TB)
+      pb: Petabyte (PB)

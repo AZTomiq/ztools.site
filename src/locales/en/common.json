@@ -27,7 +27,9 @@
     "search_placeholder": "Search tools... (Ctrl + K)",
     "search_no_results": "No results found for",
     "search_title": "Search Tools",
-    "changelog_title": "Version History"
+    "changelog_title": "Version History",
+    "reset": "Reset",
+    "how_to_use": "How to use"
   },
   "home": {
     "hero_title": "Utility Tools for Everyone",

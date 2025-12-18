@@ -1,0 +1,24 @@
+url_toolkit:
+  title: URL & Base64 Toolkit
+  desc: Encode/Decode URL, Base64 and parse URL structure quickly.
+  tabs:
+    url: URL Encoder
+    base64: Base64
+    parser: URL Parser
+  labels:
+    input: Input content...
+    output: Result
+    encode: URL Encode
+    decode: URL Decode
+    encode_base64: Base64 Encode
+    decode_base64: Base64 Decode
+    parse: Parse URL
+    copy: Copy
+    clear: Clear
+  parser:
+    protocol: Protocol
+    host: Hostname
+    path: Path
+    query: Query Params
+    hash: Hash/Fragment
+  placeholder: Paste URL or text here...

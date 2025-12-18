@@ -1,1 +1,173 @@
-function formatCurrency(t){return new Intl.NumberFormat("vi-VN").format(Math.round(t))}function parseCurrency(t){return t&&parseInt(t.replace(/[^\d]/g,""),10)||0}document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("loan-amount"),e=document.getElementById("loan-term"),n=document.getElementById("interest-rate"),r=document.getElementsByName("calculation-method"),a=document.getElementById("start-date"),o=document.getElementById("result-section"),c=document.getElementById("result-monthly"),l=document.getElementById("result-total-interest"),d=document.getElementById("result-total-payment"),i=document.getElementById("schedule-body"),u=document.getElementById("btn-calculate"),m=document.getElementById("btn-reset");t.addEventListener("input",function(t){const e=t.target.value.replace(/[^\d]/g,"");t.target.value=e?new Intl.NumberFormat("vi-VN").format(e):""}),a&&(a.valueAsDate=new Date),u.addEventListener("click",function(){const u=parseCurrency(t.value),m=parseInt(e.value,10),s=parseFloat(n.value);let y="reducing";for(const t of r)if(t.checked){y=t.value;break}if(!u||!m||!s)return void alert("Vui lòng nhập đầy đủ thông tin: Số tiền, thời hạn và lãi suất.");const g=s/100/12;let h=[],f=0,p=0,v=0,E=u;const I=a?new Date(a.value):new Date;if("reducing"===y){const t=u/m;for(let e=1;e<=m;e++){const n=E*g,r=e===m?E:t,a=r+n;f+=n,p+=a,1===e&&(v=a);const o=new Date(I);o.setMonth(I.getMonth()+e),h.push({month:e,date:o.toLocaleDateString("vi-VN"),principal:r,interest:n,payment:a,remaining:E-r}),E-=r}}else{const t=u/m,e=u*g;v=t+e;for(let n=1;n<=m;n++){const r=n===m?E:t,a=r+e;f+=e,p+=a;const o=new Date(I);o.setMonth(I.getMonth()+n),h.push({month:n,date:o.toLocaleDateString("vi-VN"),principal:r,interest:e,payment:a,remaining:E-r}),E-=r}}c.textContent=formatCurrency(v),l.textContent=formatCurrency(f),d.textContent=formatCurrency(p),function(t){let e="";t.forEach(t=>{e+=`\n                <tr>\n                    <td class="month-col">${t.month}</td>\n                    <td>${t.date}</td>\n                    <td>${formatCurrency(t.remaining>0?t.remaining+t.principal:t.principal)}</td> \x3c!-- Dư nợ đầu kỳ --\x3e\n                    <td>${formatCurrency(t.principal)}</td>\n                    <td>${formatCurrency(t.interest)}</td>\n                    <td style="font-weight:bold">${formatCurrency(t.payment)}</td>\n                    <td>${formatCurrency(Math.abs(t.remaining))}</td> \x3c!-- Dư nợ cuối kỳ --\x3e\n                </tr>\n            `}),i.innerHTML=e}(h),o.classList.add("show"),o.scrollIntoView({behavior:"smooth",block:"start"})}),m.addEventListener("click",function(){t.value="",e.value="",n.value="",o.classList.remove("show"),i.innerHTML="",r[0].checked=!0})});
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('vi-VN').format(Math.round(amount));
+}
+
+function parseCurrency(str) {
+  if (!str) return 0;
+  return parseInt(str.replace(/[^\d]/g, ''), 10) || 0;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Inputs
+  const amountInput = document.getElementById('loan-amount');
+  const termInput = document.getElementById('loan-term');
+  const rateInput = document.getElementById('interest-rate');
+  const methodInputs = document.getElementsByName('calculation-method');
+  const startDateInput = document.getElementById('start-date');
+
+  // Display fields
+  const resultSection = document.getElementById('result-section');
+  const resultMonthly = document.getElementById('result-monthly');
+  const resultTotalInterest = document.getElementById('result-total-interest');
+  const resultTotalPayment = document.getElementById('result-total-payment');
+  const scheduleBody = document.getElementById('schedule-body');
+
+  // Buttons
+  const btnCalculate = document.getElementById('btn-calculate');
+  const btnReset = document.getElementById('btn-reset');
+
+  // Auto-format currency input
+  amountInput.addEventListener('input', function (e) {
+    const val = e.target.value.replace(/[^\d]/g, '');
+    if (val) {
+      e.target.value = new Intl.NumberFormat('vi-VN').format(val);
+    } else {
+      e.target.value = '';
+    }
+  });
+
+  // Set default date to today (first day of next month usually preferred, but today is fine)
+  if (startDateInput) {
+    startDateInput.valueAsDate = new Date();
+  }
+
+  btnCalculate.addEventListener('click', calculateLoan);
+  btnReset.addEventListener('click', resetForm);
+
+  function calculateLoan() {
+    const principal = parseCurrency(amountInput.value);
+    const termMonths = parseInt(termInput.value, 10);
+    const yearlyRate = parseFloat(rateInput.value);
+
+    let method = 'reducing';
+    for (const radio of methodInputs) {
+      if (radio.checked) {
+        method = radio.value;
+        break;
+      }
+    }
+
+    if (!principal || !termMonths || !yearlyRate) {
+      alert('Vui lòng nhập đầy đủ thông tin: Số tiền, thời hạn và lãi suất.');
+      return;
+    }
+
+    const result = calculateLoanDetails(principal, termMonths, yearlyRate, method, startDateInput ? startDateInput.value : null);
+
+    // Render Results
+    resultMonthly.textContent = formatCurrency(result.firstMonthPayment);
+    resultTotalInterest.textContent = formatCurrency(result.totalInterest);
+    resultTotalPayment.textContent = formatCurrency(result.totalPayment);
+
+    renderSchedule(result.schedule);
+    resultSection.classList.add('show');
+    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function renderSchedule(data) {
+    let html = '';
+    data.forEach(item => {
+      html += `
+                <tr>
+                    <td class="month-col">${item.month}</td>
+                    <td>${item.date}</td>
+                    <td>${formatCurrency(item.remaining > 0 ? item.remaining + item.principal : item.principal)}</td> <!-- Dư nợ đầu kỳ -->
+                    <td>${formatCurrency(item.principal)}</td>
+                    <td>${formatCurrency(item.interest)}</td>
+                    <td style="font-weight:bold">${formatCurrency(item.payment)}</td>
+                    <td>${formatCurrency(Math.abs(item.remaining))}</td> <!-- Dư nợ cuối kỳ -->
+                </tr>
+            `;
+    });
+    scheduleBody.innerHTML = html;
+  }
+
+  function resetForm() {
+    amountInput.value = '';
+    termInput.value = '';
+    rateInput.value = '';
+    resultSection.classList.remove('show');
+    scheduleBody.innerHTML = '';
+    methodInputs[0].checked = true;
+  }
+});
+
+function calculateLoanDetails(principal, termMonths, yearlyRate, method, startDateStr) {
+  const monthlyRate = yearlyRate / 100 / 12;
+  let schedule = [];
+  let totalInterest = 0;
+  let totalPayment = 0;
+  let firstMonthPayment = 0;
+
+  let currentPrincipal = principal;
+  const startDate = startDateStr ? new Date(startDateStr) : new Date();
+
+  if (method === 'reducing') {
+    const principalPerMonth = principal / termMonths;
+    for (let i = 1; i <= termMonths; i++) {
+      const interestPayment = currentPrincipal * monthlyRate;
+      const principalPayment = i === termMonths ? currentPrincipal : principalPerMonth;
+      const totalMonthPayment = principalPayment + interestPayment;
+
+      totalInterest += interestPayment;
+      totalPayment += totalMonthPayment;
+      if (i === 1) firstMonthPayment = totalMonthPayment;
+
+      const date = new Date(startDate);
+      date.setMonth(startDate.getMonth() + i);
+
+      schedule.push({
+        month: i,
+        date: date.toLocaleDateString('vi-VN'),
+        principal: principalPayment,
+        interest: interestPayment,
+        payment: totalMonthPayment,
+        remaining: currentPrincipal - principalPayment
+      });
+      currentPrincipal -= principalPayment;
+    }
+  } else {
+    const principalPerMonth = principal / termMonths;
+    const interestPayment = principal * monthlyRate;
+    const totalMonthPayment = principalPerMonth + interestPayment;
+    firstMonthPayment = totalMonthPayment;
+
+    for (let i = 1; i <= termMonths; i++) {
+      const principalPayment = i === termMonths ? currentPrincipal : principalPerMonth;
+      const totalCurrent = principalPayment + interestPayment;
+
+      totalInterest += interestPayment;
+      totalPayment += totalCurrent;
+
+      const date = new Date(startDate);
+      date.setMonth(startDate.getMonth() + i);
+
+      schedule.push({
+        month: i,
+        date: date.toLocaleDateString('vi-VN'),
+        principal: principalPayment,
+        interest: interestPayment,
+        payment: totalCurrent,
+        remaining: currentPrincipal - principalPayment
+      });
+      currentPrincipal -= principalPayment;
+    }
+  }
+
+  return { schedule, totalInterest, totalPayment, firstMonthPayment };
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { calculateLoanDetails };
+}

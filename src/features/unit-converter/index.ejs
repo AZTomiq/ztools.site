@@ -1,0 +1,73 @@
+<!-- title: <%= t('unit_converter.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>📏 <%= t('unit_converter.title') %>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('unit_converter.desc') %>
+    </p>
+  </div>
+
+  <nav class="category-tabs">
+    <button class="cat-tab active" data-cat="length">📏 <%= t('unit_converter.tabs.length') %></button>
+    <button class="cat-tab" data-cat="weight">⚖️ <%= t('unit_converter.tabs.weight') %></button>
+    <button class="cat-tab" data-cat="volume">🥛 <%= t('unit_converter.tabs.volume') %></button>
+    <button class="cat-tab" data-cat="area">🗺️ <%= t('unit_converter.tabs.area') %></button>
+    <button class="cat-tab" data-cat="speed">⚡ <%= t('unit_converter.tabs.speed') %></button>
+    <button class="cat-tab" data-cat="temperature">🌡️ <%= t('unit_converter.tabs.temperature') %></button>
+    <button class="cat-tab" data-cat="digital">💻 <%= t('unit_converter.tabs.digital') %></button>
+  </nav>
+
+  <div class="converter-card card">
+    <div class="converter-main">
+      <div class="input-section">
+        <div class="form-group">
+          <label>
+            <%= t('unit_converter.labels.from') %>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="val-from" placeholder="<%= t('unit_converter.placeholder') %>" step="any"
+              autofocus>
+            <select id="unit-from"></select>
+          </div>
+        </div>
+
+        <div class="swap-action">
+          <button id="swap-btn" class="btn-icon-circle" title="<%= t('unit_converter.labels.swap') %>">
+            ⇅
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <%= t('unit_converter.labels.to') %>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="val-to" readonly placeholder="0">
+            <select id="unit-to"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula-box" id="formula-box">
+        <span class="formula-label">Formula:</span>
+        <code id="formula-text">---</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-compare-grid" id="quick-compare">
+    <!-- Will be populated by JS -->
+  </div>
+</section>
+
+<script id="units-locales" type="application/json">
+  <%- JSON.stringify(t('unit_converter.units')) %>
+</script>
+
+<script src="<%= toolConfig._assets.js %>"></script>

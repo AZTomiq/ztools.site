@@ -8,9 +8,9 @@
   /* tax: --bg-card (used for hovers) */
 
   --text-color: #0f172a;
-  /* tax: --text-primary (Slate 900) */
-  --text-muted: #475569;
-  /* tax: --text-secondary (Slate 600) */
+  /* Slate 900 */
+  --text-muted: #334155;
+  /* Slate 700 - Better contrast on light bg */
 
   --primary-color: #0891b2;
   /* tax: --accent (Cyan 700) */
@@ -40,9 +40,9 @@
   /* tax: --bg-card (Slate 700) */
 
   --text-color: #f1f5f9;
-  /* tax: --text-primary (Slate 50) */
-  --text-muted: #94a3b8;
-  /* tax: --text-secondary (Slate 400) */
+  /* Slate 50 */
+  --text-muted: #cbd5e1;
+  /* Slate 300 - Better contrast on dark bg */
 
   --primary-color: #22d3ee;
   /* tax: --accent (Cyan 400) */

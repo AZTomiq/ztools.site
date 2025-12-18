@@ -1,1 +1,241 @@
-document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("theme-toggle"),t=document.documentElement,o=t=>{e.textContent="dark"===t?"☀️":"🌙"};o(t.getAttribute("data-theme")),e.addEventListener("click",()=>{const e="dark"===t.getAttribute("data-theme")?"light":"dark";t.setAttribute("data-theme",e),localStorage.setItem("theme",e),o(e)}),console.log("ZTools Global JS Loaded"),"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("/sw.js").then(e=>console.log("SW Registered!",e.scope)).catch(e=>console.error("SW Registration Failed",e))});document.querySelectorAll(".nav-item").forEach(e=>{const t=e.querySelector(".dropdown-toggle"),o=e.querySelector(".dropdown-menu");t&&o&&t.addEventListener("click",e=>{e.preventDefault(),e.stopPropagation(),document.querySelectorAll(".dropdown-menu.show").forEach(e=>{e!==o&&e.classList.remove("show")}),o.classList.toggle("show"),t.setAttribute("aria-expanded",o.classList.contains("show"))})}),document.querySelectorAll(".mega-header").forEach(e=>{e.addEventListener("click",t=>{t.stopPropagation(),t.preventDefault();const o="true"===e.getAttribute("aria-expanded");e.setAttribute("aria-expanded",!o)})}),document.addEventListener("click",e=>{e.target.closest(".nav-item")||document.querySelectorAll(".dropdown-menu.show").forEach(e=>{e.classList.remove("show");const t=e.parentElement.querySelector(".dropdown-toggle");t&&t.setAttribute("aria-expanded","false")})});const n=document.getElementById("search-btn"),s=document.getElementById("search-modal"),r=document.getElementById("search-input"),l=document.getElementById("search-results"),c=document.getElementById("close-search"),a=document.querySelector(".search-overlay");let d=[],i={};try{const e=document.getElementById("tools-data");e&&(d=JSON.parse(e.textContent));const t=document.getElementById("i18n-data");t&&(i=JSON.parse(t.textContent))}catch(e){console.error("Error loading search/i18n data",e)}const u=()=>{s.classList.add("show"),document.body.style.overflow="hidden",setTimeout(()=>r.focus(),50),g("")},m=()=>{s.classList.remove("show"),document.body.style.overflow="",r.value=""};function g(e){if(!l)return;const t=e.toLowerCase(),o=d.filter(e=>!t||(e.title.toLowerCase().includes(t)||e.desc.toLowerCase().includes(t)||e.id.toLowerCase().includes(t))).slice(0,10);if(0===o.length){const t=i.search_no_results||"No results for";return void(l.innerHTML=`<div class="search-no-results">${t} "${e}"</div>`)}l.innerHTML=o.map((e,t)=>`\n      <a href="${e.link}" class="search-result-item ${0===t?"selected":""}" data-index="${t}">\n        <div class="result-icon">${e.icon}</div>\n        <div class="result-info">\n          <span class="result-title">${e.title}</span>\n          <span class="result-desc">${e.desc}</span>\n        </div>\n        <span class="result-cat">${e.category}</span>\n      </a>\n    `).join(""),function(){let e=0;const t=l.querySelectorAll(".search-result-item");r.onkeydown=o=>{if("ArrowDown"===o.key)o.preventDefault(),t[e].classList.remove("selected"),e=(e+1)%t.length,t[e].classList.add("selected"),t[e].scrollIntoView({block:"nearest"});else if("ArrowUp"===o.key)o.preventDefault(),t[e].classList.remove("selected"),e=(e-1+t.length)%t.length,t[e].classList.add("selected"),t[e].scrollIntoView({block:"nearest"});else if("Enter"===o.key){o.preventDefault();const e=l.querySelector(".search-result-item.selected");e&&e.click()}}}()}n&&n.addEventListener("click",u),c&&c.addEventListener("click",m),a&&a.addEventListener("click",m),document.addEventListener("keydown",e=>{(e.ctrlKey||e.metaKey)&&"k"===e.key&&(e.preventDefault(),u()),"Escape"===e.key&&m()}),r.addEventListener("input",e=>{g(e.target.value.trim())});const h=document.getElementById("open-changelog"),v=document.getElementById("changelog-modal"),y=document.getElementById("close-changelog"),p=document.getElementById("close-changelog-overlay");if(h&&v){h.addEventListener("click",()=>{v.classList.add("show"),document.body.style.overflow="hidden"});const e=()=>{v.classList.remove("show"),document.body.style.overflow=""};y&&y.addEventListener("click",e),p&&p.addEventListener("click",e)}document.querySelectorAll(".tool-item, .mega-link, .search-result-item").forEach(e=>{e.addEventListener("click",t=>{!function(e){if(!e)return;try{const t=e.split("/").filter(Boolean),o=t[t.length-1],n=Date.now();let s=JSON.parse(localStorage.getItem("ztools_recent")||"{}");s[o]=n,localStorage.setItem("ztools_recent",JSON.stringify(s));let r=JSON.parse(localStorage.getItem("ztools_usage")||"{}");r[o]=(r[o]||0)+1,localStorage.setItem("ztools_usage",JSON.stringify(r))}catch(e){console.error("Tracking error",e)}}(e.getAttribute("href")),e.classList.contains("mega-link")&&document.querySelectorAll(".dropdown-menu.show").forEach(e=>{e.classList.remove("show");const t=e.parentElement.querySelector(".dropdown-toggle");t&&t.setAttribute("aria-expanded","false")})})})});
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('theme-toggle');
+  const htmlEl = document.documentElement;
+
+  // Update button icon based on current theme
+  const updateIcon = (theme) => {
+    toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  };
+
+  updateIcon(htmlEl.getAttribute('data-theme'));
+
+  toggleBtn.addEventListener('click', () => {
+    const currentTheme = htmlEl.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    htmlEl.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateIcon(newTheme);
+  });
+
+  console.log('ZTools Global JS Loaded');
+
+  // Register Service Worker for PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(req => console.log('SW Registered!', req.scope))
+        .catch(err => console.error('SW Registration Failed', err));
+    });
+  }
+  // --- Global Navigation & Mega Menu Logic ---
+  const navItems = document.querySelectorAll('.nav-item');
+
+  // 1. Logo/Menu Toggle
+  navItems.forEach(item => {
+    const toggle = item.querySelector('.dropdown-toggle');
+    const menu = item.querySelector('.dropdown-menu');
+
+    if (toggle && menu) {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Close other open menus first
+        document.querySelectorAll('.dropdown-menu.show').forEach(m => {
+          if (m !== menu) m.classList.remove('show');
+        });
+
+        menu.classList.toggle('show');
+        toggle.setAttribute('aria-expanded', menu.classList.contains('show'));
+      });
+    }
+  });
+
+  // 2. Mega Menu Category Toggles (Expand/Collapse)
+  document.querySelectorAll('.mega-header').forEach(header => {
+    header.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent closing the menu itself
+      e.preventDefault();
+      const expanded = header.getAttribute('aria-expanded') === 'true';
+      header.setAttribute('aria-expanded', !expanded);
+    });
+  });
+
+  // 3. Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-item')) {
+      document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        const toggle = menu.parentElement.querySelector('.dropdown-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
+  // --- Search Modal Logic ---
+  const searchBtn = document.getElementById('search-btn');
+  const searchModal = document.getElementById('search-modal');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  const closeSearch = document.getElementById('close-search');
+  const searchOverlay = document.querySelector('.search-overlay');
+
+  let toolsData = [];
+  let i18nData = {};
+  try {
+    const toolsScript = document.getElementById('tools-data');
+    if (toolsScript) toolsData = JSON.parse(toolsScript.textContent);
+
+    const i18nScript = document.getElementById('i18n-data');
+    if (i18nScript) i18nData = JSON.parse(i18nScript.textContent);
+  } catch (e) { console.error('Error loading search/i18n data', e); }
+
+  const openSearch = () => {
+    searchModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => searchInput.focus(), 50);
+    renderResults('');
+  };
+
+  const hideSearch = () => {
+    searchModal.classList.remove('show');
+    document.body.style.overflow = '';
+    searchInput.value = '';
+  };
+
+  if (searchBtn) searchBtn.addEventListener('click', openSearch);
+  if (closeSearch) closeSearch.addEventListener('click', hideSearch);
+  if (searchOverlay) searchOverlay.addEventListener('click', hideSearch);
+
+  // Keyboard Shortcuts
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === 'Escape') hideSearch();
+  });
+
+  // Search Logic
+  searchInput.addEventListener('input', (e) => {
+    renderResults(e.target.value.trim());
+  });
+
+  function renderResults(query) {
+    if (!searchResults) return;
+
+    const q = query.toLowerCase();
+    const filtered = toolsData.filter(tool => {
+      if (!q) return true;
+      return tool.title.toLowerCase().includes(q) ||
+        tool.desc.toLowerCase().includes(q) ||
+        tool.id.toLowerCase().includes(q);
+    }).slice(0, 10);
+
+    if (filtered.length === 0) {
+      const emptyMsg = i18nData.search_no_results || 'No results for';
+      searchResults.innerHTML = `<div class="search-no-results">${emptyMsg} "${query}"</div>`;
+      return;
+    }
+
+    searchResults.innerHTML = filtered.map((tool, index) => `
+      <a href="${tool.link}" class="search-result-item ${index === 0 ? 'selected' : ''}" data-index="${index}">
+        <div class="result-icon">${tool.icon}</div>
+        <div class="result-info">
+          <span class="result-title">${tool.title}</span>
+          <span class="result-desc">${tool.desc}</span>
+        </div>
+        <span class="result-cat">${tool.category}</span>
+      </a>
+    `).join('');
+
+    // Handle Keyboard Navigation within results
+    setupResultNavigation();
+  }
+
+  function setupResultNavigation() {
+    let selectedIndex = 0;
+    const items = searchResults.querySelectorAll('.search-result-item');
+
+    searchInput.onkeydown = (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        items[selectedIndex].classList.remove('selected');
+        selectedIndex = (selectedIndex + 1) % items.length;
+        items[selectedIndex].classList.add('selected');
+        items[selectedIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        items[selectedIndex].classList.remove('selected');
+        selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+        items[selectedIndex].classList.add('selected');
+        items[selectedIndex].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const selected = searchResults.querySelector('.search-result-item.selected');
+        if (selected) selected.click();
+      }
+    };
+  }
+
+  // --- Changelog Modal Logic ---
+  const changelogBtn = document.getElementById('open-changelog');
+  const changelogModal = document.getElementById('changelog-modal');
+  const closeChangelog = document.getElementById('close-changelog');
+  const changelogOverlay = document.getElementById('close-changelog-overlay');
+
+  if (changelogBtn && changelogModal) {
+    changelogBtn.addEventListener('click', () => {
+      changelogModal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+
+    const hideChangelog = () => {
+      changelogModal.classList.remove('show');
+      document.body.style.overflow = '';
+    };
+
+    if (closeChangelog) closeChangelog.addEventListener('click', hideChangelog);
+    if (changelogOverlay) changelogOverlay.addEventListener('click', hideChangelog);
+  }
+
+  // --- End Search & Changelog Logic ---
+
+  // Track clicks on tool items (both in Mega Menu and Homepage Grid)
+  document.querySelectorAll('.tool-item, .mega-link, .search-result-item').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const url = link.getAttribute('href');
+      trackUsage(url);
+
+      // Close any open mega-menu if this was a menu click
+      if (link.classList.contains('mega-link')) {
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+          menu.classList.remove('show');
+          const toggle = menu.parentElement.querySelector('.dropdown-toggle');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  });
+
+  function trackUsage(toolUrl) {
+    if (!toolUrl) return;
+    try {
+      const parts = toolUrl.split('/').filter(Boolean);
+      const id = parts[parts.length - 1];
+      const now = Date.now();
+
+      // 1. Recently Used
+      let recent = JSON.parse(localStorage.getItem('ztools_recent') || '{}');
+      recent[id] = now;
+      localStorage.setItem('ztools_recent', JSON.stringify(recent));
+
+      // 2. Most Used (Personal)
+      let usage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
+      usage[id] = (usage[id] || 0) + 1;
+      localStorage.setItem('ztools_usage', JSON.stringify(usage));
+
+    } catch (e) { console.error('Tracking error', e); }
+  }
+});

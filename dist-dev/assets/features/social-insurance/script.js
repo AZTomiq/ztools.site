@@ -1,1 +1,190 @@
-const INSURANCE_RATES={employee:{bhxh:.08,bhyt:.015,bhtn:.01},employer:{bhxh:.175,bhyt:.03,bhtn:.01}},CAPS={bhxh_bhyt:468e5,bhtn_multiplier:20},MIN_WAGES={1:496e4,2:441e4,3:386e4,4:345e4},PENSION_RATES={base:.45,additional:.02,max:.75,min_years:20};function parseNumber(e){return e&&parseFloat(e.toString().replace(/\./g,"").replace(",","."))||0}function formatCurrency(e){return 0===e?"0 đ":Math.round(e).toLocaleString("vi-VN")+" đ"}function formatNumberInput(e){e.addEventListener("input",function(e){let t=e.target.value.replace(/[^\d]/g,"");t&&(e.target.value=parseInt(t).toLocaleString("vi-VN"))}),e.addEventListener("blur",function(e){e.target.value||(e.target.value="0")})}function switchTab(e){document.querySelectorAll(".tab-panel").forEach(e=>{e.classList.remove("active")}),document.querySelectorAll(".tab-btn").forEach(e=>{e.classList.remove("active")}),document.getElementById(`tab-${e}`).classList.add("active"),document.querySelector(`[data-tab="${e}"]`).classList.add("active"),document.querySelectorAll(".result-section").forEach(e=>{e.classList.remove("show")})}window.switchTab=switchTab;const salaryInput=document.getElementById("salary"),regionSelect=document.getElementById("region"),insuranceTypeSelect=document.getElementById("insurance-type"),btnCalculateContribution=document.getElementById("btn-calculate-contribution"),btnResetContribution=document.getElementById("btn-reset-contribution"),contributionResults=document.getElementById("contribution-results"),avgSalaryInput=document.getElementById("avg-salary"),yearsContributedInput=document.getElementById("years-contributed"),genderSelect=document.getElementById("gender"),btnCalculatePension=document.getElementById("btn-calculate-pension"),btnResetPension=document.getElementById("btn-reset-pension"),pensionResults=document.getElementById("pension-results"),onetimeSalaryInput=document.getElementById("onetime-salary"),yearsPre2014Input=document.getElementById("years-pre-2014"),yearsPost2014Input=document.getElementById("years-post-2014"),btnCalculateOnetime=document.getElementById("btn-calculate-onetime"),btnResetOnetime=document.getElementById("btn-reset-onetime"),onetimeResults=document.getElementById("onetime-results");function calculateContribution(){const e=parseNumber(salaryInput.value),t=parseInt(regionSelect.value);if(0===e)return alert("Vui lòng nhập lương đóng BHXH!"),void salaryInput.focus();const n=CAPS.bhxh_bhyt,o=MIN_WAGES[t]*CAPS.bhtn_multiplier,r=Math.min(e,n),a=Math.min(e,o),l=r*INSURANCE_RATES.employee.bhxh,u=r*INSURANCE_RATES.employee.bhyt,s=a*INSURANCE_RATES.employee.bhtn,c=l+u+s,i=r*INSURANCE_RATES.employer.bhxh,m=r*INSURANCE_RATES.employer.bhyt,d=a*INSURANCE_RATES.employer.bhtn,y=i+m+d,p=e-c,b=e+y;document.getElementById("employee-bhxh").textContent=formatCurrency(l),document.getElementById("employee-bhyt").textContent=formatCurrency(u),document.getElementById("employee-bhtn").textContent=formatCurrency(s),document.getElementById("employee-total").textContent=formatCurrency(c),document.getElementById("employer-bhxh").textContent=formatCurrency(i),document.getElementById("employer-bhyt").textContent=formatCurrency(m),document.getElementById("employer-bhtn").textContent=formatCurrency(d),document.getElementById("employer-total").textContent=formatCurrency(y),document.getElementById("salary-before").textContent=formatCurrency(e),document.getElementById("salary-after").textContent=formatCurrency(p),document.getElementById("total-cost").textContent=formatCurrency(b),contributionResults.classList.add("show"),contributionResults.scrollIntoView({behavior:"smooth",block:"nearest"})}function resetContribution(){salaryInput.value="",regionSelect.value="1",insuranceTypeSelect.value="mandatory",contributionResults.classList.remove("show")}function calculatePension(){const e=parseNumber(avgSalaryInput.value),t=parseFloat(yearsContributedInput.value)||0,n=genderSelect.value;if(0===e)return alert("Vui lòng nhập lương bình quân!"),void avgSalaryInput.focus();if(t<20)return alert("Cần đóng tối thiểu 20 năm để được hưởng lương hưu hàng tháng!"),void yearsContributedInput.focus();const o="female"===n?15:20;let r=.45;if(t>o){r+=.02*(t-o)}r=Math.min(r,.75);const a=e*r,l=12*a,u=10*l,s=20*l;document.getElementById("pension-avg-salary").textContent=formatCurrency(e),document.getElementById("pension-years").textContent=t+" năm",document.getElementById("pension-rate").textContent=(100*r).toFixed(1)+"%",document.getElementById("pension-amount").textContent=formatCurrency(a),document.getElementById("pension-yearly").textContent=formatCurrency(l),document.getElementById("pension-10years").textContent=formatCurrency(u),document.getElementById("pension-20years").textContent=formatCurrency(s),pensionResults.classList.add("show"),pensionResults.scrollIntoView({behavior:"smooth",block:"nearest"})}function resetPension(){avgSalaryInput.value="",yearsContributedInput.value="",genderSelect.value="male",pensionResults.classList.remove("show")}function calculateOnetime(){const e=parseNumber(onetimeSalaryInput.value),t=parseFloat(yearsPre2014Input.value)||0,n=parseFloat(yearsPost2014Input.value)||0;if(0===e)return alert("Vui lòng nhập lương bình quân 6 tháng!"),void onetimeSalaryInput.focus();if(0===t&&0===n)return alert("Vui lòng nhập số năm đã đóng BHXH!"),void yearsPost2014Input.focus();const o=1.5*t+2*n,r=e*o,a=t+n;document.getElementById("onetime-avg").textContent=formatCurrency(e),document.getElementById("onetime-total-years").textContent=a+" năm",document.getElementById("onetime-coefficient").textContent=o.toFixed(2)+" tháng",document.getElementById("onetime-amount").textContent=formatCurrency(r),onetimeResults.classList.add("show"),onetimeResults.scrollIntoView({behavior:"smooth",block:"nearest"})}function resetOnetime(){onetimeSalaryInput.value="",yearsPre2014Input.value="",yearsPost2014Input.value="",onetimeResults.classList.remove("show")}[salaryInput,avgSalaryInput,onetimeSalaryInput].forEach(formatNumberInput),btnCalculateContribution.addEventListener("click",calculateContribution),btnResetContribution.addEventListener("click",resetContribution),btnCalculatePension.addEventListener("click",calculatePension),btnResetPension.addEventListener("click",resetPension),btnCalculateOnetime.addEventListener("click",calculateOnetime),btnResetOnetime.addEventListener("click",resetOnetime),document.getElementById("contribution-form").addEventListener("keypress",function(e){"Enter"===e.key&&(e.preventDefault(),calculateContribution())}),document.getElementById("pension-form").addEventListener("keypress",function(e){"Enter"===e.key&&(e.preventDefault(),calculatePension())}),document.getElementById("onetime-form").addEventListener("keypress",function(e){"Enter"===e.key&&(e.preventDefault(),calculateOnetime())});
+/**
+ * Social Insurance & Pension Calculator
+ */
+
+// Constants
+const INSURANCE_RATES = {
+  employee: {
+    bhxh: 0.08,
+    bhyt: 0.015,
+    bhtn: 0.01
+  },
+  employer: {
+    bhxh: 0.175,
+    bhyt: 0.03,
+    bhtn: 0.01
+  }
+};
+
+const CAPS = {
+  bhxh_bhyt: 46800000,
+  bhtn_multiplier: 20
+};
+
+const MIN_WAGES = {
+  1: 4960000,
+  2: 4410000,
+  3: 3860000,
+  4: 3450000
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  const salaryInput = document.getElementById('salary');
+  if (!salaryInput) return;
+
+  const regionSelect = document.getElementById('region');
+  const btnCalculateContribution = document.getElementById('btn-calculate-contribution');
+  const btnResetContribution = document.getElementById('btn-reset-contribution');
+  const contributionResults = document.getElementById('contribution-results');
+
+  const avgSalaryInput = document.getElementById('avg-salary');
+  const yearsContributedInput = document.getElementById('years-contributed');
+  const genderSelect = document.getElementById('gender');
+  const btnCalculatePension = document.getElementById('btn-calculate-pension');
+  const btnResetPension = document.getElementById('btn-reset-pension');
+  const pensionResults = document.getElementById('pension-results');
+
+  const onetimeSalaryInput = document.getElementById('onetime-salary');
+  const yearsPre2014Input = document.getElementById('years-pre-2014');
+  const yearsPost2014Input = document.getElementById('years-post-2014');
+  const btnCalculateOnetime = document.getElementById('btn-calculate-onetime');
+  const btnResetOnetime = document.getElementById('btn-reset-onetime');
+  const onetimeResults = document.getElementById('onetime-results');
+
+  // Format inputs
+  [salaryInput, avgSalaryInput, onetimeSalaryInput].forEach(input => {
+    if (input) {
+      input.addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val) e.target.value = parseInt(val).toLocaleString('vi-VN');
+      });
+    }
+  });
+
+  if (btnCalculateContribution) {
+    btnCalculateContribution.addEventListener('click', () => {
+      const salary = parseNumber(salaryInput.value);
+      const region = parseInt(regionSelect.value);
+      if (salary === 0) return alert('Vui lòng nhập lương!');
+
+      const res = calculateInsuranceContribution(salary, region);
+      updateContributionDisplay(res, salary);
+    });
+  }
+
+  function updateContributionDisplay(res, salary) {
+    document.getElementById('employee-bhxh').textContent = formatCurrency(res.employee.bhxh);
+    document.getElementById('employee-bhyt').textContent = formatCurrency(res.employee.bhyt);
+    document.getElementById('employee-bhtn').textContent = formatCurrency(res.employee.bhtn);
+    document.getElementById('employee-total').textContent = formatCurrency(res.employee.total);
+    document.getElementById('employer-bhxh').textContent = formatCurrency(res.employer.bhxh);
+    document.getElementById('employer-bhyt').textContent = formatCurrency(res.employer.bhyt);
+    document.getElementById('employer-bhtn').textContent = formatCurrency(res.employer.bhtn);
+    document.getElementById('employer-total').textContent = formatCurrency(res.employer.total);
+    document.getElementById('salary-before').textContent = formatCurrency(salary);
+    document.getElementById('salary-after').textContent = formatCurrency(salary - res.employee.total);
+    document.getElementById('total-cost').textContent = formatCurrency(salary + res.employer.total);
+    contributionResults.classList.add('show');
+  }
+
+  if (btnCalculatePension) {
+    btnCalculatePension.addEventListener('click', () => {
+      const avgSalary = parseNumber(avgSalaryInput.value);
+      const years = parseFloat(yearsContributedInput.value) || 0;
+      const gender = genderSelect.value;
+      if (avgSalary === 0 || years < 20) return alert('Vui lòng kiểm tra lại thông tin!');
+
+      const res = calculatePensionAmount(avgSalary, years, gender);
+      updatePensionDisplay(res, avgSalary, years);
+    });
+  }
+
+  function updatePensionDisplay(res, avgSalary, years) {
+    document.getElementById('pension-avg-salary').textContent = formatCurrency(avgSalary);
+    document.getElementById('pension-years').textContent = years + ' năm';
+    document.getElementById('pension-rate').textContent = (res.rate * 100).toFixed(1) + '%';
+    document.getElementById('pension-amount').textContent = formatCurrency(res.monthly);
+    document.getElementById('pension-yearly').textContent = formatCurrency(res.yearly);
+    document.getElementById('pension-10years').textContent = formatCurrency(res.yearly * 10);
+    document.getElementById('pension-20years').textContent = formatCurrency(res.yearly * 20);
+    pensionResults.classList.add('show');
+  }
+
+  if (btnCalculateOnetime) {
+    btnCalculateOnetime.addEventListener('click', () => {
+      const salary = parseNumber(onetimeSalaryInput.value);
+      const pre = parseFloat(yearsPre2014Input.value) || 0;
+      const post = parseFloat(yearsPost2014Input.value) || 0;
+      if (salary === 0 || (pre === 0 && post === 0)) return alert('Vui lòng nhập đầy đủ!');
+
+      const res = calculateOneTimeBHXH(salary, pre, post);
+      document.getElementById('onetime-avg').textContent = formatCurrency(salary);
+      document.getElementById('onetime-total-years').textContent = (pre + post) + ' năm';
+      document.getElementById('onetime-coefficient').textContent = res.coeff.toFixed(2) + ' tháng';
+      document.getElementById('onetime-amount').textContent = formatCurrency(res.amount);
+      onetimeResults.classList.add('show');
+    });
+  }
+
+  function parseNumber(str) {
+    if (!str) return 0;
+    return parseFloat(str.toString().replace(/\./g, '').replace(',', '.')) || 0;
+  }
+
+  function formatCurrency(num) {
+    return Math.round(num).toLocaleString('vi-VN') + ' đ';
+  }
+});
+
+// Pure Logic Functions
+function calculateInsuranceContribution(salary, region) {
+  const bhxhBhytCap = CAPS.bhxh_bhyt;
+  const bhtnCap = (MIN_WAGES[region] || MIN_WAGES[1]) * CAPS.bhtn_multiplier;
+
+  const salaryForBhxhBhyt = Math.min(salary, bhxhBhytCap);
+  const salaryForBhtn = Math.min(salary, bhtnCap);
+
+  const employee = {
+    bhxh: salaryForBhxhBhyt * INSURANCE_RATES.employee.bhxh,
+    bhyt: salaryForBhxhBhyt * INSURANCE_RATES.employee.bhyt,
+    bhtn: salaryForBhtn * INSURANCE_RATES.employee.bhtn
+  };
+  employee.total = employee.bhxh + employee.bhyt + employee.bhtn;
+
+  const employer = {
+    bhxh: salaryForBhxhBhyt * INSURANCE_RATES.employer.bhxh,
+    bhyt: salaryForBhxhBhyt * INSURANCE_RATES.employer.bhyt,
+    bhtn: salaryForBhtn * INSURANCE_RATES.employer.bhtn
+  };
+  employer.total = employer.bhxh + employer.bhyt + employer.bhtn;
+
+  return { employee, employer };
+}
+
+function calculatePensionAmount(avgSalary, years, gender) {
+  const baseYears = gender === 'female' ? 15 : 20;
+  let rate = 0.45;
+  if (years > baseYears) {
+    rate += (years - baseYears) * 0.02;
+  }
+  rate = Math.min(rate, 0.75);
+  const monthly = avgSalary * rate;
+  return { rate, monthly, yearly: monthly * 12 };
+}
+
+function calculateOneTimeBHXH(avgSalary, yearsPre, yearsPost) {
+  const coeff = (yearsPre * 1.5) + (yearsPost * 2.0);
+  return { coeff, amount: avgSalary * coeff };
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    calculateInsuranceContribution,
+    calculatePensionAmount,
+    calculateOneTimeBHXH,
+    INSURANCE_RATES,
+    CAPS,
+    MIN_WAGES
+  };
+}

@@ -1,0 +1,8 @@
+id: unit-converter
+category: daily
+icon: 📏
+translationKey: unit_converter
+status: active
+link: /unit-converter/
+meta:
+  version: 1.1.0

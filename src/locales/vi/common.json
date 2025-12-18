@@ -27,7 +27,9 @@
     "search_placeholder": "Tìm kiếm công cụ... (Ctrl + K)",
     "search_no_results": "Không tìm thấy kết quả cho",
     "search_title": "Tìm kiếm công cụ",
-    "changelog_title": "Nhật ký thay đổi"
+    "changelog_title": "Nhật ký thay đổi",
+    "reset": "Đặt lại",
+    "how_to_use": "Hướng dẫn sử dụng"
   },
   "home": {
     "hero_title": "Công cụ tiện ích cho mọi người",

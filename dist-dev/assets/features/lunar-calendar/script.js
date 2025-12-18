@@ -1,1 +1,363 @@
-const CAN=["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"],CHI=["Tý","Sửu","Dần","Mão","Thìn","Tị","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"],ZODIAC_ANIMALS=["Chuột","Trâu","Hổ","Mèo","Rồng","Rắn","Ngựa","Dê","Khỉ","Gà","Chó","Lợn"],TIMEZONE_OFFSET=7;function jdFromDate(e,t,n){const a=Math.floor((14-t)/12),o=n+4800-a,r=t+12*a-3;let d=e+Math.floor((153*r+2)/5)+365*o+Math.floor(o/4)-Math.floor(o/100)+Math.floor(o/400)-32045;return d<2299161&&(d=e+Math.floor((153*r+2)/5)+365*o+Math.floor(o/4)-32083),d}function jdToDate(e){let t,n,a,o,r,d,u,l,c;return e>2299160?(t=e+32044,n=Math.floor((4*t+3)/146097),a=t-Math.floor(146097*n/4)):(n=0,a=e+32082),o=Math.floor((4*a+3)/1461),r=a-Math.floor(1461*o/4),d=Math.floor((5*r+2)/153),u=r-Math.floor((153*d+2)/5)+1,l=d+3-12*Math.floor(d/10),c=100*n+o-4800+Math.floor(d/10),[u,l,c]}function getNewMoonDay(e,t){const n=e/1236.85,a=n*n,o=a*n,r=Math.PI/180;let d=2415020.75933+29.53058868*e+1178e-7*a-155e-9*o;d+=33e-5*Math.sin((166.56+132.87*n-.009173*a)*r);const u=359.2242+29.10535608*e-333e-7*a-347e-8*o,l=306.0253+385.81691806*e+.0107306*a+1236e-8*o,c=21.2964+390.67050646*e-.0016528*a-239e-8*o;let i,h=(.1734-393e-6*n)*Math.sin(u*r)+.0021*Math.sin(2*r*u);h=h-.4068*Math.sin(l*r)+.0161*Math.sin(2*r*l),h-=4e-4*Math.sin(3*r*l),h=h+.0104*Math.sin(2*r*c)-.0051*Math.sin(r*(u+l)),h=h-.0074*Math.sin(r*(u-l))+4e-4*Math.sin(r*(2*c+u)),h=h-4e-4*Math.sin(r*(2*c-u))-6e-4*Math.sin(r*(2*c+l)),h=h+.001*Math.sin(r*(2*c-l))+5e-4*Math.sin(r*(2*l+u)),i=n<-11?.001+839e-6*n+2261e-7*a-845e-8*o-81e-9*n*o:265e-6*n-278e-6+262e-6*a;const s=d+h-i;return Math.floor(s+.5+t/24)}function getSunLongitude(e,t){const n=(e-2451545.5-t/24)/36525,a=n*n,o=Math.PI/180,r=357.5291+35999.0503*n-1559e-7*a-48e-8*n*a,d=280.46645+36000.76983*n+3032e-7*a;let u=(1.9146-.004817*n-14e-6*a)*Math.sin(o*r);u=u+(.019993-101e-6*n)*Math.sin(2*o*r)+29e-5*Math.sin(3*o*r);let l=d+u;return l*=o,l-=2*Math.PI*Math.floor(l/(2*Math.PI)),Math.floor(l/Math.PI*6+1e-9)}function getLunarMonth11(e,t){const n=jdFromDate(31,12,e)-2415021,a=Math.floor(n/29.530588853);let o=getNewMoonDay(a,t);return getSunLongitude(o,t)>=9&&(o=getNewMoonDay(a-1,t)),o}function getLeapMonthOffset(e,t){const n=Math.floor((e-2415021.076998695)/29.530588853+.5);let a=0,o=1,r=getSunLongitude(getNewMoonDay(n+o,t),t);do{a=r,o++,r=getSunLongitude(getNewMoonDay(n+o,t),t)}while(r!=a&&o<14);return o-1}function convertSolar2Lunar(e,t,n,a=7){const o=jdFromDate(e,t,n),r=Math.floor((o-2415021.076998695)/29.530588853);let d=getNewMoonDay(r+1,a);d>o&&(d=getNewMoonDay(r,a));let u,l=getLunarMonth11(n,a),c=l;l>=d?(u=n,l=getLunarMonth11(n-1,a)):(u=n+1,c=getLunarMonth11(n+1,a));const i=o-d+1,h=Math.floor((d-l)/29.53+.5);let s=0,g=h+11;if(c-l>365){const e=getLeapMonthOffset(l,a);h>=e&&(g=h+10,h==e&&(s=1))}return g>12&&(g-=12),g>=11&&h<4&&(u-=1),[i,g,u,s]}function convertLunar2Solar(e,t,n,a,o=7){let r,d;t<11?(r=getLunarMonth11(n-1,o),d=getLunarMonth11(n,o)):(r=getLunarMonth11(n,o),d=getLunarMonth11(n+1,o));const u=Math.floor(.5+(r-2415021.076998695)/29.530588853);let l=t-11;if(l<0&&(l+=12),d-r>365){const e=getLeapMonthOffset(r,o);if(0!=a&&t+1!=e)return[0,0,0];(0!=a||l>=e)&&(l+=1)}return jdToDate(getNewMoonDay(u+l,o)+e-1)}function getYearCanChi(e){return`${CAN[(e+6)%10]} ${CHI[(e+8)%12]}`}function getMonthCanChi(e,t){return`${CAN[(12*t+e+3)%10]} ${CHI[(e+1)%12]}`}function getDayCanChi(e,t,n){const a=jdFromDate(e,t,n);return`${CAN[(a+9)%10]} ${CHI[(a+1)%12]}`}function getZodiacAnimal(e){return ZODIAC_ANIMALS[(e+8)%12]}function getGoodHours(e){return{0:[0,1,3,6,8,9],1:[2,3,5,8,10,11],2:[0,1,4,5,7,10],3:[0,2,3,6,7,9],4:[2,4,5,8,9,11],5:[1,4,6,7,10,11],6:[0,1,3,6,8,9],7:[2,3,5,8,10,11],8:[0,1,4,5,7,10],9:[0,2,3,6,7,9],10:[2,4,5,8,9,11],11:[1,4,6,7,10,11]}[(e+1)%12]||[]}function formatDate(e,t,n){return`${String(e).padStart(2,"0")}/${String(t).padStart(2,"0")}/${n}`}function formatLunarDate(e,t,n,a=!1){const o=a?" (nhuận)":"";return`${String(e).padStart(2,"0")}/${String(t).padStart(2,"0")}${o}/${n}`}function handleDateConversion(){const e=document.getElementById("solar-date-input");if(!e||!e.value)return;const[t,n,a]=e.value.split("-").map(Number);updateMainCalendar(new Date(t,n-1,a))}function handleLunarConversion(){const e=parseInt(document.getElementById("lunar-day-input").value),t=parseInt(document.getElementById("lunar-month-input").value),n=parseInt(document.getElementById("lunar-year-input").value),a=document.getElementById("lunar-leap-input").checked?1:0;if(!e||!t||!n)return;const[o,r,d]=convertLunar2Solar(e,t,n,a);o>0&&updateMainCalendar(new Date(d,r-1,o))}function toggleInputMode(){const e=document.getElementById("solar-input-container"),t=document.getElementById("lunar-input-container"),n=document.getElementById("current-mode-label");if("none"!==e.style.display){e.style.display="none",t.style.display="flex",n&&(n.textContent="Âm lịch");const[a,o,r,d]=convertSolar2Lunar(currentSelectedDate.getDate(),currentSelectedDate.getMonth()+1,currentSelectedDate.getFullYear());document.getElementById("lunar-day-input").value=a,document.getElementById("lunar-month-input").value=o,document.getElementById("lunar-year-input").value=r,document.getElementById("lunar-leap-input").checked=!!d}else e.style.display="block",t.style.display="none",n&&(n.textContent="Dương lịch")}function initLunarInputs(){const e=document.getElementById("lunar-day-input"),t=document.getElementById("lunar-month-input");if(e)for(let t=1;t<=30;t++){const n=document.createElement("option");n.value=t,n.textContent=t,e.appendChild(n)}if(t)for(let e=1;e<=12;e++){const n=document.createElement("option");n.value=e,n.textContent=e,t.appendChild(n)}}let currentSelectedDate=new Date;function updateMainCalendar(e){currentSelectedDate=new Date(e);const t=currentSelectedDate.getDate(),n=currentSelectedDate.getMonth()+1,a=currentSelectedDate.getFullYear();displayTodayLunar(t,n,a);const o=document.getElementById("solar-date-input");o&&(o.value=`${a}-${String(n).padStart(2,"0")}-${String(t).padStart(2,"0")}`);currentViewMonth=n,currentViewYear=a,renderMonthView(currentViewMonth,currentViewYear)}function displayTodayLunar(e,t,n){const[a,o,r,d]=convertSolar2Lunar(e,t,n),u="vi"===(document.documentElement.lang||"vi"),l=u?["Chủ Nhật","Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy"]:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],c=u?["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"]:["January","February","March","April","May","June","July","August","September","October","November","December"],i=new Date(n,t-1,e),h=l[i.getDay()],s=c[t-1],g=document.getElementById("today-solar-day"),m=document.getElementById("today-solar-month"),y=document.getElementById("today-solar-year"),M=document.getElementById("today-solar-weekday"),p=document.getElementById("today-lunar-day-month"),D=document.getElementById("today-year-canchi"),f=document.getElementById("today-month-canchi"),C=document.getElementById("today-day-canchi"),E=document.getElementById("today-zodiac");if(g&&(g.textContent=e,0===i.getDay()?g.classList.add("is-sunday"):g.classList.remove("is-sunday")),m&&(m.textContent=s),y&&(y.textContent=n),M&&(M.textContent=h),p){const e=d?u?" (Nhuận)":" (Leap)":"";p.textContent=`${String(a).padStart(2,"0")}/${String(o).padStart(2,"0")}${e}`}D&&(D.textContent=getYearCanChi(r)),f&&(f.textContent=getMonthCanChi(o,r)),C&&(C.textContent=getDayCanChi(e,t,n)),E&&(E.textContent=getZodiacAnimal(r)),displayGoodHours(e,t,n)}function displayGoodHours(e,t,n){const a=getGoodHours(jdFromDate(e,t,n)),o=document.getElementById("good-hours-list");if(o){o.innerHTML="";for(let e=0;e<12;e++){const t=a.includes(e),n=document.createElement("div");n.className="hour-item "+(t?"good":"bad"),n.innerHTML=`\n      <span class="hour-chi">${CHI[e]}</span>\n      <span class="hour-status">${t?"✓":"✗"}</span>\n    `,o.appendChild(n)}}}function goToPrevDay(){const e=new Date(currentSelectedDate);e.setDate(e.getDate()-1),updateMainCalendar(e)}function goToNextDay(){const e=new Date(currentSelectedDate);e.setDate(e.getDate()+1),updateMainCalendar(e)}function handleDateConversion(){const e=document.getElementById("solar-date-input");if(!e||!e.value)return;const[t,n,a]=e.value.split("-").map(Number),o=new Date(t,n-1,a);currentSelectedDate=o,displayTodayLunar(a,n,t)}let currentViewMonth=(new Date).getMonth()+1,currentViewYear=(new Date).getFullYear();function renderMonthView(e,t){const n=document.getElementById("calendar-grid"),a=document.getElementById("current-month-year");if(!n)return;const o=["January","February","March","April","May","June","July","August","September","October","November","December"];a&&(a.textContent=`${o[e-1]} ${t}`),n.innerHTML="";["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(e=>{const t=document.createElement("div");t.className="calendar-header",t.textContent=e,n.appendChild(t)});const r=new Date(t,e-1,1).getDay(),d=new Date(t,e,0).getDate(),u=new Date(t,e-1,0).getDate(),l=new Date,c=e===l.getMonth()+1&&t===l.getFullYear(),i=l.getDate();for(let a=r-1;a>=0;a--){addCalendarDay(n,u-a,1===e?12:e-1,1===e?t-1:t,!0)}for(let a=1;a<=d;a++){addCalendarDay(n,a,e,t,!1,c&&a===i)}const h=n.children.length-7,s=7*Math.ceil(h/7)-h,g=12===e?1:e+1,m=12===e?t+1:t;for(let e=1;e<=s;e++)addCalendarDay(n,e,g,m,!0)}function addCalendarDay(e,t,n,a,o=!1,r=!1){const d=document.createElement("div");d.className="calendar-day",o&&d.classList.add("other-month"),r&&d.classList.add("today");const[u,l,c,i]=convertSolar2Lunar(t,n,a),h=document.createElement("div");h.className="solar-date",h.textContent=t;const s=document.createElement("div");s.className="lunar-date",s.textContent=`${u}/${l}`,d.appendChild(h),d.appendChild(s);!o&&t===currentSelectedDate.getDate()&&n===currentSelectedDate.getMonth()+1&&a===currentSelectedDate.getFullYear()&&d.classList.add("selected"),o||d.addEventListener("click",()=>{updateMainCalendar(new Date(a,n-1,t)),renderMonthView(currentViewMonth,currentViewYear)}),e.appendChild(d)}document.addEventListener("DOMContentLoaded",function(){const e=new Date;initLunarInputs(),updateMainCalendar(e);const t=document.getElementById("input-mode-toggle");t&&t.addEventListener("click",toggleInputMode);const n=document.getElementById("solar-date-input");n&&(n.addEventListener("change",handleDateConversion),n.addEventListener("input",handleDateConversion));[document.getElementById("lunar-day-input"),document.getElementById("lunar-month-input"),document.getElementById("lunar-year-input"),document.getElementById("lunar-leap-input")].forEach(e=>{e&&(e.addEventListener("change",handleLunarConversion),"INPUT"===e.tagName&&e.addEventListener("input",handleLunarConversion))});const a=document.getElementById("prev-day-btn"),o=document.getElementById("next-day-btn");a&&a.addEventListener("click",goToPrevDay),o&&o.addEventListener("click",goToNextDay),renderMonthView(e.getMonth()+1,e.getFullYear());const r=document.getElementById("prev-month-btn"),d=document.getElementById("next-month-btn"),u=document.getElementById("today-btn");r&&r.addEventListener("click",()=>{currentViewMonth--,currentViewMonth<1&&(currentViewMonth=12,currentViewYear--),renderMonthView(currentViewMonth,currentViewYear)}),d&&d.addEventListener("click",()=>{currentViewMonth++,currentViewMonth>12&&(currentViewMonth=1,currentViewYear++),renderMonthView(currentViewMonth,currentViewYear)}),u&&u.addEventListener("click",()=>{const e=new Date;currentViewMonth=e.getMonth()+1,currentViewYear=e.getFullYear(),renderMonthView(currentViewMonth,currentViewYear)})});
+/**
+ * Lunar Calendar Converter
+ * Based on Vietnamese Lunar Calendar algorithms
+ */
+
+// Constants
+const CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+const CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tị', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+const ZODIAC_ANIMALS = ['Chuột', 'Trâu', 'Hổ', 'Mèo', 'Rồng', 'Rắn', 'Ngựa', 'Dê', 'Khỉ', 'Gà', 'Chó', 'Lợn'];
+const TIMEZONE_OFFSET = 7;
+
+document.addEventListener('DOMContentLoaded', function () {
+  const today = new Date();
+  const solarDateInput = document.getElementById('solar-date-input');
+  if (!solarDateInput) return;
+
+  initLunarInputs();
+  updateMainCalendar(today);
+
+  const modeToggle = document.getElementById('input-mode-toggle');
+  if (modeToggle) modeToggle.addEventListener('click', toggleInputMode);
+
+  solarDateInput.addEventListener('change', handleDateConversion);
+  solarDateInput.addEventListener('input', handleDateConversion);
+
+  const lDay = document.getElementById('lunar-day-input');
+  const lMonth = document.getElementById('lunar-month-input');
+  const lYear = document.getElementById('lunar-year-input');
+  const lLeap = document.getElementById('lunar-leap-input');
+
+  [lDay, lMonth, lYear, lLeap].forEach(el => {
+    if (el) {
+      el.addEventListener('change', handleLunarConversion);
+      if (el.tagName === 'INPUT') el.addEventListener('input', handleLunarConversion);
+    }
+  });
+
+  const prevDayBtn = document.getElementById('prev-day-btn');
+  const nextDayBtn = document.getElementById('next-day-btn');
+  if (prevDayBtn) prevDayBtn.addEventListener('click', () => {
+    const d = new Date(currentSelectedDate);
+    d.setDate(d.getDate() - 1);
+    updateMainCalendar(d);
+  });
+  if (nextDayBtn) nextDayBtn.addEventListener('click', () => {
+    const d = new Date(currentSelectedDate);
+    d.setDate(d.getDate() + 1);
+    updateMainCalendar(d);
+  });
+
+  renderMonthView(today.getMonth() + 1, today.getFullYear());
+
+  const prevMonthBtn = document.getElementById('prev-month-btn');
+  const nextMonthBtn = document.getElementById('next-month-btn');
+  const todayBtn = document.getElementById('today-btn');
+
+  if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => {
+    currentViewMonth--;
+    if (currentViewMonth < 1) { currentViewMonth = 12; currentViewYear--; }
+    renderMonthView(currentViewMonth, currentViewYear);
+  });
+  if (nextMonthBtn) nextMonthBtn.addEventListener('click', () => {
+    currentViewMonth++;
+    if (currentViewMonth > 12) { currentViewMonth = 1; currentViewYear++; }
+    renderMonthView(currentViewMonth, currentViewYear);
+  });
+  if (todayBtn) todayBtn.addEventListener('click', () => {
+    const now = new Date();
+    currentViewMonth = now.getMonth() + 1;
+    currentViewYear = now.getFullYear();
+    renderMonthView(currentViewMonth, currentViewYear);
+  });
+});
+
+let currentSelectedDate = new Date();
+let currentViewMonth = new Date().getMonth() + 1;
+let currentViewYear = new Date().getFullYear();
+
+function updateMainCalendar(date) {
+  currentSelectedDate = new Date(date);
+  const dd = currentSelectedDate.getDate();
+  const mm = currentSelectedDate.getMonth() + 1;
+  const yy = currentSelectedDate.getFullYear();
+
+  displayTodayLunar(dd, mm, yy);
+
+  const datePicker = document.getElementById('solar-date-input');
+  if (datePicker) datePicker.value = `${yy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+
+  currentViewMonth = mm;
+  currentViewYear = yy;
+  renderMonthView(currentViewMonth, currentViewYear);
+}
+
+function displayTodayLunar(dd, mm, yy) {
+  const [lunarDay, lunarMonth, lunarYear, lunarLeap] = convertSolar2Lunar(dd, mm, yy);
+  const date = new Date(yy, mm - 1, dd);
+
+  const isVietnamese = (document.documentElement.lang || 'vi') === 'vi';
+  const weekdays = isVietnamese ? ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'] : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const monthNames = isVietnamese ? ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'] : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const elMap = {
+    'today-solar-day': dd,
+    'today-solar-month': monthNames[mm - 1],
+    'today-solar-year': yy,
+    'today-solar-weekday': weekdays[date.getDay()],
+    'today-lunar-day-month': `${String(lunarDay).padStart(2, '0')}/${String(lunarMonth).padStart(2, '0')}${lunarLeap ? (isVietnamese ? ' (Nhuận)' : ' (Leap)') : ''}`,
+    'today-year-canchi': getYearCanChi(lunarYear),
+    'today-month-canchi': getMonthCanChi(lunarMonth, lunarYear),
+    'today-day-canchi': getDayCanChi(dd, mm, yy),
+    'today-zodiac': getZodiacAnimal(lunarYear)
+  };
+
+  for (const [id, val] of Object.entries(elMap)) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  const solarDayEl = document.getElementById('today-solar-day');
+  if (solarDayEl) {
+    if (date.getDay() === 0) solarDayEl.classList.add('is-sunday');
+    else solarDayEl.classList.remove('is-sunday');
+  }
+
+  displayGoodHours(dd, mm, yy);
+}
+
+function displayGoodHours(dd, mm, yy) {
+  const jd = jdFromDate(dd, mm, yy);
+  const goodHours = getGoodHours(jd);
+  const hoursContainer = document.getElementById('good-hours-list');
+  if (!hoursContainer) return;
+
+  hoursContainer.innerHTML = '';
+  for (let i = 0; i < 12; i++) {
+    const isGood = goodHours.includes(i);
+    const hourDiv = document.createElement('div');
+    hourDiv.className = `hour-item ${isGood ? 'good' : 'bad'}`;
+    hourDiv.innerHTML = `<span class="hour-chi">${CHI[i]}</span><span class="hour-status">${isGood ? '✓' : '✗'}</span>`;
+    hoursContainer.appendChild(hourDiv);
+  }
+}
+
+function handleDateConversion() {
+  const datePicker = document.getElementById('solar-date-input');
+  if (!datePicker || !datePicker.value) return;
+  const [yy, mm, dd] = datePicker.value.split('-').map(Number);
+  currentSelectedDate = new Date(yy, mm - 1, dd);
+  displayTodayLunar(dd, mm, yy);
+}
+
+function handleLunarConversion() {
+  const ld = parseInt(document.getElementById('lunar-day-input').value);
+  const lm = parseInt(document.getElementById('lunar-month-input').value);
+  const ly = parseInt(document.getElementById('lunar-year-input').value);
+  const isLeap = document.getElementById('lunar-leap-input').checked ? 1 : 0;
+  if (!ld || !lm || !ly) return;
+  const [sd, sm, sy] = convertLunar2Solar(ld, lm, ly, isLeap);
+  if (sd > 0) updateMainCalendar(new Date(sy, sm - 1, sd));
+}
+
+function toggleInputMode() {
+  const solarContainer = document.getElementById('solar-input-container');
+  const lunarContainer = document.getElementById('lunar-input-container');
+  const modeLabel = document.getElementById('current-mode-label');
+  const isSolar = solarContainer.style.display !== 'none';
+
+  if (isSolar) {
+    solarContainer.style.display = 'none';
+    lunarContainer.style.display = 'flex';
+    if (modeLabel) modeLabel.textContent = 'Âm lịch';
+    const [ld, lm, ly, isLeap] = convertSolar2Lunar(currentSelectedDate.getDate(), currentSelectedDate.getMonth() + 1, currentSelectedDate.getFullYear());
+    document.getElementById('lunar-day-input').value = ld;
+    document.getElementById('lunar-month-input').value = lm;
+    document.getElementById('lunar-year-input').value = ly;
+    document.getElementById('lunar-leap-input').checked = !!isLeap;
+  } else {
+    solarContainer.style.display = 'block';
+    lunarContainer.style.display = 'none';
+    if (modeLabel) modeLabel.textContent = 'Dương lịch';
+  }
+}
+
+function renderMonthView(month, year) {
+  const grid = document.getElementById('calendar-grid');
+  if (!grid) return;
+  const monthYearDisplay = document.getElementById('current-month-year');
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  if (monthYearDisplay) monthYearDisplay.textContent = `${monthNames[month - 1]} ${year}`;
+
+  grid.innerHTML = '';
+  ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+    const h = document.createElement('div');
+    h.className = 'calendar-header';
+    h.textContent = day;
+    grid.appendChild(h);
+  });
+
+  const firstDay = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const daysInPrevMonth = new Date(year, month - 1, 0).getDate();
+  const today = new Date();
+
+  for (let i = firstDay - 1; i >= 0; i--) {
+    addCalendarDay(grid, daysInPrevMonth - i, month === 1 ? 12 : month - 1, month === 1 ? year - 1 : year, true);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    addCalendarDay(grid, d, month, year, false, month === today.getMonth() + 1 && year === today.getFullYear() && d === today.getDate());
+  }
+  const totalCells = grid.children.length - 7;
+  const remaining = (Math.ceil(totalCells / 7) * 7) - totalCells;
+  for (let d = 1; d <= remaining; d++) {
+    addCalendarDay(grid, d, month === 12 ? 1 : month + 1, month === 12 ? year + 1 : year, true);
+  }
+}
+
+function addCalendarDay(container, day, month, year, isOtherMonth, isToday) {
+  const cell = document.createElement('div');
+  cell.className = 'calendar-day';
+  if (isOtherMonth) cell.classList.add('other-month');
+  if (isToday) cell.classList.add('today');
+
+  const [ld, lm, ly, isLeap] = convertSolar2Lunar(day, month, year);
+  cell.innerHTML = `<div class="solar-date">${day}</div><div class="lunar-date">${ld}/${lm}</div>`;
+
+  if (!isOtherMonth && day === currentSelectedDate.getDate() && month === currentSelectedDate.getMonth() + 1 && year === currentSelectedDate.getFullYear()) {
+    cell.classList.add('selected');
+  }
+
+  if (!isOtherMonth) {
+    cell.addEventListener('click', () => {
+      updateMainCalendar(new Date(year, month - 1, day));
+    });
+  }
+  container.appendChild(cell);
+}
+
+function initLunarInputs() {
+  const dSelect = document.getElementById('lunar-day-input');
+  const mSelect = document.getElementById('lunar-month-input');
+  if (dSelect) for (let i = 1; i <= 30; i++) dSelect.add(new Option(i, i));
+  if (mSelect) for (let i = 1; i <= 12; i++) mSelect.add(new Option(i, i));
+}
+
+// Algorithm Functions
+function jdFromDate(dd, mm, yy) {
+  const a = Math.floor((14 - mm) / 12);
+  const y = yy + 4800 - a;
+  const m = mm + 12 * a - 3;
+  let jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+  if (jd < 2299161) jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - 32083;
+  return jd;
+}
+
+function jdToDate(jd) {
+  let a, b, c, d, e, m, day, month, year;
+  if (jd > 2299160) {
+    a = jd + 32044; b = Math.floor((4 * a + 3) / 146097); c = a - Math.floor((b * 146097) / 4);
+  } else {
+    b = 0; c = jd + 32082;
+  }
+  d = Math.floor((4 * c + 3) / 1461); e = c - Math.floor((1461 * d) / 4);
+  m = Math.floor((5 * e + 2) / 153); day = e - Math.floor((153 * m + 2) / 5) + 1;
+  month = m + 3 - 12 * Math.floor(m / 10); year = b * 100 + d - 4800 + Math.floor(m / 10);
+  return [day, month, year];
+}
+
+function getNewMoonDay(k, timeZone) {
+  const T = k / 1236.85; const T2 = T * T; const T3 = T2 * T;
+  const dr = Math.PI / 180;
+  let Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
+  Jd1 = Jd1 + 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr);
+  const M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3;
+  const Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3;
+  const F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3;
+  let C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
+  C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr) - 0.0004 * Math.sin(dr * 3 * Mpr);
+  C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr)) - 0.0074 * Math.sin(dr * (M - Mpr));
+  C1 = C1 + 0.0004 * Math.sin(dr * (2 * F + M)) - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
+  C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
+  let deltat = T < -11 ? (0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3) : (-0.000278 + 0.000265 * T + 0.000262 * T2);
+  return Math.floor(Jd1 + C1 - deltat + 0.5 + timeZone / 24);
+}
+
+function getSunLongitude(jdn, timeZone) {
+  const T = (jdn - 2451545.5 - timeZone / 24) / 36525;
+  const dr = Math.PI / 180;
+  const M = 357.52910 + 35999.05030 * T - 0.0001559 * T * T - 0.00000048 * T * T * T;
+  const L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T * T;
+  let DL = (1.914600 - 0.004817 * T - 0.000014 * T * T) * Math.sin(dr * M);
+  DL = DL + (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
+  let L = (L0 + DL) * dr;
+  L = L - Math.PI * 2 * (Math.floor(L / (Math.PI * 2)));
+  return Math.floor(L / Math.PI * 6 + 1e-9);
+}
+
+function getLunarMonth11(yy, timeZone) {
+  const off = jdFromDate(31, 12, yy) - 2415021;
+  const k = Math.floor(off / 29.530588853);
+  let nm = getNewMoonDay(k, timeZone);
+  if (getSunLongitude(nm, timeZone) >= 9) nm = getNewMoonDay(k - 1, timeZone);
+  return nm;
+}
+
+function getLeapMonthOffset(a11, timeZone) {
+  const k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+  let last = 0, i = 1, arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+  do { last = arc; i++; arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone); } while (arc != last && i < 14);
+  return i - 1;
+}
+
+function convertSolar2Lunar(dd, mm, yy, timeZone = TIMEZONE_OFFSET) {
+  const dayNumber = jdFromDate(dd, mm, yy);
+  const k = Math.floor((dayNumber - 2415021.076998695) / 29.530588853);
+  let monthStart = getNewMoonDay(k + 1, timeZone);
+  if (monthStart > dayNumber) monthStart = getNewMoonDay(k, timeZone);
+  let a11 = getLunarMonth11(yy, timeZone), b11 = a11, lunarYear;
+  if (a11 >= monthStart) { lunarYear = yy; a11 = getLunarMonth11(yy - 1, timeZone); }
+  else { lunarYear = yy + 1; b11 = getLunarMonth11(yy + 1, timeZone); }
+  const lunarDay = dayNumber - monthStart + 1;
+  const diff = Math.floor((monthStart - a11) / 29.53 + 0.5);
+  let lunarLeap = 0, lunarMonth = diff + 11;
+  if (b11 - a11 > 365) {
+    const leapOff = getLeapMonthOffset(a11, timeZone);
+    if (diff >= leapOff) { lunarMonth = diff + 10; if (diff == leapOff) lunarLeap = 1; }
+  }
+  if (lunarMonth > 12) lunarMonth -= 12;
+  if (lunarMonth >= 11 && diff < 4) lunarYear -= 1;
+  return [lunarDay, lunarMonth, lunarYear, lunarLeap];
+}
+
+function convertLunar2Solar(ld, lm, ly, isLeap, timeZone = TIMEZONE_OFFSET) {
+  let a11, b11;
+  if (lm < 11) { a11 = getLunarMonth11(ly - 1, timeZone); b11 = getLunarMonth11(ly, timeZone); }
+  else { a11 = getLunarMonth11(ly, timeZone); b11 = getLunarMonth11(ly + 1, timeZone); }
+  const k = Math.floor(0.5 + (a11 - 2415021.076998695) / 29.530588853);
+  let off = (lm - 11 < 0) ? (lm + 1) : (lm - 11);
+  if (b11 - a11 > 365) {
+    const leapOff = getLeapMonthOffset(a11, timeZone);
+    if (isLeap != 0 && lm + 1 != leapOff) return [0, 0, 0];
+    if (isLeap != 0 || off >= leapOff) off += 1;
+  }
+  return jdToDate(getNewMoonDay(k + off, timeZone) + ld - 1);
+}
+
+function getYearCanChi(y) { return CAN[(y + 6) % 10] + ' ' + CHI[(y + 8) % 12]; }
+function getMonthCanChi(m, y) { return CAN[(y * 12 + m + 3) % 10] + ' ' + CHI[(m + 1) % 12]; }
+function getDayCanChi(d, m, y) { const jd = jdFromDate(d, m, y); return CAN[(jd + 9) % 10] + ' ' + CHI[(jd + 1) % 12]; }
+function getZodiacAnimal(y) { return ZODIAC_ANIMALS[(y + 8) % 12]; }
+function getGoodHours(jd) {
+  const chi = (jd + 1) % 12;
+  const map = { 0: [0, 1, 3, 6, 8, 9], 1: [2, 3, 5, 8, 10, 11], 2: [0, 1, 4, 5, 7, 10], 3: [0, 2, 3, 6, 7, 9], 4: [2, 4, 5, 8, 9, 11], 5: [1, 4, 6, 7, 10, 11], 6: [0, 1, 3, 6, 8, 9], 7: [2, 3, 5, 8, 10, 11], 8: [0, 1, 4, 5, 7, 10], 9: [0, 2, 3, 6, 7, 9], 10: [2, 4, 5, 8, 9, 11], 11: [1, 4, 6, 7, 10, 11] };
+  return map[chi] || [];
+}
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    jdFromDate, jdToDate, convertSolar2Lunar, convertLunar2Solar,
+    getYearCanChi, getMonthCanChi, getDayCanChi, getZodiacAnimal, getGoodHours
+  };
+}

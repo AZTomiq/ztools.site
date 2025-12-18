@@ -1,1 +1,119 @@
-let inputText="";function formatText(){const e=document.getElementById("input-text"),t=document.getElementById("formatted-output");if(!e||!t)return;let n=e.value;if(!n.trim())return void(t.value="");const o=document.getElementById("remove_extra_spaces")?.checked??!0,a=document.getElementById("remove_line_breaks")?.checked??!1,s=document.getElementById("trim_lines")?.checked??!0,r=document.getElementById("normalize_quotes")?.checked??!0,c=document.getElementById("case_transform")?.value??"none";switch(n=n.replace(/\r\n/g,"\n").replace(/\r/g,"\n"),o&&(n=n.replace(/[ \t]+/g," ")),s&&(n=n.split("\n").map(e=>e.trim()).join("\n")),n=a?n.replace(/\n+/g," "):n.replace(/\n{3,}/g,"\n\n"),r&&(n=n.replace(/[\u201C\u201D]/g,'"'),n=n.replace(/[\u2018\u2019]/g,"'"),n=n.replace(/[\u2013\u2014]/g,"-"),n=n.replace(/\u2026/g,"...")),c){case"lowercase":n=n.toLowerCase();break;case"uppercase":n=n.toUpperCase();break;case"capitalize":n=n.charAt(0).toUpperCase()+n.slice(1).toLowerCase();break;case"title":n=n.toLowerCase().replace(/(?:^|\s)\S/g,e=>e.toUpperCase())}n=n.trim(),t.value=n,updateStats(e.value,n)}function updateStats(e,t){const n=document.getElementById("stats-original"),o=document.getElementById("stats-formatted"),a=document.getElementById("stats-reduction"),s=document.getElementById("stats-percent"),r=e.length,c=t.length,m=r-c,d=r>0?(m/r*100).toFixed(1):0;n&&(n.textContent=r),o&&(o.textContent=c),a&&(a.textContent=m>0?m:0),s&&(s.textContent=d+"%");const l=document.getElementById("format-stats");l&&(l.innerHTML=`\n      <span>Original: <strong>${r}</strong> chars</span>\n      <span>Formatted: <strong>${c}</strong> chars</span>\n      ${m>0?`<span style="color: var(--success-color);">Reduced by <strong>${m}</strong> chars (${d}%)</span>`:""}\n    `)}function copyFormatted(){const e=document.getElementById("formatted-output");e&&e.value&&(e.select(),document.execCommand("copy"),showToast("✓ Copied to clipboard!"))}function clearText(){const e=document.getElementById("input-text"),t=document.getElementById("formatted-output");e&&(e.value=""),t&&(t.value="");const n=document.getElementById("format-stats");n&&(n.innerHTML=""),inputText=""}function showToast(e){let t=document.querySelector(".toast");t||(t=document.createElement("div"),t.className="toast",document.body.appendChild(t)),t.textContent=e,t.classList.add("show"),setTimeout(()=>{t.classList.remove("show")},2500)}if(document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("input-text");e&&(e.addEventListener("input",formatText),e.addEventListener("paste",()=>setTimeout(formatText,100)),e.value&&formatText());["remove_extra_spaces","remove_line_breaks","trim_lines","normalize_quotes"].forEach(e=>{const t=document.getElementById(e);t&&t.addEventListener("change",formatText)});const t=document.getElementById("case_transform");t&&t.addEventListener("change",formatText)}),!document.getElementById("toast-animations")){const e=document.createElement("style");e.id="toast-animations",e.textContent="\n    @keyframes slideIn {\n      from {\n        transform: translateX(100%);\n        opacity: 0;\n      }\n      to {\n        transform: translateX(0);\n        opacity: 1;\n      }\n    }\n    @keyframes slideOut {\n      from {\n        transform: translateX(0);\n        opacity: 1;\n      }\n      to {\n        transform: translateX(100%);\n        opacity: 0;\n      }\n    }\n  ",document.head.appendChild(e)}
+/**
+ * Text Formatter Logic
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const inputArea = document.getElementById('input-text');
+  if (!inputArea) return;
+
+  const updateAll = () => {
+    const text = inputArea.value;
+    const options = {
+      removeExtraSpaces: document.getElementById('remove_extra_spaces')?.checked ?? true,
+      removeLineBreaks: document.getElementById('remove_line_breaks')?.checked ?? false,
+      trimLines: document.getElementById('trim_lines')?.checked ?? true,
+      normalizeQuotes: document.getElementById('normalize_quotes')?.checked ?? true,
+      caseTransform: document.getElementById('case_transform')?.value ?? 'none'
+    };
+
+    const formatted = formatTextLogic(text, options);
+    const output = document.getElementById('formatted-output');
+    if (output) output.value = formatted;
+
+    updateStats(text, formatted);
+  };
+
+  inputArea.addEventListener('input', updateAll);
+  inputArea.addEventListener('paste', () => setTimeout(updateAll, 100));
+
+  const optionIds = ['remove_extra_spaces', 'remove_line_breaks', 'trim_lines', 'normalize_quotes', 'case_transform'];
+  optionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', updateAll);
+  });
+
+  if (inputArea.value) updateAll();
+
+  window.clearText = () => {
+    inputArea.value = '';
+    updateAll();
+  };
+
+  window.copyFormatted = () => {
+    const output = document.getElementById('formatted-output');
+    if (!output || !output.value) return;
+    output.select();
+    document.execCommand('copy');
+    showToast('✓ Copied to clipboard!');
+  };
+});
+
+function formatTextLogic(text, options) {
+  if (!text) return '';
+
+  let result = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  if (options.removeExtraSpaces) {
+    result = result.replace(/[ \t]+/g, ' ');
+  }
+
+  if (options.trimLines) {
+    result = result.split('\n').map(line => line.trim()).join('\n');
+  }
+
+  if (options.removeLineBreaks) {
+    result = result.replace(/\n+/g, ' ');
+  } else {
+    result = result.replace(/\n{3,}/g, '\n\n');
+  }
+
+  if (options.normalizeQuotes) {
+    result = result.replace(/[\u201C\u201D]/g, '"')
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u2013\u2014]/g, '-')
+      .replace(/\u2026/g, '...');
+  }
+
+  switch (options.caseTransform) {
+    case 'lowercase': result = result.toLowerCase(); break;
+    case 'uppercase': result = result.toUpperCase(); break;
+    case 'capitalize': result = result.charAt(0).toUpperCase() + result.slice(1).toLowerCase(); break;
+    case 'title': result = result.toLowerCase().replace(/(?:^|\s)\S/g, (a) => a.toUpperCase()); break;
+  }
+
+  return result.trim();
+}
+
+function updateStats(original, formatted) {
+  const statsOriginal = document.getElementById('stats-original');
+  const statsFormatted = document.getElementById('stats-formatted');
+  const statsReduction = document.getElementById('stats-reduction');
+  const statsPercent = document.getElementById('stats-percent');
+
+  const originalChars = original.length;
+  const formattedChars = formatted.length;
+  const reduction = originalChars - formattedChars;
+  const reductionPercent = originalChars > 0 ? ((reduction / originalChars) * 100).toFixed(1) : 0;
+
+  if (statsOriginal) statsOriginal.textContent = originalChars;
+  if (statsFormatted) statsFormatted.textContent = formattedChars;
+  if (statsReduction) statsReduction.textContent = reduction > 0 ? reduction : 0;
+  if (statsPercent) statsPercent.textContent = reductionPercent + '%';
+}
+
+function showToast(message) {
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// Export for Node.js testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { formatTextLogic };
+}
