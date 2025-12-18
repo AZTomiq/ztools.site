@@ -387,17 +387,18 @@
       </div>
     </div>
 
-    <button id="search-btn" class="btn-icon" title="Search Tools" aria-label="Search">
-      🔍
-    </button>
-    <a href="../../vi/bookmark-creator/"
-      style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
-      🇻🇳
-    </a>
-    <button id="theme-toggle" aria-label="Toggle Dark Mode">
-      🌙
-    </button>
-  </div>
+    <div class="header-actions">
+      <button id="search-btn" class="btn-icon" title="Search Tools" aria-label="Search">
+        🔍
+      </button>
+      <a href="../../vi/bookmark-creator/" class="lang-switch"
+        title="Switch Language">
+        🇻🇳
+      </a>
+      <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
   </div>
 
   <!-- Search Overlay / Modal -->
@@ -748,6 +749,35 @@
     <button id="export-btn" class="btn btn-primary btn-block" style="margin-top: 2rem; font-size: 1.1rem;">
       🚀 Export Bookmark (.html)
     </button>
+  </div>
+
+  <!-- Visual Step-by-Step Guide -->
+  <div class="export-guide-container">
+    <h2 class="guide-main-title">🛠️ How to use the Bookmark file?
+    </h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-icon">⬇️</div>
+        <p>
+          Click &#34;Export file&#34; above to download the .html file.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-icon">📂</div>
+        <p>
+          Open Bookmark Manager in your browser (Ctrl+Shift+O or Cmd+Option+B).
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-icon">📥</div>
+        <p>
+          Choose &#34;Import Bookmarks&#34; and select the downloaded file.
+        </p>
+      </div>
+    </div>
   </div>
 
   

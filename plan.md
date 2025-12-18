@@ -551,7 +551,8 @@
 /src/pages/[category]/[tool-name]/
 ├── index.ejs          # Page template
 ├── [tool-name].css    # Tool-specific styles
-└── [tool-name].js     # Tool logic
+├── [tool-name].js     # Tool logic
+└── CHANGELOG.md       # Lịch sử thay đổi riêng cho từng công cụ (Mới)
 ```
 
 ---

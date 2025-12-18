@@ -387,17 +387,18 @@
       </div>
     </div>
 
-    <button id="search-btn" class="btn-icon" title="Tìm kiếm công cụ" aria-label="Search">
-      🔍
-    </button>
-    <a href="../../en/bookmark-creator/"
-      style="text-decoration: none; font-size: 1.2rem;" title="Switch Language">
-      🇺🇸
-    </a>
-    <button id="theme-toggle" aria-label="Toggle Dark Mode">
-      🌙
-    </button>
-  </div>
+    <div class="header-actions">
+      <button id="search-btn" class="btn-icon" title="Tìm kiếm công cụ" aria-label="Search">
+        🔍
+      </button>
+      <a href="../../en/bookmark-creator/" class="lang-switch"
+        title="Switch Language">
+        🇺🇸
+      </a>
+      <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
   </div>
 
   <!-- Search Overlay / Modal -->
@@ -748,6 +749,35 @@
     <button id="export-btn" class="btn btn-primary btn-block" style="margin-top: 2rem; font-size: 1.1rem;">
       🚀 Xuất file Bookmark (.html)
     </button>
+  </div>
+
+  <!-- Visual Step-by-Step Guide -->
+  <div class="export-guide-container">
+    <h2 class="guide-main-title">🛠️ Làm thế nào để sử dụng file Bookmark?
+    </h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-icon">⬇️</div>
+        <p>
+          Nhấn nút &#34;Xuất file&#34; ở trên để tải file .html về máy.
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-icon">📂</div>
+        <p>
+          Mở trình quản lý Bookmark trên trình duyệt (nhấn Ctrl+Shift+O hoặc Cmd+Option+B).
+        </p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-icon">📥</div>
+        <p>
+          Chọn &#34;Import Bookmarks&#34; (Nhập dấu trang) và chọn file vừa tải về.
+        </p>
+      </div>
+    </div>
   </div>
 
   

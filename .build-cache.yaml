@@ -1,4 +1,4 @@
-assets/css/global.css: 4a991d7d7e91415e16193ae9a050e74b
+assets/css/global.css: f87e2cbba7a8d544766c6cd94b14bf9f
 assets/js/global.js: b8db927eb0e3c6d2e62e91f6db6453f7
 assets/js/home.js: c2de5fca5547002208dc46902f6e2afa
 features/bmi/script.js: 7d92d741c609c7e44031d12940bf146c
@@ -32,7 +32,7 @@ features/word-counter/style.css: 0c4dc4c0471e938630ff068c1946e607
 features/word-counter/script.js: ddd15a125b8d96c0549a01c0f35851c2
 include/includes/footer.ejs: b0fb67f206d6cf17d43629c986d72d49
 include/includes/head.ejs: 2f45cd6ebb550680469a00e85aa0914e
-include/includes/header.ejs: 4d4af7883488da89823f289555bcf950
+include/includes/header.ejs: b6cb780440f97b511a80a676311767e0
 include/includes/layout.ejs: f4a2ea25164b09d40ef6d7e7c3257969
 include/includes/schema.ejs: 2cb8ee0f32443abb85637f9a860c31ae
 config/bmi/features/bmi/tool.yaml: ba2ea94e7f79bacaa0cfbf3e651f4a7f
@@ -70,7 +70,7 @@ page/features/tax/index.ejs: 9ab670676d054cf6e40c8bc6ae56bc3a
 page/features/text-formatter/index.ejs: 514299d80afacc90ee1b329882f4dc82
 page/features/uuid-generator/index.ejs: 8e777ddb3ce5c5756bbfd988c529c817
 page/features/word-counter/index.ejs: 7f25ab098badadebd7e2317bfc804ab5
-features/bookmark-creator/style.css: 1c2311dbd7a8803236888d70d217f3bb
+features/bookmark-creator/style.css: bb26679d13ab0bd5bf4b0af4cc2d2394
 features/bookmark-creator/script.js: 6674c24de2409b377d993ad95e3c50fe
 config/bookmark-creator/features/bookmark-creator/tool.yaml: d687e33dc116dfeec3abe33f9ac3ad3e
-page/features/bookmark-creator/index.ejs: 0108362bb0bb9969ee9dceca61bd69f5
+page/features/bookmark-creator/index.ejs: 4558ab3633ccd6d69db3a6ef39ebca36
