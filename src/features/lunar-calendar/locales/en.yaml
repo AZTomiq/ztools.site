@@ -1,0 +1,81 @@
+lunarCalendar:
+  title: Lunar Calendar
+  desc: Convert Solar to Lunar calendar, view Can Chi and Good Hours
+
+  header:
+    title: Lunar Calendar Converter
+    subtitle: Convert Solar ↔ Lunar calendar, view Can Chi and Good Hours
+
+  today:
+    title: Today
+    solar: Solar Date
+    lunar: Lunar Date
+    canChi: Can Chi
+    yearCanChi: Year
+    monthCanChi: Month
+    dayCanChi: Day
+
+  converter:
+    title: Date Converter
+    selectDate: Select Date
+    solarToLunar: Solar → Lunar
+    lunarToSolar: Lunar → Solar
+    convert: Convert
+    
+  monthView:
+    title: Month View
+    prevMonth: Previous Month
+    nextMonth: Next Month
+    today: Today
+    
+  result:
+    solarDate: Solar Date
+    lunarDate: Lunar Date
+    canChiYear: Year Can Chi
+    canChiMonth: Month Can Chi
+    canChiDay: Day Can Chi
+    zodiac: Zodiac Animal
+    
+  zodiacAnimals:
+    rat: Rat (Tý)
+    ox: Ox (Sửu)
+    tiger: Tiger (Dần)
+    cat: Cat (Mão)
+    dragon: Dragon (Thìn)
+    snake: Snake (Tị)
+    horse: Horse (Ngọ)
+    goat: Goat (Mùi)
+    monkey: Monkey (Thân)
+    rooster: Rooster (Dậu)
+    dog: Dog (Tuất)
+    pig: Pig (Hợi)
+
+  goodHours:
+    title: Good Hours
+    good: Good
+    bad: Bad
+    
+  hours:
+    ty: Tý (11pm-1am)
+    suu: Sửu (1am-3am)
+    dan: Dần (3am-5am)
+    mao: Mão (5am-7am)
+    thin: Thìn (7am-9am)
+    ti: Tị (9am-11am)
+    ngo: Ngọ (11am-1pm)
+    mui: Mùi (1pm-3pm)
+    than: Thân (3pm-5pm)
+    dau: Dậu (5pm-7pm)
+    tuat: Tuất (7pm-9pm)
+    hoi: Hợi (9pm-11pm)
+
+  info:
+    title: Information
+    description: |
+      The Lunar Calendar (Vietnamese Calendar) is a traditional calendar system 
+      based on the cycles of the Moon and Sun. It is used to determine holidays, 
+      festivals, and important cultural events.
+    
+    canChiInfo: |
+      Can Chi is a traditional time-counting system, consisting of 10 Heavenly Stems 
+      (Can) and 12 Earthly Branches (Chi), used to mark years, months, days, and hours.

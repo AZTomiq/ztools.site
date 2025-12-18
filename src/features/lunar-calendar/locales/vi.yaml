@@ -1,0 +1,82 @@
+lunarCalendar:
+  title: Xem Âm Lịch
+  desc: Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo
+
+  header:
+    title: Xem Âm Lịch
+    subtitle: Chuyển đổi Dương lịch ↔ Âm lịch, xem Can Chi và Giờ Hoàng Đạo
+
+  today:
+    title: Hôm nay
+    solar: Dương lịch
+    lunar: Âm lịch
+    canChi: Can Chi
+    yearCanChi: Năm
+    monthCanChi: Tháng
+    dayCanChi: Ngày
+
+  converter:
+    title: Chuyển đổi ngày
+    selectDate: Chọn ngày
+    solarToLunar: Dương lịch → Âm lịch
+    lunarToSolar: Âm lịch → Dương lịch
+    convert: Chuyển đổi
+    
+  monthView:
+    title: Xem theo tháng
+    prevMonth: Tháng trước
+    nextMonth: Tháng sau
+    today: Hôm nay
+    
+  result:
+    solarDate: Ngày Dương lịch
+    lunarDate: Ngày Âm lịch
+    canChiYear: Năm Can Chi
+    canChiMonth: Tháng Can Chi
+    canChiDay: Ngày Can Chi
+    zodiac: Con giáp
+    
+  zodiacAnimals:
+    rat: Tý (Chuột)
+    ox: Sửu (Trâu)
+    tiger: Dần (Hổ)
+    cat: Mão (Mèo)
+    dragon: Thìn (Rồng)
+    snake: Tị (Rắn)
+    horse: Ngọ (Ngựa)
+    goat: Mùi (Dê)
+    monkey: Thân (Khỉ)
+    rooster: Dậu (Gà)
+    dog: Tuất (Chó)
+    pig: Hợi (Lợn)
+
+  goodHours:
+    title: Giờ Hoàng Đạo
+    good: Giờ tốt
+    bad: Giờ xấu
+    
+  hours:
+    ty: Tý (23h-01h)
+    suu: Sửu (01h-03h)
+    dan: Dần (03h-05h)
+    mao: Mão (05h-07h)
+    thin: Thìn (07h-09h)
+    ti: Tị (09h-11h)
+    ngo: Ngọ (11h-13h)
+    mui: Mùi (13h-15h)
+    than: Thân (15h-17h)
+    dau: Dậu (17h-19h)
+    tuat: Tuất (19h-21h)
+    hoi: Hợi (21h-23h)
+
+  info:
+    title: Thông tin
+    description: |
+      Âm lịch (hay Lịch Việt) là hệ thống lịch truyền thống của người Việt, 
+      dựa trên chu kỳ của Mặt Trăng và Mặt Trời. Âm lịch được sử dụng để xác định 
+      các ngày lễ, tết, và các sự kiện văn hóa quan trọng.
+    
+    canChiInfo: |
+      Can Chi là hệ thống đếm thời gian truyền thống, gồm 10 Can (Giáp, Ất, Bính, 
+      Đinh, Mậu, Kỷ, Canh, Tân, Nhâm, Quý) và 12 Chi (Tý, Sửu, Dần, Mão, Thìn, Tị, 
+      Ngọ, Mùi, Thân, Dậu, Tuất, Hợi).

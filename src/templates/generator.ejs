@@ -125,28 +125,59 @@
                               <% }); %>
                           </select>
                         </div>
-                        <% } else { %>
-                          <!-- Single/Orphan Input (number/range) -->
-                          <div class="control-box">
-                            <label class="control-label">
-                              <%= t(input.label) %>
-                                <% if (input.displayValue) { %> <span id="<%= input.id %>-val">
-                                    <%= input.default %>
-                                  </span>
-                                  <% } %>
-                            </label>
-                            <% if (input.type==='range' ) { %>
-                              <input type="range" id="<%= input.id %>" min="<%= input.min %>" max="<%= input.max %>"
-                                value="<%= input.default %>"
-                                oninput="if(document.getElementById('<%= input.id %>-val')) document.getElementById('<%= input.id %>-val').innerText = this.value">
-                              <% } else if (input.type==='number' ) { %>
-                                <input type="number" id="<%= input.id %>" min="<%= input.min %>" max="<%= input.max %>"
-                                  value="<%= input.default %>" class="form-input">
-                                <% } %>
-                          </div>
-                          <% } %>
 
-                            <% } %>
+                        <% } else if (input.type==='icon_select' ) { %>
+                          <!-- Icon Select (for type: icon_select) -->
+                          <div class="control-box">
+                            <label for="<%= input.id %>">
+                              <%= t(input.label) %>
+                            </label>
+                            <div class="icon-select-grid">
+                              <% input.options.forEach(opt=> { %>
+                                <label class="icon-option">
+                                  <input type="radio" name="<%= input.id %>" value="<%= opt.value %>"
+                                    <%=input.default===opt.value ? 'checked' : '' %>>
+                                  <span class="icon-label" title="<%= t(opt.label) %>">
+                                    <%= opt.icon %>
+                                  </span>
+                                </label>
+                                <% }); %>
+                            </div>
+                          </div>
+
+                          <% } else if (input.type==='textarea' ) { %>
+                            <!-- Textarea Input -->
+                            <div class="control-box full-width">
+                              <label for="<%= input.id %>" class="control-label">
+                                <%= t(input.label) %>
+                              </label>
+                              <textarea id="<%= input.id %>" rows="<%= input.rows || 5 %>"
+                                placeholder="<%= input.placeholder ? t(input.placeholder) : '' %>" class="form-input"
+                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: var(--bg-card); color: var(--text-primary); font-family: inherit; resize: vertical;"><%= input.default || '' %></textarea>
+                            </div>
+
+                            <% } else { %>
+                              <!-- Single/Orphan Input (number/range) -->
+                              <div class="control-box">
+                                <label class="control-label">
+                                  <%= t(input.label) %>
+                                    <% if (input.displayValue) { %> <span id="<%= input.id %>-val">
+                                        <%= input.default %>
+                                      </span>
+                                      <% } %>
+                                </label>
+                                <% if (input.type==='range' ) { %>
+                                  <input type="range" id="<%= input.id %>" min="<%= input.min %>" max="<%= input.max %>"
+                                    value="<%= input.default %>"
+                                    oninput="if(document.getElementById('<%= input.id %>-val')) document.getElementById('<%= input.id %>-val').innerText = this.value">
+                                  <% } else if (input.type==='number' ) { %>
+                                    <input type="number" id="<%= input.id %>" min="<%= input.min %>"
+                                      max="<%= input.max %>" value="<%= input.default %>" class="form-input">
+                                    <% } %>
+                              </div>
+                              <% } %>
+
+                                <% } %>
               </div>
 
               <!-- Primary Action -->

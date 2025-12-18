@@ -1,0 +1,29 @@
+textFormatter:
+  title: Định Dạng Văn Bản - Xóa Style
+  desc: Loại bỏ định dạng và làm sạch văn bản khi copy từ web.
+  form:
+    input_label: Văn bản gốc
+    input_placeholder: Dán văn bản của bạn vào đây...
+    options_title: Tùy Chọn Định Dạng
+    remove_extra_spaces: Xóa Khoảng Trắng Thừa
+    remove_line_breaks: Xóa Xuống Dòng
+    trim_lines: Cắt Khoảng Trắng Đầu/Cuối Dòng
+    normalize_quotes: Chuẩn Hóa Dấu Ngoặc & Ký Tự
+    case_transform: Chuyển Đổi Chữ
+    case_none: Không Thay Đổi
+    case_lowercase: chữ thường
+    case_uppercase: CHỮ HOA
+    case_capitalize: Viết hoa chữ đầu
+    case_title: Viết Hoa Đầu Từ
+    btn_format: Định Dạng
+    btn_copy: Sao Chép
+    btn_clear: Xóa
+    output_placeholder: Văn bản đã định dạng sẽ hiển thị ở đây...
+  guide:
+    title: Hướng Dẫn Sử Dụng
+    paste_title: Dán Văn Bản
+    paste_content: Copy văn bản từ bất kỳ trang web nào và dán vào ô nhập liệu. Công cụ sẽ tự động định dạng.
+    options_title: Chọn Tùy Chọn
+    options_content: Chọn các tùy chọn định dạng như xóa khoảng trắng thừa, chuẩn hóa dấu ngoặc, hoặc thay đổi kiểu chữ.
+    copy_title: Sao Chép Kết Quả
+    copy_content: Nhấn nút sao chép để copy văn bản đã làm sạch vào clipboard.

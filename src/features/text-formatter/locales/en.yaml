@@ -1,0 +1,29 @@
+textFormatter:
+  title: Text Formatter - Clear Style
+  desc: Remove formatting and clean up text copied from web pages.
+  form:
+    input_label: Input Text
+    input_placeholder: Paste your text here...
+    options_title: Formatting Options
+    remove_extra_spaces: Remove Extra Spaces
+    remove_line_breaks: Remove Line Breaks
+    trim_lines: Trim Lines
+    normalize_quotes: Normalize Quotes & Symbols
+    case_transform: Text Case
+    case_none: No Change
+    case_lowercase: lowercase
+    case_uppercase: UPPERCASE
+    case_capitalize: Capitalize first letter
+    case_title: Title Case
+    btn_format: Format Text
+    btn_copy: Copy
+    btn_clear: Clear
+    output_placeholder: Formatted text will appear here...
+  guide:
+    title: How to Use
+    paste_title: Paste Your Text
+    paste_content: Copy text from any website and paste it into the input area. The tool will automatically format it.
+    options_title: Choose Options
+    options_content: Select formatting options like removing extra spaces, normalizing quotes, or changing text case.
+    copy_title: Copy Result
+    copy_content: Click the copy button to copy the cleaned text to your clipboard.

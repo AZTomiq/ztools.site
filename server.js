@@ -106,8 +106,12 @@ app.post('/api/global', (req, res) => {
   }
 });
 
-// Fallback to index.html for SPA routing (if needed) or 404
+// Fallback to index.html for SPA routing (only for page requests, not assets)
 app.use((req, res) => {
+  // If request has an extension, it's likely a missing asset
+  if (path.extname(req.path)) {
+    return res.status(404).send('Not found');
+  }
   res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 

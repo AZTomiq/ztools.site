@@ -242,6 +242,40 @@
       
       <url>
         <loc>
+          https://ztools.site/vi/lunar-calendar/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/lunar-calendar/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/lunar-calendar/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/en/lunar-calendar/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/lunar-calendar/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/lunar-calendar/" />
+          
+      </url>
+      
+      <url>
+        <loc>
           https://ztools.site/vi/password-generator/
         </loc>
         <changefreq>
@@ -407,6 +441,40 @@
           <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/tax/" />
           
           <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/tax/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/vi/text-formatter/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/text-formatter/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/text-formatter/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/en/text-formatter/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/text-formatter/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/text-formatter/" />
           
       </url>
       

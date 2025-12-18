@@ -1,0 +1,139 @@
+<!-- title: <%= t('lunarCalendar.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>
+      <%= t('lunarCalendar.header.title') %>
+    </h1>
+    <p>
+      <%= t('lunarCalendar.header.subtitle') %>
+    </p>
+  </div>
+
+  <div class="lunar-content">
+    <!-- Main Calendar Card (Merged Converter) -->
+    <div class="card tool-card wall-calendar-card"
+      style="margin-top: 2rem; border: none; background: transparent; box-shadow: none;">
+      <div class="wall-calendar-block">
+
+        <!-- Header: Month & Year -->
+        <div class="calendar-header-block">
+          <div class="header-content">
+            <span class="solar-month" id="today-solar-month">Tháng --</span>
+            <span class="solar-year" id="today-solar-year">----</span>
+          </div>
+
+          <div class="date-selector-wrapper">
+            <div class="input-control-group">
+              <button id="input-mode-toggle" class="mode-toggle-btn" title="Chuyển đổi Dương/Âm lịch">
+                <span id="current-mode-label">Dương lịch</span>
+                <span class="swap-icon">🔄</span>
+              </button>
+
+              <!-- Solar Input -->
+              <div id="solar-input-container">
+                <input type="date" id="solar-date-input" class="visible-date-input"
+                  title="<%= t('lunarCalendar.converter.selectDate') %>" />
+              </div>
+
+              <!-- Lunar Input (Hidden by default) -->
+              <div id="lunar-input-container" class="lunar-input-group">
+                <select id="lunar-day-input" class="lunar-select" title="Ngày"></select>
+                <select id="lunar-month-input" class="lunar-select" title="Tháng"></select>
+                <input type="number" id="lunar-year-input" class="lunar-year-field" placeholder="Năm" title="Năm" />
+                <label class="leap-option">
+                  <input type="checkbox" id="lunar-leap-input" /> <span>Nhuận</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body: Big Day Number & Weekday -->
+        <div class="calendar-body-block">
+          <div class="day-navigation">
+            <button id="prev-day-btn" class="nav-btn"
+              title="<%= t('lunarCalendar.monthView.prevDay') || 'Ngày trước' %>">‹</button>
+            <div class="solar-day" id="today-solar-day">--</div>
+            <button id="next-day-btn" class="nav-btn"
+              title="<%= t('lunarCalendar.monthView.nextDay') || 'Ngày sau' %>">›</button>
+          </div>
+          <div class="solar-weekday" id="today-solar-weekday">----</div>
+        </div>
+
+        <!-- Footer: Lunar Info -->
+        <div class="calendar-footer-block">
+          <div class="lunar-main-info">
+            <span class="lunar-label">Âm lịch</span>
+            <span class="lunar-date-large" id="today-lunar-day-month">--/--</span>
+          </div>
+
+          <div class="lunar-details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Năm</span>
+              <span class="detail-value" id="today-year-canchi">--</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Tháng</span>
+              <span class="detail-value" id="today-month-canchi">--</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Ngày</span>
+              <span class="detail-value" id="today-day-canchi">--</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Giờ</span>
+              <span class="detail-value" id="today-zodiac">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Month View Section -->
+    <div class="card tool-card" style="margin-top: 2rem;">
+      <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);">
+        <span style="font-size: 1.5rem;">📅</span>
+        <%= t('lunarCalendar.monthView.title') %>
+      </h2>
+      <div class="month-controls">
+        <button class="btn-month-nav" id="prev-month-btn">
+          ← <%= t('lunarCalendar.monthView.prevMonth') %>
+        </button>
+        <h3 id="current-month-year">--/----</h3>
+        <button class="btn-month-nav" id="next-month-btn">
+          <%= t('lunarCalendar.monthView.nextMonth') %> →
+        </button>
+        <button class="btn-today" id="today-btn">
+          <%= t('lunarCalendar.monthView.today') %>
+        </button>
+      </div>
+      <div id="calendar-grid" class="calendar-grid"></div>
+    </div>
+
+    <!-- Good Hours Section -->
+    <div class="card tool-card" style="margin-top: 2rem;">
+      <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);">
+        <span style="font-size: 1.5rem;">⏰</span>
+        <%= t('lunarCalendar.goodHours.title') %>
+      </h2>
+      <div id="good-hours-list"></div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="card info-card" style="margin-top: 2rem;">
+      <h2>
+        <%= t('lunarCalendar.info.title') %>
+      </h2>
+      <p style="margin-top: 1rem; color: var(--text-muted); line-height: 1.6;">
+        <%= t('lunarCalendar.info.description') %>
+      </p>
+      <p style="margin-top: 1rem; color: var(--text-muted); line-height: 1.6;">
+        <%= t('lunarCalendar.info.canChiInfo') %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script src="<%= assetPath %>script.js"></script>

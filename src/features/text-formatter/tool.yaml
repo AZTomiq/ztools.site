@@ -1,0 +1,83 @@
+id: text-formatter
+category: text
+icon: 🧹
+translationKey: textFormatter
+status: active
+link: /text-formatter/
+meta:
+  version: 1.0.0
+  type: formatter
+
+inputs:
+  - id: input-text
+    type: textarea
+    label: textFormatter.form.input_label
+    placeholder: textFormatter.form.input_placeholder
+    rows: 8
+    default: ""
+
+  - id: format_options
+    type: group
+    label: textFormatter.form.options_title
+    items:
+      - id: remove_extra_spaces
+        type: checkbox
+        label: textFormatter.form.remove_extra_spaces
+        default: true
+      - id: remove_line_breaks
+        type: checkbox
+        label: textFormatter.form.remove_line_breaks
+        default: false
+      - id: trim_lines
+        type: checkbox
+        label: textFormatter.form.trim_lines
+        default: true
+      - id: normalize_quotes
+        type: checkbox
+        label: textFormatter.form.normalize_quotes
+        default: true
+
+  - id: case_transform
+    type: select
+    label: textFormatter.form.case_transform
+    default: none
+    options:
+      - value: none
+        label: textFormatter.form.case_none
+      - value: lowercase
+        label: textFormatter.form.case_lowercase
+      - value: uppercase
+        label: textFormatter.form.case_uppercase
+      - value: capitalize
+        label: textFormatter.form.case_capitalize
+      - value: title
+        label: textFormatter.form.case_title
+
+actions:
+  primary:
+    label: textFormatter.form.btn_format
+    function: formatText
+  secondary:
+    - icon: 📋
+      title: textFormatter.form.btn_copy
+      function: copyFormatted
+    - icon: 🔄
+      title: textFormatter.form.btn_clear
+      function: clearText
+      
+output:
+  type: textarea
+  id: formatted-output
+  readonly: true
+  rows: 10
+  placeholder: textFormatter.form.output_placeholder
+
+guide:
+  title: textFormatter.guide.title
+  items:
+    - title: textFormatter.guide.paste_title
+      content: textFormatter.guide.paste_content
+    - title: textFormatter.guide.options_title
+      content: textFormatter.guide.options_content
+    - title: textFormatter.guide.copy_title
+      content: textFormatter.guide.copy_content

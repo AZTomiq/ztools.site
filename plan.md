@@ -76,9 +76,14 @@
 - [ ] **Fibonacci Generator**
 - [ ] **Credit Card Validator**
 
-### 🏥 Group 3: Sức khỏe & Đời sống (Health & Lifestyle) - 8 tools
+### 🏥 Group 3: Sức khỏe & Đời sống (Health & Lifestyle) - 9 tools
 
 - [x] **BMI Calculator** (Chuẩn IDI/WPRO cho người Việt)
+- [x] **Lunar Calendar Converter** (Xem âm lịch)
+    - [x] Hiển thị âm lịch hôm nay
+    - [x] Chọn ngày để convert Dương lịch ↔ Âm lịch
+    - [x] Hiển thị Can Chi, Giờ Hoàng Đạo
+    - [x] Xem ngày tốt xấu (Tốt/Xấu cho việc gì)
 - [ ] **Age Calculator** (Tính tuổi)
 - [ ] **Date Calculator** (Tính ngày)
 - [ ] **Date Difference Calculator**
@@ -95,6 +100,13 @@
 - [ ] **Sentence Counter** (Đếm câu)
 - [ ] **Line Counter** (Đếm dòng)
 - [x] **Text Case Converter** (Chuyển đổi chữ hoa/thường)
+- [x] **Text Formatter - Clear Style** (Xóa định dạng, normalize text)
+    - [x] Remove extra spaces
+    - [x] Normalize line breaks
+    - [x] Trim lines
+    - [x] Normalize quotes & symbols
+    - [x] Case transformation
+    - [x] Modern 2-column UI with gradients
 - [x] **Lorem Ipsum Generator**
 - [ ] **Text Diff Checker** (So sánh văn bản)
 - [ ] **Find & Replace** (Tìm & thay thế)
@@ -400,18 +412,18 @@
 | Category            | Tools Count   | Status           |
 | ------------------- | ------------- | ---------------- |
 | Job & Income        | 10            | 3/10 ✅           |
-| Finance             | 15            | 1/15 ✅           |
-| Health & Lifestyle  | 8             | 1/8 ✅            |
-| Text Tools          | 36            | 3/36             |
+| Finance             | 15            | 5/15 ✅           |
+| Health & Lifestyle  | 9             | 2/9 ✅            |
+| Text Tools          | 36            | 4/36 ✅           |
 | Conversion Tools    | 33            | 0/33             |
-| Encoding/Security   | 25            | 0/25             |
-| Data Processing     | 39            | 1/39 ✅           |
-| Generators          | 49            | 2/49             |
+| Encoding/Security   | 25            | 1/25 ✅           |
+| Data Processing     | 39            | 11/39 ✅          |
+| Generators          | 49            | 2/49 ✅           |
 | Image Tools         | 43            | 0/43             |
 | Number & Math       | 32            | 0/32             |
 | Utility & Dev Tools | 29            | 0/29             |
 | PDF Tools           | 14            | 0/14             |
-| **TOTAL**           | **333 tools** | **6/333 (1.8%)** |
+| **TOTAL**           | **334 tools** | **28/334 (8.4%)** |
 
 ---
 
@@ -440,6 +452,24 @@
 - UUID, Password Generator
 - QR Code, Barcode
 - Random Number/String
+
+**🔥 HIGH PRIORITY - UX Enhancements** (Sau khi hoàn thành Lunar Calendar)
+*Cải thiện trải nghiệm người dùng*
+
+1. **Search Feature** 
+   - [ ] Tìm kiếm tools từ menu/header
+   - [ ] Auto-complete suggestions
+   - [ ] Keyboard shortcuts (Ctrl/Cmd + K)
+   - [ ] Search by category, name, description
+   - [ ] Recent searches history
+
+2. **Bookmark Creator**
+   - [ ] Cho phép user chọn tools theo checklist
+   - [ ] Tạo bookmark folder structure: zTools > Category > Tool
+   - [ ] Export bookmarks as HTML file
+   - [ ] One-click import to browser
+   - [ ] Save user preferences (localStorage)
+   - [ ] Share bookmark collection via URL
 
 ### Phase 3: Developer Tools (3-6 tháng)
 *Công cụ cho developer - traffic chất lượng cao*
@@ -573,11 +603,16 @@
 
 ---
 
-**Last Updated**: 2025-12-16  
+**Last Updated**: 2025-12-17  
 **Current Status**: 🚀 Phase 2 (Quick Wins) In Progress  
 **Recent Achievements**:
-- ✅ **Full i18n Refactor**: Migrated to modular JSON resources for all 10 tools.
+- ✅ **Full i18n Refactor**: Migrated to modular JSON resources for all tools.
 - ✅ **New Generators**: Password Generator, UUID Generator.
-- ✅ **Text Tools**: Lorem Ipsum, Word Counter Updates.
+- ✅ **Text Tools**: Lorem Ipsum, Word Counter, **Text Formatter with Modern UI**.
 - ✅ **Job & Income**: Business Tax, Social Insurance.
-**Next Milestone**: Implement Conversion Tools (Base64, URL) & Technical SEO (Sitemap/Schema).
+- ✅ **Finance Tools**: Loan Calculator, Compound Interest, Savings Interest, Percentage Calculator.
+- ✅ **Data Processing**: JSON Toolkit (11 tools unified).
+- ✅ **Health & Lifestyle**: BMI Calculator, **Lunar Calendar Converter** 🌙.
+- ✅ **SEO Enhancement**: Dynamic sitemap, schema markup, canonical tags.
+- ✅ **UI/UX**: Text Formatter redesigned with 2-column layout, gradients, and smooth animations.
+**Next Milestone**: Implement Search Feature & Bookmark Creator (High Priority UX Enhancements).

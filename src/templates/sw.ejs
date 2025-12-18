@@ -1,81 +1,71 @@
-const CACHE_NAME = 'ztools-v6';
+const CACHE_NAME = 'ztools-v7';
 const STATIC_ASSETS = [
 './',
 './manifest.json',
 './assets/css/global.css',
 './assets/js/global.js',
-<%
-// Generate unique list of assets to avoid duplicates
-const assets = new Set();
-locales.forEach(lang => {
+<% const assets=new Set(); locales.forEach(lang=> {
   assets.add(`./${lang}/`);
   assets.add(`./${lang}/index.html`);
-});
+  });
 
-tools.forEach(tool => {
-  // Assets are shared across languages, so only add once
+  tools.forEach(tool => {
   assets.add(`./assets/features/${tool.id}/style.css`);
   assets.add(`./assets/features/${tool.id}/script.js`);
-
-  // Pages are language specific
   locales.forEach(lang => {
-    assets.add(`./${lang}/${tool.id}/`);
+  assets.add(`./${lang}/${tool.id}/`);
   });
-});
-%>
-  <%- Array.from(assets).map(a => `'${a}'`).join(',\n ') %>
-    ];
+  });
 
-    // Install Event: Cache Core Assets
-    self.addEventListener('install', (e) => {
-    console.log('[SW] Installing...');
-    e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-    console.log('[SW] Caching App Shell');
-    return cache.addAll(STATIC_ASSETS);
-    })
-    );
-    self.skipWaiting();
-    });
+  const assetList = Array.from(assets);
+  assetList.forEach((a, i) => { -%>
+  '<%= a %>'<%= i < assetList.length - 1 ? ',' : '' %>
+      <% }); -%>
+        ];
 
-    // Activate Event: Clean old caches
-    self.addEventListener('activate', (e) => {
-    console.log('[SW] Activating...');
-    e.waitUntil(
-    caches.keys().then((keys) =>
-    Promise.all(
-    keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
-    )
-    )
-    );
-    self.clients.claim();
-    });
+        // Install Event: Cache Core Assets
+        self.addEventListener('install', (e) => {
+        console.log('[SW] Installing...');
+        e.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+        console.log('[SW] Caching App Shell');
+        return cache.addAll(STATIC_ASSETS);
+        })
+        );
+        self.skipWaiting();
+        });
 
-    // Fetch Event: Strategy - Stale While Revalidate
-    self.addEventListener('fetch', (e) => {
-    // Skip non-GET and external requests
-    if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) {
-    return;
-    }
+        // Activate Event: Clean old caches
+        self.addEventListener('activate', (e) => {
+        console.log('[SW] Activating...');
+        e.waitUntil(
+        caches.keys().then((keys) =>
+        Promise.all(
+        keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
+        )
+        )
+        );
+        self.clients.claim();
+        });
 
-    e.respondWith(
-    caches.open(CACHE_NAME).then(async (cache) => {
-    const cachedResponse = await cache.match(e.request);
+        // Fetch Event: Strategy - Stale While Revalidate
+        self.addEventListener('fetch', (e) => {
+        if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) {
+        return;
+        }
 
-    // Fetch logic
-    const fetchPromise = fetch(e.request).then((networkResponse) => {
-    // Update cache with new version
-    if (networkResponse.ok) {
-    cache.put(e.request, networkResponse.clone());
-    }
-    return networkResponse;
-    }).catch((err) => {
-    // Network failed
-    console.warn('[SW] Network fail:', err);
-    });
-
-    // Return cached response immediately if available, else wait for network
-    return cachedResponse || fetchPromise;
-    })
-    );
-    });
+        e.respondWith(
+        caches.open(CACHE_NAME).then(async (cache) => {
+        const cachedResponse = await cache.match(e.request);
+        const fetchPromise = fetch(e.request).then((networkResponse) => {
+        if (networkResponse.ok) {
+        cache.put(e.request, networkResponse.clone());
+        }
+        return networkResponse;
+        }).catch((err) => {
+        console.warn('[SW] Network fail:', err);
+        });
+        return cachedResponse || fetchPromise;
+        })
+        );
+        });
