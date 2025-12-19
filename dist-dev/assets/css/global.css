@@ -161,6 +161,61 @@ a:hover {
   transform: scale(1.1);
 }
 
+.desktop-only {
+  display: flex !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+}
+
+.header-search-box {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 0 1rem;
+  height: 36px;
+  align-items: center;
+  gap: 0.5rem;
+  width: 250px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.header-search-box:hover {
+  border-color: var(--primary-color);
+  background: var(--card-bg);
+}
+
+.header-search-input {
+  border: none !important;
+  background: transparent !important;
+  font-size: 0.9rem !important;
+  padding: 0 !important;
+  color: var(--text-muted) !important;
+  cursor: pointer;
+}
+
+.header-search-box kbd {
+  font-size: 0.7rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-family: inherit;
+}
+
 .btn-icon {
   background: none;
   border: 1px solid var(--border-color);
@@ -241,6 +296,82 @@ a:hover {
   z-index: 1200;
   margin-top: 0.75rem;
   overflow: hidden;
+}
+
+.mega-menu-top {
+  padding: 0.75rem 1rem;
+  background: var(--bg-hover);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  gap: 1rem;
+}
+
+.mega-home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.mega-home-link:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.nav-link-prominent {
+  transition: all 0.2s;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+
+.nav-link-prominent:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  transform: translateY(-2px);
+}
+
+.pulse-icon {
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hide-mobile {
+  display: flex;
+}
+
+.hide-desktop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .hide-desktop {
+    display: flex !important;
+  }
 }
 
 .logo-wrapper {

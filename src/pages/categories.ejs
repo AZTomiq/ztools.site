@@ -1,0 +1,109 @@
+<!-- title: <%= t('nav.menu_categories') %> - ZTools -->
+
+<div class="container page-categories">
+  <div class="page-header" style="text-align: center; margin-bottom: 3rem;">
+    <h1>🗂️ <%= t('nav.menu_categories') %>
+    </h1>
+    <p>
+      <%= t('home.hero_desc') %>
+    </p>
+  </div>
+
+  <div class="categories-grid">
+    <% const catOrder=['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const catMap={ 'job' : { title:
+      t('home.cats.job.title') || 'Job & Income' , icon: '🛠️' }, 'finance' : { title: t('home.cats.finance.title')
+      || 'Finance' , icon: '💰' }, 'text' : { title: t('home.cats.text.title') || 'Text Tools' , icon: '📝'
+      }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: '⚙️' }, 'daily' : { title:
+      t('home.cats.daily.title') || 'Daily Utilities' , icon: '☕' }, 'dev' : { title: t('home.cats.dev.title')
+      || 'Dev Tools' , icon: '💻' } }; catOrder.forEach(catId=> {
+      const catTools = tools.filter(t => t.category === catId && t.status === 'active');
+      if (catTools.length === 0) return;
+      %>
+      <div class="category-card card" id="cat-<%= catId %>">
+        <h2 class="category-title">
+          <span class="cat-icon">
+            <%= catMap[catId].icon %>
+          </span>
+          <%= catMap[catId].title %>
+            <span class="cat-count">
+              <%= catTools.length %> tools
+            </span>
+        </h2>
+        <div class="cat-tools-list">
+          <% catTools.forEach(tool=> { %>
+            <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="cat-tool-item">
+              <span class="tool-icon">
+                <%= tool.icon %>
+              </span>
+              <span class="tool-name">
+                <%= t(tool.translationKey + '.title' ) %>
+              </span>
+            </a>
+            <% }); %>
+        </div>
+      </div>
+      <% }); %>
+  </div>
+</div>
+
+<style>
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .category-card {
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .category-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+  }
+
+  .cat-count {
+    margin-left: auto;
+    font-size: 0.8rem;
+    background: var(--bg-hover);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    color: var(--text-muted);
+  }
+
+  .cat-tools-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cat-tool-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+
+  .cat-tool-item:hover {
+    background: var(--bg-hover);
+    color: var(--primary-color);
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 600px) {
+    .categories-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

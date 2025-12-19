@@ -208,6 +208,40 @@
       
       <url>
         <loc>
+          https://ztools.site/vi/hash-toolkit/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/hash-toolkit/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/hash-toolkit/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/en/hash-toolkit/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/hash-toolkit/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/hash-toolkit/" />
+          
+      </url>
+      
+      <url>
+        <loc>
           https://ztools.site/vi/inflation-calculator/
         </loc>
         <changefreq>
@@ -305,6 +339,40 @@
           <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/json-toolkit/" />
           
           <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/json-toolkit/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/vi/jwt-toolkit/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/jwt-toolkit/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/jwt-toolkit/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/en/jwt-toolkit/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/jwt-toolkit/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/jwt-toolkit/" />
           
       </url>
       
@@ -509,6 +577,40 @@
           <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/percentage-calculator/" />
           
           <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/percentage-calculator/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/vi/qr-generator/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/qr-generator/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/qr-generator/" />
+          
+      </url>
+      
+      <url>
+        <loc>
+          https://ztools.site/en/qr-generator/
+        </loc>
+        <changefreq>
+          monthly
+        </changefreq>
+        <priority>
+          0.8
+        </priority>
+        
+          <xhtml:link rel="alternate" hreflang="vi-VN" href="https://ztools.site/vi/qr-generator/" />
+          
+          <xhtml:link rel="alternate" hreflang="en-US" href="https://ztools.site/en/qr-generator/" />
           
       </url>
       

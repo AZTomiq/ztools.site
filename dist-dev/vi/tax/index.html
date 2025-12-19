@@ -38,7 +38,7 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../assets/css/global.css?h=de66fd10">
+  <link rel="stylesheet" href="../../assets/css/global.css?h=53fdc11d">
   <link rel="icon" type="image/png"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
   <link rel="manifest" href="../../manifest.json">
@@ -123,13 +123,35 @@
         <span class="logo-icon" aria-hidden="true">🛠️</span>
         <span class="logo-text">ZTools</span>
         
-          <span class="logo-sub">
+          <span class="logo-sub hide-mobile">
             Thuế &amp; Lương
           </span>
           
       </button>
 
+      <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
+        <a href="../../vi/bookmark-creator/" class="nav-link-prominent"
+          style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
+          <span class="pulse-icon">🔖</span>
+          Bookmark Creator
+        </a>
+      </div>
+
       <div class="dropdown-menu mega-menu">
+        <div class="mega-menu-top">
+          <a href="../../vi/" class="mega-home-link">
+            <span class="icon">🏠</span>
+            Trang chủ
+          </a>
+          <a href="../../vi/categories/" class="mega-home-link">
+            <span class="icon">🗂️</span>
+            Danh mục
+          </a>
+          <a href="../../vi/bookmark-creator/" class="mega-home-link">
+            <span class="icon">🔖</span>
+            Bookmark Creator
+          </a>
+        </div>
         
 
           
@@ -429,19 +451,46 @@
                   </span>
                   Công cụ Lập trình (Dev)
                     <span class="mega-count-badge">
-                      3
+                      6
                     </span>
                 </div>
                 <span class="mega-caret" aria-hidden="true">▾</span>
               </button>
               <div class="mega-links-grid">
                 
+                  <a href="../../vi/hash-toolkit/" class="mega-link">
+                    <span class="link-icon" aria-hidden="true">
+                      🔒
+                    </span>
+                    <span class="link-text">
+                      Công cụ Base64 &amp; Hash
+                    </span>
+                  </a>
+                  
                   <a href="../../vi/json-toolkit/" class="mega-link">
                     <span class="link-icon" aria-hidden="true">
                       💻
                     </span>
                     <span class="link-text">
                       JSON Toolkit
+                    </span>
+                  </a>
+                  
+                  <a href="../../vi/jwt-toolkit/" class="mega-link">
+                    <span class="link-icon" aria-hidden="true">
+                      🔑
+                    </span>
+                    <span class="link-text">
+                      Phân tích &amp; Giải mã JWT
+                    </span>
+                  </a>
+                  
+                  <a href="../../vi/qr-generator/" class="mega-link">
+                    <span class="link-icon" aria-hidden="true">
+                      🔳
+                    </span>
+                    <span class="link-text">
+                      Tạo mã QR Code
                     </span>
                   </a>
                   
@@ -470,18 +519,28 @@
     </div>
 
     <div class="header-actions">
-      <a href="https://github.com/ph4n4n/ztools.site-public" class="btn-icon github-link" target="_blank"
-        rel="noopener noreferrer" title="View Source on GitHub" aria-label="GitHub Repository">
-        <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor"
-          style="display: inline-block; vertical-align: middle;">
-          <path
-            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
-          </path>
-        </svg>
+      <!-- Desktop Search Box -->
+      <div class="header-search-box desktop-only" id="header-search-box">
+        <span class="search-box-icon">🔍</span>
+        <input type="text" class="header-search-input" placeholder="Tìm kiếm công cụ... (Ctrl + K)" readonly>
+        <kbd>Ctrl+K</kbd>
+      </div>
+
+      <a href="../../vi/categories/" class="btn-icon" title="Danh mục"
+        aria-label="Categories">
+        🗂️
       </a>
-      <button id="search-btn" class="btn-icon" title="Tìm kiếm công cụ" aria-label="Search">
+
+      <a href="../../vi/bookmark-creator/" class="btn-icon" title="Bookmark Creator"
+        aria-label="Bookmarks">
+        🔖
+      </a>
+
+      <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Tìm kiếm công cụ"
+        aria-label="Search">
         🔍
       </button>
+
       <a href="../../en/tax/" class="lang-switch"
         title="Switch Language" aria-label="Chuyển sang Tiếng Anh">
         <span aria-hidden="true">
@@ -528,7 +587,7 @@
   <!-- Embed tools data for client-side search -->
   <script id="tools-data" type="application/json">
     
-    [{"id":"bmi","link":"../../vi/bmi/","icon":"⚖️","title":"Tính chỉ số BMI","desc":"Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI & WPRO cho người Việt.","category":"Tiện ích đời sống"},{"id":"bookmark-creator","link":"../../vi/bookmark-creator/","icon":"🔖","title":"Bookmark Creator","desc":"Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.","category":"Tiện ích đời sống"},{"id":"business-tax","link":"../../vi/business-tax/","icon":"💼","title":"Tính thuế TNDN","desc":"Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.","category":"Việc làm & Lương thưởng"},{"id":"compound-interest","link":"../../vi/compound-interest/","icon":"📈","title":"Tính Lãi Kép","desc":"Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.","category":"Tài chính & Ngân hàng"},{"id":"freelancer-tax","link":"../../vi/freelancer-tax/","icon":"🧾","title":"Thuế Freelancer & Hộ kinh doanh","desc":"Tính thuế vĩnh lai (10%) hoặc thuế khoán cho hộ kinh doanh cá thể.","category":"Việc làm & Lương thưởng"},{"id":"inflation-calculator","link":"../../vi/inflation-calculator/","icon":"📈","title":"Tính lạm phát (Việt Nam)","desc":"Tính toán trượt giá tiền tệ và sức mua của đồng tiền qua các năm.","category":"Tài chính & Ngân hàng"},{"id":"investment-calc","link":"../../vi/investment-calc/","icon":"💸","title":"Tính hiệu quả đầu tư (ROI)","desc":"Tính toán lợi nhuận (ROI) và tỷ suất sinh lời hàng năm (CAGR).","category":"Tài chính & Ngân hàng"},{"id":"json-toolkit","link":"../../vi/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.","category":"Công cụ Lập trình (Dev)"},{"id":"loan-calculator","link":"../../vi/loan-calculator/","icon":"🏠","title":"Tính lãi vay","desc":"Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.","category":"Tài chính & Ngân hàng"},{"id":"lorem-ipsum","link":"../../vi/lorem-ipsum/","icon":"📝","title":"Lorem Ipsum Generator","desc":"Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.","category":"Công cụ Văn bản"},{"id":"lunar-calendar","link":"../../vi/lunar-calendar/","icon":"🌙","title":"Xem Âm Lịch","desc":"Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo","category":"Tiện ích đời sống"},{"id":"ot-calculator","link":"../../vi/ot-calculator/","icon":"⏰","title":"Tính lương tăng ca (OT)","desc":"Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất","category":"Việc làm & Lương thưởng"},{"id":"password-generator","link":"../../vi/password-generator/","icon":"🔐","title":"Tạo Mật Khẩu Mạnh","desc":"Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.","category":"Generators (Tạo mã)"},{"id":"percentage-calculator","link":"../../vi/percentage-calculator/","icon":"％","title":"Tính Phần Trăm (%)","desc":"Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.","category":"Tài chính & Ngân hàng"},{"id":"random-toolkit","link":"../../vi/random-toolkit/","icon":"🎲","title":"Bộ công cụ Ngẫu nhiên","desc":"Tạo số ngẫu nhiên, tung xúc xắc và chọn ngẫu nhiên từ danh sách.","category":"Tiện ích đời sống"},{"id":"savings-interest","link":"../../vi/savings-interest/","icon":"🏦","title":"Tính Lãi Suất Tiết Kiệm","desc":"Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.","category":"Tài chính & Ngân hàng"},{"id":"social-insurance","link":"../../vi/social-insurance/","icon":"🏥","title":"Tính BHXH & Hưu trí","desc":"Tính BHXH bắt buộc vs Tự nguyện.","category":"Việc làm & Lương thưởng"},{"id":"tax","link":"../../vi/tax/","icon":"💸","title":"Tính thuế TNCN","desc":"Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.","category":"Việc làm & Lương thưởng"},{"id":"text-diff","link":"../../vi/text-diff/","icon":"↔️","title":"So Sánh Văn Bản","desc":"So sánh sự khác biệt giữa hai đoạn văn bản, làm nổi bật các phần thêm, xóa, sửa.","category":"Công cụ Văn bản"},{"id":"text-formatter","link":"../../vi/text-formatter/","icon":"🧹","title":"Định Dạng Văn Bản - Xóa Style","desc":"Loại bỏ định dạng và làm sạch văn bản khi copy từ web.","category":"Công cụ Văn bản"},{"id":"timestamp-converter","link":"../../vi/timestamp-converter/","icon":"⏳","title":"Chuyển đổi Timestamp","desc":"Chuyển đổi thời gian giữa định dạng Unix Timestamp và ngày tháng thực tế.","category":"Công cụ Lập trình (Dev)"},{"id":"unit-converter","link":"../../vi/unit-converter/","icon":"📏","title":"Quy đổi đơn vị","desc":"Công cụ quy đổi chiều dài, khối lượng, thể tích, diện tích và nhiều đơn vị khác.","category":"Tiện ích đời sống"},{"id":"url-toolkit","link":"../../vi/url-toolkit/","icon":"🔗","title":"URL & Base64 Toolkit","desc":"Mã hóa/Giải mã URL, Base64 và phân tích cấu trúc URL nhanh chóng.","category":"Công cụ Lập trình (Dev)"},{"id":"uuid-generator","link":"../../vi/uuid-generator/","icon":"🆔","title":"UUID Generator","desc":"Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.","category":"Generators (Tạo mã)"},{"id":"word-counter","link":"../../vi/word-counter/","icon":"📊","title":"Đếm từ & Phân tích văn bản","desc":"Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).","category":"Công cụ Văn bản"}]
+    [{"id":"bmi","link":"../../vi/bmi/","icon":"⚖️","title":"Tính chỉ số BMI","desc":"Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI & WPRO cho người Việt.","category":"Tiện ích đời sống"},{"id":"bookmark-creator","link":"../../vi/bookmark-creator/","icon":"🔖","title":"Bookmark Creator","desc":"Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.","category":"Tiện ích đời sống"},{"id":"business-tax","link":"../../vi/business-tax/","icon":"💼","title":"Tính thuế TNDN","desc":"Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.","category":"Việc làm & Lương thưởng"},{"id":"compound-interest","link":"../../vi/compound-interest/","icon":"📈","title":"Tính Lãi Kép","desc":"Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.","category":"Tài chính & Ngân hàng"},{"id":"freelancer-tax","link":"../../vi/freelancer-tax/","icon":"🧾","title":"Thuế Freelancer & Hộ kinh doanh","desc":"Tính thuế vĩnh lai (10%) hoặc thuế khoán cho hộ kinh doanh cá thể.","category":"Việc làm & Lương thưởng"},{"id":"hash-toolkit","link":"../../vi/hash-toolkit/","icon":"🔒","title":"Công cụ Base64 & Hash","desc":"Mã hóa/Giải mã Base64 và tạo các mã băm mật mã như MD5, SHA256 nhanh chóng.","category":"Công cụ Lập trình (Dev)"},{"id":"inflation-calculator","link":"../../vi/inflation-calculator/","icon":"📈","title":"Tính lạm phát (Việt Nam)","desc":"Tính toán trượt giá tiền tệ và sức mua của đồng tiền qua các năm.","category":"Tài chính & Ngân hàng"},{"id":"investment-calc","link":"../../vi/investment-calc/","icon":"💸","title":"Tính hiệu quả đầu tư (ROI)","desc":"Tính toán lợi nhuận (ROI) và tỷ suất sinh lời hàng năm (CAGR).","category":"Tài chính & Ngân hàng"},{"id":"json-toolkit","link":"../../vi/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.","category":"Công cụ Lập trình (Dev)"},{"id":"jwt-toolkit","link":"../../vi/jwt-toolkit/","icon":"🔑","title":"Phân tích & Giải mã JWT","desc":"Giải mã và kiểm tra cấu trúc JSON Web Token (JWT) an toàn ngay trên trình duyệt.","category":"Công cụ Lập trình (Dev)"},{"id":"loan-calculator","link":"../../vi/loan-calculator/","icon":"🏠","title":"Tính lãi vay","desc":"Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.","category":"Tài chính & Ngân hàng"},{"id":"lorem-ipsum","link":"../../vi/lorem-ipsum/","icon":"📝","title":"Lorem Ipsum Generator","desc":"Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.","category":"Công cụ Văn bản"},{"id":"lunar-calendar","link":"../../vi/lunar-calendar/","icon":"🌙","title":"Xem Âm Lịch","desc":"Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo","category":"Tiện ích đời sống"},{"id":"ot-calculator","link":"../../vi/ot-calculator/","icon":"⏰","title":"Tính lương tăng ca (OT)","desc":"Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất","category":"Việc làm & Lương thưởng"},{"id":"password-generator","link":"../../vi/password-generator/","icon":"🔐","title":"Tạo Mật Khẩu Mạnh","desc":"Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.","category":"Generators (Tạo mã)"},{"id":"percentage-calculator","link":"../../vi/percentage-calculator/","icon":"％","title":"Tính Phần Trăm (%)","desc":"Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.","category":"Tài chính & Ngân hàng"},{"id":"qr-generator","link":"../../vi/qr-generator/","icon":"🔳","title":"Tạo mã QR Code","desc":"Tạo mã QR cho liên kết, văn bản và nhiều hơn thế. Hoạt động offline đảm bảo quyền riêng tư.","category":"Công cụ Lập trình (Dev)"},{"id":"random-toolkit","link":"../../vi/random-toolkit/","icon":"🎲","title":"Bộ công cụ Ngẫu nhiên","desc":"Tạo số ngẫu nhiên, tung xúc xắc và chọn ngẫu nhiên từ danh sách.","category":"Tiện ích đời sống"},{"id":"savings-interest","link":"../../vi/savings-interest/","icon":"🏦","title":"Tính Lãi Suất Tiết Kiệm","desc":"Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.","category":"Tài chính & Ngân hàng"},{"id":"social-insurance","link":"../../vi/social-insurance/","icon":"🏥","title":"Tính BHXH & Hưu trí","desc":"Tính BHXH bắt buộc vs Tự nguyện.","category":"Việc làm & Lương thưởng"},{"id":"tax","link":"../../vi/tax/","icon":"💸","title":"Tính thuế TNCN","desc":"Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.","category":"Việc làm & Lương thưởng"},{"id":"text-diff","link":"../../vi/text-diff/","icon":"↔️","title":"So Sánh Văn Bản","desc":"So sánh sự khác biệt giữa hai đoạn văn bản, làm nổi bật các phần thêm, xóa, sửa.","category":"Công cụ Văn bản"},{"id":"text-formatter","link":"../../vi/text-formatter/","icon":"🧹","title":"Định Dạng Văn Bản - Xóa Style","desc":"Loại bỏ định dạng và làm sạch văn bản khi copy từ web.","category":"Công cụ Văn bản"},{"id":"timestamp-converter","link":"../../vi/timestamp-converter/","icon":"⏳","title":"Chuyển đổi Timestamp","desc":"Chuyển đổi thời gian giữa định dạng Unix Timestamp và ngày tháng thực tế.","category":"Công cụ Lập trình (Dev)"},{"id":"unit-converter","link":"../../vi/unit-converter/","icon":"📏","title":"Quy đổi đơn vị","desc":"Công cụ quy đổi chiều dài, khối lượng, thể tích, diện tích và nhiều đơn vị khác.","category":"Tiện ích đời sống"},{"id":"url-toolkit","link":"../../vi/url-toolkit/","icon":"🔗","title":"URL & Base64 Toolkit","desc":"Mã hóa/Giải mã URL, Base64 và phân tích cấu trúc URL nhanh chóng.","category":"Công cụ Lập trình (Dev)"},{"id":"uuid-generator","link":"../../vi/uuid-generator/","icon":"🆔","title":"UUID Generator","desc":"Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.","category":"Generators (Tạo mã)"},{"id":"word-counter","link":"../../vi/word-counter/","icon":"📊","title":"Đếm từ & Phân tích văn bản","desc":"Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).","category":"Công cụ Văn bản"}]
   </script>
 </header>
 
@@ -827,7 +886,7 @@
 
         
           <section class="card how-to-use-section" style="margin-top: 3rem;">
-            <h2 style="margin-bottom: 1rem;">📖 common.how_to_use
+            <h2 style="margin-bottom: 1rem;">📖 Hướng dẫn sử dụng
             </h2>
             <div class="markdown-body">
               <h3>Hướng dẫn tính thuế Thu nhập cá nhân (TNCN)</h3>
@@ -916,7 +975,7 @@
         </div>
         
 
-          <script src="../../assets/js/global.js?h=71f720ed"></script>
+          <script src="../../assets/js/global.js?h=f17a2f32"></script>
 </body>
 
 </html>

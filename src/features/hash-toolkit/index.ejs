@@ -1,0 +1,65 @@
+<!-- title: <%= t('hash.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>🔒 <%= t('hash.title') %>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('hash.desc') %>
+    </p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('base64')">
+      <%= t('hash.tabs.base64') %>
+    </button>
+    <button class="tab-btn" onclick="switchTab('md5')">
+      <%= t('hash.tabs.md5') %>
+    </button>
+    <button class="tab-btn" onclick="switchTab('sha256')">
+      <%= t('hash.tabs.sha256') %>
+    </button>
+  </div>
+
+  <div class="card editor-card">
+    <div class="input-group">
+      <label for="input-text">
+        <%= t('hash.labels.input') %>
+      </label>
+      <textarea id="input-text" placeholder="Type or paste text here..."></textarea>
+    </div>
+
+    <div class="controls" id="base64-controls">
+      <button class="btn btn-primary" onclick="processBase64('encode')">
+        <%= t('hash.labels.encode') %>
+      </button>
+      <button class="btn btn-secondary" onclick="processBase64('decode')">
+        <%= t('hash.labels.decode') %>
+      </button>
+    </div>
+
+    <div class="controls" id="hash-controls" style="display: none;">
+      <button class="btn btn-primary" onclick="generateHash()">
+        <%= t('hash.labels.generate') %>
+      </button>
+    </div>
+
+    <div class="output-group">
+      <div class="section-header">
+        <label for="output-text">
+          <%= t('hash.labels.output') %>
+        </label>
+        <button class="btn-copy" onclick="copyResult()">📋</button>
+      </div>
+      <textarea id="output-text" readonly></textarea>
+      <div id="status-msg" class="status-msg"></div>
+    </div>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

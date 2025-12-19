@@ -8,6 +8,7 @@
     "test:integrity": "node tests/integrity.js",
     "test:unit": "vitest run",
     "build:dev": "node scripts/build.js",
+    "build:force": "node scripts/build.js --force",
     "build": "node scripts/build.js --obfuscate",
     "dev": "node scripts/build.js && node server.js",
     "deploy": "node scripts/deploy.js"

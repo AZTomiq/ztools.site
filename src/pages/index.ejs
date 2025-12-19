@@ -9,7 +9,23 @@
   </p>
 </section>
 
-</section>
+<!-- Big Hero Search Section -->
+<div class="container hero-search-wrap" style="margin-bottom: 4rem; position: relative; z-index: 10;">
+  <div class="card search-box-hero"
+    style="max-width: 700px; margin: 0 auto; padding: 0.75rem; display: flex; align-items: center; border-radius: 50px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); border: 2px solid var(--primary-color);">
+    <span style="padding: 0 1.25rem; font-size: 1.5rem;">🔍</span>
+    <input type="text" id="home-search" placeholder="<%= t('nav.search_placeholder') %>"
+      style="border: none; background: transparent; padding: 1rem 0; font-size: 1.25rem; flex: 1; outline: none;"
+      aria-label="Search tools">
+    <div style="padding-right: 1.5rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0.6;">
+      <kbd
+        style="font-size: 0.8rem; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-hover);">Ctrl</kbd>
+      <span style="font-size: 0.8rem;">+</span>
+      <kbd
+        style="font-size: 0.8rem; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-hover);">K</kbd>
+    </div>
+  </div>
+</div>
 
 <!-- View Options Toolbar -->
 <div class="container view-toolbar"
@@ -38,7 +54,20 @@
     </button>
   </div>
 
-  <div class="sort-options">
+  <div class="sort-options" style="display: flex; gap: 0.5rem;">
+    <!-- Category Filter Dropdown -->
+    <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
+      aria-label="Filter by category">
+      <option value="all">
+        <%= t('nav.menu_categories') %>
+      </option>
+      <% categories.forEach(cat=> { %>
+        <option value="<%= cat.id %>">
+          <%= t(cat.titleKey) || cat.defaultTitle %>
+        </option>
+        <% }); %>
+    </select>
+
     <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
       aria-label="Sort tools by">
       <option value="default">

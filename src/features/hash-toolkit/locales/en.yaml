@@ -1,0 +1,16 @@
+hash:
+  title: Base64 & Hash Toolkit
+  desc: Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.
+  tabs:
+    base64: Base64
+    md5: MD5
+    sha256: SHA-256
+  labels:
+    input: Input Text
+    output: Output
+    encode: Encode
+    decode: Decode
+    generate: Generate Hash
+    copy: Copy
+  status:
+    error_decode: Invalid Base64 string

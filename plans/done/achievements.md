@@ -9,6 +9,7 @@
 - ✅ **Text Tools**: Lorem Ipsum, Word Counter, **Text Formatter with Modern 2-column Side-by-Side UI**.
 - ✅ **Job & Income**: Business Tax, Social Insurance, **OT Calculator**, **Freelancer Tax**.
 - ✅ **Finance Tools**: Loan Calculator, Compound Interest, Savings Interest, Percentage Calculator, **Inflation Calculator**, **Investment ROI**.
+- ✅ **Dev Tools**: Password Gen, UUID Gen, **JWT Debugger**, **Base64/Hash Toolkit**, **QR Code Generator**.
 - ✅ **Data Processing**: JSON Toolkit (11 tools unified).
 - ✅ **Health & Lifestyle**: BMI Calculator, **Lunar Calendar Converter** 🌙.
 - ✅ **SEO Enhancement**: Dynamic sitemap, schema markup, canonical tags.

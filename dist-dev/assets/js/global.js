@@ -105,6 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (searchBtn) searchBtn.addEventListener('click', openSearch);
+  const searchBtnMobile = document.getElementById('search-btn-mobile');
+  if (searchBtnMobile) searchBtnMobile.addEventListener('click', openSearch);
+
+  const headerSearchBox = document.getElementById('header-search-box');
+  if (headerSearchBox) headerSearchBox.addEventListener('click', openSearch);
+
   if (closeSearch) closeSearch.addEventListener('click', hideSearch);
   if (searchOverlay) searchOverlay.addEventListener('click', hideSearch);
 

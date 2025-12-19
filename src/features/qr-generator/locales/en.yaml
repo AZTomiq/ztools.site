@@ -1,0 +1,15 @@
+qr:
+  title: QR Code Generator
+  desc: Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.
+  labels:
+    input: Text or URL
+    size: Size (px)
+    level: Error Correction
+    download: Download PNG
+    generate: Update QR
+  levels:
+    L: Low
+    M: Medium
+    Q: Quartile
+    H: High
+  placeholder: https://ztools.site

@@ -1,0 +1,15 @@
+jwt:
+  title: JWT Debugger & Decoder
+  desc: Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.
+  labels:
+    encoded: Encoded (Paste your JWT here)
+    decoded: Decoded
+    header: Header (Algorithm & Token Type)
+    payload: Payload (Data)
+    signature: Signature Status
+    invalid: Invalid JWT Format
+    copy: Copy
+  status:
+    valid: Valid JWT Structure
+    unsigned: Signature verification not supported offline
+    error: Decode Error

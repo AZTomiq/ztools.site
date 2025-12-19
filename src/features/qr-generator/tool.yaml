@@ -1,0 +1,10 @@
+id: qr-generator
+link: /qr-generator/
+icon: 🔳
+category: dev
+status: active
+translationKey: qr
+meta:
+  version: 1.0.0
+  author: ph4n4n
+  description: Offline QR Code generator with customizable size and error correction.

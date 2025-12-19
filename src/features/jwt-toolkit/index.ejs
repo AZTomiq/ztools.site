@@ -1,0 +1,52 @@
+<!-- title: <%= t('jwt.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>🔑 <%= t('jwt.title') %>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
+    <p>
+      <%= t('jwt.desc') %>
+    </p>
+  </div>
+
+  <div class="jwt-grid">
+    <div class="jwt-input-section">
+      <div class="card editor-card">
+        <label for="jwt-input">
+          <%= t('jwt.labels.encoded') %>
+        </label>
+        <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
+        <div id="jwt-status" class="jwt-status-banner"></div>
+      </div>
+    </div>
+
+    <div class="jwt-output-section">
+      <div class="card section-card">
+        <div class="section-header">
+          <label>
+            <%= t('jwt.labels.header') %>
+          </label>
+          <button class="btn-copy" onclick="copyText('jwt-header')">📋</button>
+        </div>
+        <pre id="jwt-header" class="code-block"></pre>
+      </div>
+
+      <div class="card section-card">
+        <div class="section-header">
+          <label>
+            <%= t('jwt.labels.payload') %>
+          </label>
+          <button class="btn-copy" onclick="copyText('jwt-payload')">📋</button>
+        </div>
+        <pre id="jwt-payload" class="code-block"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

@@ -35,9 +35,9 @@
 ## 🚀 Phase 3: Expanding Ecosystem (Sắp tới)
 
 **Priority 1 - Developer Utilities**
-- [ ] JWT Debugger & Decoder
-- [ ] Base64 / Hash (MD5, SHA256) Toolkit
-- [ ] QR Code Generator (Offline)
+- [x] JWT Debugger & Decoder (Done)
+- [x] Base64 / Hash (MD5, SHA256) Toolkit (Done)
+- [x] QR Code Generator (Offline) (Done)
 - [ ] Cron Expression Parser
 
 **Priority 2 - Image & PDF Tools**

@@ -1,0 +1,15 @@
+qr:
+  title: Tạo mã QR Code
+  desc: Tạo mã QR cho liên kết, văn bản và nhiều hơn thế. Hoạt động offline đảm bảo quyền riêng tư.
+  labels:
+    input: Văn bản hoặc Liên kết
+    size: Kích thước (px)
+    level: Mức độ sửa lỗi
+    download: Tải về PNG
+    generate: Cập nhật mã
+  levels:
+    L: Thấp (L)
+    M: Trung bình (M)
+    Q: Tốt (Q)
+    H: Cao (H)
+  placeholder: https://ztools.site

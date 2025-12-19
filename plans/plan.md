@@ -19,9 +19,9 @@ Chào mừng bạn đến với trung tâm điều hành dự án ZTools. Kế h
 ---
 
 ## 📊 Quick Status
-- **Current Version**: v1.2.0 (Stable)
+- **Current Version**: v1.2.1 (Stable)
 - **Lighthouse Performance**: Green (99/100/100/100)
-- **Active Tools**: 32/334
+- **Active Tools**: 35/334
 - **Active Locales**: vi, en
-- **Last Deploy**: 2025-12-18
+- **Last Deploy**: 2025-12-19
 - **Next Target**: Phase 3 - Developer & Image Tools ecosystem.

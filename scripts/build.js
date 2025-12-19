@@ -92,10 +92,12 @@ function saveCache() {
 function hasChanged(filePath, keyPrefix = '', update = true) {
   if (forceRebuild) return true;
   if (!fs.existsSync(filePath)) return true;
+  if (fs.statSync(filePath).isDirectory()) return true; // Directories are always "changed" or we handle them specially
 
   const content = fs.readFileSync(filePath);
   const currentHash = getHash(content);
-  const cacheKey = keyPrefix + path.relative(SRC_DIR, filePath);
+  // Separate cache for dev and prod to avoid stale skips
+  const cacheKey = (isSecure ? 'prod/' : 'dev/') + keyPrefix + path.relative(SRC_DIR, filePath);
 
   if (buildCache[cacheKey] !== currentHash) {
     if (update) buildCache[cacheKey] = currentHash;
@@ -138,7 +140,7 @@ function loadLocales(lang) {
     } catch (e) { console.error(`Error loading legacy locale ${lang} `, e); }
   }
 
-  // 2. Load module folders (e.g., locales/vi/*.json)
+  // 2. Load module folders (e.g., locales/vi/*.json, *.yaml)
   const dirPath = path.join(SRC_DIR, 'locales', lang);
   if (fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory()) {
     const files = fs.readdirSync(dirPath);
@@ -146,6 +148,11 @@ function loadLocales(lang) {
       if (file.endsWith('.json')) {
         try {
           const content = require(path.join(dirPath, file));
+          Object.assign(translations, content);
+        } catch (e) { console.error(`Error loading locale module ${lang}/${file}`, e); }
+      } else if (file.endsWith('.yaml') || file.endsWith('.yml')) {
+        try {
+          const content = yaml.load(fs.readFileSync(path.join(dirPath, file), 'utf8'));
           Object.assign(translations, content);
         } catch (e) { console.error(`Error loading locale module ${lang}/${file}`, e); }
       }
@@ -264,7 +271,7 @@ async function copyRootFiles() {
   for (const file of files) {
     const srcPath = path.join(ROOT_DIR, file);
     if (fs.existsSync(srcPath)) {
-      const content = fs.readFileSync(file);
+      const content = fs.readFileSync(srcPath);
       const hash = getHash(content);
       const cacheKey = `root/${file}`;
 
@@ -285,11 +292,30 @@ async function buildAssets() {
   const jsDist = path.join(ASSETS_DIST, 'js');
   const featuresDist = path.join(ASSETS_DIST, 'features');
 
+  await fs.ensureDir(ASSETS_DIST);
   await fs.ensureDir(cssDist);
   await fs.ensureDir(jsDist);
   await fs.ensureDir(featuresDist);
 
   console.time('🎨 Assets Build');
+
+  // 0. Copy all raw assets (images, fonts, vendor, etc)
+  const assetsSrc = path.join(SRC_DIR, 'assets');
+  if (fs.existsSync(assetsSrc)) {
+    const items = fs.readdirSync(assetsSrc);
+    for (const item of items) {
+      // Skip handled directories if we want, but copying everything is safer/simpler
+      // and hasChanged inside processJs/minify will handle the skipped updates.
+      if (['css', 'js'].includes(item)) continue;
+
+      const srcPath = path.join(assetsSrc, item);
+      const destPath = path.join(ASSETS_DIST, item);
+      if (hasChanged(srcPath, 'assets-copy/', false)) {
+        await fs.copy(srcPath, destPath);
+        hasChanged(srcPath, 'assets-copy/', true);
+      }
+    }
+  }
 
   // 1. Global CSS
   if (await fs.pathExists(cssSrc)) {
@@ -406,11 +432,16 @@ async function buildPages() {
   let globalDataChanged = false;
 
   // 1. Global data
+  const changedFiles = [];
   const dataDir = path.join(SRC_DIR, 'data');
   if (fs.existsSync(dataDir)) {
     const dataFiles = fs.readdirSync(dataDir);
     for (const file of dataFiles) {
-      if (hasChanged(path.join(dataDir, file), 'data/')) globalDataChanged = true;
+      const fullPath = path.join(dataDir, file);
+      if (hasChanged(fullPath, 'data/', false)) {
+        globalDataChanged = true;
+        changedFiles.push({ path: fullPath, prefix: 'data/' });
+      }
     }
   }
 
@@ -424,7 +455,10 @@ async function buildPages() {
       if (fs.statSync(fullPath).isDirectory()) {
         checkDirRecursive(fullPath, prefix + item + '/');
       } else {
-        if (hasChanged(fullPath, prefix)) globalDataChanged = true;
+        if (hasChanged(fullPath, prefix, false)) {
+          globalDataChanged = true;
+          changedFiles.push({ path: fullPath, prefix });
+        }
       }
     }
   };
@@ -435,8 +469,10 @@ async function buildPages() {
   if (fs.existsSync(includesDir)) {
     const includeFiles = fs.readdirSync(includesDir);
     for (const file of includeFiles) {
-      if (hasChanged(path.join(includesDir, file), 'include/')) {
+      const fullPath = path.join(includesDir, file);
+      if (hasChanged(fullPath, 'include/', false)) {
         includesChanged = true;
+        changedFiles.push({ path: fullPath, prefix: 'include/' });
       }
     }
   }
@@ -449,8 +485,9 @@ async function buildPages() {
       // tool.yaml
       const configPath = path.join(featuresDir, feature, 'tool.yaml');
       if (fs.existsSync(configPath)) {
-        if (hasChanged(configPath, `config/${feature}/`)) {
+        if (hasChanged(configPath, `config/${feature}/`, false)) {
           toolsChanged = true;
+          changedFiles.push({ path: configPath, prefix: `config/${feature}/` });
           console.log(`⚙️  Config changed for: ${feature}`);
         }
       }
@@ -459,8 +496,10 @@ async function buildPages() {
       if (fs.existsSync(featLocalesDir)) {
         const featLocaleFiles = fs.readdirSync(featLocalesDir);
         for (const file of featLocaleFiles) {
-          if (hasChanged(path.join(featLocalesDir, file), `feat-locales/${feature}/`)) {
+          const fullPath = path.join(featLocalesDir, file);
+          if (hasChanged(fullPath, `feat-locales/${feature}/`, false)) {
             toolsChanged = true;
+            changedFiles.push({ path: fullPath, prefix: `feat-locales/${feature}/` });
           }
         }
       }
@@ -504,6 +543,12 @@ async function buildPages() {
 
   await walk(pagesDir, pagesDir);
   await walk(featuresDir, featuresDir);
+
+  // 4. Update Global Caches after successful page builds
+  for (const item of changedFiles) {
+    hasChanged(item.path, item.prefix, true);
+  }
+
   console.timeEnd('📄 Pages Build');
 }
 

@@ -1,0 +1,76 @@
+meta:
+  title: ZTools - Free Online Utility Tools
+  description: "Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more."
+about:
+  title: About ZTools
+privacy:
+  title: Privacy Policy
+terms:
+  title: Terms of Service
+nav:
+  home: Home
+  tax: Tax Calc
+  bmi: BMI
+  json: JSON
+  menu_job: Job & Income
+  menu_finance: Finance
+  menu_utils: Utilities
+  menu_text: Text Tools
+  menu_generator: Generators
+  menu_categories: Categories
+  menu_dev: Dev Tools
+  search_placeholder: "Search tools... (Ctrl + K)"
+  search_no_results: No results found for
+  search_title: Search Tools
+  changelog_title: Version History
+  reset: Reset
+  how_to_use: How to use
+home:
+  hero_title: Utility Tools for Everyone
+  hero_desc: "Simple, fast, secure, and completely free."
+  cats:
+    job:
+      title: Job & Income
+      corp_tax: Corporate Tax
+      insurance: Social Insurance
+      salary: Salary Utils
+    finance:
+      title: Finance & Banking
+      loan: Loan Calculator
+      loan_desc: Mortgage & Loan repayment
+      compound: Compound Interest
+      savings: Savings Interest
+      currency: Currency & Credit
+    daily:
+      title: Daily Utilities
+      pdf: PDF & Text Tools
+      image: Image Tools
+      qr: Encoder & QR
+    text:
+      title: Text Tools
+      word_counter: Word Counter
+      case_converter: Case Converter
+      lorem: Lorem Ipsum Generator
+    generator:
+      title: Generator Tools
+      password: Password Generator
+      uuid: UUID Generator
+    dev:
+      title: Dev Tools
+      encoder: Encoder / Decoder
+      generator: Generators
+      tester: Testers & Formatters
+  sort:
+    default: Default
+    az: Name (A-Z)
+    za: Name (Z-A)
+    recent: Recently Used
+    popular: Most Used
+footer:
+  about_title: ZTools.site
+  about_desc: "Free, simple, and secure utility tools."
+  links_title: Links
+  intro: About
+  policy: Privacy Policy
+  terms: Terms of Service
+  copyright: "© 2025 ZTools. Built with ❤️."

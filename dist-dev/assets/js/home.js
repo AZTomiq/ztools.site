@@ -108,4 +108,31 @@ document.addEventListener("DOMContentLoaded", () => {
       items.forEach((item) => grid.appendChild(item));
     });
   }
+
+  // --- 5. Hero Search Logic (Bridge to Global Search) ---
+  const homeSearch = document.getElementById("home-search");
+  if (homeSearch) {
+    homeSearch.addEventListener("focus", () => {
+      homeSearch.blur();
+      document.getElementById("header-search-box")?.click() ||
+        document.getElementById("search-btn")?.click() ||
+        document.getElementById("search-btn-mobile")?.click();
+    });
+  }
+
+  // --- 6. Category Filter Logic ---
+  const catFilter = document.getElementById("category-filter");
+  if (catFilter) {
+    catFilter.addEventListener("change", (e) => {
+      const cat = e.target.value;
+      const sections = document.querySelectorAll(".category-section");
+      sections.forEach(sec => {
+        if (cat === "all" || sec.id === cat + "-tools") {
+          sec.style.display = "block";
+        } else {
+          sec.style.display = "none";
+        }
+      });
+    });
+  }
 });

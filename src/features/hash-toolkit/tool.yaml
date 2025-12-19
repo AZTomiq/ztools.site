@@ -1,0 +1,10 @@
+id: hash-toolkit
+link: /hash-toolkit/
+icon: 🔒
+category: dev
+status: active
+translationKey: hash
+meta:
+  version: 1.0.0
+  author: ph4n4n
+  description: Base64 encoder/decoder and Hash generator (MD5, SHA256).

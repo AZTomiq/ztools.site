@@ -1,0 +1,16 @@
+hash:
+  title: Công cụ Base64 & Hash
+  desc: Mã hóa/Giải mã Base64 và tạo các mã băm mật mã như MD5, SHA256 nhanh chóng.
+  tabs:
+    base64: Base64
+    md5: MD5
+    sha256: SHA-256
+  labels:
+    input: Văn bản gốc
+    output: Kết quả
+    encode: Mã hóa
+    decode: Giải mã
+    generate: Tạo mã băm
+    copy: Sao chép
+  status:
+    error_decode: Định dạng Base64 không hợp lệ

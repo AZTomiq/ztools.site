@@ -1,0 +1,15 @@
+jwt:
+  title: Phân tích & Giải mã JWT
+  desc: Giải mã và kiểm tra cấu trúc JSON Web Token (JWT) an toàn ngay trên trình duyệt.
+  labels:
+    encoded: JWT đã mã hóa (Dán token vào đây)
+    decoded: Dữ liệu giải mã
+    header: Header (Thuật toán & Loại token)
+    payload: Payload (Dữ liệu nội dung)
+    signature: Trạng thái chữ ký
+    invalid: Định dạng JWT không hợp lệ
+    copy: Sao chép
+  status:
+    valid: Cấu trúc JWT hợp lệ
+    unsigned: Không hỗ trợ xác thực chữ ký (Offline)
+    error: Lỗi giải mã
