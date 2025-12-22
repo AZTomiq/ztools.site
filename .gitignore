@@ -4,3 +4,6 @@ node_modules
 
 # UI Test Results
 ui-test-results/
+
+dist
+dist-dev

@@ -38,28 +38,32 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../assets/css/global.css?h=01d42843">
-  <link rel="icon" type="image/png"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../assets/css/global.css?h=70434131">
+  
+      <link rel="icon" type="image/png"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+      <link rel="manifest" href="../manifest.json">
 
-  <script src="../assets/js/user-mode.js?h=e15180be"></script>
+      <!-- Lucide Icons Library -->
+      <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Dark Mode Script (Blocking) -->
-  <script>
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  </script>
+      <script src="../assets/js/user-mode.js?h=e15180be"></script>
 
-  <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+      <!-- Dark Mode Script (Blocking) -->
+      <script>
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      </script>
+
+      <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
   <script>
     window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
   </script>
   <script defer src="/_vercel/analytics/script.js"></script>
   -->
 
-  <!-- Schema.org Structured Data -->
-  
+      <!-- Schema.org Structured Data -->
+      
 
   <script type="application/ld+json">
 [
@@ -92,13 +96,14 @@
 </head>
 
 <body>
-  <header class="site-header">
+  
+      <header class="site-header">
   <div class="header-inner container">
     <div class="nav-item logo-wrapper">
       <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
         aria-label="Tool categories menu"
         style="background: none; border: none; padding: 0; cursor: pointer;">
-        <span class="logo-icon" aria-hidden="true">🧰</span>
+        <span class="logo-icon" aria-hidden="true"><i data-lucide="layout-grid"></i></span>
         <span class="logo-text">ZTools</span>
         
       </button>
@@ -106,109 +111,626 @@
       <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
         <a href="../en/bookmark-creator/" class="nav-link-prominent"
           style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon">⭐</span>
+          <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
           Bookmark Creator
         </a>
       </div>
 
       <div class="dropdown-menu mega-menu">
-        <div class="mega-menu-top">
-          <a href="../en/" class="mega-home-link">
-            <span class="icon">🏠</span>
-            Home
-          </a>
-          <a href="../en/categories/" class="mega-home-link">
-            <span class="icon">🗂️</span>
-            Categories
-          </a>
-          <a href="../en/blog/" class="mega-home-link">
-            <span class="icon">✍️</span>
-            nav.blog
-          </a>
-          <a href="../en/bookmark-creator/" class="mega-home-link">
-            <span class="icon">⭐</span>
-            Bookmark Creator
-          </a>
-        </div>
-        
+  <div class="mega-menu-top">
+    <a href="../en/" class="mega-home-link active">
+      <span class="icon"><i data-lucide="home"></i></span>
+      Home
+    </a>
+    <a href="../en/categories/"
+      class="mega-home-link ">
+      <span class="icon"><i data-lucide="folder-kanban"></i></span>
+      Categories
+    </a>
+    <a href="../en/blog/" class="mega-home-link ">
+      <span class="icon"><i data-lucide="pen-tool"></i></span>
+      Dev Blog
+    </a>
+    <a href="../en/bookmark-creator/"
+      class="mega-home-link ">
+      <span class="icon"><i data-lucide="star"></i></span>
+      Bookmark Creator
+    </a>
+  </div>
+  
 
+    
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="briefcase"></i>
+            </span>
+            Job &amp; Income
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
           
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    💼
-                  </span>
-                  Job &amp; Income
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../en/tax/" class="mega-link mode-standard-only">
-                    <span class="link-icon" aria-hidden="true">
-                      💸
-                    </span>
-                    <span class="link-text">
-                      PIT Calculator
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
             
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    👾
-                  </span>
-                  Dev Tools
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../en/json-toolkit/" class="mega-link ">
-                    <span class="link-icon" aria-hidden="true">
-                      💻
-                    </span>
-                    <span class="link-text">
-                      JSON Toolkit
-                    </span>
-                  </a>
-                  
-                  <a href="../en/web-playground/" class="mega-link ">
-                    <span class="link-icon" aria-hidden="true">
-                      👨‍💻
-                    </span>
-                    <span class="link-text">
-                      zTool Playground
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
+              <a href="../en/business-tax/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="briefcase"></i>
+                </span>
+                <span class="link-text">
+                  Corporate Income Tax (CIT) Calc
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
             
+              <a href="../en/freelancer-tax/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="receipt"></i>
+                </span>
+                <span class="link-text">
+                  Freelancer &amp; Business Tax
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/ot-calculator/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="clock"></i>
+                </span>
+                <span class="link-text">
+                  Overtime Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/salary-tax-master/"
+                class="mega-link mode-advanced-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="wallet"></i>
+                </span>
+                <span class="link-text">
+                  Salary &amp; Tax Master
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/social-insurance/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="shield-plus"></i>
+                </span>
+                <span class="link-text">
+                  Social Insurance
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/tax/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="banknote"></i>
+                </span>
+                <span class="link-text">
+                  PIT Calculator
+                    
+                        <span class="menu-badge hot">HOT</span>
+                        
+                </span>
+              </a>
+              
+        </div>
       </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="line-chart"></i>
+            </span>
+            Finance &amp; Banking
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../en/compound-interest/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="trending-up"></i>
+                </span>
+                <span class="link-text">
+                  Compound Interest Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/inflation-calculator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="line-chart"></i>
+                </span>
+                <span class="link-text">
+                  Inflation Calculator (Vietnam)
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/investment-calc/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="piggy-bank"></i>
+                </span>
+                <span class="link-text">
+                  Investment ROI Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/loan-calculator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="home"></i>
+                </span>
+                <span class="link-text">
+                  Loan Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/percentage-calculator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="percent"></i>
+                </span>
+                <span class="link-text">
+                  Percentage Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/savings-interest/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="coins"></i>
+                </span>
+                <span class="link-text">
+                  Savings Interest Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="type"></i>
+            </span>
+            Text Tools
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../en/lorem-ipsum/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="pilcrow"></i>
+                </span>
+                <span class="link-text">
+                  Lorem Ipsum Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/text-diff/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="file-diff"></i>
+                </span>
+                <span class="link-text">
+                  Text Diff Checker
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/text-formatter/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="wand-2"></i>
+                </span>
+                <span class="link-text">
+                  Text Formatter - Clear Style
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/word-counter/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="bar-chart-3"></i>
+                </span>
+                <span class="link-text">
+                  Word Counter &amp; Analyzer
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="wand-2"></i>
+            </span>
+            Generator Tools
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../en/password-generator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="key-round"></i>
+                </span>
+                <span class="link-text">
+                  Strong Password Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/uuid-generator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="fingerprint"></i>
+                </span>
+                <span class="link-text">
+                  UUID Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="calendar"></i>
+            </span>
+            Daily Utilities
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../en/bmi/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="scale"></i>
+                </span>
+                <span class="link-text">
+                  BMI Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/bookmark-creator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="bookmark"></i>
+                </span>
+                <span class="link-text">
+                  Bookmark Creator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/date-time-master/"
+                class="mega-link mode-advanced-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="calendar-clock"></i>
+                </span>
+                <span class="link-text">
+                  Date &amp; Time Master
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/date-toolkit/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="calendar-days"></i>
+                </span>
+                <span class="link-text">
+                  Date Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/lunar-calendar/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="moon"></i>
+                </span>
+                <span class="link-text">
+                  Lunar Calendar
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/random-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="dices"></i>
+                </span>
+                <span class="link-text">
+                  Random Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/unit-converter/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="ruler"></i>
+                </span>
+                <span class="link-text">
+                  Unit Converter
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="code"></i>
+            </span>
+            Dev Tools
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../en/cron-parser/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="terminal"></i>
+                </span>
+                <span class="link-text">
+                  Cron Expression Parser
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/dev-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="code"></i>
+                </span>
+                <span class="link-text">
+                  Developer Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/hash-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="lock"></i>
+                </span>
+                <span class="link-text">
+                  Base64 &amp; Hash Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/json-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="braces"></i>
+                </span>
+                <span class="link-text">
+                  JSON Toolkit
+                    
+                        <span class="menu-badge hot">HOT</span>
+                        
+                </span>
+              </a>
+              
+            
+              <a href="../en/jwt-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="key"></i>
+                </span>
+                <span class="link-text">
+                  JWT Debugger &amp; Decoder
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/qr-generator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="qr-code"></i>
+                </span>
+                <span class="link-text">
+                  QR Code Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/timestamp-converter/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="stopwatch"></i>
+                </span>
+                <span class="link-text">
+                  Timestamp Converter
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/url-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="link"></i>
+                </span>
+                <span class="link-text">
+                  URL &amp; Base64 Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../en/web-playground/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="monitor-play"></i>
+                </span>
+                <span class="link-text">
+                  zTool Playground
+                    
+                        <span class="menu-badge hot">HOT</span>
+                        
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+</div>
     </div>
 
     <div class="header-actions">
       <!-- Desktop Search Box -->
       <div class="header-search-box desktop-only" id="header-search-box">
-        <span class="search-box-icon">🔍</span>
+        <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
         <input type="text" class="header-search-input" placeholder="Search tools... (Ctrl + K)" readonly>
         <kbd>Ctrl+K</kbd>
       </div>
 
       <a href="../en/categories/" class="btn-icon" title="Categories"
         aria-label="Categories">
-        🗂️
+        <i data-lucide="grid-3x3"></i>
       </a>
 
       <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Search Tools"
         aria-label="Search">
-        🔍
+        <i data-lucide="search"></i>
       </button>
 
       <a href="../vi/" class="lang-switch"
@@ -224,7 +746,7 @@
         </span>
         <div class="mode-switch">
           <div class="mode-slider">
-            <span class="mode-icon">⭐</span>
+            <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
           </div>
         </div>
         <span class="mode-text">
@@ -233,51 +755,52 @@
       </button>
 
       <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
-        🌙
+        <i data-lucide="moon"></i>
       </button>
     </div>
   </div>
 
-  <!-- Search Overlay / Modal -->
-  <div id="search-modal" class="search-modal">
-    <div class="search-overlay"></div>
-    <div class="search-container">
-      <div class="search-header">
-        <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="text" id="search-input" placeholder="Search tools... (Ctrl + K)" autocomplete="off"
-          aria-label="Search tools... (Ctrl + K)">
-        <button id="close-search" class="close-search"
-          aria-label="Close search">&times;</button>
-      </div>
-      <div id="search-results" class="search-results">
-        <!-- Results will be injected here -->
-      </div>
-      <div class="search-footer">
-        <div class="search-hints">
-          <span><kbd>↵</kbd> Select</span>
-          <span><kbd>↑↓</kbd> Navigate</span>
-          <span><kbd>esc</kbd> Close</span>
-        </div>
+  <!-- Search Overlay / Modal (Reusable by hidden header mode) -->
+<div id="search-modal" class="search-modal">
+  <div class="search-overlay"></div>
+  <div class="search-container">
+    <div class="search-header">
+      <span class="search-icon" aria-hidden="true"><i data-lucide="search"></i></span>
+      <input type="text" id="search-input" placeholder="Search tools... (Ctrl + K)" autocomplete="off"
+        aria-label="Search tools... (Ctrl + K)">
+      <button id="close-search" class="close-search"
+        aria-label="Close search">&times;</button>
+    </div>
+    <div id="search-results" class="search-results">
+      <!-- Results will be injected here -->
+    </div>
+    <div class="search-footer">
+      <div class="search-hints">
+        <span><kbd>↵</kbd> Select</span>
+        <span><kbd>↑↓</kbd> Navigate</span>
+        <span><kbd>esc</kbd> Close</span>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Embed i18n data for client-side JS -->
-  <script id="i18n-data" type="application/json">
-    {
-      "search_no_results": "No results found for"
-    }
-  </script>
+<!-- Embed i18n data for client-side JS -->
+<script id="i18n-data" type="application/json">
+  {
+    "search_no_results": "No results found for"
+  }
+</script>
 
-  <!-- Embed tools data for client-side search -->
-  <script id="tools-data" type="application/json">
-    
-    [{"id":"json-toolkit","link":"../en/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"tax","link":"../en/tax/","icon":"💸","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"web-playground","link":"../en/web-playground/","icon":"👨‍💻","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"}]
-  </script>
+<!-- Embed tools data for client-side search -->
+<script id="tools-data" type="application/json">
+  
+  [{"id":"blog","link":"../en/blog/","icon":"pen-tool","title":"Dev Stories","desc":"Behind the scenes, coding techniques, and updates from the team.","category":"home.cats.legacy.title"},{"id":"bmi","link":"../en/bmi/","icon":"scale","title":"BMI Calculator","desc":"Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.","category":"Daily Utilities"},{"id":"bookmark-creator","link":"../en/bookmark-creator/","icon":"bookmark","title":"Bookmark Creator","desc":"Create a personal bookmark set for your browser with your favorite ZTools.","category":"Daily Utilities"},{"id":"business-tax","link":"../en/business-tax/","icon":"briefcase","title":"Corporate Income Tax (CIT) Calc","desc":"Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.","category":"Job & Income"},{"id":"compound-interest","link":"../en/compound-interest/","icon":"trending-up","title":"Compound Interest Calculator","desc":"Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.","category":"Finance & Banking"},{"id":"cron-parser","link":"../en/cron-parser/","icon":"terminal","title":"Cron Expression Parser","desc":"Convert Cron expressions into human-readable text.","category":"Dev Tools"},{"id":"date-time-master","link":"../en/date-time-master/","icon":"calendar-clock","title":"Date & Time Master","desc":"All-in-one time tool: Calculate distance, add/subtract dates, and Unix conversion.","category":"Daily Utilities"},{"id":"date-toolkit","link":"../en/date-toolkit/","icon":"calendar-days","title":"Date Toolkit","desc":"Calculate distance between dates, add/subtract time, and countdown.","category":"Daily Utilities"},{"id":"dev-toolkit","link":"../en/dev-toolkit/","icon":"code","title":"Developer Toolkit","desc":"Comprehensive toolkit for developers","category":"Dev Tools"},{"id":"freelancer-tax","link":"../en/freelancer-tax/","icon":"receipt","title":"Freelancer & Business Tax","desc":"Calculate tax for withholding (10%) or personal business households.","category":"Job & Income"},{"id":"hash-toolkit","link":"../en/hash-toolkit/","icon":"lock","title":"Base64 & Hash Toolkit","desc":"Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.","category":"Dev Tools"},{"id":"inflation-calculator","link":"../en/inflation-calculator/","icon":"line-chart","title":"Inflation Calculator (Vietnam)","desc":"See how much your money has lost or gained value over time.","category":"Finance & Banking"},{"id":"investment-calc","link":"../en/investment-calc/","icon":"piggy-bank","title":"Investment ROI Calculator","desc":"Calculate your Return on Investment (ROI) and Annual Yield.","category":"Finance & Banking"},{"id":"json-toolkit","link":"../en/json-toolkit/","icon":"braces","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"jwt-toolkit","link":"../en/jwt-toolkit/","icon":"key","title":"JWT Debugger & Decoder","desc":"Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.","category":"Dev Tools"},{"id":"loan-calculator","link":"../en/loan-calculator/","icon":"home","title":"Loan Calculator","desc":"Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.","category":"Finance & Banking"},{"id":"lorem-ipsum","link":"../en/lorem-ipsum/","icon":"pilcrow","title":"Lorem Ipsum Generator","desc":"Generate placeholder text for designs and mockups.","category":"Text Tools"},{"id":"lunar-calendar","link":"../en/lunar-calendar/","icon":"moon","title":"Lunar Calendar","desc":"Convert Solar to Lunar calendar, view Can Chi and Good Hours","category":"Daily Utilities"},{"id":"ot-calculator","link":"../en/ot-calculator/","icon":"clock","title":"Overtime Calculator","desc":"Calculate accurately your overtime pay based on Vietnam Labor Law","category":"Job & Income"},{"id":"password-generator","link":"../en/password-generator/","icon":"key-round","title":"Strong Password Generator","desc":"Generate secure, random passwords instantly.","category":"Generator Tools"},{"id":"percentage-calculator","link":"../en/percentage-calculator/","icon":"percent","title":"Percentage Calculator","desc":"Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.","category":"Finance & Banking"},{"id":"qr-generator","link":"../en/qr-generator/","icon":"qr-code","title":"QR Code Generator","desc":"Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.","category":"Dev Tools"},{"id":"random-toolkit","link":"../en/random-toolkit/","icon":"dices","title":"Random Toolkit","desc":"Generate random numbers, pick items from list, and roll dice.","category":"Daily Utilities"},{"id":"salary-tax-master","link":"../en/salary-tax-master/","icon":"wallet","title":"Salary & Tax Master","desc":"Full Salary & Tax Suite","category":"Job & Income"},{"id":"savings-interest","link":"../en/savings-interest/","icon":"coins","title":"Savings Interest Calculator","desc":"Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.","category":"Finance & Banking"},{"id":"social-insurance","link":"../en/social-insurance/","icon":"shield-plus","title":"Social Insurance","desc":"Social Insurance & Pension Calculator.","category":"Job & Income"},{"id":"tax","link":"../en/tax/","icon":"banknote","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"text-diff","link":"../en/text-diff/","icon":"file-diff","title":"Text Diff Checker","desc":"Compare two texts and highlight differences (additions, deletions, changes).","category":"Text Tools"},{"id":"text-formatter","link":"../en/text-formatter/","icon":"wand-2","title":"Text Formatter - Clear Style","desc":"Remove formatting and clean up text copied from web pages.","category":"Text Tools"},{"id":"timestamp-converter","link":"../en/timestamp-converter/","icon":"stopwatch","title":"Timestamp Converter","desc":"Convert between Unix timestamps and human-readable dates.","category":"Dev Tools"},{"id":"unit-converter","link":"../en/unit-converter/","icon":"ruler","title":"Unit Converter","desc":"Convert length, weight, volume, area, temperature, and more.","category":"Daily Utilities"},{"id":"url-toolkit","link":"../en/url-toolkit/","icon":"link","title":"URL & Base64 Toolkit","desc":"Encode/Decode URL, Base64 and parse URL structure quickly.","category":"Dev Tools"},{"id":"uuid-generator","link":"../en/uuid-generator/","icon":"fingerprint","title":"UUID Generator","desc":"Generate random UUIDs/GUIDs (V1, V4, V7) instantly.","category":"Generator Tools"},{"id":"web-playground","link":"../en/web-playground/","icon":"monitor-play","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"},{"id":"word-counter","link":"../en/word-counter/","icon":"bar-chart-3","title":"Word Counter & Analyzer","desc":"Count words, analyze frequency, and convert case (Case Converter).","category":"Text Tools"}]
+</script>
 </header>
+        
 
-    <main class="container">
-      <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+          <main class="container">
+            <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
 
 
 
@@ -293,7 +816,7 @@
   <!-- Big Hero Search Section -->
   <div class="hero-search-wrap">
     <div class="search-box-hero">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><i data-lucide="search"></i></span>
       <input type="text" id="home-search" placeholder="Search tools... (Ctrl + K)" aria-label="Search tools">
       <div class="search-hints">
         <kbd>Ctrl</kbd>
@@ -303,644 +826,842 @@
     </div>
   </div>
 
-  <!-- View Options Toolbar -->
-  <div class="container view-toolbar"
-    style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
-    <div class="view-toggles"
-      style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
-      <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          aria-hidden="true">
-          <rect x="3" y="3" width="7" height="7"></rect>
-          <rect x="14" y="3" width="7" height="7"></rect>
-          <rect x="14" y="14" width="7" height="7"></rect>
-          <rect x="3" y="14" width="7" height="7"></rect>
-        </svg>
-      </button>
-      <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          aria-hidden="true">
-          <line x1="8" y1="6" x2="21" y2="6"></line>
-          <line x1="8" y1="12" x2="21" y2="12"></line>
-          <line x1="8" y1="18" x2="21" y2="18"></line>
-          <line x1="3" y1="6" x2="3.01" y2="6"></line>
-          <line x1="3" y1="12" x2="3.01" y2="12"></line>
-          <line x1="3" y1="18" x2="3.01" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    <div class="sort-options" style="display: flex; gap: 0.5rem;">
-      <!-- Category Filter Dropdown -->
-      <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
-        aria-label="Filter by category">
-        <option value="all">
-          Categories
-        </option>
-        
-          <option value="job">
-            Job &amp; Income
-          </option>
-          
-          <option value="finance">
-            Finance &amp; Banking
-          </option>
-          
-          <option value="text">
-            Text Tools
-          </option>
-          
-          <option value="generator">
-            Generator Tools
-          </option>
-          
-          <option value="daily">
-            Daily Utilities
-          </option>
-          
-          <option value="dev">
-            Dev Tools
-          </option>
-          
-      </select>
-
-      <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
-        aria-label="Sort tools by">
-        <option value="default">
-          Default
-        </option>
-        <option value="recent">
-          Recently Used
-        </option>
-        <option value="popular">
-          Most Used
-        </option>
-        <option value="az">
-          Name (A-Z)
-        </option>
-        <option value="za">
-          Name (Z-A)
-        </option>
-      </select>
-    </div>
-  </div>
-
+  <!-- Highlight Section -->
   
     
-      <div class="category-section" id="job-tools">
-        <h2 class="category-title">
-          🛠️
-            Job &amp; Income
-        </h2>
-        <div class="tools-grid">
-          
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      💼
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      Corporate Income Tax Calculator
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🧾
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      ⏰
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      💸
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🏥
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      Social Insurance &amp; Pension Calculator
-                    </p>
-                  </div>
-                  
-                    
-            
-              
-                <a href="../en/tax/"
-                  class="card tool-item  mode-standard-only">
-                  <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
-                    💸
-                      
-                  </div>
-                  <h3>
-                    PIT Calculator
-                  </h3>
-                  <p>
-                    Calculate Personal Income Tax 2024, Net/Gross salary converter.
-                  </p>
-                </a>
-                
-                    
+      <div class="container highlight-section">
+        <div class="highlight-header">
+          <span class="badge-new">FEATURED</span>
+          <h2>Phổ biến & Nổi bật <i data-lucide="sparkles"
+              style="width: 24px; height: 24px; vertical-align: middle; color: #f59e0b;"></i></h2>
         </div>
-      </div>
-      
-      <div class="category-section" id="finance-tools">
-        <h2 class="category-title">
-          💰
-            Finance &amp; Banking
-        </h2>
-        <div class="tools-grid">
+        <div class="highlight-grid">
           
+            <a href="../en/json-toolkit/" class="highlight-card">
+              <div class="highlight-icon">
+                <i data-lucide="braces"></i>
+              </div>
+              <div class="highlight-info">
+                <h3>
+                  JSON Toolkit
+                </h3>
+                <p>
+                  Format, validate, and convert JSON. Includes Tree View and data processing tools.
+                </p>
+                <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
+                    style="width: 16px; height: 16px;"></i></span>
+              </div>
+            </a>
             
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      📈
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
+            <a href="../en/salary-tax-master/" class="highlight-card">
+              <div class="highlight-icon">
+                <i data-lucide="wallet"></i>
+              </div>
+              <div class="highlight-info">
+                <h3>
+                  Salary &amp; Tax Master
+                </h3>
+                <p>
+                  Full Salary &amp; Tax Suite
+                </p>
+                <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
+                    style="width: 16px; height: 16px;"></i></span>
+              </div>
+            </a>
             
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      📈
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
+            <a href="../en/tax/" class="highlight-card">
+              <div class="highlight-icon">
+                <i data-lucide="banknote"></i>
+              </div>
+              <div class="highlight-info">
+                <h3>
+                  PIT Calculator
+                </h3>
+                <p>
+                  Calculate Personal Income Tax 2024, Net/Gross salary converter.
+                </p>
+                <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
+                    style="width: 16px; height: 16px;"></i></span>
+              </div>
+            </a>
             
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      💸
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
+            <a href="../en/web-playground/" class="highlight-card">
+              <div class="highlight-icon">
+                <i data-lucide="monitor-play"></i>
+              </div>
+              <div class="highlight-info">
+                <h3>
+                  zTool Playground
+                </h3>
+                <p>
+                  Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.
+                </p>
+                <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
+                    style="width: 16px; height: 16px;"></i></span>
+              </div>
+            </a>
             
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🏠
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      ％
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🏦
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-        </div>
-      </div>
-      
-      <div class="category-section" id="text-tools">
-        <h2 class="category-title">
-          📝
-            Text Tools
-        </h2>
-        <div class="tools-grid">
-          
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      📝
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      ↔️
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🧹
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      📊
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-        </div>
-      </div>
-      
-      <div class="category-section" id="generator-tools">
-        <h2 class="category-title">
-          ⚙️
-            Generator Tools
-        </h2>
-        <div class="tools-grid">
-          
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🔐
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🆔
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-        </div>
-      </div>
-      
-      <div class="category-section" id="daily-tools">
-        <h2 class="category-title">
-          ☕
-            Daily Utilities
-        </h2>
-        <div class="tools-grid">
-          
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      ⚖️
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🔖
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🗓️
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      📅
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🌙
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🎲
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      📏
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-        </div>
-      </div>
-      
-      <div class="category-section" id="dev-tools">
-        <h2 class="category-title">
-          💻
-            Dev Tools
-        </h2>
-        <div class="tools-grid">
-          
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      ⏰
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      👾
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🔒
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-              
-                <a href="../en/json-toolkit/"
-                  class="card tool-item  ">
-                  <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
-                    💻
-                      
-                  </div>
-                  <h3>
-                    JSON Toolkit
-                  </h3>
-                  <p>
-                    Format, validate, and convert JSON. Includes Tree View and data processing tools.
-                  </p>
-                </a>
-                
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🔑
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🔳
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      ⏳
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-                  <div class="card tool-item upcoming">
-                    <div class="icon-soon">
-                      🔗
-                    </div>
-                    <h3>
-                      
-                    </h3>
-                    <p class="desc-soon">
-                      
-                    </p>
-                  </div>
-                  
-                    
-            
-              
-                <a href="../en/web-playground/"
-                  class="card tool-item  ">
-                  <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
-                    👨‍💻
-                      
-                  </div>
-                  <h3>
-                    zTool Playground
-                  </h3>
-                  <p>
-                    Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.
-                  </p>
-                </a>
-                
-                    
         </div>
       </div>
       
 
-        <script src="../assets/js/home.js?h=c2d1daf9"></script>
+        <!-- View Options Toolbar -->
+        <div class="container view-toolbar"
+          style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <div class="view-toggles"
+            style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
+            <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </button>
+            <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </button>
+          </div>
 
-        <link rel="stylesheet" href="../assets/css/home.css?h=2c6fa6d6">
+          <div class="sort-options" style="display: flex; gap: 0.5rem;">
+            <!-- Category Filter Dropdown -->
+            <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
+              aria-label="Filter by category">
+              <option value="all">
+                Categories
+              </option>
+              
+                <option value="job">
+                  Job &amp; Income
+                </option>
+                
+                <option value="finance">
+                  Finance &amp; Banking
+                </option>
+                
+                <option value="text">
+                  Text Tools
+                </option>
+                
+                <option value="generator">
+                  Generator Tools
+                </option>
+                
+                <option value="daily">
+                  Daily Utilities
+                </option>
+                
+                <option value="dev">
+                  Dev Tools
+                </option>
+                
+            </select>
+
+            <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
+              aria-label="Sort tools by">
+              <option value="default">
+                Default
+              </option>
+              <option value="recent">
+                Recently Used
+              </option>
+              <option value="popular">
+                Most Used
+              </option>
+              <option value="az">
+                Name (A-Z)
+              </option>
+              <option value="za">
+                Name (Z-A)
+              </option>
+            </select>
+          </div>
+        </div>
 
         
-    </main>
+          
+            <div class="category-section" id="job-tools">
+              <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="briefcase"></i>
+                Job &amp; Income
+              </h2>
+              <div class="tools-grid">
+                
+                  
+                    <a href="../en/business-tax/"
+                      class="card tool-item legacy-item mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="briefcase" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Corporate Income Tax (CIT) Calc
+                      </h3>
+                      <p>
+                        Corporate Income Tax Calculator
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/freelancer-tax/"
+                      class="card tool-item legacy-item mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="receipt" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Freelancer &amp; Business Tax
+                      </h3>
+                      <p>
+                        Calculate tax for withholding (10%) or personal business households.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/ot-calculator/"
+                      class="card tool-item legacy-item mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="clock" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Overtime Calculator
+                      </h3>
+                      <p>
+                        Calculate accurately your overtime pay based on Vietnam Labor Law
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/salary-tax-master/"
+                      class="card tool-item legacy-item mode-advanced-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="wallet" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Salary &amp; Tax Master
+                      </h3>
+                      <p>
+                        Full Salary &amp; Tax Suite
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/social-insurance/"
+                      class="card tool-item legacy-item mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="shield-plus" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Social Insurance
+                      </h3>
+                      <p>
+                        Social Insurance &amp; Pension Calculator
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/tax/"
+                      class="card tool-item  mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="banknote" style="width: 32px; height: 32px;"></i>
+                        
+                      </div>
+                      <h3>
+                        PIT Calculator
+                      </h3>
+                      <p>
+                        Calculate Personal Income Tax 2024, Net/Gross salary converter.
+                      </p>
+                    </a>
+                    
+              </div>
+            </div>
+            
+            <div class="category-section" id="finance-tools">
+              <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="line-chart"></i>
+                Finance &amp; Banking
+              </h2>
+              <div class="tools-grid">
+                
+                  
+                    <a href="../en/compound-interest/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="trending-up" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Compound Interest Calculator
+                      </h3>
+                      <p>
+                        Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/inflation-calculator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="line-chart" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Inflation Calculator (Vietnam)
+                      </h3>
+                      <p>
+                        See how much your money has lost or gained value over time.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/investment-calc/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="piggy-bank" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Investment ROI Calculator
+                      </h3>
+                      <p>
+                        Calculate your Return on Investment (ROI) and Annual Yield.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/loan-calculator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="home" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Loan Calculator
+                      </h3>
+                      <p>
+                        Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/percentage-calculator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="percent" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Percentage Calculator
+                      </h3>
+                      <p>
+                        Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/savings-interest/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="coins" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Savings Interest Calculator
+                      </h3>
+                      <p>
+                        Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.
+                      </p>
+                    </a>
+                    
+              </div>
+            </div>
+            
+            <div class="category-section" id="text-tools">
+              <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="type"></i>
+                Text Tools
+              </h2>
+              <div class="tools-grid">
+                
+                  
+                    <a href="../en/lorem-ipsum/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="pilcrow" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Lorem Ipsum Generator
+                      </h3>
+                      <p>
+                        Generate placeholder text for designs and mockups.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/text-diff/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="file-diff" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Text Diff Checker
+                      </h3>
+                      <p>
+                        Compare two texts and highlight differences (additions, deletions, changes).
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/text-formatter/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="wand-2" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Text Formatter - Clear Style
+                      </h3>
+                      <p>
+                        Remove formatting and clean up text copied from web pages.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/word-counter/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="bar-chart-3" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Word Counter &amp; Analyzer
+                      </h3>
+                      <p>
+                        Count words, analyze frequency, and convert case (Case Converter).
+                      </p>
+                    </a>
+                    
+              </div>
+            </div>
+            
+            <div class="category-section" id="generator-tools">
+              <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="wand-2"></i>
+                Generator Tools
+              </h2>
+              <div class="tools-grid">
+                
+                  
+                    <a href="../en/password-generator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="key-round" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Strong Password Generator
+                      </h3>
+                      <p>
+                        Generate secure, random passwords instantly.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/uuid-generator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="fingerprint" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        UUID Generator
+                      </h3>
+                      <p>
+                        Generate random UUIDs/GUIDs (V1, V4, V7) instantly.
+                      </p>
+                    </a>
+                    
+              </div>
+            </div>
+            
+            <div class="category-section" id="daily-tools">
+              <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="calendar"></i>
+                Daily Utilities
+              </h2>
+              <div class="tools-grid">
+                
+                  
+                    <a href="../en/bmi/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="scale" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        BMI Calculator
+                      </h3>
+                      <p>
+                        Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/bookmark-creator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="bookmark" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Bookmark Creator
+                      </h3>
+                      <p>
+                        Create a personal bookmark set for your browser with your favorite ZTools.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/date-time-master/"
+                      class="card tool-item legacy-item mode-advanced-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="calendar-clock" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Date &amp; Time Master
+                      </h3>
+                      <p>
+                        All-in-one time tool: Calculate distance, add/subtract dates, and Unix conversion.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/date-toolkit/"
+                      class="card tool-item legacy-item mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="calendar-days" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Date Toolkit
+                      </h3>
+                      <p>
+                        Calculate distance between dates, add/subtract time, and countdown.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/lunar-calendar/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="moon" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Lunar Calendar
+                      </h3>
+                      <p>
+                        Convert Solar to Lunar calendar, view Can Chi and Good Hours
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/random-toolkit/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="dices" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Random Toolkit
+                      </h3>
+                      <p>
+                        Generate random numbers, pick items from list, and roll dice.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/unit-converter/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="ruler" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Unit Converter
+                      </h3>
+                      <p>
+                        Convert length, weight, volume, area, temperature, and more.
+                      </p>
+                    </a>
+                    
+              </div>
+            </div>
+            
+            <div class="category-section" id="dev-tools">
+              <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="code"></i>
+                Dev Tools
+              </h2>
+              <div class="tools-grid">
+                
+                  
+                    <a href="../en/cron-parser/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="terminal" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Cron Expression Parser
+                      </h3>
+                      <p>
+                        Convert Cron expressions into human-readable text.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/dev-toolkit/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="code" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Developer Toolkit
+                      </h3>
+                      <p>
+                        Comprehensive toolkit for developers
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/hash-toolkit/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="lock" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Base64 &amp; Hash Toolkit
+                      </h3>
+                      <p>
+                        Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/json-toolkit/"
+                      class="card tool-item  ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="braces" style="width: 32px; height: 32px;"></i>
+                        
+                      </div>
+                      <h3>
+                        JSON Toolkit
+                      </h3>
+                      <p>
+                        Format, validate, and convert JSON. Includes Tree View and data processing tools.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/jwt-toolkit/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="key" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        JWT Debugger &amp; Decoder
+                      </h3>
+                      <p>
+                        Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/qr-generator/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        QR Code Generator
+                      </h3>
+                      <p>
+                        Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/timestamp-converter/"
+                      class="card tool-item legacy-item mode-standard-only">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="stopwatch" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        Timestamp Converter
+                      </h3>
+                      <p>
+                        Convert between Unix timestamps and human-readable dates.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/url-toolkit/"
+                      class="card tool-item legacy-item ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="link" style="width: 32px; height: 32px;"></i>
+                        
+                            <span class="legacy-badge"
+                              style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
+                            
+                      </div>
+                      <h3>
+                        URL &amp; Base64 Toolkit
+                      </h3>
+                      <p>
+                        Encode/Decode URL, Base64 and parse URL structure quickly.
+                      </p>
+                    </a>
+                    
+                  
+                    <a href="../en/web-playground/"
+                      class="card tool-item  ">
+                      <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                        <i data-lucide="monitor-play" style="width: 32px; height: 32px;"></i>
+                        
+                      </div>
+                      <h3>
+                        zTool Playground
+                      </h3>
+                      <p>
+                        Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.
+                      </p>
+                    </a>
+                    
+              </div>
+            </div>
+            
 
-    <footer class="site-footer">
+              <script src="../assets/js/home.js?h=c2d1daf9"></script>
+
+              <link rel="stylesheet" href="../assets/css/home.css?h=55ade6c9">
+
+              
+          </main>
+
+          
+            <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-col">
       <h3>
@@ -964,6 +1685,9 @@
         <li><a href="../en/terms/">
             Terms of Service
           </a></li>
+        <li><a href="../en/changelog/">
+            Versions
+          </a></li>
         <li><a href="https://github.com/ph4n4n/ztools.site-public" target="_blank" rel="noopener noreferrer"
             aria-label="View Source on GitHub">
             GitHub Source
@@ -974,14 +1698,23 @@
       <span>
         © 2025 ZTools. Built with ❤️.
       </span>
-      <span>ZTools v1.2.0</span>
+      <span>ZTools v1.4.0</span>
     </div>
   </div>
 </footer>
+              
 
-      
+                
 
-          <script src="../assets/js/global.js?h=ba6a7fc4"></script>
+                    <script src="../assets/js/global.js?h=c179bc0f"></script>
+                    <script>
+                      // Initialize Lucide icons
+                      if (window.lucide) {
+                        lucide.createIcons();
+                      }
+                    </script>
+
+                    
 </body>
 
 </html>

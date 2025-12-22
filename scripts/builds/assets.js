@@ -153,6 +153,11 @@ async function buildAssets() {
       }
     }
   }
+
+  // 4. Special: Building Playground Examples from folders
+  const { buildPlaygroundExamples } = require('./playground-examples');
+  await buildPlaygroundExamples();
+
   console.timeEnd('🎨 Assets Build');
 }
 

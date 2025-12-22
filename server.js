@@ -59,7 +59,7 @@ app.post('/api/features/:id', (req, res) => {
     console.log(`📝 Updated config for ${id}`);
 
     console.log('🔄 Triggering rebuild...');
-    exec('node build.js', (error, stdout, stderr) => {
+    exec('node scripts/build.js', (error, stdout, stderr) => {
       if (error) console.error(`Build error: ${error}`);
       else console.log(`✅ Build complete`);
     });
@@ -95,7 +95,7 @@ app.post('/api/global', (req, res) => {
     console.log(`📝 Updated Global Config`);
 
     console.log('🔄 Triggering rebuild...');
-    exec('node build.js', (error, stdout, stderr) => {
+    exec('node scripts/build.js', (error, stdout, stderr) => {
       if (error) console.error(`Build error: ${error}`);
       else console.log(`✅ Build complete`);
     });

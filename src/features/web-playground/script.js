@@ -13,6 +13,178 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleSidebarBtn = document.getElementById('toggle-sidebar');
   const examplesList = document.getElementById('examples-list');
 
+  // Layout & Resizing
+  const editorsSplit = document.getElementById('editors-split');
+  const previewArea = document.getElementById('preview-area');
+  const btnMaximizePreview = document.getElementById('btn-maximize-preview');
+  const btnPopout = document.getElementById('btn-popout');
+  const resizerV = document.getElementById('resizer-v');
+  const resizerH1 = document.getElementById('resizer-h1');
+  const resizerH2 = document.getElementById('resizer-h2');
+  const paneHtml = document.getElementById('pane-html');
+  const paneJs = document.getElementById('pane-js');
+  const paneCss = document.getElementById('pane-css');
+
+  // Utility to refresh monaco layout
+  const refreshLayout = () => {
+    if (editorHtml) editorHtml.layout();
+    if (editorCss) editorCss.layout();
+    if (editorJs) editorJs.layout();
+  };
+
+  // --- VERTICAL RESIZING ---
+  let isResizingV = false;
+  resizerV.addEventListener('mousedown', (e) => {
+    isResizingV = true;
+    resizerV.classList.add('active');
+    document.body.classList.add('resizing');
+    document.body.style.cursor = 'row-resize';
+  });
+
+  // --- HORIZONTAL RESIZING ---
+  let isResizingH1 = false;
+  let isResizingH2 = false;
+
+  resizerH1.addEventListener('mousedown', () => {
+    isResizingH1 = true;
+    resizerH1.classList.add('active');
+    document.body.classList.add('resizing');
+    document.body.style.cursor = 'col-resize';
+  });
+  resizerH2.addEventListener('mousedown', () => {
+    isResizingH2 = true;
+    resizerH2.classList.add('active');
+    document.body.classList.add('resizing');
+    document.body.style.cursor = 'col-resize';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isResizingV) {
+      const containerRect = document.getElementById('work-area').getBoundingClientRect();
+      const relativeY = e.clientY - containerRect.top;
+      const percentage = (relativeY / containerRect.height) * 100;
+      if (percentage > 5 && percentage < 95) {
+        editorsSplit.style.flex = 'none';
+        previewArea.style.flex = 'none';
+        editorsSplit.style.height = `${percentage}%`;
+        previewArea.style.height = `${100 - percentage}%`;
+        refreshLayout();
+      }
+    }
+
+    if (isResizingH1 || isResizingH2) {
+      const splitRect = editorsSplit.getBoundingClientRect();
+      const relativeX = e.clientX - splitRect.left;
+      const totalWidth = splitRect.width;
+
+      if (isResizingH1) {
+        const p1 = (relativeX / totalWidth) * 100;
+        if (p1 > 2 && p1 < 90) {
+          paneHtml.style.flex = `0 0 ${p1}%`;
+          refreshLayout();
+        }
+      } else if (isResizingH2) {
+        // Find HTML width first
+        const htmlRect = paneHtml.getBoundingClientRect();
+        const p1 = (htmlRect.width / totalWidth) * 100;
+        const p2 = ((relativeX / totalWidth) * 100) - p1;
+
+        if (p2 > 2 && (p1 + p2) < 98) {
+          paneJs.style.flex = `0 0 ${p2}%`;
+          refreshLayout();
+        }
+      }
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isResizingV || isResizingH1 || isResizingH2) {
+      isResizingV = false;
+      isResizingH1 = false;
+      isResizingH2 = false;
+      resizerV.classList.remove('active');
+      resizerH1.classList.remove('active');
+      resizerH2.classList.remove('active');
+      document.body.classList.remove('resizing');
+      document.body.style.cursor = 'default';
+      refreshLayout();
+    }
+  });
+
+  // Popout Preview
+  if (btnPopout) {
+    btnPopout.addEventListener('click', () => {
+      const html = editorHtml ? editorHtml.getValue() : '';
+      const css = editorCss ? editorCss.getValue() : '';
+      const js = editorJs ? editorJs.getValue() : '';
+
+      let finalContent = html;
+      if (!finalContent.includes('<html>')) {
+        finalContent = `<!DOCTYPE html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`;
+      } else {
+        finalContent = finalContent.replace('</head>', `<style>${css}</style></head>`);
+        finalContent = finalContent.replace('</body>', `<script>${js}<\/script></body>`);
+      }
+
+      const win = window.open();
+      win.document.write(finalContent);
+      win.document.close();
+    });
+  }
+
+  // Pane Toggling Logic
+  const panes = [paneHtml, paneJs, paneCss];
+  panes.forEach(pane => {
+    const header = pane.querySelector('.pane-header');
+    header.addEventListener('click', (e) => {
+      // Don't toggle if clicking a button inside header
+      if (e.target.closest('button')) return;
+
+      togglePane(pane);
+    });
+
+    const toggleBtn = pane.querySelector('.btn-pane-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        togglePane(pane);
+      });
+    }
+  });
+
+  function togglePane(pane) {
+    const isMinimized = pane.classList.toggle('minimized');
+    pane.classList.toggle('active');
+
+    // Update icon
+    const toggleBtn = pane.querySelector('.btn-pane-toggle');
+    if (toggleBtn) {
+      toggleBtn.innerHTML = isMinimized ? '<i data-lucide="plus"></i>' : '<i data-lucide="minus"></i>';
+      if (window.lucide) lucide.createIcons();
+    }
+
+    refreshLayout();
+  }
+
+  if (btnMaximizePreview) {
+    btnMaximizePreview.addEventListener('click', () => {
+      const isMax = editorsSplit.style.display === 'none';
+      if (isMax) {
+        editorsSplit.style.display = 'flex';
+        resizerV.style.display = 'block';
+        previewArea.style.height = '50%';
+        btnMaximizePreview.innerHTML = '<i data-lucide="maximize" style="width: 14px; height: 14px;"></i>';
+      } else {
+        editorsSplit.style.display = 'none';
+        resizerV.style.display = 'none';
+        previewArea.style.height = '100%';
+        btnMaximizePreview.innerHTML = '<i data-lucide="minimize-2" style="width: 14px; height: 14px;"></i>';
+      }
+      if (window.lucide) lucide.createIcons();
+      refreshLayout();
+    });
+  }
+
   // Initialize Sidebar Buttons
   if (examplesList && window.PLAYGROUND_EXAMPLES) {
     window.PLAYGROUND_EXAMPLES.forEach(ex => {
@@ -27,14 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (toggleSidebarBtn && sidebar) {
     toggleSidebarBtn.addEventListener('click', () => {
       sidebar.classList.toggle('collapsed');
+      setTimeout(refreshLayout, 310);
     });
-
-    // Mobile auto-collapse logic if needed
   }
 
   function loadExample(ex) {
-    // Confirm only if user has modified code (basic check can be added later)
-    // For now, simple confirm
     if (confirm(`Load example "${ex.title}"?\nYour current code will be replaced.`)) {
       if (editorHtml) editorHtml.setValue(ex.html);
       if (editorCss) editorCss.setValue(ex.css);
@@ -54,38 +223,44 @@ document.addEventListener('DOMContentLoaded', () => {
   <meta charset="UTF-8">
   <title>ZTools Playground</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    h1 { color: #0891b2; }
+    body { font-family: sans-serif; padding: 20px; color: #333; height: 100vh; margin:0; display:flex; align-items:center; justify-content:center; background: #f0f2f5; }
+    .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align:center; max-width: 400px; }
+    h1 { color: #0891b2; margin-top:0; }
   </style>
 </head>
 <body>
-  <h1>Hello World, Welcome to your ZTools Playground 👋</h1>
-  <p>Start coding with auto-complete!</p>
-  <button id="click-me">Click Me</button>
-  
-  <div id="result"></div>
+  <div class="card">
+    <h1>ZTools Playground</h1>
+    <p>Now with <b>Resizability</b> and better <b>Pane Share</b>!</p>
+    <button id="click-me">Click Me</button>
+    <div id="result" style="margin-top: 20px; font-weight: bold; color: #0891b2;"></div>
+  </div>
 </body>
 </html>`;
 
-  const defaultCss = `/* Custom Styles */
+  const defaultCss = `/* Styles */
 button {
-  padding: 8px 16px;
+  padding: 12px 24px;
   background: #0891b2;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
 button:hover {
   background: #0e7490;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(8, 145, 178, 0.3);
 }`;
 
-  const defaultJs = `// JavaScript Logic
+  const defaultJs = `// JS Logic
 document.getElementById('click-me').addEventListener('click', () => {
   const result = document.getElementById('result');
-  result.innerHTML = '<p>✨ Button clicked at ' + new Date().toLocaleTimeString() + '</p>';
-  console.log('Button was clicked!');
+  result.innerHTML = '✨ Sparkle! ' + new Date().toLocaleTimeString();
+  console.log('Action logged at: ' + new Date().toISOString());
 });`;
 
   let editorHtml, editorCss, editorJs;
@@ -112,7 +287,8 @@ document.getElementById('click-me').addEventListener('click', () => {
       fontSize: 14,
       padding: { top: 10 },
       automaticLayout: true,
-      tabSize: 2
+      tabSize: 2,
+      fontFamily: 'Monaco, monospace'
     };
 
     // Check URL for shared data
@@ -123,35 +299,52 @@ document.getElementById('click-me').addEventListener('click', () => {
     const hash = window.location.hash;
     if (hash && hash.startsWith('#code=')) {
       try {
-        const encoded = hash.substring(6); // Remove #code=
+        const encoded = hash.substring(6);
         const decompressed = LZString.decompressFromEncodedURIComponent(encoded);
         if (decompressed) {
           const data = JSON.parse(decompressed);
           initialHtml = data.html || '';
           initialCss = data.css || '';
           initialJs = data.js || '';
-          console.log('✅ Loaded shared code from URL');
+
+          // Apply active states if provided
+          if (data.active) {
+            const activeIds = data.active.split(',');
+            activeIds.forEach(id => {
+              const el = document.getElementById(`pane-${id}`);
+              if (el) {
+                el.classList.add('active');
+                el.classList.remove('minimized');
+              }
+            });
+            // Minimize others
+            ['html', 'css', 'js'].forEach(id => {
+              if (!activeIds.includes(id)) {
+                const el = document.getElementById(`pane-${id}`);
+                if (el) {
+                  el.classList.add('minimized');
+                  el.classList.remove('active');
+                }
+              }
+            });
+          }
         }
-      } catch (e) {
-        console.error('Failed to load code from URL', e);
-      }
+      } catch (e) { }
     }
 
-    // Init HTML Editor
+    // Init Editors
     editorHtml = monaco.editor.create(document.getElementById('monaco-html'), {
       ...editorOptions,
       value: initialHtml,
       language: 'html'
     });
 
-    // Init CSS Editor
     editorCss = monaco.editor.create(document.getElementById('monaco-css'), {
       ...editorOptions,
       value: initialCss,
       language: 'css'
     });
 
-    // Init JS Editor
     editorJs = monaco.editor.create(document.getElementById('monaco-js'), {
       ...editorOptions,
       value: initialJs,
@@ -160,10 +353,9 @@ document.getElementById('click-me').addEventListener('click', () => {
 
     // Hook Change Events for Auto-Run
     const handleChange = () => {
-      // Store simple state in localStorage if desired (Phase 5 enhancement), for now just auto-run
       if (autoRunToggle.checked) {
         clearTimeout(autoRunTimer);
-        autoRunTimer = setTimeout(updatePreview, 1000); // Debounce 1s
+        autoRunTimer = setTimeout(updatePreview, 1000);
       }
     };
 
@@ -199,10 +391,16 @@ document.getElementById('click-me').addEventListener('click', () => {
     shareBtn.addEventListener('click', () => {
       if (!editorHtml || !editorCss || !editorJs) return;
 
+      const activePanes = [];
+      if (!paneHtml.classList.contains('minimized')) activePanes.push('html');
+      if (!paneJs.classList.contains('minimized')) activePanes.push('js');
+      if (!paneCss.classList.contains('minimized')) activePanes.push('css');
+
       const data = {
         html: editorHtml.getValue(),
         css: editorCss.getValue(),
-        js: editorJs.getValue()
+        js: editorJs.getValue(),
+        active: activePanes.join(',')
       };
 
       try {
@@ -216,11 +414,8 @@ document.getElementById('click-me').addEventListener('click', () => {
           setTimeout(() => shareBtn.innerText = originalText, 2000);
         });
 
-        // Also update URL bar without reload
         window.history.replaceState(null, null, `#code=${compressed}`);
-
       } catch (e) {
-        console.error('Share failed', e);
         alert('Sharing failed. Code might be too large.');
       }
     });
@@ -242,13 +437,14 @@ document.getElementById('click-me').addEventListener('click', () => {
   function addLog(type, args) {
     const div = document.createElement('div');
     div.className = `log-entry log-${type}`;
+    div.style.color = type === 'error' ? '#ff5f56' : (type === 'warn' ? '#ffbd2e' : '#888');
 
     const text = args.map(arg => {
       if (typeof arg === 'object') return JSON.stringify(arg);
       return String(arg);
     }).join(' ');
 
-    div.textContent = `[${type}] ${text}`;
+    div.textContent = `> ${text}`;
     consoleLogs.appendChild(div);
     consoleLogs.scrollTop = consoleLogs.scrollHeight;
   }
@@ -260,7 +456,6 @@ document.getElementById('click-me').addEventListener('click', () => {
     const css = editorCss.getValue();
     const js = editorJs.getValue();
 
-    // Prepare Console Hijack Script
     const consoleProxyScript = `
             <script>
                 (function(){
@@ -287,34 +482,28 @@ document.getElementById('click-me').addEventListener('click', () => {
             <\/script>
         `;
 
-    // Simple logic for examples without full HTML structure
     let finalHtml = html;
     if (!finalHtml.includes('<html>')) {
-      finalHtml = `<html><body>${html}</body></html>`; // Wrap simple fragments
-    }
-
-    // Inject CSS
-    if (finalHtml.includes('</head>')) {
-      finalHtml = finalHtml.replace('</head>', `<style>${css}</style>${consoleProxyScript}</head>`);
+      finalHtml = `<html><head><style>${css}</style>${consoleProxyScript}</head><body>${html}<script>${js}<\/script></body></html>`;
     } else {
-      // Lazy fallback
-      finalHtml += `<style>${css}</style>${consoleProxyScript}`;
-    }
+      if (finalHtml.includes('</head>')) {
+        finalHtml = finalHtml.replace('</head>', `<style>${css}</style>${consoleProxyScript}</head>`);
+      } else {
+        finalHtml = finalHtml.replace('<html>', `<html><head><style>${css}</style>${consoleProxyScript}</head>`);
+      }
 
-    // Inject JS (Safe wrap)
-    if (finalHtml.includes('</body>')) {
-      finalHtml = finalHtml.replace('</body>', `<script>${js}<\/script></body>`);
-    } else {
-      finalHtml += `<script>${js}<\/script>`;
+      if (finalHtml.includes('</body>')) {
+        finalHtml = finalHtml.replace('</body>', `<script>${js}<\/script></body>`);
+      } else {
+        finalHtml = finalHtml.replace('</html>', `<script>${js}<\/script></html>`);
+      }
     }
 
     const blob = new Blob([finalHtml], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
-
     iframe.src = url;
   }
 
-  // Listen for messages from iframe console
   window.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'console') {
       addLog(event.data.level, event.data.args);

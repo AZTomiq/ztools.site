@@ -7,18 +7,18 @@ slug: making-of-playground
 relatedTool: web-playground
 ---
 
-<p>Tôi luôn muốn có một nơi để test nhanh ý tưởng HTML/CSS/JS mà không cần mở VS Code, tạo file, setup server. Codepen hay JSFiddle rất tuyệt, nhưng chúng quá nặng nề cho nhu cầu "mì ăn liền". Và quan trọng hơn: <strong>Tôi muốn sở hữu nó.</strong></p>
+<p>Tôi luôn muốn có một nơi để test nhanh ý tưởng HTML/CSS/JS mà không cần mở VS Code, không cần tạo file, không cần setup server. Dùng Codepen hay JSFiddle rất tuyệt, nhưng chúng quá nặng nề cho nhu cầu "mì ăn liền". Và quan trọng hơn: <strong>Tôi muốn sở hữu nó, tôi muốn có 1 cách riêng mới lại để share short demo ấn tượng mang đầy dấu ấn cá nhân.</strong></p>
 
 <img src="https://i.imgur.com/placeholer-playground.png" alt="Playground Preview" style="background:#333; height: 300px; display:flex; align-items:center; justify-content:center; color:#666;" />
 
 <h2>Thách thức 1: Editor xịn trên Web</h2>
-<p>Dùng <code>textarea</code> thì quá "phèn". Tôi cần syntax highlighting, auto-complete. Giải pháp là <strong>Monaco Editor</strong> - trái tim của VS Code. Tuy nhiên, việc tích hợp Monaco vào môi trường không có Bundler (như Project SSG này) là một cơn ác mộng nhỏ với việc load cái file Worker. Tôi đã phải dùng mánh load qua CDN và cấu hình <code>require.config</code> thủ công.</p>
+<p>Dùng <code>textarea</code> thì quá "phèn". Tôi cần syntax highlighting, auto-complete. Giải pháp là <strong>Monaco Editor</strong> - trái tim của VS Code. Tuy nhiên, việc tích hợp Monaco vào môi trường SSG (Static Site Generator) là một cơn ác mộng nhỏ với việc load cái file Worker. Tôi đã phải dùng mánh load qua CDN và cấu hình <code>require.config</code> thủ công.</p>
 
 <h2>Thách thức 2: Chạy code an toàn</h2>
 <p>Cho user chạy code JS ngay trên browser của mình là rủi ro bảo mật lớn. Giải pháp? <strong>Iframe Sandbox</strong>. Chúng ta tạo một iframe, ném code vào <code>srcdoc</code>, và cô lập nó bằng thuộc tính <code>sandbox="allow-scripts"</code>. Nó giống như nhốt con hổ vào lồng kính vậy.</p>
 
-<h2>Thách thức 3: Chia sẻ không cần Database (The Coolest Part) 😎</h2>
-<p>Đây là phần tôi tâm đắc nhất. Làm sao để bạn code xong, bấm Share, gửi link cho bạn bè mà server của tôi không tốn 1 byte lưu trữ?</p>
+<h2>Thách thức 3: Chia sẻ không cần Database (Đây là phần tôi tâm đắc nhất) 😎</h2>
+<p>Làm sao để bạn code xong, bấm Share, gửi link cho bạn bè mà server của tôi không tốn 1 byte lưu trữ?</p>
 
 <p>Câu trả lời là: <strong>URL Hash & LZ-String</strong>.</p>
 

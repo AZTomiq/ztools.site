@@ -1,6 +1,6 @@
 id: bookmark-creator
 category: daily
-icon: 🔖
+icon: bookmark
 translationKey: bookmarkCreator
 status: not-ready
 link: /bookmark-creator/

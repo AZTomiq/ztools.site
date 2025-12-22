@@ -1,6 +1,6 @@
 id: social-insurance
 category: job
-icon: 🏥
+icon: shield-plus
 translationKey: social_insurance
 descOverride: Social Insurance & Pension Calculator
 status: not-ready

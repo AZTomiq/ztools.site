@@ -1,6 +1,6 @@
 id: unit-converter
 category: daily
-icon: 📏
+icon: ruler
 translationKey: unit_converter
 status: not-ready
 link: /unit-converter/

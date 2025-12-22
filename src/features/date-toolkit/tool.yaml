@@ -1,7 +1,7 @@
 id: date-toolkit
 titleKey: dateToolkit.title
 description: Công cụ tính toán ngày tháng, cộng trừ ngày và tính khoảng cách thời gian.
-icon: 📅
+icon: calendar-days
 category: daily
 status: not-ready
 translationKey: dateToolkit

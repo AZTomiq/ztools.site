@@ -3,7 +3,7 @@ titleKey: cronParser.title
 description: >-
   Phân tích biểu thức Cron sang ngôn ngữ tự nhiên và kiểm tra thời gian thực
   thi.
-icon: ⏰
+icon: terminal
 category: dev
 status: not-ready
 translationKey: cronParser

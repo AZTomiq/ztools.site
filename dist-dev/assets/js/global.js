@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Update button icon based on current theme
   const updateIcon = (theme) => {
-    toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    const iconName = theme === 'dark' ? 'sun' : 'moon';
+    toggleBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
+    if (window.lucide) lucide.createIcons();
   };
 
   updateIcon(htmlEl.getAttribute('data-theme'));
@@ -166,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchResults.innerHTML = filtered.map((tool, index) => `
       <a href="${tool.link}" class="search-result-item ${index === 0 ? 'selected' : ''}" data-index="${index}">
-        <div class="result-icon">${tool.icon}</div>
+        <div class="result-icon"><i data-lucide="${tool.icon}"></i></div>
         <div class="result-info">
           <span class="result-title">${tool.title}</span>
           <span class="result-desc">${tool.desc}</span>
@@ -174,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="result-cat">${tool.category}</span>
       </a>
     `).join('');
+
+    if (window.lucide) lucide.createIcons();
 
     // Handle Keyboard Navigation within results
     setupResultNavigation();

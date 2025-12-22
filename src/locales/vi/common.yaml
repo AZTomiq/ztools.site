@@ -7,6 +7,8 @@ privacy:
   title: Chính Sách Bảo Mật
 terms:
   title: Điều Khoản Sử Dụng
+changelog:
+  title: Nhật Ký Thay Đổi
 common:
   legacy_title: Phiên bản cũ
   legacy_desc: Công cụ này đã được tích hợp vào bộ siêu công cụ Master mới.
@@ -23,7 +25,8 @@ nav:
   menu_text: Công cụ Văn bản
   menu_generator: Tạo mã (Generators)
   menu_categories: Danh mục
-  menu_dev: Dev Tools
+  menu_dev: Công cụ Lập trình
+  blog: Dev ký sự
   search_placeholder: Tìm kiếm công cụ... (Ctrl + K)
   search_no_results: Không tìm thấy kết quả cho
   search_title: Tìm kiếm công cụ
@@ -83,6 +86,7 @@ footer:
   intro: Giới thiệu
   policy: Chính sách
   terms: Điều khoản
+  changelog: Nhật ký cập nhật
   copyright: © 2025 ZTools. Built with ❤️.
 
 # Master Tools Translations

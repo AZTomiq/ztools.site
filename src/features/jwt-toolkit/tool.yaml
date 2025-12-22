@@ -1,6 +1,6 @@
 id: jwt-toolkit
 link: /jwt-toolkit/
-icon: 🔑
+icon: key
 category: dev
 status: not-ready
 translationKey: jwt

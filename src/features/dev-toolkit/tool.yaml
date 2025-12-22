@@ -3,7 +3,7 @@ titleKey: devToolkit.title
 description: >-
   Bộ công cụ lập trình toàn diện: JSON Formatter, Hash, Base64, URL
   Encoder/Decoder và Cron Parser.
-icon: 👾
+icon: code
 category: dev
 status: not-ready
 translationKey: devToolkit

@@ -35,24 +35,30 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="<%= asset('assets/css/global.css') %>">
-  <link rel="icon" type="image/png"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-  <link rel="manifest" href="<%= rootPath %>manifest.json">
+  <% if (toolConfig && toolConfig._assets && toolConfig._assets.css) { %>
+    <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+    <% } %>
+      <link rel="icon" type="image/png"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+      <link rel="manifest" href="<%= rootPath %>manifest.json">
 
-  <script src="<%= asset('assets/js/user-mode.js') %>"></script>
+      <!-- Lucide Icons Library -->
+      <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Dark Mode Script (Blocking) -->
-  <script>
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  </script>
+      <script src="<%= asset('assets/js/user-mode.js') %>"></script>
 
-  <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+      <!-- Dark Mode Script (Blocking) -->
+      <script>
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      </script>
+
+      <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
   <script>
     window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
   </script>
   <script defer src="/_vercel/analytics/script.js"></script>
   -->
 
-  <!-- Schema.org Structured Data -->
-  <%- include('schema.ejs') %>
+      <!-- Schema.org Structured Data -->
+      <%- include('schema.ejs') %>

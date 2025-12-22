@@ -1,0 +1,71 @@
+<div class="dropdown-menu mega-menu">
+  <div class="mega-menu-top">
+    <a href="<%= rootPath %><%= locale %>/" class="mega-home-link <%= pageUrl === '' ? 'active' : '' %>">
+      <span class="icon"><i data-lucide="home"></i></span>
+      <%= t('nav.home') %>
+    </a>
+    <a href="<%= rootPath %><%= locale %>/categories/"
+      class="mega-home-link <%= pageUrl === 'categories/' ? 'active' : '' %>">
+      <span class="icon"><i data-lucide="folder-kanban"></i></span>
+      <%= t('nav.menu_categories') %>
+    </a>
+    <a href="<%= rootPath %><%= locale %>/blog/" class="mega-home-link <%= pageUrl === 'blog/' ? 'active' : '' %>">
+      <span class="icon"><i data-lucide="pen-tool"></i></span>
+      <%= t('nav.blog') || 'Blog' %>
+    </a>
+    <a href="<%= rootPath %><%= locale %>/bookmark-creator/"
+      class="mega-home-link <%= pageUrl === 'bookmark-creator/' ? 'active' : '' %>">
+      <span class="icon"><i data-lucide="star"></i></span>
+      <%= t('bookmarkCreator.title') || 'Bookmarks' %>
+    </a>
+  </div>
+  <% const catOrder=['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const catMap={ 'job' : { title:
+    t('home.cats.job.title') || 'Job & Income' , icon: 'briefcase' }, 'finance' : { title: t('home.cats.finance.title')
+    || 'Finance' , icon: 'line-chart' }, 'text' : { title: t('home.cats.text.title') || 'Text Tools' , icon: 'type'
+    }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: 'wand-2' }, 'daily' : { title:
+    t('home.cats.daily.title') || 'Daily Utilities' , icon: 'calendar' }, 'dev' : { title: t('home.cats.dev.title')
+    || 'Dev Tools' , icon: 'code' } }; %>
+
+    <% catOrder.forEach(catId=> {
+      // Filter tools for this category, including legacy ones that might still be valid for Standard mode
+      const catTools = tools.filter(t => t.category === catId && (t.status === 'active' || t.status ===
+      'legacy' || t.status === 'not-ready'));
+      if (catTools.length === 0) return;
+      %>
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="<%= catMap[catId].icon %>"></i>
+            </span>
+            <%= catMap[catId].title %>
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          <% catTools.forEach(tool=> {
+            let modeClass = '';
+            if (tool.mode === 'standard') modeClass = 'mode-standard-only';
+            else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
+            %>
+            <% const isToolActive=pageUrl===tool.link.substring(1); %>
+              <a href="<%= rootPath %><%= locale %><%= tool.link %>"
+                class="mega-link <%= modeClass %> <%= isToolActive ? 'active' : '' %>">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="<%= tool.icon %>"></i>
+                </span>
+                <span class="link-text">
+                  <%= t(tool.translationKey + '.title' ) %>
+                    <% if (tool.status==='not-ready' ) { %>
+                      <span class="menu-badge beta">BETA</span>
+                      <% } else if (tool.highlight) { %>
+                        <span class="menu-badge hot">HOT</span>
+                        <% } %>
+                </span>
+              </a>
+              <% }); %>
+        </div>
+      </div>
+      <% }); %>
+</div>

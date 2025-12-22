@@ -1,6 +1,6 @@
 id: timestamp-converter
 category: dev
-icon: ⏳
+icon: stopwatch
 translationKey: timestamp_converter
 status: not-ready
 link: /timestamp-converter/

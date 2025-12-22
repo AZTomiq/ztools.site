@@ -3,7 +3,7 @@ titleKey: dateTimeMaster.title
 description: >-
   Bộ công cụ toàn diện về thời gian: Tính khoảng cách ngày, cộng trừ thời gian
   và chuyển đổi Timestamp.
-icon: 🗓️
+icon: calendar-clock
 category: daily
 status: not-ready
 translationKey: dateTimeMaster

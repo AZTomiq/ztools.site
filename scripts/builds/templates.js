@@ -45,7 +45,8 @@ async function buildTemplates() {
         t: (key) => key, // Dummy t function if needed or load default locale
         blogPosts: blogPosts || [],
         toolsMap,
-        categories
+        categories,
+        isDev: require('./config').isDev
       };
 
       const rendered = ejs.render(templateContent, data, {

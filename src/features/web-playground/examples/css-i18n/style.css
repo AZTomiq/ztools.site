@@ -1,73 +1,59 @@
 /* Dictionary Definitions using CSS Variables */
 :root {
-  --txt-hello: "Hello World";
-  --txt-desc: "Welcome to our website.";
-  --txt-cta: "Get Started";
+--txt-hello: "Hello World";
+--txt-desc: "Welcome to our website.";
+--txt-cta: "Get Started";
 }
 
 /* Vietnamese Overrides */
 :lang(vi) {
-  --txt-hello: "Xin Chào";
-  --txt-desc: "Chào mừng đến với website của chúng tôi.";
-  --txt-cta: "Bắt Đầu Ngay";
+--txt-hello: "Xin Chào";
+--txt-desc: "Chào mừng đến với website của chúng tôi.";
+--txt-cta: "Bắt Đầu Ngay";
 }
 
 /* Japanese Overrides */
 :lang(jp) {
-  --txt-hello: "こんにちは";
-  --txt-desc: "私たちのウェブサイトへようこそ。";
-  --txt-cta: "始めましょう";
+--txt-hello: "こんにちは";
+--txt-desc: "私たちのウェブサイトへようこそ。";
+--txt-cta: "始めましょう";
 }
 
 /* Applying Content */
-.greeting::before {
-  content: var(--txt-hello);
-}
-
-.description::before {
-  content: var(--txt-desc);
-}
-
-.cta::before {
-  content: var(--txt-cta);
-}
+.greeting::before { content: var(--txt-hello); }
+.description::before { content: var(--txt-desc); }
+.cta::before { content: var(--txt-cta); }
 
 /* Basic Styling */
 body {
-  font-family: sans-serif;
-  background: #f0f4f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+font-family: sans-serif;
+background: #f0f4f8;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 }
-
 .card {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+background: white;
+padding: 2rem;
+border-radius: 12px;
+text-align: center;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
-.lang-switch {
-  margin-bottom: 2rem;
-}
-
+.lang-switch { margin-bottom: 2rem; }
 button {
-  cursor: pointer;
-  padding: 5px 10px;
-  margin: 0 5px;
-  border: 1px solid #ddd;
-  background: white;
-  border-radius: 4px;
+cursor: pointer;
+padding: 5px 10px;
+margin: 0 5px;
+border: 1px solid #ddd;
+background: white;
+border-radius: 4px;
 }
-
 .cta {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-weight: bold;
-  margin-top: 1rem;
+background: #2563eb;
+color: white;
+border: none;
+padding: 10px 20px;
+font-weight: bold;
+margin-top: 1rem;
 }

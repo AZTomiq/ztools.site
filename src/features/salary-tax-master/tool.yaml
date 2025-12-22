@@ -3,7 +3,8 @@ titleKey: salaryTaxMaster.title
 description: >-
   Tính thuế TNCN, TNDN, bảo hiểm xã hội và lương tăng ca trong một ứng dụng duy
   nhất.
-icon: 💸
+icon: wallet
+highlight: true
 category: job
 status: not-ready
 translationKey: salaryTaxMaster

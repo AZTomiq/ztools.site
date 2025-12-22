@@ -38,28 +38,34 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../assets/css/global.css?h=01d42843">
-  <link rel="icon" type="image/png"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
-  <link rel="manifest" href="../../manifest.json">
+  <link rel="stylesheet" href="../../assets/css/global.css?h=70434131">
+  
+    <link rel="stylesheet" href="../../assets/features/cron-parser/style.css?h=3ae61bdd">
+    
+      <link rel="icon" type="image/png"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+      <link rel="manifest" href="../../manifest.json">
 
-  <script src="../../assets/js/user-mode.js?h=e15180be"></script>
+      <!-- Lucide Icons Library -->
+      <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Dark Mode Script (Blocking) -->
-  <script>
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  </script>
+      <script src="../../assets/js/user-mode.js?h=e15180be"></script>
 
-  <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+      <!-- Dark Mode Script (Blocking) -->
+      <script>
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      </script>
+
+      <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
   <script>
     window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
   </script>
   <script defer src="/_vercel/analytics/script.js"></script>
   -->
 
-  <!-- Schema.org Structured Data -->
-  
+      <!-- Schema.org Structured Data -->
+      
 
   <script type="application/ld+json">
 [
@@ -117,13 +123,14 @@
 </head>
 
 <body>
-  <header class="site-header">
+  
+      <header class="site-header">
   <div class="header-inner container">
     <div class="nav-item logo-wrapper">
       <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
         aria-label="Tool categories menu"
         style="background: none; border: none; padding: 0; cursor: pointer;">
-        <span class="logo-icon" aria-hidden="true">🧰</span>
+        <span class="logo-icon" aria-hidden="true"><i data-lucide="layout-grid"></i></span>
         <span class="logo-text">ZTools</span>
         
           <span class="logo-sub hide-mobile">
@@ -135,109 +142,626 @@
       <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
         <a href="../../en/bookmark-creator/" class="nav-link-prominent"
           style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon">⭐</span>
+          <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
           Bookmark Creator
         </a>
       </div>
 
       <div class="dropdown-menu mega-menu">
-        <div class="mega-menu-top">
-          <a href="../../en/" class="mega-home-link">
-            <span class="icon">🏠</span>
-            Home
-          </a>
-          <a href="../../en/categories/" class="mega-home-link">
-            <span class="icon">🗂️</span>
-            Categories
-          </a>
-          <a href="../../en/blog/" class="mega-home-link">
-            <span class="icon">✍️</span>
-            nav.blog
-          </a>
-          <a href="../../en/bookmark-creator/" class="mega-home-link">
-            <span class="icon">⭐</span>
-            Bookmark Creator
-          </a>
-        </div>
-        
+  <div class="mega-menu-top">
+    <a href="../../en/" class="mega-home-link ">
+      <span class="icon"><i data-lucide="home"></i></span>
+      Home
+    </a>
+    <a href="../../en/categories/"
+      class="mega-home-link ">
+      <span class="icon"><i data-lucide="folder-kanban"></i></span>
+      Categories
+    </a>
+    <a href="../../en/blog/" class="mega-home-link ">
+      <span class="icon"><i data-lucide="pen-tool"></i></span>
+      Dev Blog
+    </a>
+    <a href="../../en/bookmark-creator/"
+      class="mega-home-link ">
+      <span class="icon"><i data-lucide="star"></i></span>
+      Bookmark Creator
+    </a>
+  </div>
+  
 
+    
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="briefcase"></i>
+            </span>
+            Job &amp; Income
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
           
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    💼
-                  </span>
-                  Job &amp; Income
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../../en/tax/" class="mega-link mode-standard-only">
-                    <span class="link-icon" aria-hidden="true">
-                      💸
-                    </span>
-                    <span class="link-text">
-                      PIT Calculator
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
             
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    👾
-                  </span>
-                  Dev Tools
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../../en/json-toolkit/" class="mega-link ">
-                    <span class="link-icon" aria-hidden="true">
-                      💻
-                    </span>
-                    <span class="link-text">
-                      JSON Toolkit
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/web-playground/" class="mega-link ">
-                    <span class="link-icon" aria-hidden="true">
-                      👨‍💻
-                    </span>
-                    <span class="link-text">
-                      zTool Playground
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
+              <a href="../../en/business-tax/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="briefcase"></i>
+                </span>
+                <span class="link-text">
+                  Corporate Income Tax (CIT) Calc
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
             
+              <a href="../../en/freelancer-tax/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="receipt"></i>
+                </span>
+                <span class="link-text">
+                  Freelancer &amp; Business Tax
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/ot-calculator/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="clock"></i>
+                </span>
+                <span class="link-text">
+                  Overtime Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/salary-tax-master/"
+                class="mega-link mode-advanced-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="wallet"></i>
+                </span>
+                <span class="link-text">
+                  Salary &amp; Tax Master
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/social-insurance/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="shield-plus"></i>
+                </span>
+                <span class="link-text">
+                  Social Insurance
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/tax/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="banknote"></i>
+                </span>
+                <span class="link-text">
+                  PIT Calculator
+                    
+                        <span class="menu-badge hot">HOT</span>
+                        
+                </span>
+              </a>
+              
+        </div>
       </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="line-chart"></i>
+            </span>
+            Finance &amp; Banking
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../../en/compound-interest/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="trending-up"></i>
+                </span>
+                <span class="link-text">
+                  Compound Interest Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/inflation-calculator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="line-chart"></i>
+                </span>
+                <span class="link-text">
+                  Inflation Calculator (Vietnam)
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/investment-calc/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="piggy-bank"></i>
+                </span>
+                <span class="link-text">
+                  Investment ROI Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/loan-calculator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="home"></i>
+                </span>
+                <span class="link-text">
+                  Loan Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/percentage-calculator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="percent"></i>
+                </span>
+                <span class="link-text">
+                  Percentage Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/savings-interest/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="coins"></i>
+                </span>
+                <span class="link-text">
+                  Savings Interest Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="type"></i>
+            </span>
+            Text Tools
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../../en/lorem-ipsum/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="pilcrow"></i>
+                </span>
+                <span class="link-text">
+                  Lorem Ipsum Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/text-diff/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="file-diff"></i>
+                </span>
+                <span class="link-text">
+                  Text Diff Checker
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/text-formatter/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="wand-2"></i>
+                </span>
+                <span class="link-text">
+                  Text Formatter - Clear Style
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/word-counter/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="bar-chart-3"></i>
+                </span>
+                <span class="link-text">
+                  Word Counter &amp; Analyzer
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="wand-2"></i>
+            </span>
+            Generator Tools
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../../en/password-generator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="key-round"></i>
+                </span>
+                <span class="link-text">
+                  Strong Password Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/uuid-generator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="fingerprint"></i>
+                </span>
+                <span class="link-text">
+                  UUID Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="calendar"></i>
+            </span>
+            Daily Utilities
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../../en/bmi/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="scale"></i>
+                </span>
+                <span class="link-text">
+                  BMI Calculator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/bookmark-creator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="bookmark"></i>
+                </span>
+                <span class="link-text">
+                  Bookmark Creator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/date-time-master/"
+                class="mega-link mode-advanced-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="calendar-clock"></i>
+                </span>
+                <span class="link-text">
+                  Date &amp; Time Master
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/date-toolkit/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="calendar-days"></i>
+                </span>
+                <span class="link-text">
+                  Date Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/lunar-calendar/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="moon"></i>
+                </span>
+                <span class="link-text">
+                  Lunar Calendar
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/random-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="dices"></i>
+                </span>
+                <span class="link-text">
+                  Random Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/unit-converter/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="ruler"></i>
+                </span>
+                <span class="link-text">
+                  Unit Converter
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+      <div class="mega-category-section">
+        <button class="mega-header collapsible" aria-expanded="true">
+          <div class="mega-title-wrap">
+            <span class="mega-icon" aria-hidden="true">
+              <i data-lucide="code"></i>
+            </span>
+            Dev Tools
+          </div>
+          <span class="mega-caret" aria-hidden="true"><i data-lucide="chevron-down"
+              style="width: 14px; height: 14px;"></i></span>
+        </button>
+        <div class="mega-links-grid">
+          
+            
+              <a href="../../en/cron-parser/"
+                class="mega-link  active">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="terminal"></i>
+                </span>
+                <span class="link-text">
+                  Cron Expression Parser
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/dev-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="code"></i>
+                </span>
+                <span class="link-text">
+                  Developer Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/hash-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="lock"></i>
+                </span>
+                <span class="link-text">
+                  Base64 &amp; Hash Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/json-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="braces"></i>
+                </span>
+                <span class="link-text">
+                  JSON Toolkit
+                    
+                        <span class="menu-badge hot">HOT</span>
+                        
+                </span>
+              </a>
+              
+            
+              <a href="../../en/jwt-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="key"></i>
+                </span>
+                <span class="link-text">
+                  JWT Debugger &amp; Decoder
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/qr-generator/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="qr-code"></i>
+                </span>
+                <span class="link-text">
+                  QR Code Generator
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/timestamp-converter/"
+                class="mega-link mode-standard-only ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="stopwatch"></i>
+                </span>
+                <span class="link-text">
+                  Timestamp Converter
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/url-toolkit/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="link"></i>
+                </span>
+                <span class="link-text">
+                  URL &amp; Base64 Toolkit
+                    
+                      <span class="menu-badge beta">BETA</span>
+                      
+                </span>
+              </a>
+              
+            
+              <a href="../../en/web-playground/"
+                class="mega-link  ">
+                <span class="link-icon" aria-hidden="true">
+                  <i data-lucide="monitor-play"></i>
+                </span>
+                <span class="link-text">
+                  zTool Playground
+                    
+                        <span class="menu-badge hot">HOT</span>
+                        
+                </span>
+              </a>
+              
+        </div>
+      </div>
+      
+</div>
     </div>
 
     <div class="header-actions">
       <!-- Desktop Search Box -->
       <div class="header-search-box desktop-only" id="header-search-box">
-        <span class="search-box-icon">🔍</span>
+        <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
         <input type="text" class="header-search-input" placeholder="Search tools... (Ctrl + K)" readonly>
         <kbd>Ctrl+K</kbd>
       </div>
 
       <a href="../../en/categories/" class="btn-icon" title="Categories"
         aria-label="Categories">
-        🗂️
+        <i data-lucide="grid-3x3"></i>
       </a>
 
       <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Search Tools"
         aria-label="Search">
-        🔍
+        <i data-lucide="search"></i>
       </button>
 
       <a href="../../vi/cron-parser/" class="lang-switch"
@@ -253,7 +777,7 @@
         </span>
         <div class="mode-switch">
           <div class="mode-slider">
-            <span class="mode-icon">⭐</span>
+            <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
           </div>
         </div>
         <span class="mode-text">
@@ -262,51 +786,52 @@
       </button>
 
       <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
-        🌙
+        <i data-lucide="moon"></i>
       </button>
     </div>
   </div>
 
-  <!-- Search Overlay / Modal -->
-  <div id="search-modal" class="search-modal">
-    <div class="search-overlay"></div>
-    <div class="search-container">
-      <div class="search-header">
-        <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="text" id="search-input" placeholder="Search tools... (Ctrl + K)" autocomplete="off"
-          aria-label="Search tools... (Ctrl + K)">
-        <button id="close-search" class="close-search"
-          aria-label="Close search">&times;</button>
-      </div>
-      <div id="search-results" class="search-results">
-        <!-- Results will be injected here -->
-      </div>
-      <div class="search-footer">
-        <div class="search-hints">
-          <span><kbd>↵</kbd> Select</span>
-          <span><kbd>↑↓</kbd> Navigate</span>
-          <span><kbd>esc</kbd> Close</span>
-        </div>
+  <!-- Search Overlay / Modal (Reusable by hidden header mode) -->
+<div id="search-modal" class="search-modal">
+  <div class="search-overlay"></div>
+  <div class="search-container">
+    <div class="search-header">
+      <span class="search-icon" aria-hidden="true"><i data-lucide="search"></i></span>
+      <input type="text" id="search-input" placeholder="Search tools... (Ctrl + K)" autocomplete="off"
+        aria-label="Search tools... (Ctrl + K)">
+      <button id="close-search" class="close-search"
+        aria-label="Close search">&times;</button>
+    </div>
+    <div id="search-results" class="search-results">
+      <!-- Results will be injected here -->
+    </div>
+    <div class="search-footer">
+      <div class="search-hints">
+        <span><kbd>↵</kbd> Select</span>
+        <span><kbd>↑↓</kbd> Navigate</span>
+        <span><kbd>esc</kbd> Close</span>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Embed i18n data for client-side JS -->
-  <script id="i18n-data" type="application/json">
-    {
-      "search_no_results": "No results found for"
-    }
-  </script>
+<!-- Embed i18n data for client-side JS -->
+<script id="i18n-data" type="application/json">
+  {
+    "search_no_results": "No results found for"
+  }
+</script>
 
-  <!-- Embed tools data for client-side search -->
-  <script id="tools-data" type="application/json">
-    
-    [{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"tax","link":"../../en/tax/","icon":"💸","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"web-playground","link":"../../en/web-playground/","icon":"👨‍💻","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"}]
-  </script>
+<!-- Embed tools data for client-side search -->
+<script id="tools-data" type="application/json">
+  
+  [{"id":"blog","link":"../../en/blog/","icon":"pen-tool","title":"Dev Stories","desc":"Behind the scenes, coding techniques, and updates from the team.","category":"home.cats.legacy.title"},{"id":"bmi","link":"../../en/bmi/","icon":"scale","title":"BMI Calculator","desc":"Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.","category":"Daily Utilities"},{"id":"bookmark-creator","link":"../../en/bookmark-creator/","icon":"bookmark","title":"Bookmark Creator","desc":"Create a personal bookmark set for your browser with your favorite ZTools.","category":"Daily Utilities"},{"id":"business-tax","link":"../../en/business-tax/","icon":"briefcase","title":"Corporate Income Tax (CIT) Calc","desc":"Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.","category":"Job & Income"},{"id":"compound-interest","link":"../../en/compound-interest/","icon":"trending-up","title":"Compound Interest Calculator","desc":"Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.","category":"Finance & Banking"},{"id":"cron-parser","link":"../../en/cron-parser/","icon":"terminal","title":"Cron Expression Parser","desc":"Convert Cron expressions into human-readable text.","category":"Dev Tools"},{"id":"date-time-master","link":"../../en/date-time-master/","icon":"calendar-clock","title":"Date & Time Master","desc":"All-in-one time tool: Calculate distance, add/subtract dates, and Unix conversion.","category":"Daily Utilities"},{"id":"date-toolkit","link":"../../en/date-toolkit/","icon":"calendar-days","title":"Date Toolkit","desc":"Calculate distance between dates, add/subtract time, and countdown.","category":"Daily Utilities"},{"id":"dev-toolkit","link":"../../en/dev-toolkit/","icon":"code","title":"Developer Toolkit","desc":"Comprehensive toolkit for developers","category":"Dev Tools"},{"id":"freelancer-tax","link":"../../en/freelancer-tax/","icon":"receipt","title":"Freelancer & Business Tax","desc":"Calculate tax for withholding (10%) or personal business households.","category":"Job & Income"},{"id":"hash-toolkit","link":"../../en/hash-toolkit/","icon":"lock","title":"Base64 & Hash Toolkit","desc":"Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.","category":"Dev Tools"},{"id":"inflation-calculator","link":"../../en/inflation-calculator/","icon":"line-chart","title":"Inflation Calculator (Vietnam)","desc":"See how much your money has lost or gained value over time.","category":"Finance & Banking"},{"id":"investment-calc","link":"../../en/investment-calc/","icon":"piggy-bank","title":"Investment ROI Calculator","desc":"Calculate your Return on Investment (ROI) and Annual Yield.","category":"Finance & Banking"},{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"braces","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"jwt-toolkit","link":"../../en/jwt-toolkit/","icon":"key","title":"JWT Debugger & Decoder","desc":"Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.","category":"Dev Tools"},{"id":"loan-calculator","link":"../../en/loan-calculator/","icon":"home","title":"Loan Calculator","desc":"Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.","category":"Finance & Banking"},{"id":"lorem-ipsum","link":"../../en/lorem-ipsum/","icon":"pilcrow","title":"Lorem Ipsum Generator","desc":"Generate placeholder text for designs and mockups.","category":"Text Tools"},{"id":"lunar-calendar","link":"../../en/lunar-calendar/","icon":"moon","title":"Lunar Calendar","desc":"Convert Solar to Lunar calendar, view Can Chi and Good Hours","category":"Daily Utilities"},{"id":"ot-calculator","link":"../../en/ot-calculator/","icon":"clock","title":"Overtime Calculator","desc":"Calculate accurately your overtime pay based on Vietnam Labor Law","category":"Job & Income"},{"id":"password-generator","link":"../../en/password-generator/","icon":"key-round","title":"Strong Password Generator","desc":"Generate secure, random passwords instantly.","category":"Generator Tools"},{"id":"percentage-calculator","link":"../../en/percentage-calculator/","icon":"percent","title":"Percentage Calculator","desc":"Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.","category":"Finance & Banking"},{"id":"qr-generator","link":"../../en/qr-generator/","icon":"qr-code","title":"QR Code Generator","desc":"Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.","category":"Dev Tools"},{"id":"random-toolkit","link":"../../en/random-toolkit/","icon":"dices","title":"Random Toolkit","desc":"Generate random numbers, pick items from list, and roll dice.","category":"Daily Utilities"},{"id":"salary-tax-master","link":"../../en/salary-tax-master/","icon":"wallet","title":"Salary & Tax Master","desc":"Full Salary & Tax Suite","category":"Job & Income"},{"id":"savings-interest","link":"../../en/savings-interest/","icon":"coins","title":"Savings Interest Calculator","desc":"Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.","category":"Finance & Banking"},{"id":"social-insurance","link":"../../en/social-insurance/","icon":"shield-plus","title":"Social Insurance","desc":"Social Insurance & Pension Calculator.","category":"Job & Income"},{"id":"tax","link":"../../en/tax/","icon":"banknote","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"text-diff","link":"../../en/text-diff/","icon":"file-diff","title":"Text Diff Checker","desc":"Compare two texts and highlight differences (additions, deletions, changes).","category":"Text Tools"},{"id":"text-formatter","link":"../../en/text-formatter/","icon":"wand-2","title":"Text Formatter - Clear Style","desc":"Remove formatting and clean up text copied from web pages.","category":"Text Tools"},{"id":"timestamp-converter","link":"../../en/timestamp-converter/","icon":"stopwatch","title":"Timestamp Converter","desc":"Convert between Unix timestamps and human-readable dates.","category":"Dev Tools"},{"id":"unit-converter","link":"../../en/unit-converter/","icon":"ruler","title":"Unit Converter","desc":"Convert length, weight, volume, area, temperature, and more.","category":"Daily Utilities"},{"id":"url-toolkit","link":"../../en/url-toolkit/","icon":"link","title":"URL & Base64 Toolkit","desc":"Encode/Decode URL, Base64 and parse URL structure quickly.","category":"Dev Tools"},{"id":"uuid-generator","link":"../../en/uuid-generator/","icon":"fingerprint","title":"UUID Generator","desc":"Generate random UUIDs/GUIDs (V1, V4, V7) instantly.","category":"Generator Tools"},{"id":"web-playground","link":"../../en/web-playground/","icon":"monitor-play","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"},{"id":"word-counter","link":"../../en/word-counter/","icon":"bar-chart-3","title":"Word Counter & Analyzer","desc":"Count words, analyze frequency, and convert case (Case Converter).","category":"Text Tools"}]
+</script>
 </header>
+        
 
-    <main class="container">
-      <div class="cron-parser-wrapper">
+          <main class="container">
+            <div class="cron-parser-wrapper">
   <div class="tool-header">
     <h1>
       Cron Expression Parser
@@ -382,12 +907,12 @@
 <link rel="stylesheet" href="../../assets/features/cron-parser/style.css?h=3ae61bdd">
 <script src="../../assets/features/cron-parser/script.js?h=222d8637"></script>
 
-        
-          <section class="card how-to-use-section" style="margin-top: 3rem;">
-            <h2 style="margin-bottom: 1rem;">📖 How to use
-            </h2>
-            <div class="markdown-body">
-              <h3>How to use the Cron Expression Parser</h3>
+              
+                <section class="card how-to-use-section" style="margin-top: 3rem;">
+                  <h2 style="margin-bottom: 1rem;">📖 How to use
+                  </h2>
+                  <div class="markdown-body">
+                    <h3>How to use the Cron Expression Parser</h3>
 <ol>
 <li><strong>Enter Cron Expression</strong>: Type your 5-part cron expression (e.g., <code>0 0 * * *</code>) into the input field.</li>
 <li><strong>Read Logic</strong>: The tool will instantly translate the expression into a human-readable sentence (e.g., &quot;At 00:00 every day&quot;).</li>
@@ -396,12 +921,13 @@
 </ol>
 <p>Supported format: <code>minute hour day(month) month day(week)</code>.</p>
 
-            </div>
-          </section>
-          
-    </main>
+                  </div>
+                </section>
+                
+          </main>
 
-    <footer class="site-footer">
+          
+            <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-col">
       <h3>
@@ -425,6 +951,9 @@
         <li><a href="../../en/terms/">
             Terms of Service
           </a></li>
+        <li><a href="../../en/changelog/">
+            Versions
+          </a></li>
         <li><a href="https://github.com/ph4n4n/ztools.site-public" target="_blank" rel="noopener noreferrer"
             aria-label="View Source on GitHub">
             GitHub Source
@@ -435,14 +964,23 @@
       <span>
         © 2025 ZTools. Built with ❤️.
       </span>
-      <span>ZTools v1.2.0</span>
+      <span>ZTools v1.4.0</span>
     </div>
   </div>
 </footer>
+              
 
-      
+                
 
-          <script src="../../assets/js/global.js?h=ba6a7fc4"></script>
+                    <script src="../../assets/js/global.js?h=c179bc0f"></script>
+                    <script>
+                      // Initialize Lucide icons
+                      if (window.lucide) {
+                        lucide.createIcons();
+                      }
+                    </script>
+
+                    
 </body>
 
 </html>

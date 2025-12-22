@@ -67,7 +67,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Monaco", "Consolas", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
   background-color: var(--bg-color);
   background-image:
     radial-gradient(ellipse at 20% 0%, rgba(var(--primary-rgb), 0.15) 0%, transparent 50%),
@@ -247,6 +247,7 @@ main {
 }
 
 .header-search-box {
+  display: flex;
   background: var(--bg-hover);
   border: 1px solid var(--border-color);
   border-radius: 20px;
@@ -400,6 +401,13 @@ main {
   border-color: var(--primary-color);
   color: var(--primary-color);
   transform: translateY(-2px);
+}
+
+.mega-home-link.active,
+.mega-link.active {
+  color: var(--primary-color) !important;
+  background: rgba(var(--primary-rgb), 0.1) !important;
+  border-color: var(--primary-color) !important;
 }
 
 .nav-link-prominent {
@@ -647,6 +655,116 @@ main {
   .mega-link:hover {
     border-left-color: var(--primary-color);
   }
+}
+
+/* Master IDE Toolbar styling */
+.master-toolbar {
+  height: 45px !important;
+  min-height: 45px !important;
+  background: var(--card-bg) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  padding: 0 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  z-index: 1100 !important;
+}
+
+.master-toolbar .toolbar-left,
+.master-toolbar .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.master-toolbar .toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 0.25rem;
+}
+
+.master-toolbar .tool-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: var(--text-color) !important;
+}
+
+.header-search-box.compact {
+  width: 220px;
+  height: 28px;
+  border-radius: 6px;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+}
+
+.header-search-box.compact .header-search-input {
+  font-size: 0.8rem !important;
+}
+
+.header-search-box.compact kbd {
+  display: none;
+  /* Hide shortcut hint in compact mode to save space */
+}
+
+.mode-toggle-btn.mini {
+  padding: 2px 4px;
+  height: 24px;
+  min-width: 40px;
+}
+
+.mode-toggle-btn.mini .mode-text {
+  display: none;
+}
+
+.mode-toggle-btn.mini .mode-switch {
+  margin: 0;
+}
+
+.global-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-icon-sub {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-icon-sub:hover {
+  background: var(--bg-hover);
+  color: var(--primary-color);
+}
+
+.btn-sm {
+  padding: 4px 10px !important;
+  font-size: 0.85rem !important;
+  height: 28px !important;
+}
+
+/* Ensure playground container takes full height minus master toolbar */
+.is-playground .playground-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.is-playground .playground-body {
+  flex: 1;
+  overflow: hidden;
 }
 
 #theme-toggle {
@@ -1459,3 +1577,37 @@ kbd {
     padding: 4px 8px;
   }
 }
+/* Badges */
+.menu-badge, .tool-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 2px 5px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.menu-badge.beta, .tool-badge.beta {
+  background-color: var(--primary-color);
+  color: white;
+  opacity: 0.9;
+}
+
+.menu-badge.hot, .tool-badge.hot {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.tool-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  margin: 0;
+  font-size: 0.65rem;
+  z-index: 2;
+}
+

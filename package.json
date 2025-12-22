@@ -1,6 +1,6 @@
 {
   "name": "ztools-site",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "Multi-tool utility site",
   "main": "scripts/build.js",
   "scripts": {

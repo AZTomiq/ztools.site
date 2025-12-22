@@ -4,7 +4,7 @@
       <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
         aria-label="<%= locale === 'vi' ? 'Menu danh mục công cụ' : 'Tool categories menu' %>"
         style="background: none; border: none; padding: 0; cursor: pointer;">
-        <span class="logo-icon" aria-hidden="true">🧰</span>
+        <span class="logo-icon" aria-hidden="true"><i data-lucide="layout-grid"></i></span>
         <span class="logo-text">ZTools</span>
         <% if (category) { %>
           <span class="logo-sub hide-mobile">
@@ -16,90 +16,30 @@
       <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
         <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="nav-link-prominent"
           style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon">⭐</span>
+          <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
           <%= t('bookmarkCreator.title') %>
         </a>
       </div>
 
-      <div class="dropdown-menu mega-menu">
-        <div class="mega-menu-top">
-          <a href="<%= rootPath %><%= locale %>/" class="mega-home-link">
-            <span class="icon">🏠</span>
-            <%= t('nav.home') %>
-          </a>
-          <a href="<%= rootPath %><%= locale %>/categories/" class="mega-home-link">
-            <span class="icon">🗂️</span>
-            <%= t('nav.menu_categories') %>
-          </a>
-          <a href="<%= rootPath %><%= locale %>/blog/" class="mega-home-link">
-            <span class="icon">✍️</span>
-            <%= t('nav.blog') || 'Blog' %>
-          </a>
-          <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="mega-home-link">
-            <span class="icon">⭐</span>
-            <%= t('bookmarkCreator.title') || 'Bookmarks' %>
-          </a>
-        </div>
-        <% const catOrder=['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const catMap={ 'job' : { title:
-          t('home.cats.job.title') || 'Job & Income' , icon: '💼' }, 'finance' : { title: t('home.cats.finance.title')
-          || 'Finance' , icon: '📈' }, 'text' : { title: t('home.cats.text.title') || 'Text Tools' , icon: '✍️'
-          }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: '🪄' }, 'daily' : { title:
-          t('home.cats.daily.title') || 'Daily Utilities' , icon: '🗓️' }, 'dev' : { title: t('home.cats.dev.title')
-          || 'Dev Tools' , icon: '👾' } }; %>
-
-          <% catOrder.forEach(catId=> {
-            // Filter tools for this category, including legacy ones that might still be valid for Standard mode
-            const catTools = tools.filter(t => t.category === catId && (t.status === 'active' || t.status ===
-            'legacy'));
-            if (catTools.length === 0) return;
-            %>
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    <%= catMap[catId].icon %>
-                  </span>
-                  <%= catMap[catId].title %>
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                <% catTools.forEach(tool=> {
-                  let modeClass = '';
-                  if (tool.mode === 'standard') modeClass = 'mode-standard-only';
-                  else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
-                  %>
-                  <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="mega-link <%= modeClass %>">
-                    <span class="link-icon" aria-hidden="true">
-                      <%= tool.icon %>
-                    </span>
-                    <span class="link-text">
-                      <%= t(tool.translationKey + '.title' ) %>
-                    </span>
-                  </a>
-                  <% }); %>
-              </div>
-            </div>
-            <% }); %>
-      </div>
+      <%- include('mega-menu.ejs') %>
     </div>
 
     <div class="header-actions">
       <!-- Desktop Search Box -->
       <div class="header-search-box desktop-only" id="header-search-box">
-        <span class="search-box-icon">🔍</span>
+        <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
         <input type="text" class="header-search-input" placeholder="<%= t('nav.search_placeholder') %>" readonly>
         <kbd>Ctrl+K</kbd>
       </div>
 
       <a href="<%= rootPath %><%= locale %>/categories/" class="btn-icon" title="<%= t('nav.menu_categories') %>"
         aria-label="Categories">
-        🗂️
+        <i data-lucide="grid-3x3"></i>
       </a>
 
       <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="<%= t('nav.search_title') %>"
         aria-label="Search">
-        🔍
+        <i data-lucide="search"></i>
       </button>
 
       <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/<%= pageUrl %>" class="lang-switch"
@@ -115,7 +55,7 @@
         </span>
         <div class="mode-switch">
           <div class="mode-slider">
-            <span class="mode-icon">⭐</span>
+            <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
           </div>
         </div>
         <span class="mode-text">
@@ -124,52 +64,10 @@
       </button>
 
       <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
-        🌙
+        <i data-lucide="moon"></i>
       </button>
     </div>
   </div>
 
-  <!-- Search Overlay / Modal -->
-  <div id="search-modal" class="search-modal">
-    <div class="search-overlay"></div>
-    <div class="search-container">
-      <div class="search-header">
-        <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="text" id="search-input" placeholder="<%= t('nav.search_placeholder') %>" autocomplete="off"
-          aria-label="<%= t('nav.search_placeholder') %>">
-        <button id="close-search" class="close-search"
-          aria-label="<%= locale === 'vi' ? 'Đóng tìm kiếm' : 'Close search' %>">&times;</button>
-      </div>
-      <div id="search-results" class="search-results">
-        <!-- Results will be injected here -->
-      </div>
-      <div class="search-footer">
-        <div class="search-hints">
-          <span><kbd>↵</kbd> Select</span>
-          <span><kbd>↑↓</kbd> Navigate</span>
-          <span><kbd>esc</kbd> Close</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Embed i18n data for client-side JS -->
-  <script id="i18n-data" type="application/json">
-    {
-      "search_no_results": "<%= t('nav.search_no_results') %>"
-    }
-  </script>
-
-  <!-- Embed tools data for client-side search -->
-  <script id="tools-data" type="application/json">
-    <% const translate = t; %>
-    <%- JSON.stringify(tools.filter(t => t.status === 'active').map(tool => ({ 
-      id: tool.id, 
-      link: rootPath + locale + tool.link, 
-      icon: tool.icon, 
-      title: translate(tool.translationKey + '.title'),
-      desc: translate(tool.translationKey + '.desc'),
-      category: translate('home.cats.' + tool.category + '.title')
-    }))) %>
-  </script>
+  <%- include('header-data-only.ejs') %>
 </header>

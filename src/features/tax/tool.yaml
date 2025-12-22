@@ -1,6 +1,7 @@
 id: tax
 category: job
-icon: 💸
+icon: banknote
+highlight: true
 translationKey: tax
 status: active
 link: /tax/

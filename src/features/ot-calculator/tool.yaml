@@ -1,7 +1,7 @@
 wid: ot-calculator
 link: /ot-calculator/
 mode: standard
-icon: ⏰
+icon: clock
 category: job
 status: not-ready
 translationKey: ot

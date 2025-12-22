@@ -1,8 +1,31 @@
-<div class="app">
-  <h1>My Tasks</h1>
-  <div class="input-group">
-    <input type="text" id="taskInput" placeholder="Add a new task...">
-    <button id="addBtn">Add</button>
+<div class="app-container">
+  <div class="todo-card">
+    <div class="todo-header">
+      <h1>My Tasks</h1>
+      <p id="task-stats">0 tasks remaining</p>
+    </div>
+
+    <div class="input-wrapper">
+      <input type="text" id="taskInput" placeholder="What needs to be done?" autocomplete="off">
+      <button id="addBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Done</button>
+    </div>
+
+    <ul id="taskList" class="task-list"></ul>
+
+    <div class="todo-footer">
+      <button id="clearCompleted" class="text-btn">Clear Completed</button>
+    </div>
   </div>
-  <ul id="taskList"></ul>
 </div>

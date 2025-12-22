@@ -101,12 +101,24 @@ function validateJSON() {
   }
 }
 
-function copyJSON() {
+function copyToClipboard(text, btn) {
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span>✅ Copied!</span>';
+    btn.classList.add('btn-success');
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.classList.remove('btn-success');
+    }, 2000);
+  });
+}
+
+function copyJSON(e) {
   if (!outputEditor) return;
   const content = outputEditor.getValue();
-  navigator.clipboard.writeText(content).then(() => {
-    alert('Copied to clipboard!');
-  });
+  const btn = e && e.target ? e.target : document.querySelector('button[onclick="copyJSON()"]');
+  copyToClipboard(content, btn);
 }
 
 function clearJSON() {
@@ -338,13 +350,125 @@ window.togglePanel = (panel) => {
   // For now we just ignore to get basic features working
 };
 
-window.copyConverted = () => {
+window.copyConverted = (e) => {
   if (!convertOutputEditor) return;
-  navigator.clipboard.writeText(convertOutputEditor.getValue()).then(() => alert('Copied!'));
+  const content = convertOutputEditor.getValue();
+  const btn = e && e.target ? e.target : document.querySelector('button[onclick="copyConverted()"]');
+  copyToClipboard(content, btn);
 };
 
 window.toggleOutputView = (view) => {
-  // Stub
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`btn-view-${view}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const codeView = document.getElementById('monaco-output');
+  const treeView = document.getElementById('tree-container');
+  const treeControls = document.getElementById('tree-controls');
+
+  if (view === 'tree') {
+    if (codeView) codeView.style.display = 'none';
+    if (treeView) treeView.style.display = 'block';
+    if (treeControls) treeControls.style.display = 'flex';
+    renderTreeView();
+  } else {
+    if (codeView) codeView.style.display = 'block';
+    if (treeView) treeView.style.display = 'none';
+    if (treeControls) treeControls.style.display = 'none';
+  }
+};
+
+function renderTreeView() {
+  const container = document.getElementById('tree-container');
+  if (!container || !outputEditor) return;
+
+  const content = outputEditor.getValue().trim();
+  if (!content) {
+    container.innerHTML = '<div class="tree-placeholder">No JSON data to display</div>';
+    return;
+  }
+
+  try {
+    const data = JSON.parse(content);
+    container.innerHTML = '';
+    container.appendChild(createTreeNode('root', data, true));
+  } catch (e) {
+    container.innerHTML = `<div class="tree-error">Invalid JSON for Tree View: ${e.message}</div>`;
+  }
+}
+
+function createTreeNode(key, value, isRoot = false) {
+  const node = document.createElement('div');
+  node.className = 'tree-node';
+
+  const type = typeof value;
+  const isObject = value !== null && type === 'object';
+  const isArray = Array.isArray(value);
+
+  const header = document.createElement('div');
+  header.className = 'tree-header';
+
+  if (isObject) {
+    const toggle = document.createElement('span');
+    toggle.className = 'tree-toggle';
+    toggle.innerHTML = '▼';
+    toggle.onclick = (e) => {
+      e.stopPropagation();
+      const children = node.querySelector('.tree-children');
+      if (children) {
+        children.classList.toggle('collapsed');
+        toggle.innerHTML = children.classList.contains('collapsed') ? '▶' : '▼';
+      }
+    };
+    header.appendChild(toggle);
+  }
+
+  if (!isRoot) {
+    const keySpan = document.createElement('span');
+    keySpan.className = 'tree-key';
+    keySpan.innerText = `"${key}": `;
+    header.appendChild(keySpan);
+  }
+
+  const valueSpan = document.createElement('span');
+  if (isObject) {
+    valueSpan.className = 'tree-bracket';
+    valueSpan.innerText = isArray ? '[' : '{';
+  } else {
+    valueSpan.className = `tree-value ${value === null ? 'null' : type}`;
+    valueSpan.innerText = type === 'string' ? `"${value}"` : String(value);
+  }
+  header.appendChild(valueSpan);
+  node.appendChild(header);
+
+  if (isObject) {
+    const children = document.createElement('div');
+    children.className = 'tree-children';
+
+    const entries = isArray ? value.map((v, i) => [i, v]) : Object.entries(value);
+    entries.forEach(([k, v]) => {
+      children.appendChild(createTreeNode(k, v));
+    });
+
+    const footer = document.createElement('div');
+    footer.className = 'tree-footer';
+    footer.innerText = isArray ? ']' : '}';
+    children.appendChild(footer);
+    node.appendChild(children);
+  }
+
+  return node;
+}
+
+window.expandAll = () => {
+  document.querySelectorAll('.tree-children').forEach(el => el.classList.remove('collapsed'));
+  document.querySelectorAll('.tree-toggle').forEach(el => el.innerHTML = '▼');
+};
+
+window.collapseAll = () => {
+  document.querySelectorAll('.tree-children').forEach(el => el.classList.add('collapsed'));
+  document.querySelectorAll('.tree-toggle').forEach(el => el.innerHTML = '▶');
 };
 
 // Global Exports

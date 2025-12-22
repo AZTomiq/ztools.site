@@ -1,6 +1,6 @@
 id: lunar-calendar
 category: daily
-icon: 🌙
+icon: moon
 translationKey: lunarCalendar
 status: not-ready
 link: /lunar-calendar/

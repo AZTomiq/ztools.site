@@ -1,6 +1,6 @@
 id: loan-calculator
 category: finance
-icon: 🏠
+icon: home
 translationKey: loan
 status: not-ready
 link: /loan-calculator/

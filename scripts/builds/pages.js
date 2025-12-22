@@ -87,6 +87,16 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     // console.log(`Debug: Feature ${featureName}, found config: ${!!toolConfig.id}`);
   }
 
+  // GLOBAL CHANGELOG Logic
+  if (path.basename(filePath) === 'changelog.ejs') {
+    const globalChangelogPath = path.join(paths.ROOT, 'CHANGELOG.md');
+    if (fs.existsSync(globalChangelogPath)) {
+      try {
+        changelogHtml = marked.parse(fs.readFileSync(globalChangelogPath, 'utf8'));
+      } catch (e) { console.error('Error parsing global CHANGELOG.md', e); }
+    }
+  }
+
   const packageJson = fs.readJsonSync(path.join(paths.ROOT, 'package.json'));
   const packageVersion = packageJson.version;
 

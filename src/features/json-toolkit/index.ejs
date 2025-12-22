@@ -5,10 +5,12 @@
 <section class="tool-container">
   <div class="page-header">
     <h1>💻 <%= t('json.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
-      <% } %></h1>
+
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+          </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('json.desc') %>
     </p>
@@ -40,7 +42,7 @@
         <button class="btn" onclick="validateJSON()">
           <%= t('json.toolbar.validate') %>
         </button>
-        <button class="btn" onclick="copyJSON()">
+        <button class="btn" onclick="copyJSON(event)">
           <%= t('json.toolbar.copy') %>
         </button>
         <button class="btn btn-danger" onclick="clearJSON()">
@@ -76,7 +78,7 @@
             <%= t('json.input.title') %>
           </h3>
           <div class="panel-actions">
-            <button class="btn-sm" onclick="loadSample()">
+            <button class="btn btn-sm" onclick="loadSample()">
               <%= t('json.input.load_sample') %>
             </button>
             <button class="btn-icon" onclick="togglePanel('input')" title="Maximize/Restore">⛶</button>
@@ -169,7 +171,7 @@
           <span class="icon">🔄</span>
           <%= t('json.convert.btn_convert') %>
         </button>
-        <button class="btn" onclick="copyConverted()">
+        <button class="btn" onclick="copyConverted(event)">
           <span class="icon">📋</span>
           <%= t('json.convert.btn_copy') %>
         </button>
@@ -234,6 +236,11 @@
               <%= t('json.subtools.csv.desc') %>
             </p>
           </div>
+          <div class="tool-controls action-right">
+            <button class="btn btn-primary" onclick="csvToJSONTool()">
+              <%= t('json.subtools.csv.btn') %>
+            </button>
+          </div>
           <div class="split-editor">
             <div class="single-editor">
               <div class="editor-label">
@@ -244,11 +251,6 @@
             <div class="single-editor">
               <div class="editor-label">
                 <%= t('json.subtools.csv.output') %>
-              </div>
-              <div class="tool-controls" style="margin-bottom: 0.5rem;">
-                <button class="btn btn-primary" onclick="csvToJSONTool()">
-                  <%= t('json.subtools.csv.btn') %>
-                </button>
               </div>
               <textarea id="csv-result" readonly placeholder="Result..."></textarea>
             </div>
@@ -265,6 +267,11 @@
               <%= t('json.subtools.js_obj.desc') %>
             </p>
           </div>
+          <div class="tool-controls action-right">
+            <button class="btn btn-primary" onclick="jsObjToJSON()">
+              <%= t('json.subtools.js_obj.btn') %>
+            </button>
+          </div>
           <div class="split-editor">
             <div class="single-editor">
               <div class="editor-label">
@@ -275,11 +282,6 @@
             <div class="single-editor">
               <div class="editor-label">
                 <%= t('json.subtools.js_obj.output') %>
-              </div>
-              <div class="tool-controls" style="margin-bottom: 0.5rem;">
-                <button class="btn btn-primary" onclick="jsObjToJSON()">
-                  <%= t('json.subtools.js_obj.btn') %>
-                </button>
               </div>
               <textarea id="js-obj-result" readonly></textarea>
             </div>
@@ -296,6 +298,11 @@
               <%= t('json.subtools.sql.desc') %>
             </p>
           </div>
+          <div class="tool-controls action-right">
+            <button class="btn btn-primary" onclick="sqlToJSONTool()">
+              <%= t('json.subtools.sql.btn') %>
+            </button>
+          </div>
           <div class="split-editor">
             <div class="single-editor">
               <div class="editor-label">
@@ -306,11 +313,6 @@
             <div class="single-editor">
               <div class="editor-label">
                 <%= t('json.subtools.sql.output') %>
-              </div>
-              <div class="tool-controls" style="margin-bottom: 0.5rem;">
-                <button class="btn btn-primary" onclick="sqlToJSONTool()">
-                  <%= t('json.subtools.sql.btn') %>
-                </button>
               </div>
               <textarea id="sql-result" readonly></textarea>
             </div>
@@ -327,7 +329,7 @@
               <%= t('json.subtools.path.desc') %>
             </p>
           </div>
-          <div class="tool-controls">
+          <div class="tool-controls action-right">
             <input type="text" id="search-value" placeholder="<%= t('json.subtools.path.placeholder') %>">
             <button class="btn btn-primary" onclick="findPath()">
               <%= t('json.subtools.path.btn') %>
@@ -359,7 +361,7 @@
               <%= t('json.subtools.diff.desc') %>
             </p>
           </div>
-          <div class="tool-controls" style="margin-bottom: 0.5rem;">
+          <div class="tool-controls action-right">
             <button class="btn btn-primary" onclick="compareJSON()">
               <%= t('json.subtools.diff.btn') %>
             </button>
@@ -396,6 +398,11 @@
               <%= t('json.subtools.stats.desc') %>
             </p>
           </div>
+          <div class="tool-controls action-right">
+            <button class="btn btn-primary" onclick="analyzeJSON()">
+              <%= t('json.subtools.stats.btn') %>
+            </button>
+          </div>
           <div class="split-editor">
             <div class="single-editor">
               <div class="editor-label">
@@ -404,11 +411,6 @@
               <textarea id="stats-json" placeholder='{"items": [1, 2, 3]}'></textarea>
             </div>
             <div class="single-editor">
-              <div class="tool-controls" style="margin-bottom: 0.5rem;">
-                <button class="btn btn-primary" onclick="analyzeJSON()">
-                  <%= t('json.subtools.stats.btn') %>
-                </button>
-              </div>
               <div class="editor-label">
                 <%= t('json.subtools.stats.result') %>
               </div>
@@ -424,7 +426,7 @@
               <%= t('json.subtools.escape.title') %>
             </h3>
           </div>
-          <div class="tool-controls" style="margin-bottom: 0.5rem;">
+          <div class="tool-controls action-right">
             <button class="btn" onclick="escapeJSON()">
               <%= t('json.subtools.escape.btn_esc') %>
             </button>

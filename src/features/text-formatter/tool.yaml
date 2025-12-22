@@ -1,6 +1,6 @@
 id: text-formatter
 category: text
-icon: 🧹
+icon: wand-2
 translationKey: textFormatter
 status: not-ready
 link: /text-formatter/
@@ -54,10 +54,10 @@ actions:
     label: textFormatter.form.btn_format
     function: formatText
   secondary:
-    - icon: 📋
+    - icon: clipboard
       title: textFormatter.form.btn_copy
       function: copyFormatted
-    - icon: 🔄
+    - icon: refresh-cw
       title: textFormatter.form.btn_clear
       function: clearText
 output:

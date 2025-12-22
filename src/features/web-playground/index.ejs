@@ -1,40 +1,75 @@
 <!-- title: <%= t('playground.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
-<!-- Styles specific to breaking out of the container for full width -->
-<style>
-  /* Hack to break out of parent .container restrictions for this tool only */
-  main.container {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  /* Ensure the body/html doesn't scroll if we want app-like feel, 
-       but for now let's keep it simple and just maximize width */
-  .playground-container {
-    width: 100%;
-    height: calc(100vh - 70px);
-    /* fallback */
-  }
-</style>
-
 <div class="playground-container">
-  <!-- Toolbar -->
-  <div class="playground-toolbar">
-    <div class="toolbar-left" style="display: flex; align-items: center; gap: 10px;">
-      <button id="toggle-sidebar" class="btn-icon-sub" title="Toggle Sidebar">📑</button>
-      <h1 class="tool-title"><span class="icon">👨‍💻</span>
-        <%= t('playground.title') %>
+  <!-- Master IDE Toolbar -->
+  <div class="playground-toolbar master-toolbar">
+    <div class="toolbar-left">
+      <!-- Unified Menu & Logo -->
+      <div class="nav-item logo-wrapper">
+        <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Menu">
+          <span class="logo-icon"><i data-lucide="layout-grid"></i></span>
+          <span class="logo-text desktop-only">ZTools</span>
+        </button>
+        <%- include('mega-menu.ejs') %>
+      </div>
+
+      <div class="toolbar-divider"></div>
+
+      <button id="toggle-sidebar" class="btn-icon-sub" title="Toggle Sidebar">
+        <i data-lucide="panels-left-bottom"></i>
+      </button>
+      <h1 class="tool-title">
+        <span class="icon desktop-only"><i data-lucide="code-2"></i></span>
+        <span class="title-text">
+          <%= t('playground.title') %>
+        </span>
       </h1>
     </div>
-    <div class="toolbar-right">
-      <div class="setting-item">
-        <input type="checkbox" id="auto-run-toggle" checked>
-        <label for="auto-run-toggle">Auto-Run</label>
+
+    <div class="toolbar-center desktop-only">
+      <!-- Minimal Search Box -->
+      <div class="header-search-box compact" id="header-search-box">
+        <span class="search-box-icon"><i data-lucide="search" style="width: 14px; height: 14px;"></i></span>
+        <input type="text" class="header-search-input" placeholder="<%= t('nav.search_placeholder') %>" readonly>
+        <kbd>Ctrl+K</kbd>
       </div>
-      <button id="btn-run" class="btn-primary">▶ Run</button>
-      <button id="btn-share" class="btn-secondary">🔗 Share</button>
+    </div>
+
+    <div class="toolbar-right">
+      <!-- Run Actions -->
+      <div class="setting-item hide-mobile">
+        <label class="switch">
+          <input type="checkbox" id="auto-run-toggle" checked>
+          <span class="slider"></span>
+        </label>
+        <span class="label-text">Auto</span>
+      </div>
+      <button id="btn-run" class="btn-primary btn-sm"><i data-lucide="play"></i> <span
+          class="hide-mobile">Run</span></button>
+      <button id="btn-share" class="btn-secondary btn-sm"><i data-lucide="share-2"></i></button>
+
+      <div class="toolbar-divider hide-mobile"></div>
+
+      <!-- Global Actions -->
+      <div class="global-actions hide-mobile">
+        <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/<%= pageUrl %>" class="lang-switch small"
+          title="Switch Language">
+          <%= locale==='vi' ? '🇺🇸' : '🇻🇳' %>
+        </a>
+
+        <button id="mode-toggle" class="mode-toggle-btn mini" title="Toggle Mode">
+          <div class="mode-switch">
+            <div class="mode-slider">
+              <span class="mode-icon"><i data-lucide="zap" style="width: 10px; height: 10px;"></i></span>
+            </div>
+          </div>
+        </button>
+
+        <button id="theme-toggle" class="btn-icon-sub" title="Toggle Theme">
+          <i data-lucide="moon"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -43,7 +78,9 @@
     <!-- Sidebar Examples -->
     <div class="sidebar-examples" id="sidebar-examples">
       <div class="sidebar-header">
-        <h3>📚 Examples</h3>
+        <h3 style="font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
+          <i data-lucide="library" style="width: 16px; height: 16px;"></i> Examples
+        </h3>
       </div>
       <div class="examples-list" id="examples-list">
         <!-- Items will be injected by JS -->
@@ -51,41 +88,75 @@
     </div>
 
     <!-- Work Area -->
-    <div class="work-area">
+    <div class="work-area" id="work-area">
       <!-- Editors Area -->
-      <div class="editors-split">
-        <div class="editor-pane" id="pane-html">
+      <div class="editors-split" id="editors-split">
+        <div class="editor-pane active" id="pane-html" data-lang="html">
           <div class="pane-header">
-            <span class="lang-icon">🌐</span> HTML
+            <span class="lang-icon"><i data-lucide="file-type-2" style="width: 14px; height: 14px;"></i></span> HTML
+            <div class="pane-actions">
+              <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
+            </div>
           </div>
           <div class="editor-container" id="monaco-html"></div>
         </div>
-        <div class="editor-pane" id="pane-css">
+
+        <div class="resizer-h" id="resizer-h1"></div>
+
+        <div class="editor-pane active" id="pane-js" data-lang="js">
           <div class="pane-header">
-            <span class="lang-icon">🎨</span> CSS
-          </div>
-          <div class="editor-container" id="monaco-css"></div>
-        </div>
-        <div class="editor-pane" id="pane-js">
-          <div class="pane-header">
-            <span class="lang-icon">⚡</span> JS
+            <span class="lang-icon"><i data-lucide="braces" style="width: 14px; height: 14px;"></i></span> JS
+            <div class="pane-actions">
+              <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
+            </div>
           </div>
           <div class="editor-container" id="monaco-js"></div>
         </div>
+
+        <div class="resizer-h" id="resizer-h2"></div>
+
+        <div class="editor-pane active" id="pane-css" data-lang="css">
+          <div class="pane-header">
+            <span class="lang-icon"><i data-lucide="palette" style="width: 14px; height: 14px;"></i></span> CSS
+            <div class="pane-actions">
+              <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
+            </div>
+          </div>
+          <div class="editor-container" id="monaco-css"></div>
+        </div>
       </div>
 
+      <!-- Vertical Resizer -->
+      <div class="resizer-v" id="resizer-v"></div>
+
       <!-- Preview Area -->
-      <div class="preview-area">
-        <div class="pane-header">
-          <span class="lang-icon">👁️</span> Result
-          <button id="toggle-console" class="btn-xs" title="Toggle Console">Console</button>
+      <div class="preview-area" id="preview-area">
+        <div class="pane-header" id="preview-header">
+          <span class="lang-icon"><i data-lucide="eye" style="width: 14px; height: 14px;"></i></span> Result
+          <div class="pane-actions" style="margin-left: auto; display: flex; gap: 4px;">
+            <button id="toggle-console" class="btn-pane-toggle" title="Toggle Console">
+              <i data-lucide="terminal" style="width: 14px; height: 14px;"></i>
+            </button>
+            <button id="btn-popout" class="btn-pane-toggle" title="Open in new window"><i data-lucide="external-link"
+                style="width: 14px; height: 14px;"></i></button>
+            <button id="btn-maximize-preview" class="btn-pane-toggle" title="Toggle Full Preview"><i
+                data-lucide="maximize" style="width: 14px; height: 14px;"></i></button>
+          </div>
         </div>
         <div class="preview-content" style="position: relative; flex: 1; display:flex; flex-direction: column;">
           <iframe id="preview-frame" sandbox="allow-scripts allow-modals" style="flex: 1;"></iframe>
           <div id="console-pane" class="console-pane collapsed">
-            <div class="console-header">
-              <span>Console Output</span>
-              <button id="clear-console">🚫</button>
+            <div class="console-header"
+              style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <i data-lucide="terminal" style="width: 12px; height: 12px;"></i>
+                <span>Console</span>
+              </div>
+              <button id="clear-console"
+                style="color: #666; font-size: 0.8rem; background:none; border:none; cursor:pointer; display: flex; align-items: center; gap: 4px;">
+                <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
+                Clear
+              </button>
             </div>
             <div id="console-logs"></div>
           </div>
@@ -95,10 +166,15 @@
   </div>
 </div>
 
+<script>
+  // Force full mode for this tool
+  document.body.classList.add('is-playground');
+</script>
+
 <!-- Monaco Editor Loader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
 <!-- LZ-String for URL Compression -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
 <!-- External Examples Data -->
-<script src="./examples.js"></script>
+<script src="<%= toolConfig._assets.js.replace('script.js', 'examples.js') %>"></script>
 <script src="<%= toolConfig._assets.js %>"></script>

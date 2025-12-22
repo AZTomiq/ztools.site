@@ -1,6 +1,6 @@
 id: bmi
 category: daily
-icon: ⚖️
+icon: scale
 translationKey: bmi
 status: not-ready
 link: /bmi/

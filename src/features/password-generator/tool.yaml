@@ -1,6 +1,6 @@
 id: password-generator
 category: generator
-icon: 🔐
+icon: key-round
 translationKey: password
 status: not-ready
 link: /password-generator/
@@ -60,7 +60,7 @@ actions:
     label: password.form.btn_generate
     function: generatePassword
   secondary:
-    - icon: 📋
+    - icon: clipboard
       title: password.form.btn_copy
       function: copyPassword
 output:

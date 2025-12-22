@@ -1,5 +1,5 @@
 id: text-diff
 category: text
-icon: ↔️
+icon: file-diff
 translationKey: features.textDiff
 status: not-ready

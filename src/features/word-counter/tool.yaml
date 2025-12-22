@@ -1,6 +1,6 @@
 id: word-counter
 category: text
-icon: 📊
+icon: bar-chart-3
 translationKey: word_counter
 status: not-ready
 link: /word-counter/

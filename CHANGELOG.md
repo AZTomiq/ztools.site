@@ -5,6 +5,44 @@ Tất cả các thay đổi quan trọng đối với dự án **ZTools** sẽ �
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 và dự án này tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-12-23
+
+### Added
+- **Web Playground IDE Master Toolbar**: Tối ưu hóa không gian hiển thị code với thanh công cụ siêu mỏng (45px), tích hợp menu điều hướng và công cụ tìm kiếm toàn cục.
+- **Advanced Todo Master**: Nâng cấp ví dụ Todo List thành ứng dụng quản lý tác vụ chuyên nghiệp với tính năng lọc (Filter), thống kê (Stats) và lưu trữ dữ liệu (Persistence).
+- **Changelog Page**: Trang theo dõi lịch sử cập nhật công khai cho người dùng.
+
+### Changed
+- **Blog UI**: Nút "More stories" được thiết kế lại với icon và hiệu ứng hover hiện đại.
+- **Search Box**: Cải thiện căn chỉnh và hiển thị của ô tìm kiếm trong chế độ Compact (Playground).
+- **Header**: Tối ưu hóa việc hiển thị header mặc định (ẩn đi khi vào chế độ Playground IDE).
+
+## [1.4.0] - 2025-12-22
+
+### Added
+- **Web Playground IDE**: Nâng cấp toàn diện giao diện Playground thành một IDE thực thụ với chế độ tràn màn hình (Immersive Mode).
+- **Resizing system**: Hỗ trợ kéo dãn linh hoạt giữa các cột code (HTML | JS | CSS) và khu vực kết quả (Preview).
+- **Modular Examples**: Hệ thống ví dụ code được cấu trúc lại theo từng folder độc lập, tự động đóng gói khi build.
+- **Premium Examples**: Bổ sung các ví dụ "vọc" code đỉnh cao: Visualize B-Tree (Cây nhị phân), Mindmap Maker (Sơ đồ tư duy), World Clock và Premium Glassmorphism.
+- **Stateful Sharing**: Link chia sẻ (Share URL) giờ đây lưu giữ chính xác trạng thái đóng/mở của từng Pane code.
+
+### Changed
+- **UI UX**: Thay thế checkbox Auto-run bằng nút Toggle Switch chuẩn iOS sang trọng.
+- **Pane Order**: Sắp xếp lại thứ tự ưu tiên các Pane thành HTML | JS | CSS phù hợp với quy trình làm việc chuẩn.
+- **Full-screen Preview**: Nút thu phóng kết quả cho phép xem sản phẩm 100% diện tích màn hình.
+
+## [1.3.0] - 2025-12-22
+
+### Added
+- **JSON Toolkit UI Refactor**: Tách tab Thông minh (Format, Convert, Tools dashboard) giúp quản lý hàng chục sub-tools một cách khoa học.
+- **JSON Tree View**: Tích hợp trình xem dữ liệu dạng cây (interactive tree) hỗ trợ expand/collapse, tìm đường dẫn (path) và copy nhanh.
+- **Advanced Tool Workspace**: Giao diện Dashboard đặc biệt cho Dev Tools, tối ưu cho các thao tác chuyển đổi CSV/SQL/JS Object sang JSON.
+
+### Fixed
+- **PWA Dev-Mode**: Vô hiệu hóa Service Worker cache trong môi trường development giúp cập nhật code tức thì không cần hard-refresh.
+- **UI Alignment**: Đồng bộ hóa layout các nút hành động (action buttons) căn phải chuẩn Dashboard cho toàn bộ site.
+- **Clipboard Polish**: Thay thế các popup alert() bằng phản hồi trạng thái "Copied!" trực quan trên nút bấm.
+
 ## [1.2.0] - 2025-12-18
 
 ### Added

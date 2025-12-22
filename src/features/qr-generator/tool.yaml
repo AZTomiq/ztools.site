@@ -1,6 +1,6 @@
 id: qr-generator
 link: /qr-generator/
-icon: 🔳
+icon: qr-code
 category: dev
 status: not-ready
 translationKey: qr

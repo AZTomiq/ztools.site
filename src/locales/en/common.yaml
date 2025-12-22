@@ -7,6 +7,8 @@ privacy:
   title: Privacy Policy
 terms:
   title: Terms of Service
+changelog:
+  title: Version History
 common:
   legacy_title: Legacy Version
   legacy_desc: This tool has been integrated into the new Master toolkit.
@@ -24,6 +26,7 @@ nav:
   menu_generator: Generators
   menu_categories: Categories
   menu_dev: Dev Tools
+  blog: Dev Blog
   search_placeholder: "Search tools... (Ctrl + K)"
   search_no_results: No results found for
   search_title: Search Tools
@@ -83,6 +86,7 @@ footer:
   intro: About
   policy: Privacy Policy
   terms: Terms of Service
+  changelog: Versions
   copyright: "© 2025 ZTools. Built with ❤️."
 
 # Master Tools Translations

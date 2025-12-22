@@ -1,477 +1,59 @@
-/**
- * ZTools Playground Examples Library
- * This file contains the source code for the examples shown in the sidebar.
- * It is loaded before the main script.js
- */
-
+/** Generated File - Do Not Edit Directly **/
 window.PLAYGROUND_EXAMPLES = [
   {
-    id: 'glassmorphism',
-    title: '✨ Glassmorphism',
-    html: `<!DOCTYPE html>
-<html>
-<body>
-<div class="container">
-    <div class="card">
-        <div class="content">
-            <h2>Glassmorphism</h2>
-            <p>A modern UI trend focusing on frosting glass effect.</p>
-            <a href="#">Read More</a>
-        </div>
-    </div>
-</div>
-</body>
-</html>`,
-    css: `body {
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh;
-background: #161623;
-}
-
-.container {
-position: relative;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
-.card {
-position: relative;
-width: 280px;
-height: 400px;
-margin: 30px;
-box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
-border-radius: 15px;
-background: rgba(255,255,255,0.1);
-overflow: hidden;
-display: flex;
-justify-content: center;
-align-items: center;
-border-top: 1px solid rgba(255,255,255,0.5);
-border-left: 1px solid rgba(255,255,255,0.5);
-backdrop-filter: blur(5px);
-}
-
-.content {
-padding: 20px;
-text-align: center;
-color: #fff;
-}
-
-.content h2 {
-font-size: 2em;
-margin-bottom: 10px;
-}
-
-.content a {
-display: inline-block;
-padding: 8px 20px;
-margin-top: 15px;
-background: #fff;
-color: #000;
-border-radius: 20px;
-text-decoration: none;
-font-weight: 500;
-}`,
-    js: `// Interact with the card
-const card = document.querySelector('.card');
-card.addEventListener('mousemove', (e) => {
-// Add cool tilt effect here if desired
-console.log('Mouse at', e.clientX, e.clientY);
-})`
+    "id": "b-tree-visualizer",
+    "title": "🌳 B-Tree Visualizer (SQL Index)",
+    "html": "<div class=\"controls\">\n  <input type=\"text\" id=\"node-val\" placeholder=\"Value (Text or Number)\">\n  <button onclick=\"addNode()\">Insert</button>\n  <button onclick=\"resetTree()\">Reset</button>\n</div>\n<div id=\"tree-container\">\n  <svg id=\"tree-svg\" width=\"100%\" height=\"100%\"></svg>\n</div>",
+    "css": "body {\n  background: #0f172a;\n  color: #fff;\n  margin: 0;\n  padding: 20px;\n  font-family: 'Monaco', monospace;\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n}\n\n.controls {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 20px;\n  z-index: 10;\n  justify-content: center;\n}\n\ninput {\n  background: #1e293b;\n  border: 1px solid #334155;\n  color: white;\n  padding: 5px 10px;\n  border-radius: 4px;\n  outline: none;\n}\n\nbutton {\n  background: #0ea5e9;\n  color: white;\n  border: none;\n  padding: 5px 15px;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\nbutton:hover {\n  background: #0284c7;\n}\n\n#tree-container {\n  flex: 1;\n  position: relative;\n  overflow: hidden;\n}\n\nsvg {\n  width: 100%;\n  height: 100%;\n  cursor: grab;\n}\n\n.node-rect {\n  fill: #1e293b;\n  stroke: #0ea5e9;\n  stroke-width: 2px;\n}\n\n.node-text {\n  fill: #f1f5f9;\n  font-size: 13px;\n  font-weight: bold;\n  text-anchor: middle;\n  dominant-baseline: middle;\n  pointer-events: none;\n}\n\n.tree-edge {\n  stroke: #334155;\n  stroke-width: 2px;\n}",
+    "js": "class BTreeNode {\n  constructor(leaf = true) {\n    this.leaf = leaf;\n    this.keys = [];\n    this.children = [];\n    this.x = 0; this.y = 0;\n  }\n}\n\nclass BTree {\n  constructor(t) {\n    this.t = t; // Minimum degree\n    this.root = new BTreeNode();\n  }\n\n  insert(k) {\n    let r = this.root;\n    if (r.keys.length === 2 * this.t - 1) {\n      let s = new BTreeNode(false);\n      this.root = s;\n      s.children[0] = r;\n      this.splitChild(s, 0, r);\n      this.insertNonFull(s, k);\n    } else {\n      this.insertNonFull(r, k);\n    }\n  }\n\n  insertNonFull(x, k) {\n    let i = x.keys.length - 1;\n    if (x.leaf) {\n      while (i >= 0 && this.compare(k, x.keys[i]) < 0) {\n        x.keys[i + 1] = x.keys[i];\n        i--;\n      }\n      x.keys[i + 1] = k;\n    } else {\n      while (i >= 0 && this.compare(k, x.keys[i]) < 0) i--;\n      i++;\n      if (x.children[i].keys.length === 2 * this.t - 1) {\n        this.splitChild(x, i, x.children[i]);\n        if (this.compare(k, x.keys[i]) > 0) i++;\n      }\n      this.insertNonFull(x.children[i], k);\n    }\n  }\n\n  splitChild(x, i, y) {\n    let z = new BTreeNode(y.leaf);\n    z.keys = y.keys.splice(this.t, this.t - 1);\n    if (!y.leaf) {\n      z.children = y.children.splice(this.t, this.t);\n    }\n    x.children.splice(i + 1, 0, z);\n    x.keys.splice(i, 0, y.keys.pop());\n  }\n\n  compare(a, b) {\n    const na = parseFloat(a), nb = parseFloat(b);\n    if (!isNaN(na) && !isNaN(nb)) return na - nb;\n    return String(a).localeCompare(String(b));\n  }\n}\n\nlet tree = new BTree(2); // Order 4 (2-3-4 tree)\nconst svg = document.getElementById('tree-svg');\nconst verticalGap = 70;\nconst nodePadding = 15;\n\nfunction addNode() {\n  const input = document.getElementById('node-val');\n  const val = input.value.trim();\n  if (!val) return;\n  tree.insert(val);\n  input.value = '';\n  draw();\n  console.log('Inserted B-Tree Key:', val);\n}\n\nfunction resetTree() { tree = new BTree(2); draw(); console.log('B-Tree Reset'); }\n\nfunction calculatePositions(node, x, y, width) {\n  if (!node) return;\n  node.x = x;\n  node.y = y;\n  const childCount = node.children.length;\n  if (childCount > 0) {\n    const step = width / childCount;\n    node.children.forEach((child, i) => {\n      calculatePositions(child, x - width / 2 + step * (i + 0.5), y + verticalGap, step);\n    });\n  }\n}\n\nfunction draw() {\n  svg.innerHTML = '';\n  if (!tree.root.keys.length && !tree.root.children.length) return;\n  const w = svg.clientWidth || 800;\n  calculatePositions(tree.root, w / 2, 40, w);\n  render(tree.root);\n}\n\nfunction render(node) {\n  if (!node) return;\n  node.children.forEach(child => {\n    line(node.x, node.y, child.x, child.y);\n    render(child);\n  });\n\n  const g = document.createElementNS(\"http://www.w3.org/2000/svg\", \"g\");\n  const text = node.keys.join(' | ');\n\n  // Create auto-sizing box\n  const tempText = document.createElementNS(\"http://www.w3.org/2000/svg\", \"text\");\n  tempText.setAttribute(\"class\", \"node-text\");\n  tempText.textContent = text;\n  svg.appendChild(tempText);\n  const bbox = tempText.getBBox();\n  svg.removeChild(tempText);\n\n  const rectW = Math.max(40, bbox.width + nodePadding * 2);\n  const rectH = 30;\n\n  const r = document.createElementNS(\"http://www.w3.org/2000/svg\", \"rect\");\n  r.setAttribute(\"x\", node.x - rectW / 2); r.setAttribute(\"y\", node.y - rectH / 2);\n  r.setAttribute(\"width\", rectW); r.setAttribute(\"height\", rectH);\n  r.setAttribute(\"rx\", 4); r.setAttribute(\"class\", \"node-rect\");\n\n  const t = document.createElementNS(\"http://www.w3.org/2000/svg\", \"text\");\n  t.setAttribute(\"x\", node.x); t.setAttribute(\"y\", node.y + 5);\n  t.setAttribute(\"class\", \"node-text\");\n  t.textContent = text;\n\n  g.appendChild(r); g.appendChild(t); svg.appendChild(g);\n}\n\nfunction line(x1, y1, x2, y2) {\n  const l = document.createElementNS(\"http://www.w3.org/2000/svg\", \"line\");\n  l.setAttribute(\"x1\", x1); l.setAttribute(\"y1\", y1 + 15);\n  l.setAttribute(\"x2\", x2); l.setAttribute(\"y2\", y2 - 15);\n  l.setAttribute(\"class\", \"tree-edge\");\n  svg.insertBefore(l, svg.firstChild);\n}\n\nwindow.addEventListener('resize', draw);\nsetTimeout(draw, 100);"
   },
   {
-    id: 'todo',
-    title: '📝 Simple Todo List',
-    html: `<div class="app">
-<h1>My Tasks</h1>
-<div class="input-group">
-<input type="text" id="taskInput" placeholder="Add a new task...">
-<button id="addBtn">Add</button>
-</div>
-<ul id="taskList"></ul>
-</div>`,
-    css: `body {
-font-family: 'Segoe UI', sans-serif;
-background: #f0f2f5;
-display: flex;
-justify-content: center;
-padding-top: 50px;
-}
-.app {
-background: white;
-padding: 2rem;
-border-radius: 12px;
-box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-width: 350px;
-}
-h1 { margin-top: 0; color: #1a1a1a; }
-.input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-input {
-flex: 1;
-padding: 8px;
-border: 1px solid #ddd;
-border-radius: 4px;
-}
-button {
-background: #0891b2;
-color: white;
-border: none;
-padding: 8px 16px;
-border-radius: 4px;
-cursor: pointer;
-}
-button:hover { background: #0e7490; }
-ul { list-style: none; padding: 0; }
-li {
-padding: 10px;
-border-bottom: 1px solid #eee;
-display: flex;
-justify-content: space-between;
-}
-li button {
-background: #ef4444; 
-padding: 4px 8px; 
-font-size: 0.8rem;
-}`,
-    js: `const input = document.getElementById('taskInput');
-const btn = document.getElementById('addBtn');
-const list = document.getElementById('taskList');
-
-btn.addEventListener('click', () => {
-const text = input.value;
-if(!text) return;
-
-const li = document.createElement('li');
-li.innerHTML = \`<span>\${text}</span> <button onclick="this.parentElement.remove()">❌</button>\`;
-list.appendChild(li);
-
-input.value = '';
-console.log('Task added:', text);
-});`
+    "id": "clock",
+    "title": "⏰ Analog Clock",
+    "html": "<div class=\"clock\">\n<div class=\"hand hour\" id=\"hour\"></div>\n<div class=\"hand minute\" id=\"minute\"></div>\n<div class=\"hand second\" id=\"second\"></div>\n</div>",
+    "css": "body {\nbackground: #282c34;\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nheight: 100vh;\n}\n.clock {\nwidth: 200px;\nheight: 200px;\nborder: 10px solid #fff;\nborder-radius: 50%;\nposition: relative;\nbackground: rgba(255,255,255,0.1);\n}\n.hand {\nposition: absolute;\nbottom: 50%;\nleft: 50%;\ntransform-origin: bottom;\nbackground: white;\nborder-radius: 4px;\n}\n.hour { width: 6px; height: 60px; margin-left: -3px; background: #61dafb; }\n.minute { width: 4px; height: 80px; margin-left: -2px; }\n.second { width: 2px; height: 90px; margin-left: -1px; background: #ff4757; }",
+    "js": "function updateClock() {\nconst now = new Date();\n\nconst sec = now.getSeconds();\nconst min = now.getMinutes();\nconst hour = now.getHours();\n\nconst secDeg = ((sec / 60) * 360);\nconst minDeg = ((min / 60) * 360) + ((sec/60)*6);\nconst hourDeg = ((hour / 12) * 360) + ((min/60)*30);\n\ndocument.getElementById('second').style.transform = `rotate(${secDeg}deg)`;\ndocument.getElementById('minute').style.transform = `rotate(${minDeg}deg)`;\ndocument.getElementById('hour').style.transform = `rotate(${hourDeg}deg)`;\n}\n\nsetInterval(updateClock, 1000);\nupdateClock();\nconsole.log('Clock started');"
   },
   {
-    id: 'clock',
-    title: '⏰ Analog Clock',
-    html: `<div class="clock">
-<div class="hand hour" id="hour"></div>
-<div class="hand minute" id="minute"></div>
-<div class="hand second" id="second"></div>
-</div>`,
-    css: `body {
-background: #282c34;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-}
-.clock {
-width: 200px;
-height: 200px;
-border: 10px solid #fff;
-border-radius: 50%;
-position: relative;
-background: rgba(255,255,255,0.1);
-}
-.hand {
-position: absolute;
-bottom: 50%;
-left: 50%;
-transform-origin: bottom;
-background: white;
-border-radius: 4px;
-}
-.hour { width: 6px; height: 60px; margin-left: -3px; background: #61dafb; }
-.minute { width: 4px; height: 80px; margin-left: -2px; }
-.second { width: 2px; height: 90px; margin-left: -1px; background: #ff4757; }`,
-    js: `function updateClock() {
-const now = new Date();
-
-const sec = now.getSeconds();
-const min = now.getMinutes();
-const hour = now.getHours();
-
-const secDeg = ((sec / 60) * 360);
-const minDeg = ((min / 60) * 360) + ((sec/60)*6);
-const hourDeg = ((hour / 12) * 360) + ((min/60)*30);
-
-document.getElementById('second').style.transform = \`rotate(\${secDeg}deg)\`;
-document.getElementById('minute').style.transform = \`rotate(\${minDeg}deg)\`;
-document.getElementById('hour').style.transform = \`rotate(\${hourDeg}deg)\`;
-}
-
-setInterval(updateClock, 1000);
-updateClock();
-console.log('Clock started');`
+    "id": "css-i18n",
+    "title": "🌍 CSS-only i18n",
+    "html": "<div class=\"container\" lang=\"en\">\n<div class=\"lang-switch\">\n<button onclick=\"setLang('en')\">🇺🇸 English</button>\n<button onclick=\"setLang('vi')\">🇻🇳 Tiếng Việt</button>\n<button onclick=\"setLang('jp')\">🇯🇵 日本語</button>\n</div>\n\n<div class=\"card\">\n<h1 class=\"greeting\"></h1>\n<p class=\"description\"></p>\n<button class=\"cta\"></button>\n</div>\n</div>",
+    "css": "/* Dictionary Definitions using CSS Variables */\n:root {\n--txt-hello: \"Hello World\";\n--txt-desc: \"Welcome to our website.\";\n--txt-cta: \"Get Started\";\n}\n\n/* Vietnamese Overrides */\n:lang(vi) {\n--txt-hello: \"Xin Chào\";\n--txt-desc: \"Chào mừng đến với website của chúng tôi.\";\n--txt-cta: \"Bắt Đầu Ngay\";\n}\n\n/* Japanese Overrides */\n:lang(jp) {\n--txt-hello: \"こんにちは\";\n--txt-desc: \"私たちのウェブサイトへようこそ。\";\n--txt-cta: \"始めましょう\";\n}\n\n/* Applying Content */\n.greeting::before { content: var(--txt-hello); }\n.description::before { content: var(--txt-desc); }\n.cta::before { content: var(--txt-cta); }\n\n/* Basic Styling */\nbody {\nfont-family: sans-serif;\nbackground: #f0f4f8;\ndisplay: flex;\njustify-content: center;\nalign-items: center;\nheight: 100vh;\n}\n.card {\nbackground: white;\npadding: 2rem;\nborder-radius: 12px;\ntext-align: center;\nbox-shadow: 0 4px 12px rgba(0,0,0,0.1);\n}\n.lang-switch { margin-bottom: 2rem; }\nbutton {\ncursor: pointer;\npadding: 5px 10px;\nmargin: 0 5px;\nborder: 1px solid #ddd;\nbackground: white;\nborder-radius: 4px;\n}\n.cta {\nbackground: #2563eb;\ncolor: white;\nborder: none;\npadding: 10px 20px;\nfont-weight: bold;\nmargin-top: 1rem;\n}",
+    "js": "function setLang(code) {\n// Just change the lang attribute on the container\n// CSS handles the text replacement! 🤯\ndocument.querySelector('.container').setAttribute('lang', code);\nconsole.log('Language switched to:', code);\n}"
   },
   {
-    id: 'voting',
-    title: '⭐ Voting & Polls',
-    html: `<div class="card feedback-card">
-  <h2>Product Feedback</h2>
-  <p>What do you think about our new feature?</p>
-  
-  <!-- Star Rating Section -->
-  <div class="rating-section">
-      <div class="stars" id="star-container">
-          <span class="star" data-value="1">★</span>
-          <span class="star" data-value="2">★</span>
-          <span class="star" data-value="3">★</span>
-          <span class="star" data-value="4">★</span>
-          <span class="star" data-value="5">★</span>
-      </div>
-      <div class="rating-text" id="rating-text">Rate us!</div>
-  </div>
-
-  <hr>
-
-  <!-- Poll Section -->
-  <h3>Quick Poll: Favorite Framework?</h3>
-  <div class="poll-options">
-      <div class="option" onclick="vote('react')">
-          <div class="label-row">
-              <span>React</span>
-              <span id="pct-react">40%</span>
-          </div>
-          <div class="bar-bg"><div class="bar" id="bar-react" style="width: 40%"></div></div>
-      </div>
-      <div class="option" onclick="vote('vue')">
-          <div class="label-row">
-              <span>Vue</span>
-              <span id="pct-vue">35%</span>
-          </div>
-          <div class="bar-bg"><div class="bar" id="bar-vue" style="width: 35%"></div></div>
-      </div>
-      <div class="option" onclick="vote('svelte')">
-          <div class="label-row">
-              <span>Svelte</span>
-              <span id="pct-svelte">25%</span>
-          </div>
-          <div class="bar-bg"><div class="bar" id="bar-svelte" style="width: 25%"></div></div>
-      </div>
-  </div>
-</div>`,
-    css: `body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #111827; /* Dark bg */
-  color: #e5e7eb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.card {
-  background: #1f2937;
-  padding: 2rem;
-  border-radius: 12px;
-  width: 380px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  border: 1px solid #374151;
-}
-
-h2 { margin-top: 0; color: #60a5fa; }
-h3 { font-size: 1rem; color: #9ca3af; margin-bottom: 1rem; }
-p { color: #d1d5db; }
-hr { border: 0; border-top: 1px solid #374151; margin: 1.5rem 0; }
-
-/* Star Rating */
-.rating-section {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-.stars {
-    font-size: 2.5rem;
-    cursor: pointer;
-    color: #4b5563; /* Inactive color */
-}
-.star {
-    transition: color 0.2s, transform 0.1s;
-    display: inline-block;
-}
-.star:hover {
-    transform: scale(1.2);
-}
-.star.active {
-    color: #fbbf24; /* Gold */
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-}
-.rating-text {
-    margin-top: 0.5rem;
-    font-weight: 600;
-    color: #fbbf24;
-    height: 1.5em; 
-}
-
-/* Poll Bars */
-.option {
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: opacity 0.2s;
-}
-.option:hover { opacity: 0.9; }
-
-.label-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
-}
-
-.bar-bg {
-    height: 8px;
-    background: #374151;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.bar {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.5s ease-out;
-}
-
-#bar-react { background: #61dafb; }
-#bar-vue { background: #42b883; }
-#bar-svelte { background: #ff3e00; }`,
-    js: `// --- Star Rating Logic ---
-const stars = document.querySelectorAll('.star');
-const ratingText = document.getElementById('rating-text');
-const messages = ['Terrible 😭', 'Bad 😞', 'Okay 😐', 'Good 🙂', 'Amazing! 🤩'];
-
-stars.forEach(star => {
-    // Hover Effect
-    star.addEventListener('mouseenter', () => {
-        const val = parseInt(star.dataset.value);
-        highlightStars(val);
-        ratingText.textContent = messages[val - 1]; 
-    });
-    
-    // Click Effect
-    star.addEventListener('click', () => {
-        const val = parseInt(star.dataset.value);
-        // Persist selection (visually) by adding a class to container
-        document.getElementById('star-container').dataset.rating = val;
-        console.log(\`User rated: \${val} stars (\${messages[val-1]})\`);
-    });
-});
-
-// Reset on mouse leave if not clicked
-document.getElementById('star-container').addEventListener('mouseleave', () => {
-    const saved = parseInt(document.getElementById('star-container').dataset.rating) || 0;
-    highlightStars(saved);
-    ratingText.textContent = saved ? messages[saved - 1] : 'Rate us!';
-});
-
-function highlightStars(count) {
-    stars.forEach(s => {
-        const val = parseInt(s.dataset.value);
-        if (val <= count) s.classList.add('active');
-        else s.classList.remove('active');
-    });
-}
-
-// --- Poll Logic ---
-let votes = { react: 40, vue: 35, svelte: 25 };
-
-function vote(tech) {
-    votes[tech] += 5; // increment
-    const total = votes.react + votes.vue + votes.svelte;
-    
-    // Update all bars
-    Object.keys(votes).forEach(key => {
-        const pct = Math.round((votes[key] / total) * 100);
-        document.getElementById(\`bar-\${key}\`).style.width = \`\${pct}%\`;
-        document.getElementById(\`pct-\${key}\`).textContent = \`\${pct}%\`;
-    });
-    
-    console.log(\`Voted for \${tech}\`);
-}
-`
+    "id": "glassmorphism",
+    "title": "✨ Premium Glassmorphism",
+    "html": "<!DOCTYPE html>\n<html>\n<body>\n  <div class=\"background-blobs\">\n    <div class=\"blob color-1\"></div>\n    <div class=\"blob color-2\"></div>\n    <div class=\"blob color-3\"></div>\n  </div>\n  \n  <div class=\"container\">\n    <div class=\"glass-card\">\n      <div class=\"content\">\n        <span class=\"badge\">Trending UI</span>\n        <h2>Glassmorphism 2.0</h2>\n        <p>This premium effect combines multi-layered blur, translucent borders, and vivid backgrounds for a depth-rich experience.</p>\n        <div class=\"stats\">\n          <div class=\"stat\"><span>Soft</span>Blur</div>\n          <div class=\"stat\"><span>Vivid</span>Colors</div>\n        </div>\n        <button class=\"btn-glass\">Experience Now</button>\n      </div>\n    </div>\n  </div>\n</body>\n</html>",
+    "css": "body {\n  margin: 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n  background: #050510;\n  overflow: hidden;\n  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;\n}\n\n/* Dynamic Background Shapes */\n.background-blobs {\n  position: fixed;\n  top: 0; left: 0; width: 100%; height: 100%;\n  z-index: -1;\n}\n\n.blob {\n  position: absolute;\n  width: 400px; height: 400px;\n  background: linear-gradient(135deg, #0ea5e9, #6366f1);\n  filter: blur(80px);\n  border-radius: 50%;\n  opacity: 0.5;\n  animation: move 15s infinite alternate ease-in-out;\n}\n\n.color-1 { top: -100px; right: -50px; background: #6366f1; }\n.color-2 { bottom: -150px; left: -100px; background: #ec4899; animation-delay: -5s; }\n.color-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0ea5e9; width: 300px; height: 300px; opacity: 0.3; }\n\n@keyframes move {\n  from { transform: translate(0, 0) scale(1); }\n  to { transform: translate(100px, 50px) scale(1.2); }\n}\n\n.container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  padding: 20px;\n}\n\n.glass-card {\n  position: relative;\n  width: 340px;\n  min-height: 450px;\n  background: rgba(255, 255, 255, 0.05);\n  border-radius: 24px;\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n  border: 1px solid rgba(255, 255, 255, 0.15);\n  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  padding: 40px;\n  transition: 0.4s;\n}\n\n.glass-card:hover {\n  transform: translateY(-10px);\n  border-color: rgba(255, 255, 255, 0.3);\n  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);\n}\n\n.content {\n  color: white;\n  text-align: left;\n}\n\n.badge {\n  background: rgba(255,255,255,0.1);\n  padding: 4px 12px;\n  border-radius: 50px;\n  font-size: 0.75rem;\n  letter-spacing: 1px;\n  text-transform: uppercase;\n  margin-bottom: 20px;\n  display: inline-block;\n  border: 1px solid rgba(255,255,255,0.1);\n}\n\n.content h2 {\n  font-size: 2.2rem;\n  margin: 0 0 15px 0;\n  font-weight: 800;\n}\n\n.content p {\n  font-size: 0.95rem;\n  line-height: 1.6;\n  color: rgba(255, 255, 255, 0.7);\n  margin-bottom: 30px;\n}\n\n.stats {\n  display: flex;\n  gap: 30px;\n  margin-bottom: 40px;\n}\n\n.stat {\n  font-size: 0.7rem;\n  color: rgba(255, 255, 255, 0.5);\n  text-transform: uppercase;\n}\n\n.stat span {\n  display: block;\n  font-size: 1.1rem;\n  color: white;\n  font-weight: 700;\n}\n\n.btn-glass {\n  width: 100%;\n  padding: 12px;\n  background: white;\n  color: #050510;\n  border: none;\n  border-radius: 12px;\n  font-weight: 700;\n  font-size: 1rem;\n  cursor: pointer;\n  transition: 0.3s;\n}\n\n.btn-glass:hover {\n  background: #6366f1;\n  color: white;\n  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);\n}",
+    "js": "// Tilt Effect Logic\nconst card = document.querySelector('.glass-card');\n\ndocument.addEventListener('mousemove', (e) => {\n  const xAxis = (window.innerWidth / 2 - e.pageX) / 25;\n  const yAxis = (window.innerHeight / 2 - e.pageY) / 25;\n  card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;\n});\n\nconsole.log('Premium Tilt Glass effect ready! ✨');"
   },
   {
-    id: 'css-i18n',
-    title: '🌍 CSS-only i18n',
-    html: `<div class="container" lang="en">
-<div class="lang-switch">
-<button onclick="setLang('en')">🇺🇸 English</button>
-<button onclick="setLang('vi')">🇻🇳 Tiếng Việt</button>
-<button onclick="setLang('jp')">🇯🇵 日本語</button>
-</div>
-
-<div class="card">
-<h1 class="greeting"></h1>
-<p class="description"></p>
-<button class="cta"></button>
-</div>
-</div>`,
-    css: `/* Dictionary Definitions using CSS Variables */
-:root {
---txt-hello: "Hello World";
---txt-desc: "Welcome to our website.";
---txt-cta: "Get Started";
-}
-
-/* Vietnamese Overrides */
-:lang(vi) {
---txt-hello: "Xin Chào";
---txt-desc: "Chào mừng đến với website của chúng tôi.";
---txt-cta: "Bắt Đầu Ngay";
-}
-
-/* Japanese Overrides */
-:lang(jp) {
---txt-hello: "こんにちは";
---txt-desc: "私たちのウェブサイトへようこそ。";
---txt-cta: "始めましょう";
-}
-
-/* Applying Content */
-.greeting::before { content: var(--txt-hello); }
-.description::before { content: var(--txt-desc); }
-.cta::before { content: var(--txt-cta); }
-
-/* Basic Styling */
-body {
-font-family: sans-serif;
-background: #f0f4f8;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-}
-.card {
-background: white;
-padding: 2rem;
-border-radius: 12px;
-text-align: center;
-box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.lang-switch { margin-bottom: 2rem; }
-button {
-cursor: pointer;
-padding: 5px 10px;
-margin: 0 5px;
-border: 1px solid #ddd;
-background: white;
-border-radius: 4px;
-}
-.cta {
-background: #2563eb;
-color: white;
-border: none;
-padding: 10px 20px;
-font-weight: bold;
-margin-top: 1rem;
-}`,
-    js: `function setLang(code) {
-// Just change the lang attribute on the container
-// CSS handles the text replacement! 🤯
-document.querySelector('.container').setAttribute('lang', code);
-console.log('Language switched to:', code);
-}`
+    "id": "mindmap",
+    "title": "🧠 Mindmap Maker",
+    "html": "<div class=\"mindmap-container\">\n  <div class=\"sidebar\">\n    <h4>Mental Map Nodes</h4>\n    <p>Type each line for a node:</p>\n    <textarea id=\"map-data\" spellcheck=\"false\">Coding\n  HTML\n    Tags\n    Semantics\n  CSS\n    Flexbox\n    Grid\n  JavaScript\n    Async\n    DOM</textarea>\n  </div>\n  <div class=\"map-view\" id=\"map-view\"></div>\n</div>",
+    "css": "body { background: #0f172a; color: #fff; margin: 0; font-family: sans-serif; }\n.mindmap-container { display: flex; height: 100vh; }\n.sidebar { width: 250px; background: #1e293b; padding: 20px; border-right: 1px solid #334155; }\n.sidebar h4 { margin: 0 0 10px; color: #38bdf8; }\ntextarea { width: 100%; height: 80%; background: #0f172a; border: 1px solid #334155; color: #94a3b8; padding: 10px; border-radius: 4px; font-family: monospace; resize: none; }\n.map-view { flex: 1; position: relative; overflow: auto; padding: 50px; display: flex; align-items: center; justify-content: center; }\n.node { background: #1e293b; padding: 10px 15px; border-radius: 8px; border: 1px solid #0ea5e9; color: #fff; position: relative; white-space: nowrap; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }\n.map-tree-wrapper ul { display: flex; padding-top: 20px; position: relative; transition: all 0.5s; padding-left: 0; }\n.map-tree-wrapper li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }\n.map-tree-wrapper li::before, .map-tree-wrapper li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 1px solid #334155; width: 50%; height: 20px; }\n.map-tree-wrapper li::after { right: auto; left: 50%; border-left: 1px solid #334155; }\n.map-tree-wrapper li:only-child::after, .map-tree-wrapper li:only-child::before { display: none; }\n.map-tree-wrapper li:only-child { padding-top: 0; }\n.map-tree-wrapper li:first-child::before, .map-tree-wrapper li:last-child::after { border: 0 none; }\n.map-tree-wrapper li:last-child::before { border-right: 1px solid #334155; border-radius: 0 5px 0 0; }\n.map-tree-wrapper li:first-child::after { border-radius: 5px 0 0 0; }\n.map-tree-wrapper ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 1px solid #334155; width: 0; height: 20px; }",
+    "js": "const textarea = document.getElementById('map-data');\nconst view = document.getElementById('map-view');\n\ntextarea.addEventListener('input', updateMap);\n\nfunction parseText(text) {\n  const lines = text.split('\\n').filter(l => l.trim());\n  if (!lines.length) return null;\n  \n  const root = { name: lines[0].trim(), children: [] };\n  const stack = [{ node: root, indent: getIndent(lines[0]) }];\n  \n  for (let i = 1; i < lines.length; i++) {\n    const indent = getIndent(lines[i]);\n    const name = lines[i].trim();\n    const node = { name, children: [] };\n    \n    while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {\n      stack.pop();\n    }\n    \n    stack[stack.length - 1].node.children.push(node);\n    stack.push({ node, indent });\n  }\n  return root;\n}\n\nfunction getIndent(line) { return line.match(/^\\s*/)[0].length; }\n\nfunction createHTML(node) {\n  let html = `<li><div class=\"node\">${node.name}</div>`;\n  if (node.children.length) {\n    html += `<ul>`;\n    node.children.forEach(c => html += createHTML(c));\n    html += `</ul>`;\n  }\n  html += `</li>`;\n  return html;\n}\n\nfunction updateMap() {\n  const data = parseText(textarea.value);\n  if (!data) { view.innerHTML = ''; return; }\n  view.innerHTML = `<div class=\"map-tree-wrapper\"><ul>${createHTML(data)}</ul></div>`;\n}\n\nupdateMap();"
+  },
+  {
+    "id": "todo",
+    "title": "✅ Advanced Todo Master",
+    "html": "<div class=\"app-container\">\n  <div class=\"todo-card\">\n    <div class=\"todo-header\">\n      <h1>My Tasks</h1>\n      <p id=\"task-stats\">0 tasks remaining</p>\n    </div>\n\n    <div class=\"input-wrapper\">\n      <input type=\"text\" id=\"taskInput\" placeholder=\"What needs to be done?\" autocomplete=\"off\">\n      <button id=\"addBtn\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\"\n          stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n          <line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"></line>\n          <line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"></line>\n        </svg>\n      </button>\n    </div>\n\n    <div class=\"filter-bar\">\n      <button class=\"filter-btn active\" data-filter=\"all\">All</button>\n      <button class=\"filter-btn\" data-filter=\"active\">Active</button>\n      <button class=\"filter-btn\" data-filter=\"completed\">Done</button>\n    </div>\n\n    <ul id=\"taskList\" class=\"task-list\"></ul>\n\n    <div class=\"todo-footer\">\n      <button id=\"clearCompleted\" class=\"text-btn\">Clear Completed</button>\n    </div>\n  </div>\n</div>",
+    "css": ":root {\n  --primary: #0891b2;\n  --primary-light: #ecfeff;\n  --text: #0f172a;\n  --text-muted: #64748b;\n  --bg-page: #f8fafc;\n  --card-bg: #ffffff;\n  --border: #e2e8f0;\n  --danger: #ef4444;\n  --success: #22c55e;\n}\n\n[data-theme=\"dark\"] {\n  --text: #f1f5f9;\n  --text-muted: #94a3b8;\n  --bg-page: #0f172a;\n  --card-bg: #1e293b;\n  --border: #334155;\n  --primary-light: rgba(8, 145, 178, 0.1);\n}\n\nbody {\n  font-family: 'Inter', system-ui, -apple-system, sans-serif;\n  background-color: var(--bg-page);\n  color: var(--text);\n  margin: 0;\n  display: flex;\n  justify-content: center;\n  padding-top: 60px;\n  line-height: 1.5;\n  transition: background 0.3s;\n}\n\n.app-container {\n  width: 100%;\n  max-width: 400px;\n  padding: 0 20px;\n}\n\n.todo-card {\n  background: var(--card-bg);\n  padding: 2rem;\n  border-radius: 20px;\n  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);\n  border: 1px solid var(--border);\n}\n\n.todo-header h1 {\n  margin: 0;\n  font-size: 1.75rem;\n  font-weight: 800;\n  letter-spacing: -0.025em;\n}\n\n.todo-header p {\n  color: var(--text-muted);\n  font-size: 0.9rem;\n  margin: 4px 0 24px 0;\n}\n\n.input-wrapper {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 20px;\n}\n\ninput[type=\"text\"] {\n  flex: 1;\n  background: var(--bg-page);\n  border: 2px solid var(--border);\n  padding: 12px 16px;\n  border-radius: 12px;\n  color: var(--text);\n  font-size: 1rem;\n  outline: none;\n  transition: all 0.2s;\n}\n\ninput[type=\"text\"]:focus {\n  border-color: var(--primary);\n  box-shadow: 0 0 0 4px var(--primary-light);\n}\n\n#addBtn {\n  background: var(--primary);\n  color: white;\n  border: none;\n  width: 48px;\n  height: 48px;\n  border-radius: 12px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.2s;\n  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);\n}\n\n#addBtn:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 6px 15px rgba(8, 145, 178, 0.4);\n}\n\n#addBtn:active {\n  transform: translateY(0);\n}\n\n.filter-bar {\n  display: flex;\n  gap: 8px;\n  margin-bottom: 15px;\n  padding-bottom: 15px;\n  border-bottom: 1px solid var(--border);\n}\n\n.filter-btn {\n  background: none;\n  border: 1px solid var(--border);\n  color: var(--text-muted);\n  padding: 4px 12px;\n  border-radius: 20px;\n  font-size: 0.8rem;\n  font-weight: 600;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n\n.filter-btn:hover {\n  border-color: var(--primary);\n  color: var(--primary);\n}\n\n.filter-btn.active {\n  background: var(--primary);\n  border-color: var(--primary);\n  color: white;\n}\n\n.task-list {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  max-height: 350px;\n  overflow-y: auto;\n}\n\n.task-item {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px;\n  border-radius: 12px;\n  margin-bottom: 8px;\n  transition: all 0.2s;\n  border: 1px solid transparent;\n  animation: slideIn 0.3s ease-out;\n}\n\n@keyframes slideIn {\n  from {\n    opacity: 0;\n    transform: translateY(10px);\n  }\n\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n\n.task-item:hover {\n  background: var(--bg-page);\n  border-color: var(--border);\n}\n\n.task-checkbox {\n  width: 20px;\n  height: 20px;\n  border: 2px solid var(--border);\n  border-radius: 6px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: all 0.2s;\n}\n\n.task-item.completed .task-checkbox {\n  background: var(--success);\n  border-color: var(--success);\n}\n\n.task-item.completed .task-checkbox::after {\n  content: '✓';\n  color: white;\n  font-size: 12px;\n}\n\n.task-text {\n  flex: 1;\n  font-size: 1rem;\n  color: var(--text);\n  transition: all 0.2s;\n}\n\n.task-item.completed .task-text {\n  text-decoration: line-through;\n  color: var(--text-muted);\n  opacity: 0.7;\n}\n\n.delete-btn {\n  background: none;\n  border: none;\n  color: var(--text-muted);\n  cursor: pointer;\n  padding: 6px;\n  border-radius: 8px;\n  opacity: 0;\n  transition: all 0.2s;\n}\n\n.task-item:hover .delete-btn {\n  opacity: 1;\n}\n\n.delete-btn:hover {\n  color: var(--danger);\n  background: rgba(239, 68, 68, 0.1);\n}\n\n.todo-footer {\n  margin-top: 20px;\n  display: flex;\n  justify-content: flex-end;\n}\n\n.text-btn {\n  background: none;\n  border: none;\n  color: var(--primary);\n  font-size: 0.85rem;\n  font-weight: 600;\n  cursor: pointer;\n  padding: 4px 8px;\n  border-radius: 6px;\n}\n\n.text-btn:hover {\n  background: var(--primary-light);\n}",
+    "js": "let todos = JSON.parse(localStorage.getItem('playground_todos')) || [];\nlet currentFilter = 'all';\n\nconst input = document.getElementById('taskInput');\nconst addBtn = document.getElementById('addBtn');\nconst taskList = document.getElementById('taskList');\nconst stats = document.getElementById('task-stats');\nconst filterBtns = document.querySelectorAll('.filter-btn');\nconst clearBtn = document.getElementById('clearCompleted');\n\nfunction save() {\n  localStorage.setItem('playground_todos', JSON.stringify(todos));\n  render();\n}\n\nfunction addTodo() {\n  const text = input.value.trim();\n  if (!text) return;\n\n  todos.push({\n    id: Date.now(),\n    text: text,\n    completed: false\n  });\n\n  input.value = '';\n  save();\n  console.log('Task added:', text);\n}\n\nfunction toggleTodo(id) {\n  todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);\n  save();\n}\n\nfunction deleteTodo(id) {\n  todos = todos.filter(t => t.id !== id);\n  save();\n}\n\nfunction render() {\n  taskList.innerHTML = '';\n\n  const filtered = todos.filter(t => {\n    if (currentFilter === 'active') return !t.completed;\n    if (currentFilter === 'completed') return t.completed;\n    return true;\n  });\n\n  filtered.forEach(todo => {\n    const li = document.createElement('li');\n    li.className = `task-item ${todo.completed ? 'completed' : ''}`;\n    li.innerHTML = `\n      <div class=\"task-checkbox\" onclick=\"toggleTodo(${todo.id})\"></div>\n      <span class=\"task-text\">${todo.text}</span>\n      <button class=\"delete-btn\" onclick=\"deleteTodo(${todo.id})\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"></line></svg>\n      </button>\n    `;\n    taskList.appendChild(li);\n  });\n\n  const remaining = todos.filter(t => !t.completed).length;\n  stats.textContent = `${remaining} task${remaining !== 1 ? 's' : ''} remaining`;\n}\n\n// Events\naddBtn.onclick = addTodo;\ninput.onkeypress = (e) => e.key === 'Enter' && addTodo();\n\nfilterBtns.forEach(btn => {\n  btn.onclick = () => {\n    filterBtns.forEach(b => b.classList.remove('active'));\n    btn.classList.add('active');\n    currentFilter = btn.dataset.filter;\n    render();\n  };\n});\n\nclearBtn.onclick = () => {\n  todos = todos.filter(t => !t.completed);\n  save();\n};\n\n// Initial Render\nrender();\nconsole.log('Todo App Initialized with', todos.length, 'items');"
+  },
+  {
+    "id": "voting",
+    "title": "⭐ Voting & Polls",
+    "html": "<div class=\"card feedback-card\">\n  <h2>Product Feedback</h2>\n  <p>What do you think about our new feature?</p>\n  \n  <!-- Star Rating Section -->\n  <div class=\"rating-section\">\n      <div class=\"stars\" id=\"star-container\">\n          <span class=\"star\" data-value=\"1\">★</span>\n          <span class=\"star\" data-value=\"2\">★</span>\n          <span class=\"star\" data-value=\"3\">★</span>\n          <span class=\"star\" data-value=\"4\">★</span>\n          <span class=\"star\" data-value=\"5\">★</span>\n      </div>\n      <div class=\"rating-text\" id=\"rating-text\">Rate us!</div>\n  </div>\n\n  <hr>\n\n  <!-- Poll Section -->\n  <h3>Quick Poll: Favorite Framework?</h3>\n  <div class=\"poll-options\">\n      <div class=\"option\" onclick=\"vote('react')\">\n          <div class=\"label-row\">\n              <span>React</span>\n              <span id=\"pct-react\">40%</span>\n          </div>\n          <div class=\"bar-bg\"><div class=\"bar\" id=\"bar-react\" style=\"width: 40%\"></div></div>\n      </div>\n      <div class=\"option\" onclick=\"vote('vue')\">\n          <div class=\"label-row\">\n              <span>Vue</span>\n              <span id=\"pct-vue\">35%</span>\n          </div>\n          <div class=\"bar-bg\"><div class=\"bar\" id=\"bar-vue\" style=\"width: 35%\"></div></div>\n      </div>\n      <div class=\"option\" onclick=\"vote('svelte')\">\n          <div class=\"label-row\">\n              <span>Svelte</span>\n              <span id=\"pct-svelte\">25%</span>\n          </div>\n          <div class=\"bar-bg\"><div class=\"bar\" id=\"bar-svelte\" style=\"width: 25%\"></div></div>\n      </div>\n  </div>\n</div>",
+    "css": "body {\n  font-family: 'Inter', system-ui, sans-serif;\n  background: #111827; /* Dark bg */\n  color: #e5e7eb;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  margin: 0;\n}\n\n.card {\n  background: #1f2937;\n  padding: 2rem;\n  border-radius: 12px;\n  width: 380px;\n  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);\n  border: 1px solid #374151;\n}\n\nh2 { margin-top: 0; color: #60a5fa; }\nh3 { font-size: 1rem; color: #9ca3af; margin-bottom: 1rem; }\np { color: #d1d5db; }\nhr { border: 0; border-top: 1px solid #374151; margin: 1.5rem 0; }\n\n/* Star Rating */\n.rating-section {\n    text-align: center;\n    margin-bottom: 1rem;\n}\n.stars {\n    font-size: 2.5rem;\n    cursor: pointer;\n    color: #4b5563; /* Inactive color */\n}\n.star {\n    transition: color 0.2s, transform 0.1s;\n    display: inline-block;\n}\n.star:hover {\n    transform: scale(1.2);\n}\n.star.active {\n    color: #fbbf24; /* Gold */\n    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);\n}\n.rating-text {\n    margin-top: 0.5rem;\n    font-weight: 600;\n    color: #fbbf24;\n    height: 1.5em; \n}\n\n/* Poll Bars */\n.option {\n    margin-bottom: 1rem;\n    cursor: pointer;\n    transition: opacity 0.2s;\n}\n.option:hover { opacity: 0.9; }\n\n.label-row {\n    display: flex;\n    justify-content: space-between;\n    font-size: 0.9rem;\n    margin-bottom: 0.25rem;\n}\n\n.bar-bg {\n    height: 8px;\n    background: #374151;\n    border-radius: 4px;\n    overflow: hidden;\n}\n\n.bar {\n    height: 100%;\n    border-radius: 4px;\n    transition: width 0.5s ease-out;\n}\n\n#bar-react { background: #61dafb; }\n#bar-vue { background: #42b883; }\n#bar-svelte { background: #ff3e00; }",
+    "js": "// --- Star Rating Logic ---\nconst stars = document.querySelectorAll('.star');\nconst ratingText = document.getElementById('rating-text');\nconst messages = ['Terrible 😭', 'Bad 😞', 'Okay 😐', 'Good 🙂', 'Amazing! 🤩'];\n\nstars.forEach(star => {\n    // Hover Effect\n    star.addEventListener('mouseenter', () => {\n        const val = parseInt(star.dataset.value);\n        highlightStars(val);\n        ratingText.textContent = messages[val - 1]; \n    });\n    \n    // Click Effect\n    star.addEventListener('click', () => {\n        const val = parseInt(star.dataset.value);\n        // Persist selection (visually) by adding a class to container\n        document.getElementById('star-container').dataset.rating = val;\n        console.log(`User rated: ${val} stars (${messages[val-1]})`);\n    });\n});\n\n// Reset on mouse leave if not clicked\ndocument.getElementById('star-container').addEventListener('mouseleave', () => {\n    const saved = parseInt(document.getElementById('star-container').dataset.rating) || 0;\n    highlightStars(saved);\n    ratingText.textContent = saved ? messages[saved - 1] : 'Rate us!';\n});\n\nfunction highlightStars(count) {\n    stars.forEach(s => {\n        const val = parseInt(s.dataset.value);\n        if (val <= count) s.classList.add('active');\n        else s.classList.remove('active');\n    });\n}\n\n// --- Poll Logic ---\nlet votes = { react: 40, vue: 35, svelte: 25 };\n\nfunction vote(tech) {\n    votes[tech] += 5; // increment\n    const total = votes.react + votes.vue + votes.svelte;\n    \n    // Update all bars\n    Object.keys(votes).forEach(key => {\n        const pct = Math.round((votes[key] / total) * 100);\n        document.getElementById(`bar-${key}`).style.width = `${pct}%`;\n        document.getElementById(`pct-${key}`).textContent = `${pct}%`;\n    });\n    \n    console.log(`Voted for ${tech}`);\n}\n"
+  },
+  {
+    "id": "world-clock",
+    "title": "🌐 World Clock",
+    "html": "<div class=\"clock-grid\">\n  <div class=\"clock-card\" data-offset=\"7\">\n    <div class=\"city\">Ho Chi Minh</div>\n    <div class=\"time\" id=\"time-hcm\">00:00:00</div>\n    <div class=\"date\" id=\"date-hcm\">Monday, Dec 22</div>\n  </div>\n  <div class=\"clock-card\" data-offset=\"9\">\n    <div class=\"city\">Tokyo</div>\n    <div class=\"time\" id=\"time-tokyo\">00:00:00</div>\n    <div class=\"date\" id=\"date-tokyo\">Monday, Dec 22</div>\n  </div>\n  <div class=\"clock-card\" data-offset=\"0\">\n    <div class=\"city\">London</div>\n    <div class=\"time\" id=\"time-london\">00:00:00</div>\n    <div class=\"date\" id=\"date-london\">Monday, Dec 22</div>\n  </div>\n  <div class=\"clock-card\" data-offset=\"-5\">\n    <div class=\"city\">New York</div>\n    <div class=\"time\" id=\"time-ny\">00:00:00</div>\n    <div class=\"date\" id=\"date-ny\">Monday, Dec 22</div>\n  </div>\n</div>",
+    "css": "body { \n  background: #0f172a; \n  display: flex; justify-content: center; align-items: center; min-height: 100vh;\n  font-family: 'Monaco', monospace; \n}\n.clock-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 90%; max-width: 600px; }\n.clock-card { \n  background: rgba(30, 41, 59, 0.7); \n  backdrop-filter: blur(10px);\n  border: 1px solid #334155;\n  padding: 30px 20px; border-radius: 16px; text-align: center;\n  box-shadow: 0 10px 30px rgba(0,0,0,0.5);\n}\n.city { color: #38bdf8; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }\n.time { color: #fff; font-size: 2.5rem; font-weight: 800; margin-bottom: 5px; }\n.date { color: #64748b; font-size: 0.8rem; }\n@media (max-width: 480px) { .clock-grid { grid-template-columns: 1fr; } }",
+    "js": "function updateClocks() {\n  const now = new Date();\n  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);\n  \n  const clocks = [\n    { id: 'hcm', offset: 7 },\n    { id: 'tokyo', offset: 9 },\n    { id: 'london', offset: 0 },\n    { id: 'ny', offset: -5 }\n  ];\n  \n  clocks.forEach(clock => {\n    const cityTime = new Date(utc + (3600000 * clock.offset));\n    document.getElementById(`time-${clock.id}`).textContent = cityTime.toLocaleTimeString('en-US', { hour12: false });\n    document.getElementById(`date-${clock.id}`).textContent = cityTime.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });\n  });\n}\n\nsetInterval(updateClocks, 1000);\nupdateClocks();"
   }
 ];
