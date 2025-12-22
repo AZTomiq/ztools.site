@@ -1,7 +1,4 @@
-.inflation-card {
-  max-width: 600px;
-  margin: 2rem auto;
-}
+/* Inflation card handled by global */
 
 .form-row {
   display: grid;
@@ -10,10 +7,7 @@
   margin-top: 1rem;
 }
 
-.result-box-container {
-  max-width: 600px;
-  margin: 0 auto;
-}
+
 
 .equivalent-value {
   font-size: 2.5rem;

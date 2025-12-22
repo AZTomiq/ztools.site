@@ -2,7 +2,7 @@ id: qr-generator
 link: /qr-generator/
 icon: 🔳
 category: dev
-status: active
+status: not-ready
 translationKey: qr
 meta:
   version: 1.0.0

@@ -1,0 +1,414 @@
+/* Basic Layout Variables */
+:root {
+  --editor-bg: #1e1e1e;
+  --editor-header-bg: #252526;
+  --editor-border: #333;
+  --editor-text: #d4d4d4;
+  --toolbar-height: 60px;
+  --header-height: 40px;
+  --sidebar-width: 250px;
+}
+
+body {
+  background-color: var(--bg-color);
+  /* From global */
+  overflow-y: hidden;
+  /* App-like feel */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Override global main padding to maximize space */
+main.playground-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-width: 100vw;
+  margin: 0;
+  height: calc(100vh - 70px);
+  /* Adjust based on global header */
+}
+
+/* Toolbar */
+.playground-toolbar {
+  height: var(--toolbar-height);
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.tool-title {
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.setting-item input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Button Styles - Premium IDE Look */
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  /* Tighter radius for toolbar */
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  font-family: inherit;
+  height: 36px;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--text-muted);
+  color: var(--primary-color);
+}
+
+.btn-xs {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f8f9fa;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.btn-xs:hover {
+  background: #e9ecef;
+}
+
+.btn-icon-sub {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.btn-icon-sub:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-muted);
+}
+
+/* Layout Body (Sidebar + WorkArea) */
+.playground-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100% - var(--toolbar-height));
+  position: relative;
+}
+
+/* Sidebar Styles */
+.sidebar-examples {
+  width: var(--sidebar-width);
+  background-color: var(--bg-hover);
+  /* Slight contrast */
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sidebar-examples.collapsed {
+  width: 0;
+  border-right: none;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.examples-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.example-item {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.example-item:hover {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--primary-color);
+}
+
+/* Work Area (Editors + Preview) */
+.work-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  /* Flexbox trick for nested scroll */
+}
+
+/* Split Layout */
+.editors-split {
+  flex: 1;
+  /* Occupy remaining space shared with preview */
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--border-color);
+  min-height: 200px;
+  height: 50%;
+}
+
+.editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  min-width: 100px;
+}
+
+.editor-pane:last-child {
+  border-right: none;
+}
+
+.pane-header {
+  background-color: var(--editor-header-bg);
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--editor-border);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: var(--header-height);
+}
+
+/* Monaco Container */
+.editor-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--editor-bg);
+}
+
+/* Ensure Monaco uses full height of container */
+.monaco-editor {
+  padding-top: 5px;
+}
+
+
+/* Preview Area */
+.preview-area {
+  flex: 1;
+  /* Share 50%/50% vertical space initially */
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.preview-area .pane-header {
+  background-color: #f0f0f0;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+
+iframe#preview-frame {
+  flex: 1;
+  border: none;
+  width: 100%;
+  height: 100%;
+  /* Will share specific height with console */
+  background: #fff;
+}
+
+/* Console Pane */
+.console-pane {
+  height: 150px;
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  transition: height 0.2s;
+}
+
+.console-pane.collapsed {
+  height: 0;
+  overflow: hidden;
+  border-top: none;
+}
+
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background: #e9ecef;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+#clear-console {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 4px;
+}
+
+#console-logs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+
+.log-entry {
+  padding: 2px 0;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.log-error {
+  color: #d32f2f;
+}
+
+.log-warn {
+  color: #f57c00;
+}
+
+.log-info {
+  color: #1976d2;
+}
+
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    /* Allow scroll on mobile */
+    height: auto;
+  }
+
+  main.playground-container {
+    height: auto;
+  }
+
+  .editors-split {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .editor-pane {
+    height: 300px;
+    /* Fixed height for editors on mobile */
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .preview-area {
+    height: 500px;
+    /* Fixed height preview */
+  }
+
+  .playground-toolbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+  }
+
+  /* Sidebar mobile override */
+  .sidebar-examples {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    background: var(--card-bg);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  }
+}

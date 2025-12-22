@@ -38,10 +38,12 @@
   <meta name="robots" content="index, follow" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../assets/css/global.css?h=53fdc11d">
+  <link rel="stylesheet" href="../../assets/css/global.css?h=e3ba62f3">
   <link rel="icon" type="image/png"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
   <link rel="manifest" href="../../manifest.json">
+
+  <script src="../../assets/js/user-mode.js?h=e15180be"></script>
 
   <!-- Dark Mode Script (Blocking) -->
   <script>
@@ -49,11 +51,12 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
-  <!-- Vercel Analytics -->
+  <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
   <script>
     window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
   </script>
   <script defer src="/_vercel/analytics/script.js"></script>
+  -->
 
   <!-- Schema.org Structured Data -->
   
@@ -120,7 +123,7 @@
       <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
         aria-label="Tool categories menu"
         style="background: none; border: none; padding: 0; cursor: pointer;">
-        <span class="logo-icon" aria-hidden="true">🛠️</span>
+        <span class="logo-icon" aria-hidden="true">🧰</span>
         <span class="logo-text">ZTools</span>
         
           <span class="logo-sub hide-mobile">
@@ -132,7 +135,7 @@
       <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
         <a href="../../en/bookmark-creator/" class="nav-link-prominent"
           style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon">🔖</span>
+          <span class="pulse-icon">⭐</span>
           Bookmark Creator
         </a>
       </div>
@@ -147,8 +150,12 @@
             <span class="icon">🗂️</span>
             Categories
           </a>
+          <a href="../../en/blog/" class="mega-home-link">
+            <span class="icon">✍️</span>
+            nav.blog
+          </a>
           <a href="../../en/bookmark-creator/" class="mega-home-link">
-            <span class="icon">🔖</span>
+            <span class="icon">⭐</span>
             Bookmark Creator
           </a>
         </div>
@@ -159,54 +166,15 @@
               <button class="mega-header collapsible" aria-expanded="true">
                 <div class="mega-title-wrap">
                   <span class="mega-icon" aria-hidden="true">
-                    🛠️
+                    💼
                   </span>
                   Job &amp; Income
-                    <span class="mega-count-badge">
-                      5
-                    </span>
                 </div>
                 <span class="mega-caret" aria-hidden="true">▾</span>
               </button>
               <div class="mega-links-grid">
                 
-                  <a href="../../en/business-tax/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      💼
-                    </span>
-                    <span class="link-text">
-                      Corporate Income Tax (CIT) Calc
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/freelancer-tax/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🧾
-                    </span>
-                    <span class="link-text">
-                      Freelancer &amp; Business Tax
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/ot-calculator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      ⏰
-                    </span>
-                    <span class="link-text">
-                      Overtime Calculator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/social-insurance/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🏥
-                    </span>
-                    <span class="link-text">
-                      Social Insurance
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/tax/" class="mega-link">
+                  <a href="../../en/tax/" class="mega-link mode-standard-only">
                     <span class="link-icon" aria-hidden="true">
                       💸
                     </span>
@@ -222,252 +190,15 @@
               <button class="mega-header collapsible" aria-expanded="true">
                 <div class="mega-title-wrap">
                   <span class="mega-icon" aria-hidden="true">
-                    💰
-                  </span>
-                  Finance &amp; Banking
-                    <span class="mega-count-badge">
-                      6
-                    </span>
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../../en/compound-interest/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      📈
-                    </span>
-                    <span class="link-text">
-                      Compound Interest Calculator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/inflation-calculator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      📈
-                    </span>
-                    <span class="link-text">
-                      Inflation Calculator (Vietnam)
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/investment-calc/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      💸
-                    </span>
-                    <span class="link-text">
-                      Investment ROI Calculator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/loan-calculator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🏠
-                    </span>
-                    <span class="link-text">
-                      Loan Calculator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/percentage-calculator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      ％
-                    </span>
-                    <span class="link-text">
-                      Percentage Calculator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/savings-interest/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🏦
-                    </span>
-                    <span class="link-text">
-                      Savings Interest Calculator
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
-            
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    📝
-                  </span>
-                  Text Tools
-                    <span class="mega-count-badge">
-                      4
-                    </span>
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../../en/lorem-ipsum/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      📝
-                    </span>
-                    <span class="link-text">
-                      Lorem Ipsum Generator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/text-diff/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      ↔️
-                    </span>
-                    <span class="link-text">
-                      Text Diff Checker
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/text-formatter/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🧹
-                    </span>
-                    <span class="link-text">
-                      Text Formatter - Clear Style
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/word-counter/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      📊
-                    </span>
-                    <span class="link-text">
-                      Word Counter &amp; Analyzer
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
-            
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    ⚙️
-                  </span>
-                  Generator Tools
-                    <span class="mega-count-badge">
-                      2
-                    </span>
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../../en/password-generator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🔐
-                    </span>
-                    <span class="link-text">
-                      Strong Password Generator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/uuid-generator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🆔
-                    </span>
-                    <span class="link-text">
-                      UUID Generator
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
-            
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    ☕
-                  </span>
-                  Daily Utilities
-                    <span class="mega-count-badge">
-                      5
-                    </span>
-                </div>
-                <span class="mega-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="mega-links-grid">
-                
-                  <a href="../../en/bmi/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      ⚖️
-                    </span>
-                    <span class="link-text">
-                      BMI Calculator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/bookmark-creator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🔖
-                    </span>
-                    <span class="link-text">
-                      Bookmark Creator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/lunar-calendar/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🌙
-                    </span>
-                    <span class="link-text">
-                      Lunar Calendar
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/random-toolkit/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🎲
-                    </span>
-                    <span class="link-text">
-                      Random Toolkit
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/unit-converter/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      📏
-                    </span>
-                    <span class="link-text">
-                      Unit Converter
-                    </span>
-                  </a>
-                  
-              </div>
-            </div>
-            
-            <div class="mega-category-section">
-              <button class="mega-header collapsible" aria-expanded="true">
-                <div class="mega-title-wrap">
-                  <span class="mega-icon" aria-hidden="true">
-                    💻
+                    👾
                   </span>
                   Dev Tools
-                    <span class="mega-count-badge">
-                      6
-                    </span>
                 </div>
                 <span class="mega-caret" aria-hidden="true">▾</span>
               </button>
               <div class="mega-links-grid">
                 
-                  <a href="../../en/hash-toolkit/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🔒
-                    </span>
-                    <span class="link-text">
-                      Base64 &amp; Hash Toolkit
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/json-toolkit/" class="mega-link">
+                  <a href="../../en/json-toolkit/" class="mega-link ">
                     <span class="link-icon" aria-hidden="true">
                       💻
                     </span>
@@ -476,39 +207,12 @@
                     </span>
                   </a>
                   
-                  <a href="../../en/jwt-toolkit/" class="mega-link">
+                  <a href="../../en/web-playground/" class="mega-link ">
                     <span class="link-icon" aria-hidden="true">
-                      🔑
+                      👨‍💻
                     </span>
                     <span class="link-text">
-                      JWT Debugger &amp; Decoder
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/qr-generator/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🔳
-                    </span>
-                    <span class="link-text">
-                      QR Code Generator
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/timestamp-converter/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      ⏳
-                    </span>
-                    <span class="link-text">
-                      Timestamp Converter
-                    </span>
-                  </a>
-                  
-                  <a href="../../en/url-toolkit/" class="mega-link">
-                    <span class="link-icon" aria-hidden="true">
-                      🔗
-                    </span>
-                    <span class="link-text">
-                      URL &amp; Base64 Toolkit
+                      zTool Playground
                     </span>
                   </a>
                   
@@ -531,11 +235,6 @@
         🗂️
       </a>
 
-      <a href="../../en/bookmark-creator/" class="btn-icon" title="Bookmark Creator"
-        aria-label="Bookmarks">
-        🔖
-      </a>
-
       <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Search Tools"
         aria-label="Search">
         🔍
@@ -547,6 +246,21 @@
           🇻🇳
         </span>
       </a>
+      <button id="mode-toggle" class="mode-toggle-btn" title="Advanced Mode (Comprehensive, Master Tools)"
+        aria-label="Toggle User Mode">
+        <span class="mode-text">
+          Standard
+        </span>
+        <div class="mode-switch">
+          <div class="mode-slider">
+            <span class="mode-icon">⭐</span>
+          </div>
+        </div>
+        <span class="mode-text">
+          Advanced
+        </span>
+      </button>
+
       <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
         🌙
       </button>
@@ -587,7 +301,7 @@
   <!-- Embed tools data for client-side search -->
   <script id="tools-data" type="application/json">
     
-    [{"id":"bmi","link":"../../en/bmi/","icon":"⚖️","title":"BMI Calculator","desc":"Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.","category":"Daily Utilities"},{"id":"bookmark-creator","link":"../../en/bookmark-creator/","icon":"🔖","title":"Bookmark Creator","desc":"Create a personal bookmark set for your browser with your favorite ZTools.","category":"Daily Utilities"},{"id":"business-tax","link":"../../en/business-tax/","icon":"💼","title":"Corporate Income Tax (CIT) Calc","desc":"Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.","category":"Job & Income"},{"id":"compound-interest","link":"../../en/compound-interest/","icon":"📈","title":"Compound Interest Calculator","desc":"Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.","category":"Finance & Banking"},{"id":"freelancer-tax","link":"../../en/freelancer-tax/","icon":"🧾","title":"Freelancer & Business Tax","desc":"Calculate tax for withholding (10%) or personal business households.","category":"Job & Income"},{"id":"hash-toolkit","link":"../../en/hash-toolkit/","icon":"🔒","title":"Base64 & Hash Toolkit","desc":"Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.","category":"Dev Tools"},{"id":"inflation-calculator","link":"../../en/inflation-calculator/","icon":"📈","title":"Inflation Calculator (Vietnam)","desc":"See how much your money has lost or gained value over time.","category":"Finance & Banking"},{"id":"investment-calc","link":"../../en/investment-calc/","icon":"💸","title":"Investment ROI Calculator","desc":"Calculate your Return on Investment (ROI) and Annual Yield.","category":"Finance & Banking"},{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"jwt-toolkit","link":"../../en/jwt-toolkit/","icon":"🔑","title":"JWT Debugger & Decoder","desc":"Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.","category":"Dev Tools"},{"id":"loan-calculator","link":"../../en/loan-calculator/","icon":"🏠","title":"Loan Calculator","desc":"Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.","category":"Finance & Banking"},{"id":"lorem-ipsum","link":"../../en/lorem-ipsum/","icon":"📝","title":"Lorem Ipsum Generator","desc":"Generate placeholder text for designs and mockups.","category":"Text Tools"},{"id":"lunar-calendar","link":"../../en/lunar-calendar/","icon":"🌙","title":"Lunar Calendar","desc":"Convert Solar to Lunar calendar, view Can Chi and Good Hours","category":"Daily Utilities"},{"id":"ot-calculator","link":"../../en/ot-calculator/","icon":"⏰","title":"Overtime Calculator","desc":"Calculate accurately your overtime pay based on Vietnam Labor Law","category":"Job & Income"},{"id":"password-generator","link":"../../en/password-generator/","icon":"🔐","title":"Strong Password Generator","desc":"Generate secure, random passwords instantly.","category":"Generator Tools"},{"id":"percentage-calculator","link":"../../en/percentage-calculator/","icon":"％","title":"Percentage Calculator","desc":"Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.","category":"Finance & Banking"},{"id":"qr-generator","link":"../../en/qr-generator/","icon":"🔳","title":"QR Code Generator","desc":"Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.","category":"Dev Tools"},{"id":"random-toolkit","link":"../../en/random-toolkit/","icon":"🎲","title":"Random Toolkit","desc":"Generate random numbers, pick items from list, and roll dice.","category":"Daily Utilities"},{"id":"savings-interest","link":"../../en/savings-interest/","icon":"🏦","title":"Savings Interest Calculator","desc":"Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.","category":"Finance & Banking"},{"id":"social-insurance","link":"../../en/social-insurance/","icon":"🏥","title":"Social Insurance","desc":"Social Insurance & Pension Calculator.","category":"Job & Income"},{"id":"tax","link":"../../en/tax/","icon":"💸","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"text-diff","link":"../../en/text-diff/","icon":"↔️","title":"Text Diff Checker","desc":"Compare two texts and highlight differences (additions, deletions, changes).","category":"Text Tools"},{"id":"text-formatter","link":"../../en/text-formatter/","icon":"🧹","title":"Text Formatter - Clear Style","desc":"Remove formatting and clean up text copied from web pages.","category":"Text Tools"},{"id":"timestamp-converter","link":"../../en/timestamp-converter/","icon":"⏳","title":"Timestamp Converter","desc":"Convert between Unix timestamps and human-readable dates.","category":"Dev Tools"},{"id":"unit-converter","link":"../../en/unit-converter/","icon":"📏","title":"Unit Converter","desc":"Convert length, weight, volume, area, temperature, and more.","category":"Daily Utilities"},{"id":"url-toolkit","link":"../../en/url-toolkit/","icon":"🔗","title":"URL & Base64 Toolkit","desc":"Encode/Decode URL, Base64 and parse URL structure quickly.","category":"Dev Tools"},{"id":"uuid-generator","link":"../../en/uuid-generator/","icon":"🆔","title":"UUID Generator","desc":"Generate random UUIDs/GUIDs (V1, V4, V7) instantly.","category":"Generator Tools"},{"id":"word-counter","link":"../../en/word-counter/","icon":"📊","title":"Word Counter & Analyzer","desc":"Count words, analyze frequency, and convert case (Case Converter).","category":"Text Tools"}]
+    [{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"tax","link":"../../en/tax/","icon":"💸","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"web-playground","link":"../../en/web-playground/","icon":"👨‍💻","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"}]
   </script>
 </header>
 
@@ -737,7 +451,7 @@
 
       
 
-          <script src="../../assets/js/global.js?h=f17a2f32"></script>
+          <script src="../../assets/js/global.js?h=ba6a7fc4"></script>
 </body>
 
 </html>

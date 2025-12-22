@@ -4,7 +4,7 @@
       <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
         aria-label="<%= locale === 'vi' ? 'Menu danh mục công cụ' : 'Tool categories menu' %>"
         style="background: none; border: none; padding: 0; cursor: pointer;">
-        <span class="logo-icon" aria-hidden="true">🛠️</span>
+        <span class="logo-icon" aria-hidden="true">🧰</span>
         <span class="logo-text">ZTools</span>
         <% if (category) { %>
           <span class="logo-sub hide-mobile">
@@ -16,7 +16,7 @@
       <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
         <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="nav-link-prominent"
           style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon">🔖</span>
+          <span class="pulse-icon">⭐</span>
           <%= t('bookmarkCreator.title') %>
         </a>
       </div>
@@ -31,20 +31,26 @@
             <span class="icon">🗂️</span>
             <%= t('nav.menu_categories') %>
           </a>
+          <a href="<%= rootPath %><%= locale %>/blog/" class="mega-home-link">
+            <span class="icon">✍️</span>
+            <%= t('nav.blog') || 'Blog' %>
+          </a>
           <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="mega-home-link">
-            <span class="icon">🔖</span>
+            <span class="icon">⭐</span>
             <%= t('bookmarkCreator.title') || 'Bookmarks' %>
           </a>
         </div>
         <% const catOrder=['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const catMap={ 'job' : { title:
-          t('home.cats.job.title') || 'Job & Income' , icon: '🛠️' }, 'finance' : { title: t('home.cats.finance.title')
-          || 'Finance' , icon: '💰' }, 'text' : { title: t('home.cats.text.title') || 'Text Tools' , icon: '📝'
-          }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: '⚙️' }, 'daily' : { title:
-          t('home.cats.daily.title') || 'Daily Utilities' , icon: '☕' }, 'dev' : { title: t('home.cats.dev.title')
-          || 'Dev Tools' , icon: '💻' } }; %>
+          t('home.cats.job.title') || 'Job & Income' , icon: '💼' }, 'finance' : { title: t('home.cats.finance.title')
+          || 'Finance' , icon: '📈' }, 'text' : { title: t('home.cats.text.title') || 'Text Tools' , icon: '✍️'
+          }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: '🪄' }, 'daily' : { title:
+          t('home.cats.daily.title') || 'Daily Utilities' , icon: '🗓️' }, 'dev' : { title: t('home.cats.dev.title')
+          || 'Dev Tools' , icon: '👾' } }; %>
 
           <% catOrder.forEach(catId=> {
-            const catTools = tools.filter(t => t.category === catId && t.status === 'active');
+            // Filter tools for this category, including legacy ones that might still be valid for Standard mode
+            const catTools = tools.filter(t => t.category === catId && (t.status === 'active' || t.status ===
+            'legacy'));
             if (catTools.length === 0) return;
             %>
             <div class="mega-category-section">
@@ -54,15 +60,16 @@
                     <%= catMap[catId].icon %>
                   </span>
                   <%= catMap[catId].title %>
-                    <span class="mega-count-badge">
-                      <%= catTools.length %>
-                    </span>
                 </div>
                 <span class="mega-caret" aria-hidden="true">▾</span>
               </button>
               <div class="mega-links-grid">
-                <% catTools.forEach(tool=> { %>
-                  <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="mega-link">
+                <% catTools.forEach(tool=> {
+                  let modeClass = '';
+                  if (tool.mode === 'standard') modeClass = 'mode-standard-only';
+                  else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
+                  %>
+                  <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="mega-link <%= modeClass %>">
                     <span class="link-icon" aria-hidden="true">
                       <%= tool.icon %>
                     </span>
@@ -90,11 +97,6 @@
         🗂️
       </a>
 
-      <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="btn-icon" title="Bookmark Creator"
-        aria-label="Bookmarks">
-        🔖
-      </a>
-
       <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="<%= t('nav.search_title') %>"
         aria-label="Search">
         🔍
@@ -106,6 +108,21 @@
           <%= locale==='vi' ? '🇺🇸' : '🇻🇳' %>
         </span>
       </a>
+      <button id="mode-toggle" class="mode-toggle-btn" title="<%= t('nav.mode_advanced_desc') %>"
+        aria-label="Toggle User Mode">
+        <span class="mode-text">
+          <%= t('nav.mode_standard') %>
+        </span>
+        <div class="mode-switch">
+          <div class="mode-slider">
+            <span class="mode-icon">⭐</span>
+          </div>
+        </div>
+        <span class="mode-text">
+          <%= t('nav.mode_advanced') %>
+        </span>
+      </button>
+
       <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
         🌙
       </button>

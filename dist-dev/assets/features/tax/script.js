@@ -1,42 +1,25 @@
-const TAX_CONFIG = {
-  // Employee insurance rates
-  bhxh: { rate: 0.08, cap: 46_800_000 },  // BHXH 8%, cap 20 × 2.34M (từ 7/2024)
-  bhyt: { rate: 0.015, cap: 46_800_000 }, // BHYT 1.5%, cap 20 × 2.34M
-  bhtn: { rate: 0.01 },                    // BHTN 1%, cap depends on region
+const TAX_CONFIG = TaxLogic.TAX_CONFIG;
 
-  // BHTN caps by region (20 × minimum wage)
-  bhtnCaps: {
-    1: 99_200_000,  // Vùng I: 20 × 4,960,000
-    2: 88_200_000,  // Vùng II: 20 × 4,410,000
-    3: 77_200_000,  // Vùng III: 20 × 3,860,000
-    4: 69_000_000,  // Vùng IV: 20 × 3,450,000
-  },
-
-  // Employer insurance rates
-  bhxhCompany: { rate: 0.17, cap: 46_800_000 },  // BHXH 17%
-  bhnnCompany: { rate: 0.005, cap: 46_800_000 }, // BH tai nạn LĐ - Bệnh nghề nghiệp 0.5%
-  bhytCompany: { rate: 0.03, cap: 46_800_000 },  // BHYT 3%
-  bhtnCompany: { rate: 0.01 },  // BHTN 1%, cap depends on region
-
-  personalDeduction: { old: 11_000_000, new: 15_500_000 },
-  dependentDeduction: { old: 4_400_000, new: 6_200_000 },
-  bracketsOld: [
-    [5_000_000, 0.05],
-    [10_000_000, 0.10],
-    [18_000_000, 0.15],
-    [32_000_000, 0.20],
-    [52_000_000, 0.25],
-    [80_000_000, 0.30],
-    [Infinity, 0.35],
-  ],
-  bracketsNew: [
-    [10_000_000, 0.05],
-    [30_000_000, 0.15],
-    [60_000_000, 0.25],
-    [100_000_000, 0.30],
-    [Infinity, 0.35],
-  ],
+// Proxy functions to TaxLogic
+const calculateProgressiveTax = TaxLogic.calculateProgressiveTax;
+const calculateTaxBreakdown = TaxLogic.calculateTaxBreakdown;
+const calcInsurance = TaxLogic.calcInsurance;
+const calculatePIT = (g, d) => TaxLogic.calculatePIT(g, d, getRegion());
+const netToGross = (n, d, u) => TaxLogic.netToGross(n, d, getRegion(), u);
+const calcCompanyInsuranceDetail = (i) => {
+  const cfg = TAX_CONFIG;
+  const region = getRegion();
+  const bhtnCap = cfg.bhtnCaps[region];
+  const bhxh = calcInsurance(i, cfg.bhxhCompany.rate, cfg.bhxhCompany.cap);
+  const bhnn = calcInsurance(i, cfg.bhnnCompany.rate, cfg.bhnnCompany.cap);
+  const bhyt = calcInsurance(i, cfg.bhytCompany.rate, cfg.bhytCompany.cap);
+  const bhtn = calcInsurance(i, cfg.bhtnCompany.rate, bhtnCap);
+  return { bhxh, bhnn, bhyt, bhtn, total: bhxh + bhnn + bhyt + bhtn };
 };
+
+function formatMoney(n) {
+  return Math.round(n).toLocaleString('vi-VN') + ' ₫';
+}
 
 let incomeType = 'gross';
 let netScenario = 'keep-gross'; // 'keep-gross' or 'keep-net'
@@ -160,197 +143,9 @@ function renderHistory() {
   }).join('');
 }
 
-function calculateProgressiveTax(taxableIncome, brackets) {
-  if (taxableIncome <= 0) return 0;
-  let tax = 0, prev = 0;
-  for (const [threshold, rate] of brackets) {
-    const taxable = Math.min(taxableIncome, threshold) - prev;
-    if (taxable <= 0) break;
-    tax += taxable * rate;
-    prev = threshold;
-  }
-  return tax;
-}
-
-// Calculate tax breakdown by bracket
-function calculateTaxBreakdown(taxableIncome, brackets) {
-  const breakdown = [];
-  let prev = 0;
-  for (const [threshold, rate] of brackets) {
-    const taxable = Math.min(taxableIncome, threshold) - prev;
-    const tax = taxable > 0 ? taxable * rate : 0;
-    breakdown.push({
-      from: prev,
-      to: threshold === Infinity ? null : threshold,
-      rate,
-      taxable: Math.max(0, taxable),
-      tax
-    });
-    prev = threshold;
-    if (taxableIncome <= threshold) break;
-  }
-  return breakdown;
-}
-
-function calcInsurance(income, rate, cap) {
-  return Math.min(income, cap) * rate;
-}
-
 function getRegion() {
   const el = document.getElementById('region');
   return el ? parseInt(el.value, 10) : 1;
-}
-
-function getBhtnCap() {
-  return TAX_CONFIG.bhtnCaps[getRegion()];
-}
-
-function calculatePIT(grossIncome, dependents) {
-  const cfg = TAX_CONFIG;
-  const bhtnCap = getBhtnCap();
-
-  // Employee insurance (detailed)
-  const bhxh = calcInsurance(grossIncome, cfg.bhxh.rate, cfg.bhxh.cap);
-  const bhyt = calcInsurance(grossIncome, cfg.bhyt.rate, cfg.bhyt.cap);
-  const bhtn = calcInsurance(grossIncome, cfg.bhtn.rate, bhtnCap);
-  const insurance = bhxh + bhyt + bhtn;
-
-  const incomeAfterInsurance = grossIncome - insurance;
-
-  const deductionOld = cfg.personalDeduction.old + cfg.dependentDeduction.old * dependents;
-  const deductionNew = cfg.personalDeduction.new + cfg.dependentDeduction.new * dependents;
-
-  const taxableOld = Math.max(0, incomeAfterInsurance - deductionOld);
-  const taxableNew = Math.max(0, incomeAfterInsurance - deductionNew);
-
-  const taxOld = calculateProgressiveTax(taxableOld, cfg.bracketsOld);
-  const taxNew = calculateProgressiveTax(taxableNew, cfg.bracketsNew);
-
-  // Tax breakdown by bracket
-  const breakdownOld = calculateTaxBreakdown(taxableOld, cfg.bracketsOld);
-  const breakdownNew = calculateTaxBreakdown(taxableNew, cfg.bracketsNew);
-
-  // Tax with only personal deduction (no dependent deduction) - monthly withholding
-  // Company MUST deduct personal deduction, only dependent deduction can be claimed at year-end
-  const taxableSelfOnlyOld = Math.max(0, incomeAfterInsurance - cfg.personalDeduction.old);
-  const taxableSelfOnlyNew = Math.max(0, incomeAfterInsurance - cfg.personalDeduction.new);
-  const taxSelfOnlyOld = calculateProgressiveTax(taxableSelfOnlyOld, cfg.bracketsOld);
-  const taxSelfOnlyNew = calculateProgressiveTax(taxableSelfOnlyNew, cfg.bracketsNew);
-
-  return {
-    grossIncome,
-    dependents,
-    bhxh,
-    bhyt,
-    bhtn,
-    insurance,
-    incomeAfterInsurance,
-    deductionOld,
-    deductionNew,
-    taxableOld,
-    taxableNew,
-    taxOld,
-    taxNew,
-    breakdownOld,
-    breakdownNew,
-    taxSelfOnlyOld,
-    taxSelfOnlyNew,
-    taxSaved: taxOld - taxNew,
-    netOld: grossIncome - insurance - taxOld,
-    netNew: grossIncome - insurance - taxNew,
-  };
-}
-
-// Calculate yearly PIT with bonus (bonus taxed progressively with yearly income)
-function calculateYearlyPIT(monthlyGross, dependents, bonusMonths) {
-  const cfg = TAX_CONFIG;
-  const bhtnCap = getBhtnCap();
-
-  // Monthly insurance
-  const monthlyBhxh = calcInsurance(monthlyGross, cfg.bhxh.rate, cfg.bhxh.cap);
-  const monthlyBhyt = calcInsurance(monthlyGross, cfg.bhyt.rate, cfg.bhyt.cap);
-  const monthlyBhtn = calcInsurance(monthlyGross, cfg.bhtn.rate, bhtnCap);
-  const monthlyInsurance = monthlyBhxh + monthlyBhyt + monthlyBhtn;
-
-  // Bonus doesn't have insurance deduction (already paid on monthly salary)
-  const bonusGross = monthlyGross * bonusMonths;
-
-  // Yearly totals
-  const yearlyGross = monthlyGross * 12 + bonusGross;
-  const yearlyInsurance = monthlyInsurance * 12;
-  const yearlyIncomeAfterInsurance = yearlyGross - yearlyInsurance;
-
-  // Yearly deductions
-  const yearlyDeductionOld = (cfg.personalDeduction.old + cfg.dependentDeduction.old * dependents) * 12;
-  const yearlyDeductionNew = (cfg.personalDeduction.new + cfg.dependentDeduction.new * dependents) * 12;
-
-  const yearlyTaxableOld = Math.max(0, yearlyIncomeAfterInsurance - yearlyDeductionOld);
-  const yearlyTaxableNew = Math.max(0, yearlyIncomeAfterInsurance - yearlyDeductionNew);
-
-  const yearlyTaxOld = calculateProgressiveTax(yearlyTaxableOld, cfg.bracketsOld);
-  const yearlyTaxNew = calculateProgressiveTax(yearlyTaxableNew, cfg.bracketsNew);
-
-  return {
-    yearlyGross,
-    bonusGross,
-    yearlyInsurance,
-    yearlyIncomeAfterInsurance,
-    yearlyDeductionOld,
-    yearlyDeductionNew,
-    yearlyTaxableOld,
-    yearlyTaxableNew,
-    yearlyTaxOld,
-    yearlyTaxNew,
-    yearlyNetOld: yearlyGross - yearlyInsurance - yearlyTaxOld,
-    yearlyNetNew: yearlyGross - yearlyInsurance - yearlyTaxNew,
-    yearlySaved: yearlyTaxOld - yearlyTaxNew,
-  };
-}
-
-// Binary search: find Gross from Net
-function netToGross(targetNet, dependents, useNewTax = false) {
-  let low = targetNet;
-  let high = targetNet * 2;
-  const tolerance = 1; // Precise to 1 VND
-
-  for (let i = 0; i < 100; i++) {
-    const mid = Math.floor((low + high) / 2);
-    const result = calculatePIT(mid, dependents);
-    const net = useNewTax ? result.netNew : result.netOld;
-
-    if (Math.abs(net - targetNet) < tolerance) {
-      return mid;
-    }
-
-    if (net < targetNet) {
-      low = mid;
-    } else {
-      high = mid;
-    }
-  }
-
-  return Math.floor((low + high) / 2);
-}
-
-function formatMoney(n) {
-  return Math.round(n).toLocaleString('vi-VN') + ' ₫';
-}
-
-// Calculate company insurance (detailed)
-function calcCompanyInsuranceDetail(income) {
-  const cfg = TAX_CONFIG;
-  const bhtnCap = getBhtnCap();
-  const bhxh = calcInsurance(income, cfg.bhxhCompany.rate, cfg.bhxhCompany.cap);
-  const bhnn = calcInsurance(income, cfg.bhnnCompany.rate, cfg.bhnnCompany.cap);
-  const bhyt = calcInsurance(income, cfg.bhytCompany.rate, cfg.bhytCompany.cap);
-  const bhtn = calcInsurance(income, cfg.bhtnCompany.rate, bhtnCap);
-  return {
-    bhxh,
-    bhnn,
-    bhyt,
-    bhtn,
-    total: bhxh + bhnn + bhyt + bhtn
-  };
 }
 
 // N→G mode: Net thực nhận = input, thuế tính trên input (thay vì Gross thực)

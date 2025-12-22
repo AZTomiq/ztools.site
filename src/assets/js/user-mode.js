@@ -1,0 +1,54 @@
+(function () {
+  const MODE_KEY = 'ztools_user_mode';
+  const modes = { STANDARD: 'standard', ADVANCED: 'advanced' };
+
+  // Get saved mode or default to standard
+  let currentMode = localStorage.getItem(MODE_KEY) || modes.STANDARD;
+
+  // Apply mode to document
+  function applyMode(mode) {
+    document.documentElement.setAttribute('data-user-mode', mode);
+    localStorage.setItem(MODE_KEY, mode);
+
+    // Update toggle button if exists
+    const toggleBtn = document.getElementById('mode-toggle');
+    if (toggleBtn) {
+      const isAdvanced = mode === modes.ADVANCED;
+      toggleBtn.classList.toggle('is-advanced', isAdvanced);
+      toggleBtn.setAttribute('aria-label', isAdvanced ? 'Switch to Standard Mode' : 'Switch to Advanced Mode');
+    }
+
+    // Dispatch event for other components
+    window.dispatchEvent(new CustomEvent('ztools-mode-change', { detail: { mode } }));
+  }
+
+  // Initial apply
+  applyMode(currentMode);
+
+  // Expose to window
+  window.ZToolsMode = {
+    get: () => currentMode,
+    set: (mode) => {
+      currentMode = mode;
+      applyMode(mode);
+    },
+    toggle: () => {
+      const newMode = currentMode === modes.STANDARD ? modes.ADVANCED : modes.STANDARD;
+      window.ZToolsMode.set(newMode);
+    },
+    MODES: modes
+  };
+
+  // Wait for DOM to attach listener
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('mode-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.ZToolsMode.toggle();
+      });
+      // Re-apply to ensure UI is in sync
+      applyMode(currentMode);
+    }
+  });
+})();

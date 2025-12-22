@@ -109,7 +109,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchBtnMobile) searchBtnMobile.addEventListener('click', openSearch);
 
   const headerSearchBox = document.getElementById('header-search-box');
-  if (headerSearchBox) headerSearchBox.addEventListener('click', openSearch);
+  if (headerSearchBox) {
+    headerSearchBox.addEventListener('click', openSearch);
+
+    // Smart visibility for Homepage Hero Search
+    const heroSearch = document.querySelector('.search-box-hero');
+    if (heroSearch) {
+      // Check initial state
+      headerSearchBox.classList.add('search-hidden');
+
+      window.addEventListener('scroll', () => {
+        const rect = heroSearch.getBoundingClientRect();
+        // If hero search bottom is above viewport (scrolled past)
+        if (rect.bottom < 0) {
+          headerSearchBox.classList.remove('search-hidden');
+        } else {
+          headerSearchBox.classList.add('search-hidden');
+        }
+      }, { passive: true });
+    }
+  }
 
   if (closeSearch) closeSearch.addEventListener('click', hideSearch);
   if (searchOverlay) searchOverlay.addEventListener('click', hideSearch);

@@ -1,12 +1,6 @@
-.investment-card {
-  max-width: 500px;
-  margin: 1.5rem auto;
-}
+/* Investment card standard handled by global */
 
-.result-box-container {
-  max-width: 500px;
-  margin: 0 auto;
-}
+
 
 .roi-summary {
   display: grid;

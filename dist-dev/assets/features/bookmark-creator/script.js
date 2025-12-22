@@ -42,14 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function generateBookmarkHtml(selectedTools) {
+    const now = Math.floor(Date.now() / 1000);
     // Group tools by category name for a better folder structure
     const folders = {};
     selectedTools.forEach(cb => {
       const cat = cb.getAttribute('data-cat-name');
       if (!folders[cat]) folders[cat] = [];
+
+      // Resolve absolute URL correctly
+      const relUrl = cb.getAttribute('data-url');
+      const absUrl = new URL(relUrl, window.location.href).href;
+
       folders[cat].push({
         name: cb.getAttribute('data-name'),
-        url: window.location.origin + cb.getAttribute('data-url')
+        url: absUrl
       });
     });
 
@@ -61,14 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
 <TITLE>Bookmarks</TITLE>
 <H1>Bookmarks</H1>
 <DL><p>
-    <DT><H3 ADD_DATE="${Math.floor(Date.now() / 1000)}" LAST_MODIFIED="${Math.floor(Date.now() / 1000)}">ZTools</H3>
+    <DT><H3 ADD_DATE="${now}" LAST_MODIFIED="${now}">ZTools</H3>
     <DL><p>
 `;
 
     for (const [catName, tools] of Object.entries(folders)) {
-      html += `        <DT><H3 ADD_DATE="${Math.floor(Date.now() / 1000)}">${catName}</H3>\n        <DL><p>\n`;
+      html += `        <DT><H3 ADD_DATE="${now}" LAST_MODIFIED="${now}">${catName}</H3>\n        <DL><p>\n`;
       tools.forEach(tool => {
-        html += `            <DT><A HREF="${tool.url}" ADD_DATE="${Math.floor(Date.now() / 1000)}">${tool.name}</A>\n`;
+        html += `            <DT><A HREF="${tool.url}" ADD_DATE="${now}">${tool.name}</A>\n`;
       });
       html += `        </DL><p>\n`;
     }

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Free Online Utility Tools
+</title>
+<meta name="description" content="Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more.">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://ztools.site/en/date-toolkit/" />
+
+<!-- Hreflang Tags for Multi-language -->
+
+  <link rel="alternate" hreflang="vi" href="https://ztools.site/vi/date-toolkit/" />
+  <link rel="alternate" hreflang="en" href="https://ztools.site/en/date-toolkit/" />
+  <link rel="alternate" hreflang="x-default" href="https://ztools.site/vi/date-toolkit/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ztools.site/en/date-toolkit/" />
+  <meta property="og:title" content="ZTools - Free Online Utility Tools" />
+  <meta property="og:description" content="Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more." />
+  <meta property="og:site_name" content="ZTools" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="vi_VN" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://ztools.site/en/date-toolkit/" />
+  <meta name="twitter:title" content="ZTools - Free Online Utility Tools" />
+  <meta name="twitter:description" content="Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more." />
+
+  <!-- Author & Copyright -->
+  <meta name="author" content="Anph" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../../assets/css/global.css?h=e3ba62f3">
+  <link rel="icon" type="image/png"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+  <link rel="manifest" href="../../manifest.json">
+
+  <script src="../../assets/js/user-mode.js?h=e15180be"></script>
+
+  <!-- Dark Mode Script (Blocking) -->
+  <script>
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+  <script>
+    window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/analytics/script.js"></script>
+  -->
+
+  <!-- Schema.org Structured Data -->
+  
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ZTools",
+    "url": "https://ztools.site",
+    "description": "Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more.",
+    "inLanguage": "en-US",
+    "author": {
+      "@type": "Person",
+      "name": "Anph"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ztools.site/en/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Date Toolkit",
+        "item": "https://ztools.site/en/date-toolkit/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Date Toolkit",
+    "description": "Calculate distance between dates, add/subtract time, and countdown.",
+    "url": "https://ztools.site/en/date-toolkit/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Anph"
+    },
+    "inLanguage": "en-US"
+  }
+]
+</script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <div class="nav-item logo-wrapper">
+      <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
+        aria-label="Tool categories menu"
+        style="background: none; border: none; padding: 0; cursor: pointer;">
+        <span class="logo-icon" aria-hidden="true">🧰</span>
+        <span class="logo-text">ZTools</span>
+        
+          <span class="logo-sub hide-mobile">
+            Utilities
+          </span>
+          
+      </button>
+
+      <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
+        <a href="../../en/bookmark-creator/" class="nav-link-prominent"
+          style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
+          <span class="pulse-icon">⭐</span>
+          Bookmark Creator
+        </a>
+      </div>
+
+      <div class="dropdown-menu mega-menu">
+        <div class="mega-menu-top">
+          <a href="../../en/" class="mega-home-link">
+            <span class="icon">🏠</span>
+            Home
+          </a>
+          <a href="../../en/categories/" class="mega-home-link">
+            <span class="icon">🗂️</span>
+            Categories
+          </a>
+          <a href="../../en/blog/" class="mega-home-link">
+            <span class="icon">✍️</span>
+            nav.blog
+          </a>
+          <a href="../../en/bookmark-creator/" class="mega-home-link">
+            <span class="icon">⭐</span>
+            Bookmark Creator
+          </a>
+        </div>
+        
+
+          
+            <div class="mega-category-section">
+              <button class="mega-header collapsible" aria-expanded="true">
+                <div class="mega-title-wrap">
+                  <span class="mega-icon" aria-hidden="true">
+                    💼
+                  </span>
+                  Job &amp; Income
+                </div>
+                <span class="mega-caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="mega-links-grid">
+                
+                  <a href="../../en/tax/" class="mega-link mode-standard-only">
+                    <span class="link-icon" aria-hidden="true">
+                      💸
+                    </span>
+                    <span class="link-text">
+                      PIT Calculator
+                    </span>
+                  </a>
+                  
+              </div>
+            </div>
+            
+            <div class="mega-category-section">
+              <button class="mega-header collapsible" aria-expanded="true">
+                <div class="mega-title-wrap">
+                  <span class="mega-icon" aria-hidden="true">
+                    👾
+                  </span>
+                  Dev Tools
+                </div>
+                <span class="mega-caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="mega-links-grid">
+                
+                  <a href="../../en/json-toolkit/" class="mega-link ">
+                    <span class="link-icon" aria-hidden="true">
+                      💻
+                    </span>
+                    <span class="link-text">
+                      JSON Toolkit
+                    </span>
+                  </a>
+                  
+                  <a href="../../en/web-playground/" class="mega-link ">
+                    <span class="link-icon" aria-hidden="true">
+                      👨‍💻
+                    </span>
+                    <span class="link-text">
+                      zTool Playground
+                    </span>
+                  </a>
+                  
+              </div>
+            </div>
+            
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Desktop Search Box -->
+      <div class="header-search-box desktop-only" id="header-search-box">
+        <span class="search-box-icon">🔍</span>
+        <input type="text" class="header-search-input" placeholder="Search tools... (Ctrl + K)" readonly>
+        <kbd>Ctrl+K</kbd>
+      </div>
+
+      <a href="../../en/categories/" class="btn-icon" title="Categories"
+        aria-label="Categories">
+        🗂️
+      </a>
+
+      <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Search Tools"
+        aria-label="Search">
+        🔍
+      </button>
+
+      <a href="../../vi/date-toolkit/" class="lang-switch"
+        title="Switch Language" aria-label="Switch to Vietnamese">
+        <span aria-hidden="true">
+          🇻🇳
+        </span>
+      </a>
+      <button id="mode-toggle" class="mode-toggle-btn" title="Advanced Mode (Comprehensive, Master Tools)"
+        aria-label="Toggle User Mode">
+        <span class="mode-text">
+          Standard
+        </span>
+        <div class="mode-switch">
+          <div class="mode-slider">
+            <span class="mode-icon">⭐</span>
+          </div>
+        </div>
+        <span class="mode-text">
+          Advanced
+        </span>
+      </button>
+
+      <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Overlay / Modal -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-overlay"></div>
+    <div class="search-container">
+      <div class="search-header">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="text" id="search-input" placeholder="Search tools... (Ctrl + K)" autocomplete="off"
+          aria-label="Search tools... (Ctrl + K)">
+        <button id="close-search" class="close-search"
+          aria-label="Close search">&times;</button>
+      </div>
+      <div id="search-results" class="search-results">
+        <!-- Results will be injected here -->
+      </div>
+      <div class="search-footer">
+        <div class="search-hints">
+          <span><kbd>↵</kbd> Select</span>
+          <span><kbd>↑↓</kbd> Navigate</span>
+          <span><kbd>esc</kbd> Close</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embed i18n data for client-side JS -->
+  <script id="i18n-data" type="application/json">
+    {
+      "search_no_results": "No results found for"
+    }
+  </script>
+
+  <!-- Embed tools data for client-side search -->
+  <script id="tools-data" type="application/json">
+    
+    [{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"💻","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"tax","link":"../../en/tax/","icon":"💸","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"web-playground","link":"../../en/web-playground/","icon":"👨‍💻","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"}]
+  </script>
+</header>
+
+    <main class="container">
+      <div class="date-toolkit-wrapper">
+  <div class="tool-header">
+    <h1>
+      Date Toolkit
+    </h1>
+    <p>
+      Calculate distance between dates, add/subtract time, and countdown.
+    </p>
+  </div>
+
+  <div class="card date-tabs-card">
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="diff">
+        Date Difference
+      </button>
+      <button class="tab-btn" data-tab="addsub">
+        Add/Subtract Date
+      </button>
+    </div>
+
+    <div class="tab-content-wrapper">
+      <!-- Tab 1: Date Difference -->
+      <div id="tab-diff" class="tab-content active">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              Start Date
+            </label>
+            <input type="date" id="diff-start" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              End Date
+            </label>
+            <input type="date" id="diff-end" class="input-form">
+          </div>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-end">
+          <label for="include-end">
+            Include end date (+1 day)
+          </label>
+        </div>
+        <div id="diff-result-area" class="result-box hidden">
+          <div class="result-main" id="diff-days-text"></div>
+          <div class="result-detail" id="diff-detail-text"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Add/Subtract Date -->
+      <div id="tab-addsub" class="tab-content hidden">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              Start Date
+            </label>
+            <input type="date" id="calc-base" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              Unit
+            </label>
+            <select id="calc-unit" class="input-form">
+              <option value="days">
+                Days
+              </option>
+              <option value="weeks">
+                Weeks
+              </option>
+              <option value="months">
+                Months
+              </option>
+              <option value="years">
+                Years
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              Result
+            </label>
+            <div class="calc-action-row">
+              <input type="number" id="calc-amount" class="input-form" value="1" min="1">
+              <div class="btn-group">
+                <button id="btn-subtract" class="btn btn-secondary">-</button>
+                <button id="btn-add" class="btn btn-primary">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="calc-result-area" class="result-box hidden">
+          <div class="result-label">
+            Calculated Date:
+          </div>
+          <div class="result-main" id="calc-result-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="../../assets/features/date-toolkit/style.css">
+<script src="../../assets/features/date-toolkit/script.js"></script>
+
+        
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Free, simple, and secure utility tools.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Links
+      </h4>
+      <ul>
+        <li><a href="../../en/about/">
+            About
+          </a></li>
+        <li><a href="../../en/privacy/">
+            Privacy Policy
+          </a></li>
+        <li><a href="../../en/terms/">
+            Terms of Service
+          </a></li>
+        <li><a href="https://github.com/ph4n4n/ztools.site-public" target="_blank" rel="noopener noreferrer"
+            aria-label="View Source on GitHub">
+            GitHub Source
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-copyright">
+      <span>
+        © 2025 ZTools. Built with ❤️.
+      </span>
+      <span>ZTools v1.2.0</span>
+    </div>
+  </div>
+</footer>
+
+      
+
+          <script src="../../assets/js/global.js?h=ba6a7fc4"></script>
+</body>
+
+</html>

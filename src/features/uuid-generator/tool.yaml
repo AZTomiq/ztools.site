@@ -2,12 +2,11 @@ id: uuid-generator
 category: generator
 icon: 🆔
 translationKey: uuid
-status: active
+status: not-ready
 link: /uuid-generator/
 meta:
   version: 1.0.0
   type: generator
-
 inputs:
   - id: uuid-version
     type: select
@@ -22,14 +21,12 @@ inputs:
         label: uuid.form.options.v7
       - value: guid
         label: uuid.form.options.guid
-
   - id: uuid-quantity
     type: number
     label: uuid.form.quantity
     default: 1
     min: 1
     max: 1000
-    
   - id: uuid-options
     type: group
     label: uuid.form.options_title
@@ -46,7 +43,6 @@ inputs:
         type: checkbox
         label: uuid.form.braces
         default: false
-
 actions:
   primary:
     label: uuid.form.btn_generate
@@ -55,13 +51,11 @@ actions:
     - icon: 📋
       title: uuid.form.btn_copy
       function: copyUUIDs
-      
 output:
   type: textarea
   id: uuid-output
   readonly: true
   placeholder: uuid.form.output_placeholder
-  
 guide:
   title: uuid.guide.title
   items:

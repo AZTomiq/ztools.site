@@ -1,0 +1,34 @@
+dateTimeMaster:
+  title: "Date & Time Master"
+  desc: "All-in-one time tool: Calculate distance, add/subtract dates, and Unix conversion."
+  tabs:
+    diff: "Date Difference"
+    addsub: "Add/Subtract Date"
+    unix: "Unix Timestamp"
+  diff:
+    start_date: "Start Date"
+    end_date: "End Date"
+    include_end: "Include end date (+1 day)"
+    result_days: "Difference: {d} days"
+    result_full: "Detail: {y} year(s), {m} month(s), {d} day(s)"
+  addsub:
+    base_date: "Base Date"
+    amount: "Amount"
+    unit: "Unit"
+    add: "Add"
+    subtract: "Subtract"
+    result_label: "Calculated Date:"
+    units:
+      days: "Days"
+      weeks: "Weeks"
+      months: "Months"
+      years: "Years"
+  unix:
+    current_time: "Current Unix Time"
+    unix_to_date: "Unix to Date"
+    date_to_unix: "Date to Unix"
+    placeholder: "Enter timestamp..."
+    convert: "Convert"
+    local_time: "Local Time"
+    seconds: "Seconds"
+    milliseconds: "Milliseconds"

@@ -2,12 +2,11 @@ id: password-generator
 category: generator
 icon: 🔐
 translationKey: password
-status: active
+status: not-ready
 link: /password-generator/
 meta:
   version: 1.0.0
   type: generator
-
 inputs:
   - id: quantity
     type: number
@@ -16,7 +15,6 @@ inputs:
     min: 1
     max: 50
     layout: half
-    
   - id: length
     type: range
     label: password.form.length
@@ -25,7 +23,6 @@ inputs:
     max: 50
     layout: half
     displayValue: true
-
   - id: char_sets
     type: group
     label: password.form.chars_title
@@ -46,11 +43,10 @@ inputs:
         type: checkbox
         label: password.form.symbols
         default: true
-
   - id: options
     type: group
     label: password.form.options_title
-    items:        
+    items:
       - id: exclude_ambiguous
         type: checkbox
         label: password.form.exclude_ambiguous
@@ -59,7 +55,6 @@ inputs:
         type: checkbox
         label: password.form.easy_say
         default: false
-
 actions:
   primary:
     label: password.form.btn_generate
@@ -68,7 +63,6 @@ actions:
     - icon: 📋
       title: password.form.btn_copy
       function: copyPassword
-      
 output:
   type: textarea
   id: password-output

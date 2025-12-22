@@ -2,7 +2,7 @@ id: compound-interest
 category: finance
 icon: 📈
 translationKey: compound
-status: active
+status: not-ready
 link: /compound-interest/
 meta:
   version: 1.0.0

@@ -1,0 +1,170 @@
+salaryTaxMaster:
+  title: "Salary & Tax Master"
+  desc: "Full Salary & Tax Suite"
+  menu:
+    personal: "PIT"
+    business: "CIT"
+    freelancer: "Freelancer"
+    insurance: "Insurance"
+    ot: "OT Calc"
+  tabs:
+    personal: "Calculate"
+tax:
+  title: PIT Calculator
+  desc: Calculate Personal Income Tax 2024, Net/Gross salary converter.
+business_tax:
+  title: Corporate Income Tax (CIT) Calc
+  desc: Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.
+  method:
+    title: Select Calculation Method
+    detailed: 
+      label: 📊 Detailed Method 
+      desc: For businesses that can account for expenses (Common)
+    simple:
+      label: 📈 Simple Method
+      desc: Percentage of revenue (Unable to account for expenses)
+  detailed_form:
+    title: Detailed Tax Calculation
+    revenue: 
+      label: Total Revenue (VND)
+      hint: Total economic benefits from sales and services
+    expenses:
+      label: Deductible Expenses (VND)
+      hint: Reasonable and valid expenses for business operation
+    other_income:
+      label: Other Income (VND)
+      hint: Interest, asset transfer, compensation...
+    exempt_income:
+      label: Exempt Income (VND)
+      hint: Income from agriculture, scientific research...
+    previous_losses:
+      label: Previous Years' Losses (VND)
+      hint: Losses carried forward (max 5 years)
+    business_type:
+      label: Business Type
+      options:
+        general: General Business
+        small: Revenue ≤ 20 billion VND
+        oil_gas: Oil & Gas Exploration
+        rare: Rare Resources Mining
+    rd_fund:
+      label: Science & Tech Fund (%)
+      hint: Max 10% of taxable income
+    btn_calc: Calculate Tax
+    btn_reset: Reset
+  simple_form:
+    title: Simple Tax Calculation
+    revenue:
+      label: Revenue (VND)
+    sector:
+      label: Business Sector
+      options:
+        goods: Goods Trading (1%)
+        services: Services (5%)
+        other: Other Activities (2%)
+    btn_calc: Calculate Tax
+    btn_reset: Reset
+  results:
+    title: Calculation Results
+    revenue: Revenue
+    expenses: Deductible Expenses
+    other_income: Other Income
+    taxable_income: Taxable Income
+    exempt_income: Exempt Income
+    previous_losses: Previous Losses
+    rd_fund: Sci-Tech Fund
+    income_for_tax: Income for Tax
+    tax_rate: Tax Rate
+    tax_rate_label: Taxable Rate
+    total_tax: 💰 CIT Payable
+  info:
+    title: 📋 Current CIT Rates
+    headers:
+      type: Business Type
+      rate: Tax Rate
+    rows:
+      general: General Business
+      small: Revenue ≤ 20B/year
+      oil: Oil & Gas Exploration
+      rare: Rare Resources
+  guide:
+    title: 📚 Corporate Income Tax Guide
+    s1:
+      title: 1. What is Corporate Income Tax (CIT)?
+      content: Corporate Income Tax (CIT) is a direct tax levied on the taxable income of organizations and enterprises from production, trading, and other activities.
+    s2:
+      title: 2. Who must pay CIT?
+      items:
+        - Enterprises established under Vietnamese law
+        - Foreign enterprises with permanent establishments in Vietnam
+        - Cooperatives and other organizations
+        - Other organizations with business activities
+    s3:
+      title: 3. Calculation Steps
+      steps:
+        step1: "<strong>Step 1:</strong> Calculate Taxable Income"
+        code1: "Taxable Income = Revenue - Deductible Expenses + Other Income"
+        step2: "<strong>Step 2:</strong> Calculate Income for Tax"
+        code2: "Income for Tax = Taxable Income - Exempt Income - Losses Carried Forward"
+        step3: "<strong>Step 3:</strong> Calculate Tax Payable"
+        code3: "CIT Payable = (Income for Tax - Sci-Tech Fund) × Tax Rate"
+    s4:
+      title: 4. Deadlines
+      items:
+        - "<strong>Annual Settlement:</strong> Last day of the 3rd month after financial year-end"
+        - "<strong>Quarterly Provisional:</strong> Must pay 75% of total tax liability by Q3 deadline"
+        - "<strong>Payment:</strong> Same deadline as tax declaration"
+    s5:
+      title: 5. Tax Exemptions
+      items:
+        - Income from agriculture, forestry, fishery
+        - Income from scientific research and technology development
+        - Income from education, healthcare, culture, charity
+        - Income from capital contribution, share purchase (taxed previously)
+        - Income from vocational training for disabilities/minorities
+    warning: "⚠️ <strong>Note:</strong> This tool is for reference only. For accurate results, please consult a tax expert or local tax authority."
+freelancer_tax:
+  title: Freelancer & Business Tax
+  desc: Calculate tax for withholding (10%) or personal business households.
+  modes:
+    withholding: Personal (Withholding 10%)
+    household: Business Household (HKD)
+  form:
+    amount: Contract Amount
+    amount_ph: e.g. 10,000,000
+    sector: Business Sector
+    calculate: Calculate Tax
+  sectors:
+    dist: Distribution/Supply (1.5%)
+    service: Services (4.5% - 7%)
+    comm: Commission/Agent (7%)
+    other: Construction/Production (3%)
+  results:
+    net: Net Amount Received
+    tax_total: Total Tax to Pay
+    pit: Personal Income Tax (PIT)
+    vat: Value Added Tax (VAT)
+social_insurance:
+  title: Social Insurance
+  desc: Social Insurance & Pension Calculator.
+ot:
+  title: Overtime Calculator
+  desc: Calculate accurately your overtime pay based on Vietnam Labor Law
+  form:
+    salary: Base Salary (Monthly)
+    salary_ph: e.g. 20,000,000
+    working_days: Working days per month
+    working_hours: Hours per day
+    ot_hours: OT Hours
+    day: Day
+    night: Night
+    calculate: Calculate
+  categories:
+    weekday: Weekdays (150%)
+    weekend: Weekends (200%)
+    holiday: Holidays/Tet (300%)
+  results:
+    hourly_rate: Hourly rate
+    total_ot: Total OT Pay
+    total_income: Total (Salary + OT)
+    breakdown: Detailed Breakdown

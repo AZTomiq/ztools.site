@@ -30,6 +30,10 @@ async function runTests() {
       try {
         const config = yaml.load(fs.readFileSync(toolYaml, 'utf8'));
         const required = ['id', 'category', 'translationKey'];
+
+        // Legacy support: 'wid' can be used instead of 'id'
+        if (config.wid && !config.id) config.id = config.wid;
+
         required.forEach(key => {
           if (!config[key]) logError(`Tool "${feature}" config missing required key: ${key}`);
         });

@@ -2,7 +2,8 @@ id: timestamp-converter
 category: dev
 icon: ⏳
 translationKey: timestamp_converter
-status: active
+status: not-ready
 link: /timestamp-converter/
+mode: standard
 meta:
   version: 1.0.0

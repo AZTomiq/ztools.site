@@ -1,0 +1,70 @@
+<%- include('../../includes/header', { pageTitle: t('blog.title') }) %>
+
+  <main class="blog-container">
+
+    <!-- HOME VIEW: List of Articles -->
+    <div id="home-view">
+      <header class="blog-header">
+        <h1 class="blog-title-main">Dev Stories ✍️</h1>
+        <p class="blog-subtitle">
+          <%= t('blog.desc') %>
+        </p>
+      </header>
+
+      <div class="post-list">
+        <% if (blogPosts && blogPosts.length> 0) { %>
+          <% blogPosts.forEach(post=> { %>
+            <a onclick="route('#<%= post.slug %>')" class="post-card">
+              <div class="post-meta">
+                <span>
+                  <%= post.date %>
+                </span> • <span>
+                  <%= post.tag || 'Blog' %>
+                </span>
+              </div>
+              <h2 class="post-title">
+                <%= post.title %>
+              </h2>
+              <p class="post-excerpt">
+                Read this story...
+              </p>
+              <span class="read-more">Read Story ➔</span>
+            </a>
+            <% }); %>
+              <% } else { %>
+                <div style="text-align:center; padding: 2rem;">No stories yet.</div>
+                <% } %>
+      </div>
+    </div>
+
+    <!-- ARTICLE VIEW: Dynamic Content Container -->
+    <div id="article-view">
+      <a onclick="route('')" class="article-back">← Back to Stories</a>
+      <div id="article-content" class="article-content">
+        <!-- Content Injected Here -->
+      </div>
+    </div>
+
+  </main>
+
+  <%- include('../../includes/footer') %>
+
+    <!-- Client-side Router & Content Data -->
+    <script>
+      // --- DYNAMIC BLOG CONTENT DATA ---
+      // Injected by EJS Build Process
+      const POSTS = {};
+      <% if (blogPosts) { %>
+          <% blogPosts.forEach(post => { %>
+        POSTS['<%= post.slug %>'] = {
+          title: `<%- post.title %>`,
+            date: `<%- post.date %>`,
+              tag: `<%- post.tag || 'Blog' %>`,
+                readTime: `<%- post.readTime || '3 min read' %>`,
+                  body: <% - JSON.stringify(post.body) %>
+        };
+          <% }); %>
+      <% } %>
+
+      // Simple Router
+    </script>

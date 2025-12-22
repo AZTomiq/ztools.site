@@ -16,7 +16,9 @@
       }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' , icon: '⚙️' }, 'daily' : { title:
       t('home.cats.daily.title') || 'Daily Utilities' , icon: '☕' }, 'dev' : { title: t('home.cats.dev.title')
       || 'Dev Tools' , icon: '💻' } }; catOrder.forEach(catId=> {
-      const catTools = tools.filter(t => t.category === catId && t.status === 'active');
+      // Filter tools for this category, including legacy ones
+      const catTools=tools.filter(t=> t.category === catId
+      && (t.status === 'active' || t.status === 'legacy'));
       if (catTools.length === 0) return;
       %>
       <div class="category-card card" id="cat-<%= catId %>">
@@ -30,10 +32,19 @@
             </span>
         </h2>
         <div class="cat-tools-list">
-          <% catTools.forEach(tool=> { %>
-            <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="cat-tool-item">
+          <% catTools.forEach(tool=> {
+            let modeClass = '';
+            if (tool.mode === 'standard') modeClass = 'mode-standard-only';
+            else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
+            %>
+            <a href="<%= rootPath %><%= locale %><%= tool.link %>"
+              class="cat-tool-item <%= tool.status === 'legacy' ? 'legacy-item' : '' %> <%= modeClass %>">
               <span class="tool-icon">
                 <%= tool.icon %>
+                  <% if (tool.status==='legacy' ) { %>
+                    <span class="legacy-dot" title="Legacy Tool"
+                      style="display:inline-block; width: 6px; height: 6px; background: var(--text-muted); border-radius: 50%; position: absolute; top: 0; right: 0;"></span>
+                    <% } %>
               </span>
               <span class="tool-name">
                 <%= t(tool.translationKey + '.title' ) %>
@@ -46,64 +57,4 @@
   </div>
 </div>
 
-<style>
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 2rem;
-  }
-
-  .category-card {
-    padding: 1.5rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .category-title {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-  }
-
-  .cat-count {
-    margin-left: auto;
-    font-size: 0.8rem;
-    background: var(--bg-hover);
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    color: var(--text-muted);
-  }
-
-  .cat-tools-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .cat-tool-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-    color: var(--text-muted);
-    transition: all 0.2s;
-  }
-
-  .cat-tool-item:hover {
-    background: var(--bg-hover);
-    color: var(--primary-color);
-    transform: translateX(5px);
-  }
-
-  @media (max-width: 600px) {
-    .categories-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+<link rel="stylesheet" href="<%= asset('assets/css/categories.css') %>">

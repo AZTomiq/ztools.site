@@ -1,8 +1,9 @@
 id: freelancer-tax
 link: /freelancer-tax/
+mode: standard
 icon: 🧾
 category: job
-status: active
+status: not-ready
 translationKey: freelancer_tax
 meta:
   version: 1.0.0

@@ -7,6 +7,11 @@ privacy:
   title: Chính Sách Bảo Mật
 terms:
   title: Điều Khoản Sử Dụng
+common:
+  legacy_title: Phiên bản cũ
+  legacy_desc: Công cụ này đã được tích hợp vào bộ siêu công cụ Master mới.
+  try_master: Trải nghiệm ngay
+  reset: Đặt lại
 nav:
   home: Trang chủ
   tax: Tính Thuế
@@ -25,6 +30,10 @@ nav:
   changelog_title: Nhật ký thay đổi
   reset: Đặt lại
   how_to_use: Hướng dẫn sử dụng
+  mode_standard: Standard
+  mode_advanced: Advanced
+  mode_standard_desc: Chế độ Tiêu chuẩn (Đơn giản, tập trung)
+  mode_advanced_desc: Chế độ Nâng cao (Đầy đủ, Master Tools)
 home:
   hero_title: Công cụ tiện ích cho mọi người
   hero_desc: Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.
@@ -66,6 +75,7 @@ home:
     za: Tên (Z-A)
     recent: Vừa xem gần đây
     popular: Phổ biến nhất
+  reset: Đặt lại
 footer:
   about_title: ZTools.site
   about_desc: Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
@@ -74,3 +84,54 @@ footer:
   policy: Chính sách
   terms: Điều khoản
   copyright: © 2025 ZTools. Built with ❤️.
+
+# Master Tools Translations
+salaryTaxMaster:
+  title: Bộ Công Cụ Thuế & Lương Master
+  desc: Tính thuế TNCN, TNDN, bảo hiểm xã hội và lương tăng ca trong một ứng dụng duy nhất.
+  menu:
+    personal: Thuế TNCN
+    business: Thuế TNDN
+    freelancer: Thuế Freelancer
+    insurance: Bảo hiểm XH
+    ot: Tính lương OT
+  tabs:
+    personal: Tính thuế cá nhân
+    compare: So sánh lương
+
+dateTimeMaster:
+  title: Bộ Công Cụ Ngày Giờ Master
+  desc: Bộ công cụ toàn diện về thời gian - Tính khoảng cách ngày, cộng trừ thời gian và chuyển đổi Timestamp.
+  tabs:
+    diff: Tính khoảng cách
+    addsub: Cộng/Trừ ngày
+    unix: Unix Timestamp
+  diff:
+    start_date: Ngày bắt đầu
+    end_date: Ngày kết thúc
+    include_end: Tính cả ngày cuối
+  addsub:
+    base_date: Ngày gốc
+    unit: Đơn vị
+    amount: Số lượng
+    subtract: Trừ đi
+    add: Cộng thêm
+    result_label: Kết quả
+    units:
+      days: Ngày
+      weeks: Tuần
+      months: Tháng
+      years: Năm
+  unix:
+    current_time: Thời gian hiện tại
+    unix_to_date: Unix → Ngày
+    date_to_unix: Ngày → Unix
+    placeholder: Nhập timestamp...
+    convert: Chuyển đổi
+    seconds: Giây (seconds)
+    milliseconds: Mili giây (ms)
+
+# Dev Toolkit
+devToolkit:
+  title: Bộ Công Cụ Lập Trình
+  desc: Bộ công cụ lập trình toàn diện cho developers

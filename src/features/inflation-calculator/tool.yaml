@@ -2,7 +2,7 @@ id: inflation-calculator
 link: /inflation-calculator/
 icon: 📈
 category: finance
-status: active
+status: not-ready
 translationKey: inflation
 meta:
   version: 1.0.0

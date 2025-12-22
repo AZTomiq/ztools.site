@@ -2,7 +2,7 @@ id: percentage-calculator
 category: finance
 icon: ％
 translationKey: percentage
-status: active
+status: not-ready
 link: /percentage-calculator/
 meta:
   version: 1.0.0

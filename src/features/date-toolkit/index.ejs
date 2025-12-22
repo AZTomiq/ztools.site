@@ -1,0 +1,105 @@
+<div class="date-toolkit-wrapper">
+  <div class="tool-header">
+    <h1>
+      <%= t('dateToolkit.title') %>
+    </h1>
+    <p>
+      <%= t('dateToolkit.desc') %>
+    </p>
+  </div>
+
+  <div class="card date-tabs-card">
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="diff">
+        <%= t('dateToolkit.diff_tab') %>
+      </button>
+      <button class="tab-btn" data-tab="addsub">
+        <%= t('dateToolkit.add_sub_tab') %>
+      </button>
+    </div>
+
+    <div class="tab-content-wrapper">
+      <!-- Tab 1: Date Difference -->
+      <div id="tab-diff" class="tab-content active">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              <%= t('dateToolkit.start_date') %>
+            </label>
+            <input type="date" id="diff-start" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              <%= t('dateToolkit.end_date') %>
+            </label>
+            <input type="date" id="diff-end" class="input-form">
+          </div>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-end">
+          <label for="include-end">
+            <%= t('dateToolkit.include_end_date') %>
+          </label>
+        </div>
+        <div id="diff-result-area" class="result-box hidden">
+          <div class="result-main" id="diff-days-text"></div>
+          <div class="result-detail" id="diff-detail-text"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Add/Subtract Date -->
+      <div id="tab-addsub" class="tab-content hidden">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              <%= t('dateToolkit.start_date') %>
+            </label>
+            <input type="date" id="calc-base" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              <%= t('dateToolkit.time_unit') %>
+            </label>
+            <select id="calc-unit" class="input-form">
+              <option value="days">
+                <%= t('dateToolkit.days') %>
+              </option>
+              <option value="weeks">
+                <%= t('dateToolkit.weeks') %>
+              </option>
+              <option value="months">
+                <%= t('dateToolkit.months') %>
+              </option>
+              <option value="years">
+                <%= t('dateToolkit.years') %>
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              <%= t('dateToolkit.result') %>
+            </label>
+            <div class="calc-action-row">
+              <input type="number" id="calc-amount" class="input-form" value="1" min="1">
+              <div class="btn-group">
+                <button id="btn-subtract" class="btn btn-secondary">-</button>
+                <button id="btn-add" class="btn btn-primary">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="calc-result-area" class="result-box hidden">
+          <div class="result-label">
+            <%= t('dateToolkit.date_after') %>
+          </div>
+          <div class="result-main" id="calc-result-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+<script src="<%= assetPath %>script.js"></script>

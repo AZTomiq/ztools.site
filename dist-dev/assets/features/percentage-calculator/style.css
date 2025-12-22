@@ -1,10 +1,4 @@
-/* Percentage Calculator Styles */
-
-.tool-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
-}
+/* Percentage Calculator Styles handled by global.css */
 
 .page-header {
   text-align: center;
@@ -20,13 +14,7 @@
   color: var(--text-muted);
 }
 
-.calculator-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
-  box-shadow: var(--shadow);
-}
+/* calculator-card handled by global */
 
 /* Tabs */
 .tab-nav {

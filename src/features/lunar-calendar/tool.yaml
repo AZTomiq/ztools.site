@@ -2,7 +2,7 @@ id: lunar-calendar
 category: daily
 icon: 🌙
 translationKey: lunarCalendar
-status: active
+status: not-ready
 link: /lunar-calendar/
 meta:
   version: 1.1.0

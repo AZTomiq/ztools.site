@@ -1,3 +1,26 @@
 uuid:
   title: UUID Generator
   desc: Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.
+  form:
+    version: Phiên bản UUID
+    quantity: Số lượng
+    options_title: Tùy chọn định dạng
+    uppercase: VIẾT HOA
+    hyphens: Dấu gạch nối
+    braces: Dấu ngoặc nhọn {}
+    btn_generate: Tạo UUID
+    options:
+      v1: Version 1 (Timestamp)
+      v4: Version 4 (Random)
+      v7: Version 7 (Time-sorted)
+  guide:
+    title: Hướng dẫn sử dụng
+    v1:
+      title: Version 1 (Time-based/MAC)
+      content: Phiên bản 1 được tạo dựa trên thời gian hiện tại và địa chỉ MAC của thiết bị. Phù hợp khi cần đảm bảo tính duy nhất theo thời gian và không gian.
+    v4:
+      title: Version 4 (Random)
+      content: Phiên bản 4 được tạo hoàn toàn ngẫu nhiên. Đây là phiên bản phổ biến nhất, đảm bảo tính duy nhất cực cao với xác suất trùng lặp gần như bằng 0.
+    v7:
+      title: Version 7 (Time-sorted)
+      content: Phiên bản 7 tương tự v1 nhưng được sắp xếp theo thời gian (time-ordered), rất tối ưu cho việc sử dụng làm Primary Key trong cơ sở dữ liệu.

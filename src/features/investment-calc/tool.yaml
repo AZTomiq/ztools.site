@@ -2,7 +2,7 @@ id: investment-calc
 link: /investment-calc/
 icon: 💸
 category: finance
-status: active
+status: not-ready
 translationKey: investment
 meta:
   version: 1.0.0

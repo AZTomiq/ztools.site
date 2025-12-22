@@ -4,9 +4,13 @@
   "description": "Multi-tool utility site",
   "main": "scripts/build.js",
   "scripts": {
-    "test": "npm run test:integrity && npm run test:unit",
+    "test": "npm run test:integrity && npm run test:feature && npm run test:build",
     "test:integrity": "node tests/integrity.js",
-    "test:unit": "vitest run",
+    "test:feature": "vitest run tests/feature",
+    "test:build": "vitest run tests/build",
+    "test:ui": "node scripts/ui-test.js",
+    "test:ui:vi": "node scripts/ui-test.js --lang=vi",
+    "test:ui:en": "node scripts/ui-test.js --lang=en",
     "build:dev": "node scripts/build.js",
     "build:force": "node scripts/build.js --force",
     "build": "node scripts/build.js --obfuscate",
@@ -38,7 +42,9 @@
     "html-minifier-terser": "^7.0.0",
     "javascript-obfuscator": "^4.0.0",
     "jsdom": "^27.3.0",
+    "puppeteer": "^24.33.1",
     "terser": "^5.0.0",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.16",
+    "xml2js": "^0.6.2"
   }
 }

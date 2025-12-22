@@ -2,7 +2,7 @@ id: random-toolkit
 category: daily
 icon: 🎲
 translationKey: random_toolkit
-status: active
+status: not-ready
 link: /random-toolkit/
 meta:
   version: 1.0.0

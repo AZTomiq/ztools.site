@@ -4,10 +4,12 @@
 <section class="tool-container">
   <div class="page-header">
     <h1>⚖️ <%= t('bmi.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
-      <% } %></h1>
+
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+          </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('bmi.desc') %>
     </p>
@@ -55,7 +57,7 @@
     </h3>
     <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
       <thead>
-        <tr style="background: var(--bg-color); text-align: left;">
+        <tr style="background: var(--bg-hover); text-align: left;">
           <th style="padding: 0.5rem;">
             <%= t('bmi.table.classification') %>
           </th>
@@ -94,18 +96,5 @@
   </div>
 </section>
 
+<script src="<%= rootPath %>assets/features/bmi/logic.js"></script>
 <script src="<%= toolConfig._assets.js %>"></script>
-
-<style>
-  .text-warning {
-    color: #fd7e14;
-  }
-
-  .text-success {
-    color: #198754;
-  }
-
-  .text-danger {
-    color: #dc3545;
-  }
-</style>

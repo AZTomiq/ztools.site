@@ -1,0 +1,34 @@
+dateTimeMaster:
+  title: "Bộ Công Cụ Ngày Giờ Master"
+  desc: "Bộ công cụ toàn diện: Tính khoảng cách, cộng trừ ngày và chuyển đổi Unix Timestamp."
+  tabs:
+    diff: "Khoảng cách ngày"
+    addsub: "Cộng/Trừ thời gian"
+    unix: "Unix Timestamp"
+  diff:
+    start_date: "Ngày bắt đầu"
+    end_date: "Ngày kết thúc"
+    include_end: "Bao gồm ngày kết thúc (+1 ngày)"
+    result_days: "Khoảng cách là: {d} ngày"
+    result_full: "Chi tiết: {y} năm, {m} tháng, {d} ngày"
+  addsub:
+    base_date: "Ngày gốc"
+    amount: "Số lượng"
+    unit: "Đơn vị"
+    add: "Cộng thêm"
+    subtract: "Trừ đi"
+    result_label: "Ngày sau khi tính:"
+    units:
+      days: "Ngày"
+      weeks: "Tuần"
+      months: "Tháng"
+      years: "Năm"
+  unix:
+    current_time: "Thời gian hiện tại (Unix)"
+    unix_to_date: "Unix sang Ngày tháng"
+    date_to_unix: "Ngày tháng sang Unix"
+    placeholder: "Nhập timestamp..."
+    convert: "Chuyển đổi"
+    local_time: "Giờ địa phương"
+    seconds: "Giây"
+    milliseconds: "Mili giây"

@@ -2,7 +2,7 @@ id: loan-calculator
 category: finance
 icon: 🏠
 translationKey: loan
-status: active
+status: not-ready
 link: /loan-calculator/
 meta:
   version: 1.0.0

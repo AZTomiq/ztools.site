@@ -1,0 +1,168 @@
+<div class="date-time-master-wrapper">
+  <div class="tool-header">
+    <h1>
+      <%= t('dateTimeMaster.title') %>
+    </h1>
+    <p>
+      <%= t('dateTimeMaster.desc') %>
+    </p>
+  </div>
+
+  <div class="card master-tabs-card">
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="diff">
+        <%= t('dateTimeMaster.tabs.diff') %>
+      </button>
+      <button class="tab-btn" data-tab="addsub">
+        <%= t('dateTimeMaster.tabs.addsub') %>
+      </button>
+      <button class="tab-btn" data-tab="unix">
+        <%= t('dateTimeMaster.tabs.unix') %>
+      </button>
+    </div>
+
+    <div class="tab-content-wrapper">
+      <!-- Tab 1: Date Difference -->
+      <div id="tab-diff" class="tab-content active">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              <%= t('dateTimeMaster.diff.start_date') %>
+            </label>
+            <input type="date" id="diff-start" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              <%= t('dateTimeMaster.diff.end_date') %>
+            </label>
+            <input type="date" id="diff-end" class="input-form">
+          </div>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-end">
+          <label for="include-end">
+            <%= t('dateTimeMaster.diff.include_end') %>
+          </label>
+        </div>
+        <div id="diff-result-area" class="result-box hidden">
+          <div class="result-main" id="diff-days-text"></div>
+          <div class="result-detail" id="diff-detail-text"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Add/Subtract Date -->
+      <div id="tab-addsub" class="tab-content hidden">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              <%= t('dateTimeMaster.addsub.base_date') %>
+            </label>
+            <input type="date" id="calc-base" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              <%= t('dateTimeMaster.addsub.unit') %>
+            </label>
+            <select id="calc-unit" class="input-form">
+              <option value="days">
+                <%= t('dateTimeMaster.addsub.units.days') %>
+              </option>
+              <option value="weeks">
+                <%= t('dateTimeMaster.addsub.units.weeks') %>
+              </option>
+              <option value="months">
+                <%= t('dateTimeMaster.addsub.units.months') %>
+              </option>
+              <option value="years">
+                <%= t('dateTimeMaster.addsub.units.years') %>
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              <%= t('dateTimeMaster.addsub.amount') %>
+            </label>
+            <div class="action-row">
+              <input type="number" id="calc-amount" class="input-form" value="1" min="1">
+              <div class="btn-group">
+                <button id="btn-subtract" class="btn btn-secondary">
+                  <%= t('dateTimeMaster.addsub.subtract') %>
+                </button>
+                <button id="btn-add" class="btn btn-primary">
+                  <%= t('dateTimeMaster.addsub.add') %>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="calc-result-area" class="result-box hidden">
+          <div class="result-label">
+            <%= t('dateTimeMaster.addsub.result_label') %>
+          </div>
+          <div class="result-main" id="calc-result-text"></div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Unix Timestamp -->
+      <div id="tab-unix" class="tab-content hidden">
+        <div class="current-unix-box mb-6">
+          <div class="text-sm text-muted mb-1">
+            <%= t('dateTimeMaster.unix.current_time') %>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="text-2xl font-mono font-bold text-primary" id="now-unix">--</div>
+            <div class="badge" id="now-date">--</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="converter-part">
+            <h3>
+              <%= t('dateTimeMaster.unix.unix_to_date') %>
+            </h3>
+            <div class="input-group mt-3">
+              <input type="number" id="unix-input" class="input-form font-mono"
+                placeholder="<%= t('dateTimeMaster.unix.placeholder') %>">
+              <div class="unit-toggle mt-2">
+                <label><input type="radio" name="unix-unit" value="s" checked> Sec</label>
+                <label><input type="radio" name="unix-unit" value="ms"> Ms</label>
+              </div>
+              <button class="btn btn-primary w-full mt-4" id="btn-unix-convert">
+                <%= t('dateTimeMaster.unix.convert') %>
+              </button>
+            </div>
+            <div id="unix-res-area" class="result-box mt-4 hidden">
+              <div class="res-row"><span>Local:</span> <strong id="unix-res-local"></strong></div>
+              <div class="res-row"><span>UTC:</span> <strong id="unix-res-utc"></strong></div>
+            </div>
+          </div>
+
+          <div class="converter-part">
+            <h3>
+              <%= t('dateTimeMaster.unix.date_to_unix') %>
+            </h3>
+            <div class="input-group mt-3">
+              <input type="datetime-local" id="date-input" class="input-form" step="1">
+              <button class="btn btn-secondary w-full mt-4" id="btn-date-convert">
+                <%= t('dateTimeMaster.unix.convert') %>
+              </button>
+            </div>
+            <div id="date-res-area" class="result-box mt-4 hidden text-left">
+              <div class="res-row"><span>
+                  <%= t('dateTimeMaster.unix.seconds') %>:
+                </span> <code id="date-res-unix"></code></div>
+              <div class="res-row"><span>
+                  <%= t('dateTimeMaster.unix.milliseconds') %>:
+                </span> <code id="date-res-ms"></code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="<%= assetPath %>style.css">
+<script src="<%= assetPath %>script.js"></script>

@@ -3,7 +3,8 @@ category: job
 icon: 🏥
 translationKey: social_insurance
 descOverride: Social Insurance & Pension Calculator
-status: active
+status: not-ready
 link: /social-insurance/
+mode: standard
 meta:
   version: 1.0.0

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+</title>
+<meta name="description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://ztools.site/vi/date-time-master/" />
+
+<!-- Hreflang Tags for Multi-language -->
+
+  <link rel="alternate" hreflang="vi" href="https://ztools.site/vi/date-time-master/" />
+  <link rel="alternate" hreflang="en" href="https://ztools.site/en/date-time-master/" />
+  <link rel="alternate" hreflang="x-default" href="https://ztools.site/vi/date-time-master/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ztools.site/vi/date-time-master/" />
+  <meta property="og:title" content="ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí" />
+  <meta property="og:description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt." />
+  <meta property="og:site_name" content="ZTools" />
+  <meta property="og:locale" content="vi_VN" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://ztools.site/vi/date-time-master/" />
+  <meta name="twitter:title" content="ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí" />
+  <meta name="twitter:description" content="Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt." />
+
+  <!-- Author & Copyright -->
+  <meta name="author" content="Anph" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../../assets/css/global.css?h=e3ba62f3">
+  <link rel="icon" type="image/png"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+  <link rel="manifest" href="../../manifest.json">
+
+  <script src="../../assets/js/user-mode.js?h=e15180be"></script>
+
+  <!-- Dark Mode Script (Blocking) -->
+  <script>
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
+  <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+  <script>
+    window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/analytics/script.js"></script>
+  -->
+
+  <!-- Schema.org Structured Data -->
+  
+
+  <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ZTools",
+    "url": "https://ztools.site",
+    "description": "Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.",
+    "inLanguage": "vi-VN",
+    "author": {
+      "@type": "Person",
+      "name": "Anph"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ztools.site/vi/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Bộ Công Cụ Ngày Giờ Master",
+        "item": "https://ztools.site/vi/date-time-master/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Bộ Công Cụ Ngày Giờ Master",
+    "description": "Bộ công cụ toàn diện: Tính khoảng cách, cộng trừ ngày và chuyển đổi Unix Timestamp.",
+    "url": "https://ztools.site/vi/date-time-master/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Anph"
+    },
+    "inLanguage": "vi-VN"
+  }
+]
+</script>
+</head>
+
+<body>
+  <header class="site-header">
+  <div class="header-inner container">
+    <div class="nav-item logo-wrapper">
+      <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
+        aria-label="Menu danh mục công cụ"
+        style="background: none; border: none; padding: 0; cursor: pointer;">
+        <span class="logo-icon" aria-hidden="true">🧰</span>
+        <span class="logo-text">ZTools</span>
+        
+          <span class="logo-sub hide-mobile">
+            Tiện ích
+          </span>
+          
+      </button>
+
+      <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
+        <a href="../../vi/bookmark-creator/" class="nav-link-prominent"
+          style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
+          <span class="pulse-icon">⭐</span>
+          Bookmark Creator
+        </a>
+      </div>
+
+      <div class="dropdown-menu mega-menu">
+        <div class="mega-menu-top">
+          <a href="../../vi/" class="mega-home-link">
+            <span class="icon">🏠</span>
+            Trang chủ
+          </a>
+          <a href="../../vi/categories/" class="mega-home-link">
+            <span class="icon">🗂️</span>
+            Danh mục
+          </a>
+          <a href="../../vi/blog/" class="mega-home-link">
+            <span class="icon">✍️</span>
+            nav.blog
+          </a>
+          <a href="../../vi/bookmark-creator/" class="mega-home-link">
+            <span class="icon">⭐</span>
+            Bookmark Creator
+          </a>
+        </div>
+        
+
+          
+            <div class="mega-category-section">
+              <button class="mega-header collapsible" aria-expanded="true">
+                <div class="mega-title-wrap">
+                  <span class="mega-icon" aria-hidden="true">
+                    💼
+                  </span>
+                  Việc làm &amp; Lương thưởng
+                </div>
+                <span class="mega-caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="mega-links-grid">
+                
+                  <a href="../../vi/tax/" class="mega-link mode-standard-only">
+                    <span class="link-icon" aria-hidden="true">
+                      💸
+                    </span>
+                    <span class="link-text">
+                      Tính thuế TNCN
+                    </span>
+                  </a>
+                  
+              </div>
+            </div>
+            
+            <div class="mega-category-section">
+              <button class="mega-header collapsible" aria-expanded="true">
+                <div class="mega-title-wrap">
+                  <span class="mega-icon" aria-hidden="true">
+                    👾
+                  </span>
+                  Công cụ Lập trình (Dev)
+                </div>
+                <span class="mega-caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="mega-links-grid">
+                
+                  <a href="../../vi/json-toolkit/" class="mega-link ">
+                    <span class="link-icon" aria-hidden="true">
+                      💻
+                    </span>
+                    <span class="link-text">
+                      Bộ công cụ JSON
+                    </span>
+                  </a>
+                  
+                  <a href="../../vi/web-playground/" class="mega-link ">
+                    <span class="link-icon" aria-hidden="true">
+                      👨‍💻
+                    </span>
+                    <span class="link-text">
+                      zTool Playground
+                    </span>
+                  </a>
+                  
+              </div>
+            </div>
+            
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Desktop Search Box -->
+      <div class="header-search-box desktop-only" id="header-search-box">
+        <span class="search-box-icon">🔍</span>
+        <input type="text" class="header-search-input" placeholder="Tìm kiếm công cụ... (Ctrl + K)" readonly>
+        <kbd>Ctrl+K</kbd>
+      </div>
+
+      <a href="../../vi/categories/" class="btn-icon" title="Danh mục"
+        aria-label="Categories">
+        🗂️
+      </a>
+
+      <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Tìm kiếm công cụ"
+        aria-label="Search">
+        🔍
+      </button>
+
+      <a href="../../en/date-time-master/" class="lang-switch"
+        title="Switch Language" aria-label="Chuyển sang Tiếng Anh">
+        <span aria-hidden="true">
+          🇺🇸
+        </span>
+      </a>
+      <button id="mode-toggle" class="mode-toggle-btn" title="Chế độ Nâng cao (Đầy đủ, Master Tools)"
+        aria-label="Toggle User Mode">
+        <span class="mode-text">
+          Standard
+        </span>
+        <div class="mode-switch">
+          <div class="mode-slider">
+            <span class="mode-icon">⭐</span>
+          </div>
+        </div>
+        <span class="mode-text">
+          Advanced
+        </span>
+      </button>
+
+      <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Overlay / Modal -->
+  <div id="search-modal" class="search-modal">
+    <div class="search-overlay"></div>
+    <div class="search-container">
+      <div class="search-header">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="text" id="search-input" placeholder="Tìm kiếm công cụ... (Ctrl + K)" autocomplete="off"
+          aria-label="Tìm kiếm công cụ... (Ctrl + K)">
+        <button id="close-search" class="close-search"
+          aria-label="Đóng tìm kiếm">&times;</button>
+      </div>
+      <div id="search-results" class="search-results">
+        <!-- Results will be injected here -->
+      </div>
+      <div class="search-footer">
+        <div class="search-hints">
+          <span><kbd>↵</kbd> Select</span>
+          <span><kbd>↑↓</kbd> Navigate</span>
+          <span><kbd>esc</kbd> Close</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embed i18n data for client-side JS -->
+  <script id="i18n-data" type="application/json">
+    {
+      "search_no_results": "Không tìm thấy kết quả cho"
+    }
+  </script>
+
+  <!-- Embed tools data for client-side search -->
+  <script id="tools-data" type="application/json">
+    
+    [{"id":"json-toolkit","link":"../../vi/json-toolkit/","icon":"💻","title":"Bộ công cụ JSON","desc":"Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.","category":"Công cụ Lập trình (Dev)"},{"id":"tax","link":"../../vi/tax/","icon":"💸","title":"Tính thuế TNCN","desc":"Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.","category":"Việc làm & Lương thưởng"},{"id":"web-playground","link":"../../vi/web-playground/","icon":"👨‍💻","title":"zTool Playground","desc":"Trình soạn thảo HTML/CSS/JS online, chạy ngay trên trình duyệt, không cần server.","category":"Công cụ Lập trình (Dev)"}]
+  </script>
+</header>
+
+    <main class="container">
+      <div class="date-time-master-wrapper">
+  <div class="tool-header">
+    <h1>
+      Bộ Công Cụ Ngày Giờ Master
+    </h1>
+    <p>
+      Bộ công cụ toàn diện: Tính khoảng cách, cộng trừ ngày và chuyển đổi Unix Timestamp.
+    </p>
+  </div>
+
+  <div class="card master-tabs-card">
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="diff">
+        Khoảng cách ngày
+      </button>
+      <button class="tab-btn" data-tab="addsub">
+        Cộng/Trừ thời gian
+      </button>
+      <button class="tab-btn" data-tab="unix">
+        Unix Timestamp
+      </button>
+    </div>
+
+    <div class="tab-content-wrapper">
+      <!-- Tab 1: Date Difference -->
+      <div id="tab-diff" class="tab-content active">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              Ngày bắt đầu
+            </label>
+            <input type="date" id="diff-start" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              Ngày kết thúc
+            </label>
+            <input type="date" id="diff-end" class="input-form">
+          </div>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="include-end">
+          <label for="include-end">
+            Bao gồm ngày kết thúc (+1 ngày)
+          </label>
+        </div>
+        <div id="diff-result-area" class="result-box hidden">
+          <div class="result-main" id="diff-days-text"></div>
+          <div class="result-detail" id="diff-detail-text"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Add/Subtract Date -->
+      <div id="tab-addsub" class="tab-content hidden">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              Ngày gốc
+            </label>
+            <input type="date" id="calc-base" class="input-form">
+          </div>
+          <div class="input-group">
+            <label>
+              Đơn vị
+            </label>
+            <select id="calc-unit" class="input-form">
+              <option value="days">
+                Ngày
+              </option>
+              <option value="weeks">
+                Tuần
+              </option>
+              <option value="months">
+                Tháng
+              </option>
+              <option value="years">
+                Năm
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>
+              Số lượng
+            </label>
+            <div class="action-row">
+              <input type="number" id="calc-amount" class="input-form" value="1" min="1">
+              <div class="btn-group">
+                <button id="btn-subtract" class="btn btn-secondary">
+                  Trừ đi
+                </button>
+                <button id="btn-add" class="btn btn-primary">
+                  Cộng thêm
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="calc-result-area" class="result-box hidden">
+          <div class="result-label">
+            Ngày sau khi tính:
+          </div>
+          <div class="result-main" id="calc-result-text"></div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Unix Timestamp -->
+      <div id="tab-unix" class="tab-content hidden">
+        <div class="current-unix-box mb-6">
+          <div class="text-sm text-muted mb-1">
+            Thời gian hiện tại (Unix)
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="text-2xl font-mono font-bold text-primary" id="now-unix">--</div>
+            <div class="badge" id="now-date">--</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="converter-part">
+            <h3>
+              Unix sang Ngày tháng
+            </h3>
+            <div class="input-group mt-3">
+              <input type="number" id="unix-input" class="input-form font-mono"
+                placeholder="Nhập timestamp...">
+              <div class="unit-toggle mt-2">
+                <label><input type="radio" name="unix-unit" value="s" checked> Sec</label>
+                <label><input type="radio" name="unix-unit" value="ms"> Ms</label>
+              </div>
+              <button class="btn btn-primary w-full mt-4" id="btn-unix-convert">
+                Chuyển đổi
+              </button>
+            </div>
+            <div id="unix-res-area" class="result-box mt-4 hidden">
+              <div class="res-row"><span>Local:</span> <strong id="unix-res-local"></strong></div>
+              <div class="res-row"><span>UTC:</span> <strong id="unix-res-utc"></strong></div>
+            </div>
+          </div>
+
+          <div class="converter-part">
+            <h3>
+              Ngày tháng sang Unix
+            </h3>
+            <div class="input-group mt-3">
+              <input type="datetime-local" id="date-input" class="input-form" step="1">
+              <button class="btn btn-secondary w-full mt-4" id="btn-date-convert">
+                Chuyển đổi
+              </button>
+            </div>
+            <div id="date-res-area" class="result-box mt-4 hidden text-left">
+              <div class="res-row"><span>
+                  Giây:
+                </span> <code id="date-res-unix"></code></div>
+              <div class="res-row"><span>
+                  Mili giây:
+                </span> <code id="date-res-ms"></code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="../../assets/features/date-time-master/style.css">
+<script src="../../assets/features/date-time-master/script.js"></script>
+
+        
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3>
+        ZTools.site
+      </h3>
+      <p>
+        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>
+        Liên kết
+      </h4>
+      <ul>
+        <li><a href="../../vi/about/">
+            Giới thiệu
+          </a></li>
+        <li><a href="../../vi/privacy/">
+            Chính sách
+          </a></li>
+        <li><a href="../../vi/terms/">
+            Điều khoản
+          </a></li>
+        <li><a href="https://github.com/ph4n4n/ztools.site-public" target="_blank" rel="noopener noreferrer"
+            aria-label="View Source on GitHub">
+            GitHub Source
+          </a></li>
+      </ul>
+    </div>
+    <div class="footer-copyright">
+      <span>
+        © 2025 ZTools. Built with ❤️.
+      </span>
+      <span>ZTools v1.2.0</span>
+    </div>
+  </div>
+</footer>
+
+      
+
+          <script src="../../assets/js/global.js?h=ba6a7fc4"></script>
+</body>
+
+</html>

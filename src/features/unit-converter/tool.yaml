@@ -2,7 +2,7 @@ id: unit-converter
 category: daily
 icon: 📏
 translationKey: unit_converter
-status: active
+status: not-ready
 link: /unit-converter/
 meta:
   version: 1.1.0

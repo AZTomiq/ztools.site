@@ -1,0 +1,104 @@
+<!-- title: <%= t('playground.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<!-- Styles specific to breaking out of the container for full width -->
+<style>
+  /* Hack to break out of parent .container restrictions for this tool only */
+  main.container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure the body/html doesn't scroll if we want app-like feel, 
+       but for now let's keep it simple and just maximize width */
+  .playground-container {
+    width: 100%;
+    height: calc(100vh - 70px);
+    /* fallback */
+  }
+</style>
+
+<div class="playground-container">
+  <!-- Toolbar -->
+  <div class="playground-toolbar">
+    <div class="toolbar-left" style="display: flex; align-items: center; gap: 10px;">
+      <button id="toggle-sidebar" class="btn-icon-sub" title="Toggle Sidebar">📑</button>
+      <h1 class="tool-title"><span class="icon">👨‍💻</span>
+        <%= t('playground.title') %>
+      </h1>
+    </div>
+    <div class="toolbar-right">
+      <div class="setting-item">
+        <input type="checkbox" id="auto-run-toggle" checked>
+        <label for="auto-run-toggle">Auto-Run</label>
+      </div>
+      <button id="btn-run" class="btn-primary">▶ Run</button>
+      <button id="btn-share" class="btn-secondary">🔗 Share</button>
+    </div>
+  </div>
+
+  <!-- Main Workspace Layout -->
+  <div class="playground-body">
+    <!-- Sidebar Examples -->
+    <div class="sidebar-examples" id="sidebar-examples">
+      <div class="sidebar-header">
+        <h3>📚 Examples</h3>
+      </div>
+      <div class="examples-list" id="examples-list">
+        <!-- Items will be injected by JS -->
+      </div>
+    </div>
+
+    <!-- Work Area -->
+    <div class="work-area">
+      <!-- Editors Area -->
+      <div class="editors-split">
+        <div class="editor-pane" id="pane-html">
+          <div class="pane-header">
+            <span class="lang-icon">🌐</span> HTML
+          </div>
+          <div class="editor-container" id="monaco-html"></div>
+        </div>
+        <div class="editor-pane" id="pane-css">
+          <div class="pane-header">
+            <span class="lang-icon">🎨</span> CSS
+          </div>
+          <div class="editor-container" id="monaco-css"></div>
+        </div>
+        <div class="editor-pane" id="pane-js">
+          <div class="pane-header">
+            <span class="lang-icon">⚡</span> JS
+          </div>
+          <div class="editor-container" id="monaco-js"></div>
+        </div>
+      </div>
+
+      <!-- Preview Area -->
+      <div class="preview-area">
+        <div class="pane-header">
+          <span class="lang-icon">👁️</span> Result
+          <button id="toggle-console" class="btn-xs" title="Toggle Console">Console</button>
+        </div>
+        <div class="preview-content" style="position: relative; flex: 1; display:flex; flex-direction: column;">
+          <iframe id="preview-frame" sandbox="allow-scripts allow-modals" style="flex: 1;"></iframe>
+          <div id="console-pane" class="console-pane collapsed">
+            <div class="console-header">
+              <span>Console Output</span>
+              <button id="clear-console">🚫</button>
+            </div>
+            <div id="console-logs"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Monaco Editor Loader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+<!-- LZ-String for URL Compression -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+<!-- External Examples Data -->
+<script src="./examples.js"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

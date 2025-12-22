@@ -3,7 +3,8 @@ category: job
 icon: 💼
 translationKey: business_tax
 descOverride: Corporate Income Tax Calculator
-status: active
+status: not-ready
 link: /business-tax/
+mode: standard
 meta:
   version: 1.0.0

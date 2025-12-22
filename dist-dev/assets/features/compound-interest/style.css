@@ -1,11 +1,5 @@
 /* Compound Interest Calculator Styles */
 
-.tool-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
 .page-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -21,45 +15,10 @@
   color: var(--text-muted);
 }
 
-.calculator-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-}
+/* Form Styles handled by global.css */
 
 /* Form Styles */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--text-color);
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
-}
+/* Tool-specific form overrides can go here */
 
 .input-group {
   position: relative;
@@ -174,7 +133,7 @@
 }
 
 .result-card.primary {
-  background: rgba(34, 211, 238, 0.05);
+  background: rgba(var(--primary-rgb), 0.1);
   border-color: var(--primary-color);
 }
 

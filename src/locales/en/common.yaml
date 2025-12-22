@@ -7,6 +7,11 @@ privacy:
   title: Privacy Policy
 terms:
   title: Terms of Service
+common:
+  legacy_title: Legacy Version
+  legacy_desc: This tool has been integrated into the new Master toolkit.
+  try_master: Try New Version
+  reset: Reset
 nav:
   home: Home
   tax: Tax Calc
@@ -25,6 +30,10 @@ nav:
   changelog_title: Version History
   reset: Reset
   how_to_use: How to use
+  mode_standard: Standard
+  mode_advanced: Advanced
+  mode_standard_desc: Standard Mode (Simplified, focused)
+  mode_advanced_desc: Advanced Mode (Comprehensive, Master Tools)
 home:
   hero_title: Utility Tools for Everyone
   hero_desc: "Simple, fast, secure, and completely free."
@@ -66,6 +75,7 @@ home:
     za: Name (Z-A)
     recent: Recently Used
     popular: Most Used
+  reset: Reset
 footer:
   about_title: ZTools.site
   about_desc: "Free, simple, and secure utility tools."
@@ -74,3 +84,54 @@ footer:
   policy: Privacy Policy
   terms: Terms of Service
   copyright: "© 2025 ZTools. Built with ❤️."
+
+# Master Tools Translations
+salaryTaxMaster:
+  title: Salary & Tax Master Toolkit
+  desc: Calculate personal income tax, corporate tax, social insurance, and overtime pay in one comprehensive app.
+  menu:
+    personal: Personal Tax
+    business: Corporate Tax
+    freelancer: Freelancer Tax
+    insurance: Social Insurance
+    ot: OT Calculator
+  tabs:
+    personal: Personal Tax Calculator
+    compare: Compare Salary
+
+dateTimeMaster:
+  title: Date & Time Master Toolkit
+  desc: Comprehensive time utilities - Calculate date differences, add/subtract time, and convert Unix timestamps.
+  tabs:
+    diff: Date Difference
+    addsub: Add/Subtract Date
+    unix: Unix Timestamp
+  diff:
+    start_date: Start Date
+    end_date: End Date
+    include_end: Include end date
+  addsub:
+    base_date: Base Date
+    unit: Unit
+    amount: Amount
+    subtract: Subtract
+    add: Add
+    result_label: Result
+    units:
+      days: Days
+      weeks: Weeks
+      months: Months
+      years: Years
+  unix:
+    current_time: Current Time
+    unix_to_date: Unix → Date
+    date_to_unix: Date → Unix
+    placeholder: Enter timestamp...
+    convert: Convert
+    seconds: Seconds
+    milliseconds: Milliseconds
+
+# Dev Toolkit  
+devToolkit:
+  title: Developer Toolkit
+  desc: Comprehensive toolkit for developers

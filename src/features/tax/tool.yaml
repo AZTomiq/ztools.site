@@ -4,5 +4,6 @@ icon: 💸
 translationKey: tax
 status: active
 link: /tax/
+mode: standard
 meta:
   version: 1.0.0

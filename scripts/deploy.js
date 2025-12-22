@@ -33,12 +33,15 @@ try {
     const topDeployment = parsed.deployment || {};
 
     // Normalize keys (handle "folder" as "dist_folder")
-    if (topDeployment.folder) {
-      topDeployment.dist_folder = topDeployment.folder;
-      delete topDeployment.folder;
-    }
+    const normalize = (obj) => {
+      if (obj.folder) {
+        obj.dist_folder = obj.folder;
+        delete obj.folder;
+      }
+      return obj;
+    };
 
-    yamlConfig = { ...buildDeploy, ...topDeployment };
+    yamlConfig = { ...normalize(buildDeploy), ...normalize(topDeployment) };
   }
 } catch (e) {
   console.warn('⚠️ Warning: Failed to parse global.yaml, using defaults.');

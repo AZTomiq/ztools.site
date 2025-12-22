@@ -1,8 +1,9 @@
-id: ot-calculator
+wid: ot-calculator
 link: /ot-calculator/
+mode: standard
 icon: ⏰
 category: job
-status: active
+status: not-ready
 translationKey: ot
 meta:
   version: 1.0.0

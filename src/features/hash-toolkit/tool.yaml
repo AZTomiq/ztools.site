@@ -2,7 +2,7 @@ id: hash-toolkit
 link: /hash-toolkit/
 icon: 🔒
 category: dev
-status: active
+status: not-ready
 translationKey: hash
 meta:
   version: 1.0.0

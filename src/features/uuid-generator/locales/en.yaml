@@ -1,3 +1,26 @@
 uuid:
   title: UUID Generator
   desc: Generate random UUIDs/GUIDs (V1, V4, V7) instantly.
+  form:
+    version: UUID Version
+    quantity: Quantity
+    options_title: Format Options
+    uppercase: Uppercase
+    hyphens: Hyphens
+    braces: Braces {}
+    btn_generate: Generate UUIDs
+    options:
+      v1: Version 1 (Timestamp)
+      v4: Version 4 (Random)
+      v7: Version 7 (Time-sorted)
+  guide:
+    title: User Guide
+    v1:
+      title: Version 1 (Time-based/MAC)
+      content: Version 1 is generated based on the current time and the device's MAC address. Suitable when uniqueness is required across time and space.
+    v4:
+      title: Version 4 (Random)
+      content: Version 4 is generated purely randomly. This is the most common version, ensuring extremely high uniqueness with near-zero collision probability.
+    v7:
+      title: Version 7 (Time-sorted)
+      content: Version 7 is similar to v1 but time-ordered, highly optimized for use as Primary Keys in databases.

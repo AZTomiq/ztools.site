@@ -174,7 +174,7 @@
 }
 
 .result-card.primary {
-  background: rgba(34, 211, 238, 0.05);
+  background: rgba(var(--primary-rgb), 0.1);
   border-color: var(--primary-color);
 }
 

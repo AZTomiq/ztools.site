@@ -1,0 +1,299 @@
+<div class="salary-tax-master-wrapper">
+  <div class="master-layout">
+    <aside class="master-sidebar">
+      <button class="sidebar-btn active" data-section="personal-tax">
+        <i>💸</i>
+        <span>
+          <%= t('salaryTaxMaster.menu.personal') %>
+        </span>
+      </button>
+      <button class="sidebar-btn" data-section="business-tax">
+        <i>🏢</i>
+        <span>
+          <%= t('salaryTaxMaster.menu.business') %>
+        </span>
+      </button>
+      <button class="sidebar-btn" data-section="freelancer">
+        <i>👨‍💻</i>
+        <span>
+          <%= t('salaryTaxMaster.menu.freelancer') %>
+        </span>
+      </button>
+      <button class="sidebar-btn" data-section="insurance">
+        <i>🏥</i>
+        <span>
+          <%= t('salaryTaxMaster.menu.insurance') %>
+        </span>
+      </button>
+      <button class="sidebar-btn" data-section="ot">
+        <i>⏰</i>
+        <span>
+          <%= t('salaryTaxMaster.menu.ot') %>
+        </span>
+      </button>
+    </aside>
+
+    <main class="master-content">
+      <!-- Section: Personal Income Tax -->
+      <div id="section-personal-tax" class="content-section active">
+        <div class="tool-header-collapsed">
+          <h1>
+            <%= t('tax.title') %>
+          </h1>
+          <p>
+            <%= t('tax.desc') %>
+          </p>
+        </div>
+
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="pit-main">🧮 <%= t('salaryTaxMaster.tabs.personal') %></button>
+          <button class="tab-btn" data-tab="pit-compare">📊 <%= t('salaryTaxMaster.tabs.compare') %></button>
+        </nav>
+
+        <div id="tab-pit-main" class="tab-panel active">
+          <section class="input-section">
+            <div class="input-stack">
+              <div class="form-group">
+                <label id="incomeLabel" for="incomeInput">Thu nhập Gross (VNĐ/tháng)</label>
+                <div class="input-with-toggle">
+                  <input type="text" id="incomeInput" placeholder="50,000,000" inputmode="numeric">
+                  <div class="toggle-group">
+                    <button type="button" class="toggle-btn active" data-type="gross">Gross</button>
+                    <button type="button" class="toggle-btn" data-type="net">Net</button>
+                  </div>
+                  <div class="scenario-toggle" id="scenarioToggle" style="display: none;">
+                    <button type="button" class="scenario-btn active" data-scenario="keep-gross">📈 Giữ Gross</button>
+                    <button type="button" class="scenario-btn" data-scenario="keep-net">💼 Giữ Net</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="dependents">Số người phụ thuộc</label>
+                  <input type="number" id="dependents" value="0" min="0" max="20">
+                </div>
+                <div class="form-group form-group-sm">
+                  <label for="bonusMonths">Bonus (tháng)</label>
+                  <input type="number" id="bonusMonths" value="0" min="0" max="12">
+                </div>
+                <div class="form-group form-group-sm">
+                  <label for="region">Vùng lương</label>
+                  <select id="region">
+                    <option value="1">Vùng I</option>
+                    <option value="2">Vùng II</option>
+                    <option value="3">Vùng III</option>
+                    <option value="4">Vùng IV</option>
+                  </select>
+                </div>
+                <button class="btn" onclick="calculatePITMaster()">Tính toán</button>
+              </div>
+            </div>
+          </section>
+
+          <div id="pit-result-section" class="result-section">
+            <div class="result-card">
+              <div class="result-header">
+                <h2>📊 Kết quả chi tiết</h2>
+              </div>
+              <table id="pit-result-table">
+                <thead>
+                  <tr>
+                    <th>Mục</th>
+                    <th>2025</th>
+                    <th>2026</th>
+                  </tr>
+                </thead>
+                <tbody id="pit-result-body"></tbody>
+              </table>
+              <div id="pit-result-note" class="result-note" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-pit-compare" class="tab-panel">
+          <section class="input-section">
+            <div class="form-group">
+              <label>Nhập các mức lương Gross cách nhau bởi dấu ;</label>
+              <input type="text" id="compareInput" placeholder="30,000,000 ; 50,000,000">
+            </div>
+            <button class="btn" onclick="compareMultiplePITMaster()">So sánh ngay</button>
+          </section>
+          <div id="pit-compare-section" class="result-section">
+            <div class="result-card">
+              <div class="compare-table-wrapper">
+                <table id="pit-compare-table">
+                  <thead id="pit-compare-head"></thead>
+                  <tbody id="pit-compare-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Business Tax -->
+      <div id="section-business-tax" class="content-section">
+        <div class="tool-header-collapsed">
+          <h1>
+            <%= t('business_tax.title') %>
+          </h1>
+          <p>
+            <%= t('business_tax.desc') %>
+          </p>
+        </div>
+
+        <div class="calculator-card">
+          <div class="method-selector">
+            <div class="radio-group-vertical">
+              <label class="radio-card">
+                <input type="radio" name="cit-method" value="detailed" checked>
+                <div class="radio-content">
+                  <strong>
+                    <%= t('business_tax.method.detailed.label') %>
+                  </strong>
+                  <p>
+                    <%= t('business_tax.method.detailed.desc') %>
+                  </p>
+                </div>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="cit-method" value="simple">
+                <div class="radio-content">
+                  <strong>
+                    <%= t('business_tax.method.simple.label') %>
+                  </strong>
+                  <p>
+                    <%= t('business_tax.method.simple.desc') %>
+                  </p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <form id="cit-detailed-form" class="tax-form">
+            <div class="form-group">
+              <label for="cit-revenue">
+                <%= t('business_tax.detailed_form.revenue.label') %>
+              </label>
+              <input type="text" id="cit-revenue" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label for="cit-expenses">
+                <%= t('business_tax.detailed_form.expenses.label') %>
+              </label>
+              <input type="text" id="cit-expenses" inputmode="numeric">
+            </div>
+            <div class="form-row">
+              <button type="button" class="btn btn-primary" onclick="calculateCITDetailed()">Tính thuế</button>
+            </div>
+          </form>
+
+          <div id="cit-result-section" class="result-section">
+            <div class="result-card">
+              <table class="result-table">
+                <tbody id="cit-result-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Freelancer -->
+      <div id="section-freelancer" class="content-section">
+        <div class="tool-header-collapsed">
+          <h1>
+            <%= t('freelancer_tax.title') %>
+          </h1>
+          <p>
+            <%= t('freelancer_tax.desc') %>
+          </p>
+        </div>
+        <div class="calculator-card">
+          <div class="form-group">
+            <label>
+              <%= t('freelancer_tax.form.amount') %>
+            </label>
+            <input type="text" id="free-amount" inputmode="numeric">
+          </div>
+          <button class="btn" onclick="calculateFreelancerMaster()">Tính thuế</button>
+          <div id="free-result-section" class="result-section">
+            <div class="result-card" id="free-result-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Insurance -->
+      <div id="section-insurance" class="content-section">
+        <div class="tool-header-collapsed">
+          <h1>
+            <%= t('social_insurance.title') %>
+          </h1>
+          <p>
+            <%= t('social_insurance.desc') %>
+          </p>
+        </div>
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="si-contrib">Tính đóng BHXH</button>
+          <button class="tab-btn" data-tab="si-pension">Lương hưu</button>
+        </nav>
+        <div id="tab-si-contrib" class="tab-panel active">
+          <div class="form-group">
+            <label>Lương đóng BHXH</label>
+            <input type="text" id="si-salary" inputmode="numeric">
+          </div>
+          <button class="btn" onclick="calculateSICall()">Tính toán</button>
+          <div id="si-result-section" class="result-section">
+            <div id="si-result-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: OT -->
+      <div id="section-ot" class="content-section">
+        <div class="tool-header-collapsed">
+          <h1>
+            <%= t('ot.title') %>
+          </h1>
+          <p>
+            <%= t('ot.desc') %>
+          </p>
+        </div>
+        <div class="calculator-card">
+          <div class="form-group">
+            <label>Lương Gross</label>
+            <input type="text" id="ot-base-salary" inputmode="numeric">
+          </div>
+          <button class="btn" onclick="calculateOTMaster()">Tính lương OT</button>
+          <div id="ot-result-section" class="result-section">
+            <div id="ot-result-body"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <button class="share-float-btn" onclick="shareResult()" title="Chia sẻ kết quả">
+    <span>🔗</span> Chia sẻ
+  </button>
+</div>
+
+<link rel="stylesheet" href="/assets/css/master-layout.css">
+<style>
+  .tool-header-collapsed {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+  }
+
+  .tool-header-collapsed h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .tool-header-collapsed p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+</style>
+<script src="/assets/features/tax/logic.js"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

@@ -2,7 +2,7 @@ id: jwt-toolkit
 link: /jwt-toolkit/
 icon: 🔑
 category: dev
-status: active
+status: not-ready
 translationKey: jwt
 meta:
   version: 1.0.0

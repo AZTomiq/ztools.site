@@ -39,10 +39,7 @@
   font-size: 0.85rem;
 }
 
-.result-card {
-  padding: 2rem;
-  text-align: center;
-}
+/* Result card standard handled by global */
 
 .net-value {
   font-size: 2.5rem;

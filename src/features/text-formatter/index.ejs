@@ -5,7 +5,8 @@
   <div class="page-header">
     <h1>📝 <%= t(toolConfig.translationKey + '.title' ) %>
         <% if (toolConfig.meta && toolConfig.meta.version) { %>
-          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
           <% } %>
     </h1>
     <p>
@@ -41,27 +42,32 @@
   </div>
 
   <!-- Actions & Stats Row -->
-  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+  <div class="actions-row"
+    style="display: flex; gap: 1.5rem; margin-bottom: 2rem; align-items: flex-start; flex-wrap: wrap;">
     <!-- Actions -->
-    <div class="actions">
-      <button class="btn btn-primary" onclick="formatText()">
+    <div class="actions" style="flex: 1; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <button class="btn btn-primary" onclick="formatText()" style="flex: 1; max-width: 200px;">
         🚀 <%= t('textFormatter.form.btn_format') %>
       </button>
-      <button class="btn btn-secondary" onclick="copyFormatted()">
+      <button class="btn btn-secondary" onclick="copyFormatted()" style="flex: 1; max-width: 200px;">
         📋 <%= t('textFormatter.form.btn_copy') %>
       </button>
-      <button class="btn btn-secondary" onclick="clearText()">
+      <button class="btn btn-secondary" onclick="clearText()" style="flex: 1; max-width: 200px;">
         🔄 <%= t('textFormatter.form.btn_clear') %>
       </button>
     </div>
 
     <!-- Quick Stats -->
     <div id="format-stats" class="stats"
-      style="display: flex; flex-direction: column; justify-content: center; padding: 1rem;">
-      <div style="font-size: 0.9rem; color: var(--text-muted);">
-        <%= locale==='vi' ? 'Giảm bớt' : 'Reduced' %>: <strong id="stats-reduction"
-            style="color: var(--success-color);">0</strong> chars
-          (<span id="stats-percent">0%</span>)
+      style="min-width: 15px; background: var(--bg-hover); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+      <div style="font-size: 0.9rem; color: var(--text-muted); text-align: center;">
+        <div style="margin-bottom: 4px;">
+          <%= locale==='vi' ? 'Giảm bớt' : 'Reduced' %>
+        </div>
+        <div style="font-size: 1.2rem; line-height: 1.2;">
+          <strong id="stats-reduction" style="color: var(--success-color);">0</strong> chars
+          <div style="font-size: 0.8em; opacity: 0.8;">(<span id="stats-percent">0%</span>)</div>
+        </div>
       </div>
     </div>
   </div>

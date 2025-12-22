@@ -1,266 +1,146 @@
 <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+<% var categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , emoji: '🛠️' }, {
+  id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , emoji: '💰' }, { id: 'text' ,
+  titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , emoji: '📝' }, { id: 'generator' ,
+  titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , emoji: '⚙️' }, { id: 'daily' ,
+  titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , emoji: '☕' }, { id: 'dev' ,
+  titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , emoji: '💻' } ]; %>
 
-<section class="hero" style="text-align: center; padding: 3rem 1rem;">
-  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
-    <%= t('home.hero_title') %>
-  </h1>
-  <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
-    <%= t('home.hero_desc') %>
-  </p>
-</section>
 
-<!-- Big Hero Search Section -->
-<div class="container hero-search-wrap" style="margin-bottom: 4rem; position: relative; z-index: 10;">
-  <div class="card search-box-hero"
-    style="max-width: 700px; margin: 0 auto; padding: 0.75rem; display: flex; align-items: center; border-radius: 50px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); border: 2px solid var(--primary-color);">
-    <span style="padding: 0 1.25rem; font-size: 1.5rem;">🔍</span>
-    <input type="text" id="home-search" placeholder="<%= t('nav.search_placeholder') %>"
-      style="border: none; background: transparent; padding: 1rem 0; font-size: 1.25rem; flex: 1; outline: none;"
-      aria-label="Search tools">
-    <div style="padding-right: 1.5rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0.6;">
-      <kbd
-        style="font-size: 0.8rem; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-hover);">Ctrl</kbd>
-      <span style="font-size: 0.8rem;">+</span>
-      <kbd
-        style="font-size: 0.8rem; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-hover);">K</kbd>
-    </div>
-  </div>
-</div>
+  <section class="hero">
+    <h1>
+      <%= t('home.hero_title') %>
+    </h1>
+    <p>
+      <%= t('home.hero_desc') %>
+    </p>
+  </section>
 
-<!-- View Options Toolbar -->
-<div class="container view-toolbar"
-  style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
-  <div class="view-toggles"
-    style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
-    <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-      </svg>
-    </button>
-    <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        aria-hidden="true">
-        <line x1="8" y1="6" x2="21" y2="6"></line>
-        <line x1="8" y1="12" x2="21" y2="12"></line>
-        <line x1="8" y1="18" x2="21" y2="18"></line>
-        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-      </svg>
-    </button>
-  </div>
-
-  <div class="sort-options" style="display: flex; gap: 0.5rem;">
-    <!-- Category Filter Dropdown -->
-    <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
-      aria-label="Filter by category">
-      <option value="all">
-        <%= t('nav.menu_categories') %>
-      </option>
-      <% categories.forEach(cat=> { %>
-        <option value="<%= cat.id %>">
-          <%= t(cat.titleKey) || cat.defaultTitle %>
-        </option>
-        <% }); %>
-    </select>
-
-    <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
-      aria-label="Sort tools by">
-      <option value="default">
-        <%= t('home.sort.default') || 'Default' %>
-      </option>
-      <option value="recent">
-        <%= t('home.sort.recent') || 'Recently Used' %>
-      </option>
-      <option value="popular">
-        <%= t('home.sort.popular') || 'Most Used' %>
-      </option>
-      <option value="az">
-        <%= t('home.sort.az') || 'Name (A-Z)' %>
-      </option>
-      <option value="za">
-        <%= t('home.sort.za') || 'Name (Z-A)' %>
-      </option>
-    </select>
-  </div>
-</div>
-
-<% /* The manual job-income block was removed to avoid duplication. The dynamic loop below handles all categories. */ %>
-  <% const categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , emoji: '🛠️' }, {
-    id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , emoji: '💰' }, { id: 'text' ,
-    titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , emoji: '📝' }, { id: 'generator' ,
-    titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , emoji: '⚙️' }, { id: 'daily' ,
-    titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , emoji: '☕' }, { id: 'dev' ,
-    titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , emoji: '💻' } ]; categories.forEach(cat=> {
-    const catTools = tools.filter(t => t.category === cat.id);
-    if (catTools.length === 0) return;
-    %>
-    <div class="category-section" id="<%= cat.id %>-tools">
-      <h2 class="category-title">
-        <%= cat.emoji %>
-          <%= t(cat.titleKey) || cat.defaultTitle %>
-      </h2>
-      <div class="tools-grid">
-        <% catTools.forEach(tool=> { %>
-          <% if (tool.status==='active' ) { %>
-            <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="card tool-item">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;" aria-hidden="true">
-                <%= tool.icon %>
-              </div>
-              <h3>
-                <%= t(tool.translationKey + '.title' ) %>
-              </h3>
-              <p>
-                <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
-              </p>
-            </a>
-            <% } else { %>
-              <div class="card tool-item upcoming">
-                <div class="icon-soon">
-                  <%= tool.icon %>
-                </div>
-                <h3>
-                  <%= tool.titleOverrideKey ? t(tool.titleOverrideKey) : tool.defaultTitle %>
-                </h3>
-                <p class="desc-soon">
-                  <%= tool.descOverride %>
-                </p>
-              </div>
-              <% } %>
-                <% }); %>
+  <!-- Big Hero Search Section -->
+  <div class="hero-search-wrap">
+    <div class="search-box-hero">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="home-search" placeholder="<%= t('nav.search_placeholder') %>" aria-label="Search tools">
+      <div class="search-hints">
+        <kbd>Ctrl</kbd>
+        <span>+</span>
+        <kbd>K</kbd>
       </div>
     </div>
-    <% }); %>
+  </div>
 
-      <script src="<%= asset('assets/js/home.js') %>"></script>
+  <!-- View Options Toolbar -->
+  <div class="container view-toolbar"
+    style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
+    <div class="view-toggles"
+      style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
+      <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+      </button>
+      <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          aria-hidden="true">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+      </button>
+    </div>
 
-      <style>
-        .category-section {
-          margin-bottom: 4rem;
-        }
+    <div class="sort-options" style="display: flex; gap: 0.5rem;">
+      <!-- Category Filter Dropdown -->
+      <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
+        aria-label="Filter by category">
+        <option value="all">
+          <%= t('nav.menu_categories') %>
+        </option>
+        <% categories.forEach(cat=> { %>
+          <option value="<%= cat.id %>">
+            <%= t(cat.titleKey) || cat.defaultTitle %>
+          </option>
+          <% }); %>
+      </select>
 
-        .category-title {
-          font-size: 1.8rem;
-          margin-bottom: 1.5rem;
-          border-bottom: 2px solid var(--border-color);
-          padding-bottom: 0.5rem;
-          display: inline-block;
-        }
+      <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
+        aria-label="Sort tools by">
+        <option value="default">
+          <%= t('home.sort.default') || 'Default' %>
+        </option>
+        <option value="recent">
+          <%= t('home.sort.recent') || 'Recently Used' %>
+        </option>
+        <option value="popular">
+          <%= t('home.sort.popular') || 'Most Used' %>
+        </option>
+        <option value="az">
+          <%= t('home.sort.az') || 'Name (A-Z)' %>
+        </option>
+        <option value="za">
+          <%= t('home.sort.za') || 'Name (Z-A)' %>
+        </option>
+      </select>
+    </div>
+  </div>
 
-        .tools-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-          gap: 1.5rem;
-          transition: all 0.3s;
-        }
+  <% /* The manual job-income block was removed to avoid duplication. The dynamic loop below handles all categories. */
+    %>
+    <% categories.forEach(cat=> {
+      const catTools = tools.filter(t => t.category === cat.id);
+      if (catTools.length === 0) return;
+      %>
+      <div class="category-section" id="<%= cat.id %>-tools">
+        <h2 class="category-title">
+          <%= cat.emoji %>
+            <%= t(cat.titleKey) || cat.defaultTitle %>
+        </h2>
+        <div class="tools-grid">
+          <% catTools.forEach(tool=> { %>
+            <% if (tool.status==='active' || tool.status==='legacy' ) { %>
+              <% let modeClass='' ; if (tool.mode==='standard' ) modeClass='mode-standard-only' ; else if
+                (tool.mode==='advanced' ) modeClass='mode-advanced-only' ; %>
+                <a href="<%= rootPath %><%= locale %><%= tool.link %>"
+                  class="card tool-item <%= tool.status==='legacy' ? 'legacy-item' : '' %> <%= modeClass %>">
+                  <div style="font-size: 2rem; margin-bottom: 0.5rem; position: relative;" aria-hidden="true">
+                    <%= tool.icon %>
+                      <% if (tool.status==='legacy' ) { %>
+                        <span class="legacy-badge"
+                          style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--text-muted); color: var(--bg-color); padding: 2px 4px; border-radius: 4px; opacity: 0.7;">LEGACY</span>
+                        <% } %>
+                  </div>
+                  <h3>
+                    <%= t(tool.translationKey + '.title' ) %>
+                  </h3>
+                  <p>
+                    <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
+                  </p>
+                </a>
+                <% } else { %>
+                  <div class="card tool-item upcoming">
+                    <div class="icon-soon">
+                      <%= tool.icon %>
+                    </div>
+                    <h3>
+                      <%= tool.titleOverrideKey ? t(tool.titleOverrideKey) : tool.defaultTitle %>
+                    </h3>
+                    <p class="desc-soon">
+                      <%= tool.descOverride %>
+                    </p>
+                  </div>
+                  <% } %>
+                    <% }); %>
+        </div>
+      </div>
+      <% }); %>
 
-        /* List View Style */
-        .tools-grid.list-view {
-          grid-template-columns: 1fr !important;
-        }
+        <script src="<%= asset('assets/js/home.js') %>"></script>
 
-        .tools-grid.list-view .tool-item {
-          flex-direction: row;
-          align-items: center;
-          padding: 1rem;
-          gap: 1.5rem;
-        }
-
-        .tools-grid.list-view .tool-item div:first-child {
-          font-size: 1.5rem !important;
-          margin-bottom: 0 !important;
-        }
-
-        .tools-grid.list-view .tool-item h3 {
-          margin-bottom: 0;
-          min-width: 200px;
-        }
-
-        @media (min-width: 900px) {
-          .tools-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-
-        @media (min-width: 1200px) {
-          .tools-grid {
-            grid-template-columns: repeat(4, 1fr);
-          }
-        }
-
-        .tool-item {
-          text-decoration: none;
-          color: inherit;
-          transition: transform 0.2s, box-shadow 0.2s;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .tool-item:hover {
-          transform: translateY(-5px);
-          border-color: var(--primary-color);
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .tools-grid.list-view .tool-item:hover {
-          transform: translateX(5px);
-        }
-
-        .tool-item h3 {
-          margin-bottom: 0.5rem;
-          font-size: 1.2rem;
-        }
-
-        .tool-item p {
-          color: var(--text-muted);
-          font-size: 0.9rem;
-          flex-grow: 1;
-        }
-
-        /* Toolbar Styles */
-        .btn-icon {
-          background: transparent;
-          border: none;
-          color: var(--text-color);
-          padding: 0.4rem;
-          border-radius: 6px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s;
-        }
-
-        .btn-icon:hover {
-          background: var(--bg-color);
-          color: var(--primary-color);
-        }
-
-        /* Upcoming tools style */
-        .tool-item.upcoming {
-          opacity: 0.7;
-          background-color: var(--bg-secondary);
-          border-style: dashed;
-          cursor: default;
-        }
-
-        .tool-item.upcoming:hover {
-          transform: none;
-          box-shadow: none;
-          border-color: var(--border-color);
-        }
-
-        .icon-soon {
-          font-size: 2rem;
-          margin-bottom: 0.5rem;
-        }
-
-        .desc-soon {
-          font-style: italic;
-        }
-      </style>
+        <link rel="stylesheet" href="<%= asset('assets/css/home.css') %>">

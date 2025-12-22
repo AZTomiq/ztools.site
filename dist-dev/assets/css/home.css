@@ -1,0 +1,218 @@
+.category-section {
+  margin-bottom: 4rem;
+}
+
+.category-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  transition: all 0.3s;
+}
+
+/* List View Style */
+.tools-grid.list-view {
+  grid-template-columns: 1fr !important;
+}
+
+.tools-grid.list-view .tool-item {
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem;
+  gap: 1.5rem;
+}
+
+.tools-grid.list-view .tool-item div:first-child {
+  font-size: 1.5rem !important;
+  margin-bottom: 0 !important;
+}
+
+.tools-grid.list-view .tool-item h3 {
+  margin-bottom: 0;
+  min-width: 200px;
+}
+
+@media (min-width: 900px) {
+  .tools-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .tools-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.tool-item {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  contain: layout;
+}
+
+.tool-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+}
+
+.tools-grid.list-view .tool-item:hover {
+  transform: translateX(5px);
+}
+
+.tool-item h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.tool-item p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+
+/* Toolbar Styles */
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  padding: 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  background: var(--bg-hover);
+  color: var(--primary-color);
+}
+
+/* Upcoming tools style */
+.tool-item.upcoming {
+  opacity: 0.7;
+  background-color: var(--bg-secondary);
+  border-style: dashed;
+  cursor: default;
+}
+
+.tool-item.upcoming:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border-color);
+}
+
+.icon-soon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.desc-soon {
+  font-style: italic;
+}
+
+/* Hero Section - Prevent CLS */
+.hero {
+  min-height: 200px;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Hero Search Pro Effects */
+.hero-search-wrap {
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 10;
+  padding: 0 1rem;
+  min-height: 80px;
+}
+
+.search-box-hero {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-box-hero:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.search-box-hero:focus-within {
+  transform: scale(1.03) translateY(-2px);
+  border-color: var(--primary-color);
+  box-shadow: 0 25px 30px -10px rgba(var(--primary-rgb), 0.2);
+}
+
+.search-box-hero input {
+  border: none !important;
+  background: transparent !important;
+  padding: 0.75rem 0 !important;
+  font-size: 1.25rem !important;
+  flex: 1;
+  outline: none !important;
+  color: var(--text-color);
+}
+
+.search-box-hero .search-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  opacity: 0.7;
+  transition: transform 0.3s;
+}
+
+.search-box-hero:focus-within .search-icon {
+  transform: scale(1.2) rotate(-10deg);
+  opacity: 1;
+}
+
+.search-box-hero .search-hints {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-right: 1.5rem;
+  opacity: 0.5;
+}
+
+.search-box-hero .search-hints kbd {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-hover);
+  font-family: inherit;
+}

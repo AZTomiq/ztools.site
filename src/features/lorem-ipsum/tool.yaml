@@ -2,7 +2,7 @@ id: lorem-ipsum
 category: text
 icon: 📝
 translationKey: lorem
-status: active
+status: not-ready
 link: /lorem-ipsum/
 meta:
   version: 1.0.0

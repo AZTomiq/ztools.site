@@ -1,0 +1,467 @@
+
+> ztools-site@1.2.0 test:ui
+> node scripts/ui-test.js
+
+🚀 Starting UI Testing Tool
+
+Base URL: http://localhost:3000
+Output: ./ui-test-results
+
+📄 Reading sitemap...
+✅ Found 54 URLs in sitemap
+📍 Testing against: http://localhost:3000
+
+🌐 Launching browser...
+
+[1/54] Testing: 
+          http://localhost:3000/vi/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[2/54] Testing: 
+          http://localhost:3000/en/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[3/54] Testing: 
+          http://localhost:3000/vi/bmi/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  ❌ Found 1 console errors
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[4/54] Testing: 
+          http://localhost:3000/en/bmi/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  ❌ Found 1 console errors
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[5/54] Testing: 
+          http://localhost:3000/vi/bookmark-creator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[6/54] Testing: 
+          http://localhost:3000/en/bookmark-creator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[7/54] Testing: 
+          http://localhost:3000/vi/compound-interest/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 2 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[8/54] Testing: 
+          http://localhost:3000/en/compound-interest/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 2 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[9/54] Testing: 
+          http://localhost:3000/vi/cron-parser/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[10/54] Testing: 
+          http://localhost:3000/en/cron-parser/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[11/54] Testing: 
+          http://localhost:3000/vi/date-time-master/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[12/54] Testing: 
+          http://localhost:3000/en/date-time-master/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[13/54] Testing: 
+          http://localhost:3000/vi/dev-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[14/54] Testing: 
+          http://localhost:3000/en/dev-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[15/54] Testing: 
+          http://localhost:3000/vi/hash-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[16/54] Testing: 
+          http://localhost:3000/en/hash-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[17/54] Testing: 
+          http://localhost:3000/vi/inflation-calculator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[18/54] Testing: 
+          http://localhost:3000/en/inflation-calculator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[19/54] Testing: 
+          http://localhost:3000/vi/investment-calc/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[20/54] Testing: 
+          http://localhost:3000/en/investment-calc/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[21/54] Testing: 
+          http://localhost:3000/vi/json-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  ⚠️  Found 1 CSS issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[22/54] Testing: 
+          http://localhost:3000/en/json-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  ⚠️  Found 1 CSS issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[23/54] Testing: 
+          http://localhost:3000/vi/jwt-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[24/54] Testing: 
+          http://localhost:3000/en/jwt-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[25/54] Testing: 
+          http://localhost:3000/vi/loan-calculator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[26/54] Testing: 
+          http://localhost:3000/en/loan-calculator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[27/54] Testing: 
+          http://localhost:3000/vi/lorem-ipsum/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[28/54] Testing: 
+          http://localhost:3000/en/lorem-ipsum/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[29/54] Testing: 
+          http://localhost:3000/vi/lunar-calendar/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[30/54] Testing: 
+          http://localhost:3000/en/lunar-calendar/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[31/54] Testing: 
+          http://localhost:3000/vi/password-generator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[32/54] Testing: 
+          http://localhost:3000/en/password-generator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[33/54] Testing: 
+          http://localhost:3000/vi/percentage-calculator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[34/54] Testing: 
+          http://localhost:3000/en/percentage-calculator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[35/54] Testing: 
+          http://localhost:3000/vi/qr-generator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[36/54] Testing: 
+          http://localhost:3000/en/qr-generator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[37/54] Testing: 
+          http://localhost:3000/vi/random-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[38/54] Testing: 
+          http://localhost:3000/en/random-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[39/54] Testing: 
+          http://localhost:3000/vi/salary-tax-master/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[40/54] Testing: 
+          http://localhost:3000/en/salary-tax-master/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[41/54] Testing: 
+          http://localhost:3000/vi/savings-interest/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 2 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[42/54] Testing: 
+          http://localhost:3000/en/savings-interest/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 2 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[43/54] Testing: 
+          http://localhost:3000/vi/text-diff/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[44/54] Testing: 
+          http://localhost:3000/en/text-diff/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[45/54] Testing: 
+          http://localhost:3000/vi/text-formatter/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[46/54] Testing: 
+          http://localhost:3000/en/text-formatter/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[47/54] Testing: 
+          http://localhost:3000/vi/unit-converter/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[48/54] Testing: 
+          http://localhost:3000/en/unit-converter/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[49/54] Testing: 
+          http://localhost:3000/vi/url-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[50/54] Testing: 
+          http://localhost:3000/en/url-toolkit/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[51/54] Testing: 
+          http://localhost:3000/vi/uuid-generator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[52/54] Testing: 
+          http://localhost:3000/en/uuid-generator/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[53/54] Testing: 
+          http://localhost:3000/vi/word-counter/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+[54/54] Testing: 
+          http://localhost:3000/en/word-counter/
+        
+  📸 Desktop screenshot saved
+  ⚠️  Found 1 i18n issues
+  📱 Mobile screenshot saved
+  ✅ Status: FAILED
+
+📊 Generating HTML report...
+✅ Report saved to: ui-test-results/report.html
+
+============================================================
+📊 TEST SUMMARY
+============================================================
+Total Pages:  54
+✅ Passed:    0
+⚠️  Warnings:  0
+❌ Failed:    54
+============================================================
+
+📄 Full report: ui-test-results/report.html
+
+💡 Open report: open ui-test-results/report.html
+

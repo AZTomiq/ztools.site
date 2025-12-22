@@ -1,0 +1,10 @@
+id: cron-parser
+titleKey: cronParser.title
+description: >-
+  Phân tích biểu thức Cron sang ngôn ngữ tự nhiên và kiểm tra thời gian thực
+  thi.
+icon: ⏰
+category: dev
+status: not-ready
+translationKey: cronParser
+link: /cron-parser/

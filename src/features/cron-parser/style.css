@@ -1,0 +1,98 @@
+/* Cron Parser Styles handled by global.css */
+
+.tool-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.tool-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-header p {
+  color: var(--text-muted);
+}
+
+/* tool-card standard handled by global */
+
+/* Standard input styles applied globally */
+
+.result-box {
+  background: var(--bg-hover);
+  border: 1px dashed var(--primary-color);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.result-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-main {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.examples-section {
+  margin-top: 2rem;
+}
+
+.examples-section h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.example-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  text-align: left;
+  padding: 1rem !important;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.example-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.example-cron {
+  font-family: monospace;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.example-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Local utilities for script.js */
+.text-primary { color: var(--primary-color); }
+.text-red-500 { color: #ef4444; }
+.border-primary { border-color: var(--primary-color) !important; }

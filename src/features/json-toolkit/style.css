@@ -1,14 +1,15 @@
 /* JSON Toolkit - Enhanced Styles */
 
+/* Force Wide Layout override against global.css */
+main.container {
+  max-width: 100% !important;
+  width: 100%;
+}
+
 .tool-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 1.5rem;
-}
-
-/* Force Wide Layout override against global.css */
-main.container {
-  max-width: 1400px !important;
 }
 
 .page-header {
@@ -58,7 +59,7 @@ main.container {
 .tab-btn.active {
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
-  background: rgba(34, 211, 238, 0.05);
+  background: rgba(var(--primary-rgb), 0.1);
 }
 
 .tab-panel {
@@ -299,6 +300,9 @@ textarea {
   font-size: 0.95rem;
   line-height: 1.6;
   resize: vertical;
+  overflow-x: auto;
+  /* Handle wide content */
+  word-wrap: break-word;
 }
 
 /* Textarea in Tools/Flex Layout should resizing via container */

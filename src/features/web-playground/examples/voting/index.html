@@ -1,0 +1,50 @@
+<div class="card feedback-card">
+  <h2>Product Feedback</h2>
+  <p>What do you think about our new feature?</p>
+
+  <!-- Star Rating Section -->
+  <div class="rating-section">
+    <div class="stars" id="star-container">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <div class="rating-text" id="rating-text">Rate us!</div>
+  </div>
+
+  <hr>
+
+  <!-- Poll Section -->
+  <h3>Quick Poll: Favorite Framework?</h3>
+  <div class="poll-options">
+    <div class="option" onclick="vote('react')">
+      <div class="label-row">
+        <span>React</span>
+        <span id="pct-react">40%</span>
+      </div>
+      <div class="bar-bg">
+        <div class="bar" id="bar-react" style="width: 40%"></div>
+      </div>
+    </div>
+    <div class="option" onclick="vote('vue')">
+      <div class="label-row">
+        <span>Vue</span>
+        <span id="pct-vue">35%</span>
+      </div>
+      <div class="bar-bg">
+        <div class="bar" id="bar-vue" style="width: 35%"></div>
+      </div>
+    </div>
+    <div class="option" onclick="vote('svelte')">
+      <div class="label-row">
+        <span>Svelte</span>
+        <span id="pct-svelte">25%</span>
+      </div>
+      <div class="bar-bg">
+        <div class="bar" id="bar-svelte" style="width: 25%"></div>
+      </div>
+    </div>
+  </div>
+</div>

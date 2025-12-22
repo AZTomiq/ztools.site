@@ -1,6 +1,5 @@
+/* Random card handled by global */
 .random-card {
-  max-width: 600px;
-  margin: 0 auto;
   padding: 2.5rem;
 }
 

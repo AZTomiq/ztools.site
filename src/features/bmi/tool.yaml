@@ -2,7 +2,7 @@ id: bmi
 category: daily
 icon: ⚖️
 translationKey: bmi
-status: active
+status: not-ready
 link: /bmi/
 meta:
   version: 1.0.0
