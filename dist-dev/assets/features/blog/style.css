@@ -2,7 +2,6 @@
 .blog-container {
   max-width: 800px;
   /* Reading optimial width */
-  margin: 0 auto;
   padding: 2rem 1rem;
   font-family: 'Merriweather', 'Georgia', serif;
   /* Serif for reading */

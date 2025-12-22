@@ -1,7 +1,6 @@
 /* Tax Calculator Specific Styles */
 .tool-container {
   max-width: 900px;
-  margin: 0 auto;
 }
 
 /* Feature specific header */
@@ -973,7 +972,6 @@ footer a {
 
 .tool-container {
   max-width: 900px;
-  margin: 0 auto;
   padding: 1rem;
 }
 
@@ -1453,7 +1451,6 @@ footer a {
 
 .tool-container {
   max-width: 1000px;
-  margin: 0 auto;
   padding: 1rem;
 }
 
