@@ -5,18 +5,62 @@ document.addEventListener('DOMContentLoaded', () => {
   const toolSearch = document.getElementById('tool-search');
   const checkboxes = document.querySelectorAll('input[name="tool-choice"]');
 
-  // Multi-select logic
-  selectAllBtn.addEventListener('click', () => {
-    checkboxes.forEach(cb => cb.checked = true);
-  });
+  // Collapse/Expand Logic
+  const toggleViewBtn = document.getElementById('toggle-view-btn');
+  const catGroups = document.querySelectorAll('.category-group');
+  let isAllExpanded = true;
+  const i18n = {
+    collapse: window.i18nData?.collapse || 'Thu gọn',
+    expand: window.i18nData?.expand || 'Mở rộng',
+    selectAll: window.i18nData?.selectAll || 'Chọn tất cả',
+    deselectAll: window.i18nData?.deselectAll || 'Bỏ chọn'
+  };
 
-  deselectAllBtn.addEventListener('click', () => {
-    checkboxes.forEach(cb => cb.checked = false);
+  // Toggle View
+  if (toggleViewBtn) {
+    toggleViewBtn.addEventListener('click', () => {
+      isAllExpanded = !isAllExpanded;
+      catGroups.forEach(group => {
+        if (isAllExpanded) group.classList.add('expanded');
+        else group.classList.remove('expanded');
+      });
+
+      const viewText = document.getElementById('view-text');
+      if (viewText) viewText.textContent = isAllExpanded ? i18n.collapse : i18n.expand;
+    });
+  }
+
+  // Toggle Select
+  const toggleSelectBtn = document.getElementById('toggle-select-btn');
+  let isAllSelected = true;
+
+  if (toggleSelectBtn) {
+    toggleSelectBtn.addEventListener('click', () => {
+      isAllSelected = !isAllSelected;
+      checkboxes.forEach(cb => cb.checked = isAllSelected);
+
+      const selectText = document.getElementById('select-text');
+      if (selectText) selectText.textContent = isAllSelected ? i18n.deselectAll : i18n.selectAll;
+    });
+  }
+
+  // Individual Group Toggle
+  document.querySelectorAll('.toggle-cat').forEach(header => {
+    header.addEventListener('click', () => {
+      const group = header.closest('.category-group');
+      group.classList.toggle('expanded');
+    });
   });
 
   // Search filter logic
   toolSearch.addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();
+
+    // Auto-expand all if searching
+    if (q.length > 0) {
+      catGroups.forEach(group => group.classList.add('expanded'));
+    }
+
     document.querySelectorAll('.tool-checkbox-item').forEach(item => {
       const title = item.getAttribute('data-title').toLowerCase();
       item.style.display = title.includes(q) ? 'flex' : 'none';

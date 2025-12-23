@@ -209,6 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (editorCss) editorCss.setValue(ex.css);
       if (editorJs) editorJs.setValue(ex.js);
 
+      // Reset URL to base path (remove hash) without reloading
+      window.history.pushState(null, null, window.location.pathname);
+
       // On mobile, close sidebar after pick
       if (window.innerWidth <= 768) {
         sidebar.classList.add('collapsed');
@@ -300,36 +303,42 @@ document.getElementById('click-me').addEventListener('click', () => {
     if (hash && hash.startsWith('#code=')) {
       try {
         const encoded = hash.substring(6);
-        const decompressed = LZString.decompressFromEncodedURIComponent(encoded);
-        if (decompressed) {
-          const data = JSON.parse(decompressed);
-          initialHtml = data.html || '';
-          initialCss = data.css || '';
-          initialJs = data.js || '';
+        if (encoded) {
+          const decompressed = LZString.decompressFromEncodedURIComponent(encoded);
+          if (decompressed) {
+            const data = JSON.parse(decompressed);
+            initialHtml = data.html || '';
+            initialCss = data.css || '';
+            initialJs = data.js || '';
 
-          // Apply active states if provided
-          if (data.active) {
-            const activeIds = data.active.split(',');
-            activeIds.forEach(id => {
-              const el = document.getElementById(`pane-${id}`);
-              if (el) {
-                el.classList.add('active');
-                el.classList.remove('minimized');
-              }
-            });
-            // Minimize others
-            ['html', 'css', 'js'].forEach(id => {
-              if (!activeIds.includes(id)) {
+            // Apply active states if provided
+            if (data.active) {
+              const activeIds = data.active.split(',');
+              activeIds.forEach(id => {
                 const el = document.getElementById(`pane-${id}`);
                 if (el) {
-                  el.classList.add('minimized');
-                  el.classList.remove('active');
+                  el.classList.add('active');
+                  el.classList.remove('minimized');
                 }
-              }
-            });
+              });
+              // Minimize others
+              ['html', 'css', 'js'].forEach(id => {
+                if (!activeIds.includes(id)) {
+                  const el = document.getElementById(`pane-${id}`);
+                  if (el) {
+                    el.classList.add('minimized');
+                    el.classList.remove('active');
+                  }
+                }
+              });
+            }
+          } else {
+            console.warn('Failed to decompress code from URL hash');
           }
         }
-      } catch (e) { }
+      } catch (e) {
+        console.error('Error parsing shared code:', e);
+      }
     }
 
     // Init Editors
@@ -385,39 +394,105 @@ document.getElementById('click-me').addEventListener('click', () => {
     });
   }
 
-  // Share Button Logic
+  // --- Share Modal Logic ---
   const shareBtn = document.getElementById('btn-share');
-  if (shareBtn) {
+  const shareModal = document.getElementById('share-modal');
+  const closeShareModal = document.getElementById('close-share-modal');
+  const optHtml = document.getElementById('share-opt-html');
+  const optCss = document.getElementById('share-opt-css');
+  const optJs = document.getElementById('share-opt-js');
+  const optResult = document.getElementById('share-opt-result');
+  const shareUrlInput = document.getElementById('share-url-input');
+  const shareEmbedInput = document.getElementById('share-embed-input');
+
+  const generateShareData = () => {
+    if (!editorHtml || !editorCss || !editorJs) return null;
+
+    const data = {
+      html: editorHtml.getValue(),
+      css: editorCss.getValue(),
+      js: editorJs.getValue()
+    };
+
+    const activePanes = [];
+    if (optHtml.checked) activePanes.push('html');
+    if (optJs.checked) activePanes.push('js');
+    if (optCss.checked) activePanes.push('css');
+    if (optResult.checked) activePanes.push('result');
+
+    if (activePanes.length > 0) {
+      data.active = activePanes.join(',');
+    }
+
+    return data;
+  };
+
+  const updateShareInputs = () => {
+    try {
+      const data = generateShareData();
+      if (!data) return;
+
+      const json = JSON.stringify(data);
+      const compressed = LZString.compressToEncodedURIComponent(json);
+      const url = `${window.location.origin}${window.location.pathname}#code=${compressed}`;
+
+      shareUrlInput.value = url;
+      shareEmbedInput.value = `<iframe src="${url}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="ZTools Playground" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>`;
+    } catch (e) {
+      console.error('Data compression error', e);
+    }
+  };
+
+  if (shareBtn && shareModal) {
     shareBtn.addEventListener('click', () => {
-      if (!editorHtml || !editorCss || !editorJs) return;
+      // Sync Checkboxes with Current State
+      optHtml.checked = !paneHtml.classList.contains('minimized');
+      optCss.checked = !paneCss.classList.contains('minimized');
+      optJs.checked = !paneJs.classList.contains('minimized');
+      optResult.checked = true;
 
-      const activePanes = [];
-      if (!paneHtml.classList.contains('minimized')) activePanes.push('html');
-      if (!paneJs.classList.contains('minimized')) activePanes.push('js');
-      if (!paneCss.classList.contains('minimized')) activePanes.push('css');
+      // Generate initial state
+      updateShareInputs();
+      shareModal.classList.remove('hidden');
+    });
 
-      const data = {
-        html: editorHtml.getValue(),
-        css: editorCss.getValue(),
-        js: editorJs.getValue(),
-        active: activePanes.join(',')
-      };
+    closeShareModal.addEventListener('click', () => {
+      shareModal.classList.add('hidden');
+    });
 
-      try {
-        const json = JSON.stringify(data);
-        const compressed = LZString.compressToEncodedURIComponent(json);
-        const url = `${window.location.origin}${window.location.pathname}#code=${compressed}`;
-
-        navigator.clipboard.writeText(url).then(() => {
-          const originalText = shareBtn.innerText;
-          shareBtn.innerText = '✅ Copied!';
-          setTimeout(() => shareBtn.innerText = originalText, 2000);
-        });
-
-        window.history.replaceState(null, null, `#code=${compressed}`);
-      } catch (e) {
-        alert('Sharing failed. Code might be too large.');
+    // Close on overlay click
+    shareModal.addEventListener('click', (e) => {
+      if (e.target === shareModal) {
+        shareModal.classList.add('hidden');
       }
+    });
+
+    // Update on Option Change
+    optHtml.addEventListener('change', updateShareInputs);
+    optCss.addEventListener('change', updateShareInputs);
+    optJs.addEventListener('change', updateShareInputs);
+    optResult.addEventListener('change', updateShareInputs);
+
+    // Copy Actions
+    document.querySelectorAll('.btn-copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (input) {
+          input.select();
+          input.setSelectionRange(0, 99999);
+          navigator.clipboard.writeText(input.value).then(() => {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="check"></i> Copied!';
+            if (window.lucide) lucide.createIcons();
+
+            setTimeout(() => {
+              btn.innerHTML = originalHtml;
+              if (window.lucide) lucide.createIcons();
+            }, 2000);
+          });
+        }
+      });
     });
   }
 

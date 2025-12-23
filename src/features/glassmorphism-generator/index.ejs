@@ -1,0 +1,107 @@
+<div class="glass-generator-container">
+  <div class="preview-panel">
+    <div class="glass-card" id="glass-preview">
+      <div class="glass-content">
+        <h3>Glassmorphism</h3>
+        <p>Enhance your UI with this frosted glass effect.</p>
+        <button class="glass-btn">Read More</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-panel">
+    <h3>Configuration</h3>
+
+    <div class="control-group">
+      <label>Blur Value</label>
+      <input type="range" id="ctrl-blur" min="0" max="40" value="16">
+      <span class="val-display" id="val-blur">16px</span>
+    </div>
+
+    <div class="control-group">
+      <label>Transparency</label>
+      <input type="range" id="ctrl-transparency" min="0" max="1" step="0.01" value="0.25">
+      <span class="val-display" id="val-transparency">0.25</span>
+    </div>
+
+    <div class="control-group">
+      <label>Saturation</label>
+      <input type="range" id="ctrl-saturation" min="100" max="200" value="180">
+      <span class="val-display" id="val-saturation">180%</span>
+    </div>
+
+    <div class="control-group">
+      <label>Border Radius</label>
+      <input type="range" id="ctrl-radius" min="0" max="50" value="12">
+      <span class="val-display" id="val-radius">12px</span>
+    </div>
+
+    <div class="control-group">
+      <label>Background Color</label>
+      <div class="color-picker-wrapper">
+        <input type="color" id="ctrl-color" value="#ffffff">
+      </div>
+    </div>
+
+    <div class="output-group">
+      <h4>CSS Code</h4>
+      <div class="code-box">
+        <pre><code id="css-output">background: rgba(255, 255, 255, 0.25);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.125);</code></pre>
+        <button id="btn-copy-css" class="btn-copy-code">
+          <i data-lucide="copy"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="examples-section">
+  <h3><%- t('glassmorphismGenerator.examples_title') %></h3>
+  <div class="examples-grid">
+    <% t('glassmorphismGenerator.examples').forEach((example)=> { %>
+      <button class="example-card" data-blur="<%= example.blur %>" data-transparency="<%= example.transparency %>"
+        data-saturation="<%= example.saturation %>" data-radius="<%= example.radius %>"
+        data-color="<%= example.color %>">
+        <div class="example-preview"
+          style="background: rgba(<%= example.color === '#ffffff' ? '255, 255, 255' : example.color === '#000000' ? '0, 0, 0' : example.color === '#4F46E5' ? '79, 70, 229' : '107, 114, 128' %>, <%= example.transparency %>); backdrop-filter: blur(<%= example.blur %>px) saturate(<%= example.saturation %>%); border-radius: <%= example.radius %>px;">
+        </div>
+        <span class="example-name"><%- example.name %></span>
+      </button>
+      <% }); %>
+  </div>
+</div>
+
+<div class="tool-intro">
+  <h2><%- t('glassmorphismGenerator.intro.what_is_title') %></h2>
+  <p><%- t('glassmorphismGenerator.intro.what_is_desc') %></p>
+
+  <h3><%- t('glassmorphismGenerator.intro.benefits_title') %></h3>
+  <ul>
+    <% t('glassmorphismGenerator.intro.benefits').forEach(benefit=> { %>
+      <li><strong><%- benefit.label %></strong> <%- benefit.text %></li>
+      <% }); %>
+  </ul>
+
+  <h3><%- t('glassmorphismGenerator.intro.use_cases_title') %></h3>
+  <ul>
+    <% t('glassmorphismGenerator.intro.use_cases').forEach(useCase=> { %>
+      <li><%- useCase %></li>
+      <% }); %>
+  </ul>
+
+  <h3><%- t('glassmorphismGenerator.intro.browser_title') %></h3>
+  <p><%- t('glassmorphismGenerator.intro.browser_desc') %></p>
+
+  <h3><%- t('glassmorphismGenerator.intro.tips_title') %></h3>
+  <ul>
+    <% t('glassmorphismGenerator.intro.tips').forEach(tip=> { %>
+      <li><%- tip %></li>
+      <% }); %>
+  </ul>
+</div>
+
+<script src="<%= toolConfig._assets.js %>"></script>

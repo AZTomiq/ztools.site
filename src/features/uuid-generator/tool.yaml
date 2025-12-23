@@ -2,7 +2,7 @@ id: uuid-generator
 category: generator
 icon: fingerprint
 translationKey: uuid
-status: not-ready
+status: active
 link: /uuid-generator/
 meta:
   version: 1.0.0

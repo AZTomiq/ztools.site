@@ -3,11 +3,13 @@
 
 <section class="tool-container">
   <div class="page-header">
-    <h1>📝 <%= t('lorem.title') %>
+    <h1>
+      <i data-lucide="<%= toolConfig.icon || 'file-text' %>"></i>
+      <%= t('lorem.title') %>
 
         <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
           <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
-              </button>
+          </button>
           <% } %>
     </h1>
     <p>
@@ -18,39 +20,60 @@
   <div class="calculator-card">
     <div class="controls">
       <div class="control-group">
-        <label for="count">Count:</label>
+        <label for="count">
+          <%= t('lorem.form.count') %>:
+        </label>
         <input type="number" id="count" value="5" min="1" max="100">
       </div>
 
       <div class="control-group">
-        <label for="type">Type:</label>
+        <label for="type">
+          <%= t('lorem.form.type') %>:
+        </label>
         <select id="type">
-          <option value="paragraphs">Paragraphs</option>
-          <option value="sentences">Sentences</option>
-          <option value="words">Words</option>
-          <option value="lists">Lists (ul)</option>
+          <option value="paragraphs">
+            <%= t('lorem.form.types.paragraphs') %>
+          </option>
+          <option value="sentences">
+            <%= t('lorem.form.types.sentences') %>
+          </option>
+          <option value="words">
+            <%= t('lorem.form.types.words') %>
+          </option>
+          <option value="lists">
+            <%= t('lorem.form.types.lists') %>
+          </option>
         </select>
       </div>
 
       <div class="control-group checkbox">
         <label>
           <input type="checkbox" id="start-lorem" checked>
-          Start with "Lorem ipsum..."
+          <%= t('lorem.form.start_with') %>
         </label>
       </div>
 
       <div class="control-group">
-        <button class="btn btn-primary" onclick="generateLorem()">Generate</button>
+        <button class="btn btn-primary" onclick="generateLorem()">
+          <%= t('lorem.form.generate') %>
+        </button>
       </div>
     </div>
 
     <div class="output-section">
       <div class="toolbar">
         <div class="view-toggle">
-          <button class="view-btn active" onclick="setView('text')" id="btn-text">Text</button>
-          <button class="view-btn" onclick="setView('html')" id="btn-html">HTML</button>
+          <button class="view-btn active" onclick="setView('text')" id="btn-text">
+            <%= t('lorem.output.text') %>
+          </button>
+          <button class="view-btn" onclick="setView('html')" id="btn-html">
+            <%= t('lorem.output.html') %>
+          </button>
         </div>
-        <button class="btn btn-sm" onclick="copyLorem()">📋 Copy</button>
+        <button class="btn btn-sm" onclick="copyLorem()">
+          <i data-lucide="clipboard" class="icon-sm"></i>
+          <%= t('lorem.output.copy') %>
+        </button>
       </div>
 
       <textarea id="output" readonly></textarea>
@@ -58,9 +81,12 @@
   </div>
 
   <section class="info-section">
-    <h2>What is Lorem Ipsum?</h2>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-      standard dummy text ever since the 1500s.</p>
+    <h2>
+      <%= t('lorem.info.title') %>
+    </h2>
+    <p>
+      <%= t('lorem.info.text') %>
+    </p>
   </section>
 </section>
 

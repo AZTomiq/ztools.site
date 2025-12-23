@@ -1,7 +1,7 @@
 {
   "name": "ztools-site",
-  "version": "1.4.0",
-  "description": "Multi-tool utility site",
+  "version": "1.5.1",
+  "description": "zTools - Multi-tool utility site with secure, fast, and modern UI",
   "main": "scripts/build.js",
   "scripts": {
     "test": "npm run test:integrity && npm run test:feature && npm run test:build",

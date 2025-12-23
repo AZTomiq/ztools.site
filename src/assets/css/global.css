@@ -354,7 +354,7 @@ main {
   transform: rotate(180deg);
 }
 
-/* Mega Menu */
+/* Mega Menu Refactor (Sidebar + Grid) */
 .dropdown-menu.mega-menu {
   position: absolute;
   top: 100%;
@@ -364,150 +364,16 @@ main {
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
-  width: 650px;
-  max-width: 90vw;
+  width: 900px;
+  max-width: 95vw;
   display: none;
-  flex-direction: column;
+  flex-direction: row; /* changed to row for sidebar layout */
   gap: 0;
   padding: 0;
   z-index: 1200;
   margin-top: 0.75rem;
   overflow: hidden;
-}
-
-.mega-menu-top {
-  padding: 0.75rem 1rem;
-  background: var(--bg-hover);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  gap: 1rem;
-}
-
-.mega-home-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  color: var(--text-color);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  transition: all 0.2s;
-  font-size: 0.9rem;
-}
-
-.mega-home-link:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  transform: translateY(-2px);
-}
-
-.mega-home-link.active,
-.mega-link.active {
-  color: var(--primary-color) !important;
-  background: rgba(var(--primary-rgb), 0.1) !important;
-  border-color: var(--primary-color) !important;
-}
-
-.nav-link-prominent {
-  transition: all 0.2s;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-}
-
-.nav-link-prominent:hover {
-  background: rgba(var(--primary-rgb), 0.1);
-  transform: translateY(-2px);
-}
-
-.pulse-icon {
-  display: inline-block;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.2);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-.hide-mobile {
-  display: flex;
-}
-
-.hide-desktop {
-  display: none;
-}
-
-@media (max-width: 900px) {
-  .hide-mobile {
-    display: none !important;
-  }
-
-  .hide-desktop {
-    display: flex !important;
-  }
-}
-
-.logo-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--text-color);
-  text-decoration: none;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.logo-icon {
-  margin-right: 0.5rem;
-}
-
-.logo-sub {
-  margin-left: 0.5rem;
-  padding-left: 0.5rem;
-  border-left: 1px solid var(--border-color);
-  font-weight: 400;
-  font-size: 1rem;
-  opacity: 0.9;
-  line-height: 1.2;
-}
-
-.logo-caret {
-  margin-left: 0.5rem;
-  font-size: 0.75em;
-  opacity: 0.6;
-  transition: transform 0.2s;
-}
-
-.logo[aria-expanded="true"] .logo-caret {
-  transform: rotate(180deg);
-}
-
-@media (max-width: 900px) {
-  .dropdown-menu.mega-menu {
-    left: -100px;
-    transform: none;
-  }
+  height: 500px; /* Fixed height for clean layout */
 }
 
 /* Explicit class for JS toggle */
@@ -515,52 +381,263 @@ main {
   display: flex !important;
 }
 
-.mega-category-section {
-  border-bottom: 1px solid var(--border-color);
+/* Sidebar */
+.mega-sidebar {
+  width: 64px; /* Default collapsed width */
+  background: var(--bg-hover);
+  border-right: 1px solid var(--border-color);
+  padding: 1.5rem 0.75rem; /* Reduced horizontal padding */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex-shrink: 0;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.mega-category-section:last-child {
-  border-bottom: none;
+.mega-sidebar:hover {
+  width: 240px; /* Expanded width */
 }
 
-.mega-header {
-  width: 100%;
-  background: rgba(var(--primary-rgb), 0.05);
-  /* Slight tint */
-  border: none;
-  padding: 0.75rem 1rem;
+.mega-sidebar-header {
+  padding-left: 0.5rem;
+  height: 32px; /* Fixed height to prevent layout jump */
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
+}
+
+.sidebar-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--text-color);
-  font-weight: 600;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: background 0.2s;
-}
-
-.mega-header:hover {
-  background: rgba(var(--primary-rgb), 0.1);
-}
-
-.mega-title-wrap {
+  letter-spacing: -0.03em;
   display: flex;
   align-items: center;
+  opacity: 0; /* Hidden by default */
+  transform: translateX(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mega-sidebar:hover .sidebar-logo {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.logo-dot {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  line-height: 0.5;
+}
+
+.mega-sidebar-links {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
-.mega-count-badge {
-  background: var(--primary-color);
-  color: white;
-  font-size: 0.75rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 4px;
-  opacity: 0.9;
+.mega-side-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.5rem; /* Adjusted padding */
+  border-radius: 8px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+  justify-content: flex-start; /* Keep aligned start */
 }
 
-.mega-icon {
-  font-size: 1.1em;
+.mega-side-link .link-text {
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.2s ease-in-out;
+}
+
+.mega-sidebar:hover .mega-side-link .link-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mega-side-link:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+}
+
+.mega-side-link.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  min-width: 24px; /* Ensure icon doesn't shrink */
+}
+
+.mega-side-link .icon-wrap i {
+  width: 20px;
+  height: 20px;
+}
+
+/* Tool Links & Badges */
+.mega-tool-link {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  position: relative;
+  justify-content: space-between; /* Push content apart */
+}
+
+.tool-info-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.tool-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border-color);
+  margin-right: 0.75rem;
+  transition: background 0.2s;
+}
+
+.tool-label {
+  /* No special styles needed */
+}
+
+/* Content Area */
+.mega-content-wrap {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: var(--card-bg);
+}
+
+/* Switch from Grid to Columns for Masonry effect */
+.mega-grid {
+  column-count: 2;
+  column-gap: 1.5rem;
+}
+
+/* Category Card */
+.mega-cat-card {
+  break-inside: avoid; /* Prevent card splitting across cols */
+  margin-bottom: 1.5rem; /* Replaces grid gap */
+  page-break-inside: avoid; /* Safari support */
+  
+  /* separation styles */
+  background: var(--bg-hover); /* Light contrast background */
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+/* Specific background adjustment for Dark Mode */
+[data-theme="dark"] .mega-cat-card {
+   background: rgba(30, 41, 59, 0.5); /* Semi-transparent Slate 800 */
+}
+
+.mega-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mega-cat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px; /* Prevent shrink */
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mega-cat-icon i {
+  width: 18px;
+  height: 18px;
+}
+
+.mega-cat-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-color);
+  white-space: nowrap; /* Prevent title wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mega-cat-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem; /* Slightly increased gap */
+}
+
+/* Tool Links & Badges */
+.mega-tool-link {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  position: relative;
+  justify-content: flex-start; /* Reset to start */
+  gap: 0.6rem;
+}
+
+.mega-tool-link:hover {
+  background: var(--card-bg); /* Use card-bg for hover inside bg-hover */
+  color: var(--primary-color);
+  transform: translateX(3px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.tool-dot {
+  width: 4px;
+  height: 4px;
+  min-width: 4px; /* Prevent shrinking */
+  border-radius: 50%;
+  background: var(--border-color);
+  transition: background 0.2s;
+  margin: 0; /* Remove right margin, handled by gap */
+}
+
+.tool-label {
+  flex: 1; /* Take available space */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-badge {
+  font-size: 0.55rem;
+  margin-left: 4px; 
+  flex-shrink: 0; /* Ensure badge doesn't shrink */
+}
+
+.mega-tool-link:hover .tool-dot,
+.mega-tool-link.active .tool-dot {
+  background: var(--primary-color);
 }
 
 .mega-caret {

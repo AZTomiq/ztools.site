@@ -38,8 +38,8 @@ nav:
   mode_standard_desc: Chế độ Tiêu chuẩn (Đơn giản, tập trung)
   mode_advanced_desc: Chế độ Nâng cao (Đầy đủ, Master Tools)
 home:
-  hero_title: Công cụ tiện ích cho mọi người
-  hero_desc: Đơn giản, nhanh chóng, bảo mật và hoàn toàn miễn phí.
+  hero_title: Small tools. Big help.
+  hero_desc: Fast • Secure • Free
   cats:
     job:
       title: Việc làm & Lương thưởng
@@ -139,3 +139,18 @@ dateTimeMaster:
 devToolkit:
   title: Bộ Công Cụ Lập Trình
   desc: Bộ công cụ lập trình toàn diện cho developers
+
+bookmarkCreator:
+  title: Bookmark Creator
+  desc: Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.
+  form:
+    search: Tìm nhanh công cụ...
+    select_all: Chọn tất cả
+    deselect_all: Bỏ chọn tất cả
+    collapse_all: Thu gọn tất cả
+    btn_export: Xuất file Bookmark (.html)
+  steps_guide:
+    title: 3 Bước đơn giản để sử dụng
+    step1: Chọn các công cụ bạn muốn thêm vào bookmark
+    step2: Nhấn nút "Xuất file Bookmark" để tải về
+    step3: Nhập file vào trình duyệt (Chrome, Safari,...)

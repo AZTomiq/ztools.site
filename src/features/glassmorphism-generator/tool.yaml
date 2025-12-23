@@ -1,0 +1,12 @@
+id: glassmorphism-generator
+title: Glassmorphism Generator
+description: Create beautiful CSS glassmorphism effects for your UI elements.
+icon: sparkles
+category: dev-tools
+tags: [css, generator, glassmorphism, ui, design]
+highlight: false
+status: active
+translationKey: glassmorphismGenerator
+meta:
+  version: 1.0.0
+layout: full-width

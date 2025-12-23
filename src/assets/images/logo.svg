@@ -1,0 +1,17 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad2" x1="50" y1="50" x2="462" y2="462" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Shape: Soft Rounded Square -->
+  <rect x="32" y="32" width="448" height="448" rx="120" fill="url(#grad2)"/>
+  
+  <!-- Inner Content: Stylized Z with Tool Integration -->
+  <g transform="translate(106, 106) scale(0.6)">
+    <!-- Main Z Shape -->
+    <path d="M420 80H120C108.954 80 100 88.9543 100 100V130C100 137.95 104.604 145.136 111.789 148.514L280 220L111.789 291.486C104.604 294.864 100 302.05 100 310V340C100 351.046 108.954 360 120 360H420C431.046 360 440 351.046 440 340V310C440 302.05 435.396 294.864 428.211 291.486L260 220L428.211 148.514C435.396 145.136 440 137.95 440 130V100C440 88.9543 431.046 80 420 80Z" fill="white"/>
+  </g>
+</svg>

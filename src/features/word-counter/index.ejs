@@ -1,17 +1,16 @@
 <!-- title: <%= t('word_counter.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
-<style>
-  /* ... */
-</style>
-
 <section class="tool-container">
   <div class="page-header">
-    <h1>📊 <%= t('word_counter.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
-      <% } %></h1>
+    <h1><i data-lucide="bar-chart-2"></i>
+      <%= t('word_counter.title') %>
+
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('word_counter.desc') %>
     </p>
@@ -21,31 +20,55 @@
     <!-- Toolbar -->
     <div class="toolbar">
       <div class="tool-group">
-        <button class="btn btn-sm" onclick="clearText()">🗑️ Clear</button>
-        <button class="btn btn-sm" onclick="copyText()">📋 Copy</button>
+        <button class="btn btn-sm" onclick="clearText()">
+          <i data-lucide="trash-2" class="icon-sm"></i>
+          <%= t('word_counter.toolbar.clear') %>
+        </button>
+        <button class="btn btn-sm" onclick="copyText()">
+          <i data-lucide="clipboard" class="icon-sm"></i>
+          <%= t('word_counter.toolbar.copy') %>
+        </button>
       </div>
       <div class="tool-group">
         <select id="case-select" onchange="convertCase(this.value)">
-          <option value="">🔠 Case Conversion...</option>
-          <option value="upper">UPPERCASE</option>
-          <option value="lower">lowercase</option>
-          <option value="title">Title Case</option>
-          <option value="sentence">Sentence case</option>
-          <option value="camel">camelCase</option>
-          <option value="kebab">kebab-case</option>
-          <option value="snake">snake_case</option>
+          <option value="">
+            <%= t('word_counter.toolbar.case_label') %>
+          </option>
+          <option value="upper">
+            <%= t('word_counter.toolbar.cases.upper') %>
+          </option>
+          <option value="lower">
+            <%= t('word_counter.toolbar.cases.lower') %>
+          </option>
+          <option value="title">
+            <%= t('word_counter.toolbar.cases.title') %>
+          </option>
+          <option value="sentence">
+            <%= t('word_counter.toolbar.cases.sentence') %>
+          </option>
+          <option value="camel">
+            <%= t('word_counter.toolbar.cases.camel') %>
+          </option>
+          <option value="kebab">
+            <%= t('word_counter.toolbar.cases.kebab') %>
+          </option>
+          <option value="snake">
+            <%= t('word_counter.toolbar.cases.snake') %>
+          </option>
         </select>
-        <button class="btn btn-sm" onclick="removeExtraSpaces()">Rem. Spaces</button>
+        <button class="btn btn-sm" onclick="removeExtraSpaces()">
+          <%= t('word_counter.toolbar.remove_spaces') %>
+        </button>
       </div>
     </div>
 
     <!-- Main Editor -->
     <div class="editor-container">
-      <textarea id="text-input" placeholder="Type or paste your text here..." autofocus></textarea>
+      <textarea id="text-input" placeholder="<%= t('word_counter.analysis.empty_list') %>" autofocus></textarea>
       <div class="floating-stats">
-        <span id="stat-words">0 words</span>
+        <span id="stat-words">0 <%= t('word_counter.stats.words') %></span>
         <span class="separator">•</span>
-        <span id="stat-chars">0 chars</span>
+        <span id="stat-chars">0 <%= t('word_counter.stats.chars') %></span>
       </div>
     </div>
 
@@ -53,53 +76,83 @@
     <div class="stats-grid">
       <div class="stat-card primary">
         <div class="stat-value" id="count-words">0</div>
-        <div class="stat-label">Words</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.words') %>
+        </div>
       </div>
       <div class="stat-card secondary">
         <div class="stat-value" id="count-chars">0</div>
-        <div class="stat-label">Characters</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.chars') %>
+        </div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="count-chars-no-space">0</div>
-        <div class="stat-label">Chars (no spaces)</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.chars_no_space') %>
+        </div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="count-sentences">0</div>
-        <div class="stat-label">Sentences</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.sentences') %>
+        </div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="count-lines">0</div>
-        <div class="stat-label">Lines</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.lines') %>
+        </div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="count-paragraphs">0</div>
-        <div class="stat-label">Paragraphs</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.paragraphs') %>
+        </div>
       </div>
       <div class="stat-card info">
         <div class="stat-value" id="reading-time">0s</div>
-        <div class="stat-label">Reading Time</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.reading_time') %>
+        </div>
       </div>
       <div class="stat-card info">
         <div class="stat-value" id="speaking-time">0s</div>
-        <div class="stat-label">Speaking Time</div>
+        <div class="stat-label">
+          <%= t('word_counter.stats.speaking_time') %>
+        </div>
       </div>
     </div>
 
     <!-- Analysis Section -->
     <div class="analysis-section">
       <div class="analysis-col">
-        <h3>📊 Top Keywords</h3>
+        <h3><i data-lucide="pie-chart"></i>
+          <%= t('word_counter.analysis.top_keywords') %>
+        </h3>
         <ul id="keyword-list" class="keyword-list">
-          <li class="empty">Type something to see top keywords...</li>
+          <li class="empty">
+            <%= t('word_counter.analysis.empty_list') %>
+          </li>
         </ul>
       </div>
       <div class="analysis-col">
-        <h3>ℹ️ Text Details</h3>
+        <h3><i data-lucide="info"></i>
+          <%= t('word_counter.analysis.text_details') %>
+        </h3>
         <ul class="details-list">
-          <li><strong>Longest Word:</strong> <span id="detail-longest">-</span></li>
-          <li><strong>Shortest Word:</strong> <span id="detail-shortest">-</span></li>
-          <li><strong>Avg. Word Length:</strong> <span id="detail-avg-word">-</span> chars</li>
-          <li><strong>Avg. Sentence Length:</strong> <span id="detail-avg-sentence">-</span> words</li>
+          <li><strong>
+              <%= t('word_counter.analysis.longest_word') %>:
+            </strong> <span id="detail-longest">-</span></li>
+          <li><strong>
+              <%= t('word_counter.analysis.shortest_word') %>:
+            </strong> <span id="detail-shortest">-</span></li>
+          <li><strong>
+              <%= t('word_counter.analysis.avg_word') %>:
+            </strong> <span id="detail-avg-word">-</span></li>
+          <li><strong>
+              <%= t('word_counter.analysis.avg_sentence') %>:
+            </strong> <span id="detail-avg-sentence">-</span></li>
         </ul>
       </div>
     </div>
@@ -107,24 +160,42 @@
 
   <!-- SEO Content -->
   <section class="card" style="padding: 2rem; margin-top: 3rem;">
-    <h2>📚 About Word Counter Tool</h2>
+    <h2><i data-lucide="book-open"></i>
+      <%= t('word_counter.guide.title') %>
+    </h2>
     <p>
-      Bộ đếm từ (Word Counter) là công cụ miễn phí giúp bạn đếm số lượng từ, ký tự, câu, đoạn văn trong văn bản theo
-      thời gian thực.
-      Ngoài ra, công cụ còn cung cấp các tính năng hữu ích:
+      <%= t('word_counter.guide.intro') %>
     </p>
     <ul>
-      <li><strong>Đếm chính xác:</strong> Số từ, ký tự (có/không khoảng trắng).</li>
-      <li><strong>Thời gian đọc:</strong> Ước tính thời gian để đọc hết văn bản (trung bình 200 từ/phút).</li>
-      <li><strong>Phân tích từ khóa:</strong> Tìm các từ xuất hiện nhiều nhất (Keyword Density) để tối ưu SEO.</li>
-      <li><strong>Chuyển đổi văn bản:</strong> Chuyển sang chữ hoa, chữ thường, Title Case, v.v.</li>
-      <li><strong>Xử lý văn bản:</strong> Xóa khoảng trắng thừa, xóa dòng trống.</li>
+      <li><strong>
+          <%= t('word_counter.guide.features.accurate') %>
+        </strong></li>
+      <li>
+        <%= t('word_counter.guide.features.time') %>
+      </li>
+      <li>
+        <%= t('word_counter.guide.features.keyword') %>
+      </li>
+      <li>
+        <%= t('word_counter.guide.features.convert') %>
+      </li>
+      <li>
+        <%= t('word_counter.guide.features.clean') %>
+      </li>
     </ul>
-    <h3>Why use ZTools Word Counter?</h3>
+    <h3>
+      <%= t('word_counter.guide.why_title') %>
+    </h3>
     <ul>
-      <li>⚡ <strong>Real-time:</strong> Kết quả hiển thị ngay khi bạn gõ.</li>
-      <li>🔒 <strong>Privacy:</strong> Xử lý 100% trên trình duyệt của bạn, văn bản không bao giờ được gửi đi đâu.</li>
-      <li>📱 <strong>Responsive:</strong> Hoạt động mượt mà trên cả điện thoại và máy tính.</li>
+      <li>
+        <%= t('word_counter.guide.why.realtime') %>
+      </li>
+      <li>
+        <%= t('word_counter.guide.why.privacy') %>
+      </li>
+      <li>
+        <%= t('word_counter.guide.why.responsive') %>
+      </li>
     </ul>
   </section>
 </section>

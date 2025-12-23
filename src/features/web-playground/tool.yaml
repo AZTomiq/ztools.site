@@ -2,7 +2,7 @@ id: web-playground
 name: zTool Playground
 description: Trình soạn thảo HTML/CSS/JS online với khả năng chia sẻ không cần Database.
 category: dev
-icon: monitor-play
+icon: code-2
 status: active
 hideStandardHeader: true
 highlight: true

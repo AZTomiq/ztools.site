@@ -1,3 +1,48 @@
 word_counter:
   title: Đếm từ & Phân tích văn bản
   desc: Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).
+  toolbar:
+    clear: Xóa
+    copy: Sao chép
+    case_label: Chuyển đổi chữ...
+    remove_spaces: Xóa khoảng trắng thừa
+    cases:
+      upper: CHỮ HOA
+      lower: chữ thường
+      title: Viết Hoa Đầu Từ
+      sentence: Viết hoa đầu câu
+      camel: camelCase
+      kebab: kebab-case
+      snake: snake_case
+  stats:
+    words: Từ
+    chars: Ký tự
+    chars_no_space: Ký tự (không dấu cách)
+    sentences: Câu
+    lines: Dòng
+    paragraphs: Đoạn văn
+    reading_time: Thời gian đọc
+    speaking_time: Thời gian nói
+  analysis:
+    top_keywords: Từ khóa phổ biến
+    text_details: Chi tiết văn bản
+    longest_word: Từ dài nhất
+    shortest_word: Từ ngắn nhất
+    avg_word: Độ dài từ trung bình
+    avg_sentence: Độ dài câu trung bình
+    empty_list: Nhập văn bản để xem phân tích...
+  guide:
+    title: Giới thiệu công cụ đếm từ
+    intro: Bộ đếm từ (Word Counter) là công cụ miễn phí giúp bạn đếm số lượng từ, ký tự, câu, đoạn văn trong văn bản theo thời gian thực.
+    features_title: Tính năng chính
+    features:
+      accurate: "Đếm chính xác: Số từ, ký tự (có/không khoảng trắng)."
+      time: "Ước tính thời gian đọc (trung bình 200 từ/phút)."
+      keyword: "Phân tích mật độ từ khóa (Keyword Density) cho SEO."
+      convert: "Chuyển đổi văn bản (Chữ hoa, thường, tiêu đề, v.v.)."
+      clean: "Xử lý văn bản (Xóa khoảng trắng thừa, dòng trống)."
+    why_title: Tại sao nên dùng ZTools Word Counter?
+    why:
+      realtime: "Real-time: Kết quả hiển thị ngay khi bạn gõ."
+      privacy: "Riêng tư: Xử lý 100% trên trình duyệt của bạn, văn bản không bao giờ được gửi đi đâu."
+      responsive: "Mượt mà: Hoạt động tốt trên cả điện thoại và máy tính."

@@ -107,6 +107,9 @@
     const taxOld = calculateProgressiveTax(taxableOld, cfg.bracketsOld);
     const taxNew = calculateProgressiveTax(taxableNew, cfg.bracketsNew);
 
+    const breakdownOld = calculateTaxBreakdown(taxableOld, cfg.bracketsOld);
+    const breakdownNew = calculateTaxBreakdown(taxableNew, cfg.bracketsNew);
+
     return {
       grossIncome,
       dependents,
@@ -121,6 +124,8 @@
       taxableNew,
       taxOld,
       taxNew,
+      breakdownOld,
+      breakdownNew,
       netOld: grossIncome - insurance - taxOld,
       netNew: grossIncome - insurance - taxNew,
     };

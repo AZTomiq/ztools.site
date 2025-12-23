@@ -1,3 +1,48 @@
 word_counter:
   title: Word Counter & Analyzer
   desc: Count words, analyze frequency, and convert case (Case Converter).
+  toolbar:
+    clear: Clear
+    copy: Copy
+    case_label: Case Conversion...
+    remove_spaces: Rem. Spaces
+    cases:
+      upper: UPPERCASE
+      lower: lowercase
+      title: Title Case
+      sentence: Sentence case
+      camel: camelCase
+      kebab: kebab-case
+      snake: snake_case
+  stats:
+    words: Words
+    chars: Characters
+    chars_no_space: Chars (no spaces)
+    sentences: Sentences
+    lines: Lines
+    paragraphs: Paragraphs
+    reading_time: Reading Time
+    speaking_time: Speaking Time
+  analysis:
+    top_keywords: Top Keywords
+    text_details: Text Details
+    longest_word: Longest Word
+    shortest_word: Shortest Word
+    avg_word: Avg. Word Length
+    avg_sentence: Avg. Sentence Length
+    empty_list: Type something to see top keywords...
+  guide:
+    title: About Word Counter Tool
+    intro: Word Counter is a free tool to count words, characters, sentences, and paragraphs in real-time.
+    features_title: Key Features
+    features:
+      accurate: "Accurate count: Words, characters (with/without spaces)."
+      time: "Reading time estimation (avg. 200 wpm)."
+      keyword: "Keyword Density analysis for SEO."
+      convert: "Case conversion (Upper, Lower, Title case, etc.)."
+      clean: "Text cleanup (remove extra spaces/lines)."
+    why_title: Why use ZTools Word Counter?
+    why:
+      realtime: "Real-time: Results appear as you type."
+      privacy: "Privacy: 100% client-side processing."
+      responsive: "Responsive: Works on mobile and desktop."

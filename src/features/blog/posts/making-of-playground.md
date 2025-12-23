@@ -7,7 +7,7 @@ slug: making-of-playground
 relatedTool: web-playground
 ---
 
-<p>Tôi luôn muốn có một nơi để test nhanh ý tưởng HTML/CSS/JS mà không cần mở VS Code, không cần tạo file, không cần setup server. Dùng Codepen hay JSFiddle rất tuyệt, nhưng chúng quá nặng nề cho nhu cầu "mì ăn liền". Và quan trọng hơn: <strong>Tôi muốn sở hữu nó, tôi muốn có 1 cách riêng mới lại để share short demo ấn tượng mang đầy dấu ấn cá nhân.</strong></p>
+<p>Xuất phát từ ý tưởng, tôi luôn muốn có một nơi để test nhanh ý tưởng HTML/CSS/JS mà không cần mở VS Code, không cần tạo file, không cần setup server. Dùng Codepen hay JSFiddle rất tuyệt, nhưng chúng quá nặng nề cho nhu cầu "mì ăn liền". Và quan trọng hơn: <strong>Tôi muốn sở hữu nó, tôi muốn có 1 cách riêng mới lại để share short demo ấn tượng mang đầy dấu ấn cá nhân.</strong></p>
 
 <img src="https://i.imgur.com/placeholer-playground.png" alt="Playground Preview" style="background:#333; height: 300px; display:flex; align-items:center; justify-content:center; color:#666;" />
 
@@ -36,9 +36,18 @@ window.location.hash = 'code=' + compressed;</code></pre>
 
 <p>Kết quả là một cái link trông hơi dài một chút, nhưng nó chứa đựng <strong>toàn bộ</strong> source code của bạn. Server không biết gì cả. Privacy tuyệt đối. Free tuyệt đối.</p>
 
-<h2>Kết luận</h2>
+<h2>Kết luận & Trải nghiệm</h2>
 <p>Đôi khi, giải pháp tốt nhất không phải là công nghệ phức tạp nhất (như Docker, Microservices), mà là giải pháp thông minh nhất. <strong>zTool Playground</strong> là minh chứng cho việc bạn có thể làm được những tool cực mạnh chỉ với Static Web.</p>
 
+<div class="card" style="margin: 2rem 0; padding: 1.5rem; background: var(--bg-hover);">
+    <h3 style="margin-top: 0;">✨ Examples Nổi bật</h3>
+    <p>Tôi đã dựng sẵn vài demo để bạn thấy sức mạnh của nó:</p>
+    <ul>
+        <li><a href="/web-playground/examples/todo/">👉 <strong>Advanced Todo App</strong></a>: CRUD, Filter, Stats (như ảnh demo).</li>
+        <li><a href="/web-playground/examples/bst-visualizer/">🌳 <strong>B-Tree Visualizer</strong></a>: Trực quan hóa cấu trúc dữ liệu.</li>
+    </ul>
+</div>
+
 <p style="margin-top: 3rem; font-style: italic; border-left: 3px solid #666; padding-left: 1rem;">
-    Hãy thử ngay: <a href="/web-playground/" style="color: #61dafb; text-decoration: none;">👉 Mở zTool Playground</a>
+    Hãy thử ngay: <a href="/web-playground/" style="color: #61dafb; text-decoration: none;">🚀 Mở zTool Playground IDE</a>
 </p>

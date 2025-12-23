@@ -163,6 +163,61 @@
         </div>
       </div>
     </div>
+    <!-- Share Modal -->
+    <div id="share-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Share Project</h3>
+          <button id="close-share-modal" class="btn-icon-sub"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+          <!-- Options -->
+          <div class="share-options-group">
+            <label class="share-option-label">Visible Panes:</label>
+            <div class="pane-toggles">
+              <label class="checkbox-pill">
+                <input type="checkbox" id="share-opt-html" value="html">
+                <span class="pill-text">HTML</span>
+              </label>
+              <label class="checkbox-pill">
+                <input type="checkbox" id="share-opt-css" value="css">
+                <span class="pill-text">CSS</span>
+              </label>
+              <label class="checkbox-pill">
+                <input type="checkbox" id="share-opt-js" value="js">
+                <span class="pill-text">JS</span>
+              </label>
+              <label class="checkbox-pill">
+                <input type="checkbox" id="share-opt-result" value="result">
+                <span class="pill-text">Result</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Direct Link -->
+          <div class="share-group">
+            <label>Direct Link</label>
+            <div class="input-with-copy">
+              <input type="text" id="share-url-input" readonly>
+              <button class="btn-copy" data-target="share-url-input">
+                <i data-lucide="copy"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Embed Code -->
+          <div class="share-group">
+            <label>Embed Code (Iframe)</label>
+            <div class="input-with-copy">
+              <input type="text" id="share-embed-input" readonly>
+              <button class="btn-copy" data-target="share-embed-input">
+                <i data-lucide="code"></i> Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

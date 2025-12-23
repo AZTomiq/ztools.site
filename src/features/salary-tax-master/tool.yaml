@@ -4,7 +4,7 @@ description: >-
   Tính thuế TNCN, TNDN, bảo hiểm xã hội và lương tăng ca trong một ứng dụng duy
   nhất.
 icon: wallet
-highlight: true
+highlight: false
 category: job
 status: not-ready
 translationKey: salaryTaxMaster

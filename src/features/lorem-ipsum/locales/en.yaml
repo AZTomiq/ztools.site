@@ -1,3 +1,20 @@
 lorem:
   title: Lorem Ipsum Generator
   desc: Generate placeholder text for designs and mockups.
+  form:
+    count: Count
+    type: Type
+    start_with: Start with "Lorem ipsum..."
+    generate: Generate
+    types:
+      paragraphs: Paragraphs
+      sentences: Sentences
+      words: Words
+      lists: Lists (ul)
+  output:
+    text: Text
+    html: HTML
+    copy: Copy
+  info:
+    title: What is Lorem Ipsum?
+    text: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.

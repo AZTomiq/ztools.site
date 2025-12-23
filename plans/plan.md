@@ -40,7 +40,7 @@ _Lưu trữ các báo cáo phiên làm việc và các công việc đã hoàn t
 
 ## 📊 Trạng thái Hệ thống
 
-- **Phiên bản hiện tại**: v1.5.0 (Playground IDE Update)
+- **Phiên bản hiện tại**: v1.5.1 (UI Masonry & Logo Refactor)
 - **Mục tiêu ưu tiên**: Tối ưu UX & Hoàn thiện Master Tools
 - **Công cụ đang hoạt động**: 40/334
 - **Ngôn ngữ**: vi, en

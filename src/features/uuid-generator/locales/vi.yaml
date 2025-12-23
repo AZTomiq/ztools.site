@@ -13,6 +13,7 @@ uuid:
       v1: Version 1 (Timestamp)
       v4: Version 4 (Random)
       v7: Version 7 (Time-sorted)
+      guid: GUID (Microsoft)
   guide:
     title: Hướng dẫn sử dụng
     v1:

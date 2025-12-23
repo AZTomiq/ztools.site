@@ -1,3 +1,20 @@
 lorem:
   title: Tạo chữ mẫu Lorem Ipsum
   desc: Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.
+  form:
+    count: Số lượng
+    type: Loại
+    start_with: Bắt đầu bằng "Lorem ipsum..."
+    generate: Tạo văn bản
+    types:
+      paragraphs: Đoạn văn
+      sentences: Câu
+      words: Từ
+      lists: Danh sách (ul)
+  output:
+    text: Văn bản
+    html: HTML
+    copy: Sao chép
+  info:
+    title: Lorem Ipsum là gì?
+    text: Lorem Ipsum là văn bản giả dùng trong ngành in ấn và dàn trang. Lorem Ipsum đã trở thành văn bản giả tiêu chuẩn của ngành công nghiệp kể từ những năm 1500.

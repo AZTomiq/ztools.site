@@ -1,0 +1,57 @@
+glassmorphismGenerator:
+  title: Trình Tạo Glassmorphism
+  desc: Tạo hiệu ứng kính mờ đẹp mắt cho giao diện web với xem trước trực tiếp
+  examples_title: Mẫu có sẵn
+  examples:
+    - name: Trắng Mềm
+      blur: 16
+      transparency: 0.25
+      saturation: 180
+      radius: 12
+      color: "#ffffff"
+    - name: Kính Đen
+      blur: 10
+      transparency: 0.15
+      saturation: 150
+      radius: 16
+      color: "#000000"
+    - name: Xanh Rực Rỡ
+      blur: 20
+      transparency: 0.3
+      saturation: 200
+      radius: 20
+      color: "#4F46E5"
+    - name: Xám Tinh Tế
+      blur: 8
+      transparency: 0.2
+      saturation: 120
+      radius: 8
+      color: "#6B7280"
+  intro:
+    what_is_title: Glassmorphism là gì?
+    what_is_desc: Glassmorphism là xu hướng thiết kế UI hiện đại tạo hiệu ứng kính mờ sương giá bằng các thuộc tính CSS như <code>backdrop-filter</code>. Phong cách này kết hợp độ trong suốt, độ mờ và viền tinh tế để tạo chiều sâu và phân cấp thị giác trong giao diện của bạn.
+    benefits_title: Lợi ích chính
+    benefits:
+      - label: "Hiện đại & Thanh lịch:"
+        text: Tạo vẻ ngoài cao cấp, đương đại nổi bật
+      - label: "Chiều sâu thị giác:"
+        text: Thêm lớp và kích thước cho thiết kế phẳng
+      - label: "Linh hoạt:"
+        text: Hoạt động tuyệt vời trên nền màu sắc, hình ảnh hoặc gradient
+      - label: "Nhẹ nhàng:"
+        text: Giải pháp CSS thuần túy không cần hình ảnh
+    use_cases_title: Trường hợp sử dụng phổ biến
+    use_cases:
+      - Thanh điều hướng và menu
+      - Hộp thoại modal và popup
+      - Thành phần card và widget
+      - Bảng điều khiển dashboard
+      - Phần hero và trang landing
+    browser_title: Hỗ trợ trình duyệt
+    browser_desc: Thuộc tính <code>backdrop-filter</code> được hỗ trợ trên tất cả các trình duyệt hiện đại bao gồm Chrome, Safari, Edge và Firefox. Đối với các trình duyệt cũ hơn, hãy cân nhắc cung cấp nền màu đặc làm dự phòng.
+    tips_title: Mẹo để có kết quả tốt nhất
+    tips:
+      - Sử dụng nền màu sắc hoặc có kết cấu để làm nổi bật hiệu ứng kính
+      - Giữ độ trong suốt từ 0.1-0.4 để đảm bảo khả năng đọc tối ưu
+      - Kết hợp với bóng đổ tinh tế để tăng chiều sâu
+      - Kiểm tra trên các màu nền khác nhau để đảm bảo độ tương phản

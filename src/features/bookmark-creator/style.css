@@ -1,74 +1,137 @@
 /* Bookmark Creator Styles */
 
+/* Actions Layout */
 .bookmark-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
 }
 
 .search-box {
   flex: 1;
-  min-width: 250px;
+  min-width: 300px;
 }
 
-#tool-search {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  background: var(--bg-color);
-  width: 100%;
-}
-
-.bulk-actions {
+.actions-right {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1rem;
 }
 
-.btn-sm {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
+.bulk-controls {
+  display: flex;
+  align-items: center;
+  /* Removed border/padding/bg as requested */
+}
+
+.divider-v {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 6px;
+}
+
+.btn-icon,
+#export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Category Toggle */
+/* Masonry Layout for Bookmark List */
+#bookmark-list {
+  column-count: 2;
+  column-gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  #bookmark-list {
+    column-count: 1;
+  }
 }
 
 .category-group {
+  break-inside: avoid;
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.category-group .tools-selection {
+  display: none; /* Collapsed by default */
+  margin-top: 1rem;
+}
+
+.category-group.expanded .tools-selection {
+  display: grid; 
 }
 
 .category-title {
   font-size: 1.1rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0; /* Remove margin when collapsed */
+  padding-bottom: 0; 
+  border-bottom: none;
   color: var(--text-color);
-  opacity: 0.9;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between title and chevron */
+  gap: 0.75rem;
+  cursor: pointer;
 }
 
-.tools-selection {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+.category-group.expanded .category-title {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cat-title-left {
+  display: flex;
+  align-items: center;
   gap: 0.75rem;
+}
+
+.cat-caret {
+  transition: transform 0.2s;
+  color: var(--text-muted);
+}
+
+.category-group.expanded .cat-caret {
+  transform: rotate(180deg);
 }
 
 .tool-checkbox-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
   user-select: none;
+  color: var(--text-muted);
 }
 
 .tool-checkbox-item:hover {
   background: var(--bg-hover);
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
+  color: var(--primary-color);
+  transform: translateX(3px);
+  border-color: var(--border-color);
 }
 
 .tool-checkbox-item input {
@@ -121,6 +184,16 @@
 .tool-name {
   font-weight: 500;
   font-size: 0.95rem;
+}
+/* Badge Positioning */
+.tool-checkbox-item .tool-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.3rem;
+  display: inline-block !important; /* Force show */
+  opacity: 1 !important;
 }
 
 /* Export Guide */

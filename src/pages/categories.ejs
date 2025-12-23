@@ -43,7 +43,9 @@
               <% if (tool.status==='not-ready' ) { %>
                 <span class="tool-badge beta">BETA</span>
                 <% } else if (tool.highlight) { %>
-                  <span class="tool-badge hot">HOT</span>
+                  <span class="tool-badge hot" style="background: transparent; padding: 0;">
+                    <i data-lucide="sparkles" style="width: 12px; height: 12px; color: #f59e0b; fill: #f59e0b;"></i>
+                  </span>
                   <% } %>
                     <span class="tool-icon">
                       <i data-lucide="<%= tool.icon %>"></i>

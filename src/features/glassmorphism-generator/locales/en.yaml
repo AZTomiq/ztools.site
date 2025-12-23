@@ -1,0 +1,57 @@
+glassmorphismGenerator:
+  title: Glassmorphism Generator
+  desc: Create stunning frosted glass UI effects with real-time preview
+  examples_title: Preset Examples
+  examples:
+    - name: Soft White
+      blur: 16
+      transparency: 0.25
+      saturation: 180
+      radius: 12
+      color: "#ffffff"
+    - name: Dark Glass
+      blur: 10
+      transparency: 0.15
+      saturation: 150
+      radius: 16
+      color: "#000000"
+    - name: Vibrant Blue
+      blur: 20
+      transparency: 0.3
+      saturation: 200
+      radius: 20
+      color: "#4F46E5"
+    - name: Subtle Gray
+      blur: 8
+      transparency: 0.2
+      saturation: 120
+      radius: 8
+      color: "#6B7280"
+  intro:
+    what_is_title: What is Glassmorphism?
+    what_is_desc: Glassmorphism is a modern UI design trend that creates a frosted glass effect using CSS properties like <code>backdrop-filter</code>. This aesthetic combines transparency, blur, and subtle borders to create depth and visual hierarchy in your interface.
+    benefits_title: Key Benefits
+    benefits:
+      - label: "Modern & Elegant:"
+        text: Creates a premium, contemporary look that stands out
+      - label: "Visual Depth:"
+        text: Adds layers and dimension to flat designs
+      - label: "Versatile:"
+        text: Works beautifully on colorful backgrounds, images, or gradients
+      - label: "Lightweight:"
+        text: Pure CSS solution with no images required
+    use_cases_title: Common Use Cases
+    use_cases:
+      - Navigation bars and menus
+      - Modal dialogs and popups
+      - Card components and widgets
+      - Dashboard panels
+      - Hero sections and landing pages
+    browser_title: Browser Support
+    browser_desc: The <code>backdrop-filter</code> property is supported in all modern browsers including Chrome, Safari, Edge, and Firefox. For older browsers, consider providing a solid background fallback.
+    tips_title: Tips for Best Results
+    tips:
+      - Use colorful or textured backgrounds to showcase the glass effect
+      - Keep transparency between 0.1-0.4 for optimal readability
+      - Combine with subtle shadows for added depth
+      - Test on different background colors to ensure contrast

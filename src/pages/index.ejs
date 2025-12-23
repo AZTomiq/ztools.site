@@ -145,9 +145,15 @@
                           <span class="legacy-badge"
                             style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--text-muted); color: var(--bg-color); padding: 2px 4px; border-radius: 4px; opacity: 0.7;">LEGACY</span>
                           <% } else if (tool.status==='not-ready' ) { %>
-                            <span class="legacy-badge"
+                            <span class="legacy-badge tool-badge beta"
                               style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: var(--primary-color); color: white; padding: 2px 4px; border-radius: 4px; opacity: 0.8;">BETA</span>
-                            <% } %>
+                            <% } else if (tool.highlight) { %>
+                              <span class="legacy-badge tool-badge hot"
+                                style="position: absolute; top: -5px; right: -5px; font-size: 0.5rem; background: transparent; padding: 0; opacity: 1;">
+                                <i data-lucide="sparkles"
+                                  style="width: 16px; height: 16px; color: #f59e0b; fill: #f59e0b;"></i>
+                              </span>
+                              <% } %>
                       </div>
                       <h3>
                         <%= t(tool.translationKey + '.title' ) || tool.defaultTitle %>
