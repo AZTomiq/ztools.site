@@ -1,8 +1,8 @@
 meta:
-  title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+  title: AZtomiq - Bộ Công Cụ Tiện Ích Online Miễn Phí
   description: Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.
 about:
-  title: Về ZTools
+  title: Về AZtomiq
 privacy:
   title: Chính Sách Bảo Mật
 terms:
@@ -40,6 +40,8 @@ nav:
 home:
   hero_title: Small tools. Big help.
   hero_desc: Fast • Secure • Free
+  favorites: Công cụ của tôi
+  tag_cloud_title: Từ khóa phổ biến
   cats:
     job:
       title: Việc làm & Lương thưởng
@@ -80,14 +82,14 @@ home:
     popular: Phổ biến nhất
   reset: Đặt lại
 footer:
-  about_title: ZTools.site
+  about_title: AZtomiq.site
   about_desc: Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
   links_title: Liên kết
   intro: Giới thiệu
   policy: Chính sách
   terms: Điều khoản
   changelog: Nhật ký cập nhật
-  copyright: © 2025 ZTools. Built with ❤️.
+  copyright: © 2025 AZtomiq. Built with ❤️.
 
 # Master Tools Translations
 salaryTaxMaster:
@@ -142,7 +144,7 @@ devToolkit:
 
 bookmarkCreator:
   title: Bookmark Creator
-  desc: Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.
+  desc: Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên AZtomiq.
   form:
     search: Tìm nhanh công cụ...
     select_all: Chọn tất cả

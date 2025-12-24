@@ -2,11 +2,12 @@ id: password-generator
 category: generator
 icon: key-round
 translationKey: password
-status: not-ready
+status: active
 link: /password-generator/
 meta:
   version: 1.0.0
   type: generator
+tags: [password, generator, security, privacy, web]
 inputs:
   - id: quantity
     type: number

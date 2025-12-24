@@ -1,16 +1,18 @@
-# 🛠️ ZTools.site
+# 🛠️ AZtomiq.site
 
-**ZTools** is a collection of free, fast, and secure online utility tools designed for Vietnamese users. Built with a focus on privacy, performance, and user experience.
+**AZtomiq** is a collection of free, fast, and secure online utility tools designed for Vietnamese users. Built with a focus on privacy, performance, and user experience.
 
 ## 🌟 Features
 
 ### Available Tools
+
 - **💸 Tax Calculator (Tính Thuế TNCN)** - Calculate Vietnam personal income tax with 2025 vs 2026 comparison
 - **📊 BMI Calculator** - Body Mass Index calculator with Asian standards
 - **📄 JSON Formatter** - Beautify, validate, and format JSON data
 - **💰 Loan Calculator** - Calculate loan interest with reducing balance and flat rate methods
 
 ### Core Features
+
 - 🌐 **Multi-language Support** - Vietnamese (default) and English
 - 🌓 **Dark Mode** - Automatic theme switching with user preference
 - 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
@@ -21,11 +23,12 @@
 
 ## 🚀 Tech Stack
 
+- **Core Framework**: Built on [AZtomiq Core](https://github.com/ph4n4n/aztomiq)
 - **Build System**: Custom Node.js build script with EJS templating
 - **Styling**: Vanilla CSS with CSS variables for theming
 - **JavaScript**: Vanilla JS (no frameworks)
 - **PWA**: Service Worker with cache-first strategy
-- **Optimization**: 
+- **Optimization**:
   - CSS minification with `clean-css-cli`
   - JS minification with `terser`
   - JS obfuscation with `javascript-obfuscator` (production only)
@@ -84,6 +87,7 @@ ztools.site/
 ## 🛠️ Development Setup
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - npm or yarn
 
@@ -108,6 +112,7 @@ npm run dev
 ```
 
 The dev build:
+
 - Outputs to `dist-dev/` folder
 - Uses minification (no obfuscation)
 - Faster build times
@@ -123,6 +128,7 @@ npx serve dist
 ```
 
 The production build:
+
 - Outputs to `dist/` folder
 - Includes JS obfuscation for code protection
 - Optimized for deployment
@@ -132,11 +138,13 @@ The production build:
 The custom build script (`scripts/build.js`) performs:
 
 1. **Asset Processing**
+
    - Minifies all CSS files
    - Minifies/obfuscates JavaScript files
    - Copies to `dist/assets/`
 
 2. **Page Generation**
+
    - Renders EJS templates for both `vi` and `en` locales
    - Injects translations using `t()` helper
    - Generates clean URLs (e.g., `/vi/tax/` instead of `/vi/tax.html`)
@@ -151,6 +159,7 @@ The custom build script (`scripts/build.js`) performs:
 The site is designed to be deployed on static hosting platforms:
 
 ### Recommended Platforms
+
 - **Vercel** (recommended) - Zero config deployment
 - **Netlify** - Simple drag & drop
 - **GitHub Pages** - Free hosting
@@ -159,6 +168,7 @@ The site is designed to be deployed on static hosting platforms:
 ### Deployment Steps
 
 1. Build the production version:
+
    ```bash
    npm run build
    ```
@@ -183,10 +193,12 @@ The site is designed to be deployed on static hosting platforms:
 ### Modifying Translations
 
 Edit the JSON files in `src/locales/`:
+
 - `vi.json` - Vietnamese translations
 - `en.json` - English translations
 
 Use the `t()` function in EJS templates:
+
 ```ejs
 <h1><%= t('home.hero_title') %></h1>
 ```
@@ -226,7 +238,7 @@ Modify CSS variables in `src/assets/css/global.css`:
 
 ## 📄 License
 
-© 2025 ZTools. Built with ❤️.
+© 2025 AZtomiq. Built with ❤️.
 
 ## 🤝 Contributing
 

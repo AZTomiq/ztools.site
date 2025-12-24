@@ -2,7 +2,7 @@ id: bookmark-creator
 category: daily
 icon: bookmark
 translationKey: bookmarkCreator
-status: not-ready
+status: active
 link: /bookmark-creator/
 meta:
   version: 1.0.0

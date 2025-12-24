@@ -2,28 +2,28 @@
 .salary-tax-master-wrapper,
 .date-time-master-wrapper {
   width: 100%;
-  padding: 2rem 0;
+  padding: var(--s-6) 0;
 }
 
 .master-layout {
   display: flex;
-  gap: 2rem;
+  gap: var(--s-6);
   min-height: 80vh;
-  max-width: 1400px;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 var(--s-4);
 }
 
 .master-sidebar {
-  width: 250px;
+  width: 280px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--s-2);
   position: sticky;
   top: 100px;
   height: fit-content;
-  padding: 1.5rem;
+  padding: var(--s-4);
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -64,7 +64,7 @@
 .master-content {
   flex: 1;
   min-width: 0;
-  padding: 2rem;
+  padding: var(--s-6);
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -95,18 +95,20 @@
 @media (max-width: 1000px) {
   .master-layout {
     flex-direction: column;
+    gap: var(--s-4);
   }
 
   .master-sidebar {
     width: 100%;
     flex-direction: row;
     overflow-x: auto;
-    padding-bottom: 1rem;
+    padding-bottom: var(--s-2);
     position: static;
   }
 
   .sidebar-btn {
     white-space: nowrap;
+    padding: var(--s-3) var(--s-4);
   }
 }
 

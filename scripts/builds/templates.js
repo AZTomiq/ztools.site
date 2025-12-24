@@ -63,25 +63,26 @@ async function buildTemplates() {
 }
 
 async function createRootRedirect() {
+  const entry = GLOBAL_CONFIG.build.entry_point === 'blog' ? 'blog/' : '';
+  const redirectUrl = `/${DEFAULT_LOCALE}/${entry}`;
+
   const html = `<!DOCTYPE html>
-<html lang="vi">
+<html lang="${DEFAULT_LOCALE}">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=/vi/">
+    <meta http-equiv="refresh" content="0;url=${redirectUrl}">
     <script>
-        // Default to Vietnamese
-        window.location.href = '/vi/';
+        window.location.href = '${redirectUrl}';
     </script>
     <title>Redirecting...</title>
 </head>
 <body>
-    <p>Redirecting to <a href="/vi/">/vi/</a>...</p>
+    <p>Redirecting to <a href="${redirectUrl}">${redirectUrl}</a>...</p>
 </body>
 </html>`;
   await fs.writeFile(path.join(paths.DIST, 'index.html'), html);
   console.log('📄 Created root redirect index.html');
 }
-
 async function copyRootFiles() {
   // Logic to copy files from ROOT to DIST if they exist and changed
   // e.g. manual robots.txt override

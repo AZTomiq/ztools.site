@@ -1,11 +1,22 @@
 site:
   url: https://ztools.site
   author: Anph
+  description: AZtomiq - Multi-tool utility site with secure, fast, and modern UI
+  og_image: /assets/images/og-default.png
+  keywords:
+    - free tools
+    - online utility
+    - bộ công cụ online
+    - tính thuế tncn
+    - format json
+    - aztomiq
+    - tiện ích miễn phí
 build:
   locales:
     - vi
     - en
   default_locale: vi
+  entry_point: blog
   deploy:
     remote: "https://github.com/ph4n4n/ztools.site-public.git"
     branch: "main"

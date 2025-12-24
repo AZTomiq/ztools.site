@@ -2,7 +2,8 @@ id: word-counter
 category: text
 icon: bar-chart-3
 translationKey: word_counter
-status: not-ready
+status: active
 link: /word-counter/
 meta:
   version: 1.0.0
+tags: [text, writing, counter, words, utility]

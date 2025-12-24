@@ -3,13 +3,15 @@
 
   <section class="tool-container">
     <div class="page-header">
-      <h1>
-        <i data-lucide="<%= toolConfig.icon %>"></i>
-        <%= t(toolConfig.translationKey + '.title' ) %>
-          <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-            <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
-            <% } %>
-      </h1>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <h1 style="margin-bottom: 0;">
+          <i data-lucide="<%= toolConfig.icon %>"></i>
+          <%= t(toolConfig.translationKey + '.title' ) %>
+        </h1>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <span class="version-badge" id="open-changelog">v<%= toolConfig.meta.version %></span>
+          <% } %>
+      </div>
       <p>
         <%= t(toolConfig.translationKey + '.desc' ) %>
       </p>

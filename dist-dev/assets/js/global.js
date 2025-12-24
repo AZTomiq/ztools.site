@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateIcon(newTheme);
   });
 
-  console.log('ZTools Global JS Loaded');
+  console.log('AZtomiq Global JS Loaded');
 
   // Register Service Worker for PWA
   if ('serviceWorker' in navigator) {
@@ -256,15 +256,118 @@ document.addEventListener('DOMContentLoaded', () => {
       const now = Date.now();
 
       // 1. Recently Used
-      let recent = JSON.parse(localStorage.getItem('ztools_recent') || '{}');
+      let recent = JSON.parse(localStorage.getItem('aztomiq_recent') || '{}');
       recent[id] = now;
-      localStorage.setItem('ztools_recent', JSON.stringify(recent));
+      localStorage.setItem('aztomiq_recent', JSON.stringify(recent));
 
       // 2. Most Used (Personal)
-      let usage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
+      let usage = JSON.parse(localStorage.getItem('aztomiq_usage') || '{}');
       usage[id] = (usage[id] || 0) + 1;
-      localStorage.setItem('ztools_usage', JSON.stringify(usage));
+      localStorage.setItem('aztomiq_usage', JSON.stringify(usage));
 
     } catch (e) { console.error('Tracking error', e); }
   }
+  // --- Favorite Tools Logic (Star System) ---
+  const FAVORITES_KEY = 'aztomiq_favorites';
+  let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+
+  function updateStars() {
+    document.querySelectorAll('.star-btn').forEach(btn => {
+      const id = btn.getAttribute('data-tool-id');
+      const isActive = favorites.includes(id);
+      btn.classList.toggle('active', isActive);
+      const icon = btn.querySelector('i');
+      if (icon && window.lucide) {
+        // We just toggle the class, CSS handles the fill/color
+      }
+    });
+  }
+
+  function toggleFavorite(id) {
+    const index = favorites.indexOf(id);
+    if (index === -1) {
+      favorites.push(id);
+    } else {
+      favorites.splice(index, 1);
+    }
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    updateStars();
+    renderFavorites();
+  }
+
+  function renderFavorites() {
+    const favoritesSection = document.getElementById('favorites-section');
+    const favoritesGrid = document.getElementById('favorites-grid');
+    if (!favoritesGrid) return;
+
+    if (favorites.length === 0) {
+      favoritesSection.style.display = 'none';
+      return;
+    }
+
+    favoritesSection.style.display = 'block';
+
+    // Find tool objects from toolsData
+    const favoriteTools = favorites.map(id => toolsData.find(t => t.id === id)).filter(Boolean);
+
+    favoritesGrid.innerHTML = favoriteTools.map(tool => {
+      let modeClass = '';
+      if (tool.mode === 'standard') modeClass = 'mode-standard-only';
+      else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
+
+      return `
+          <div class="tool-card-wrapper ${modeClass}">
+            <div class="tool-card">
+              <button class="star-btn active" data-tool-id="${tool.id}" aria-label="Remove from favorites" title="Remove from favorites">
+                <i data-lucide="star" style="width: 14px; height: 14px; fill: currentColor;"></i>
+              </button>
+              
+              <div class="tool-badge-row">
+                 ${tool.highlight ? `<span class="tool-badge hot"><i data-lucide="sparkles" style="width: 12px; height: 12px;"></i> HOT</span>` : ''}
+                 ${tool.status === 'not-ready' ? `<span class="tool-badge beta">BETA</span>` : ''}
+              </div>
+
+              <a href="${tool.link}" class="tool-link">
+                <div class="tool-icon-wrap">
+                  <i data-lucide="${tool.icon}" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h3>${tool.title}</h3>
+                <p>${tool.desc}</p>
+              </a>
+            </div>
+          </div>
+        `;
+    }).join('');
+
+    if (window.lucide) lucide.createIcons();
+
+    // Re-attach listeners to new buttons in favorites grid
+    favoritesGrid.querySelectorAll('.star-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleFavorite(btn.getAttribute('data-tool-id'));
+      };
+    });
+  }
+
+  // Global delegate for stars
+  document.addEventListener('click', (e) => {
+    const starBtn = e.target.closest('.star-btn');
+    if (starBtn && !starBtn.closest('#favorites-grid')) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(starBtn.getAttribute('data-tool-id'));
+    }
+  });
+
+  // Initial render
+  updateStars();
+  renderFavorites();
+
+  // Final Lucide init (for any dynamically added or static icons missed)
+  if (window.lucide) lucide.createIcons();
+
+  // --- End Favorite Tools Logic ---
 });
+

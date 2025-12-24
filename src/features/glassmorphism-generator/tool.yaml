@@ -10,3 +10,4 @@ translationKey: glassmorphismGenerator
 meta:
   version: 1.0.0
 layout: full-width
+mode: advanced

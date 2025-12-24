@@ -40,23 +40,25 @@
             %>
             <a href="<%= rootPath %><%= locale %><%= tool.link %>"
               class="cat-tool-item <%= tool.status === 'legacy' ? 'legacy-item' : '' %> <%= modeClass %>">
+              <span class="tool-icon">
+                <i data-lucide="<%= tool.icon %>"></i>
+                <% if (tool.status==='legacy' ) { %>
+                  <span class="legacy-dot" title="Legacy Tool"
+                    style="display:inline-block; width: 6px; height: 6px; background: var(--text-muted); border-radius: 50%; position: absolute; top: 0; right: 0;"></span>
+                  <% } %>
+              </span>
+              <span class="tool-name">
+                <%= t(tool.translationKey + '.title' ) %>
+              </span>
+
               <% if (tool.status==='not-ready' ) { %>
-                <span class="tool-badge beta">BETA</span>
+                <span class="tool-badge beta" style="margin-left: auto; position: static;">BETA</span>
                 <% } else if (tool.highlight) { %>
-                  <span class="tool-badge hot" style="background: transparent; padding: 0;">
-                    <i data-lucide="sparkles" style="width: 12px; height: 12px; color: #f59e0b; fill: #f59e0b;"></i>
+                  <span class="tool-badge hot"
+                    style="font-size: 0.6rem; padding: 2px 6px; background: #fff7ed; color: #c2410c; border: 1px solid #fb923c; border-radius: 4px; display: flex; align-items: center; gap: 3px; font-weight: 700; position: static; margin-left: auto;">
+                    <i data-lucide="sparkles" style="width: 10px; height: 10px;"></i> HOT
                   </span>
                   <% } %>
-                    <span class="tool-icon">
-                      <i data-lucide="<%= tool.icon %>"></i>
-                      <% if (tool.status==='legacy' ) { %>
-                        <span class="legacy-dot" title="Legacy Tool"
-                          style="display:inline-block; width: 6px; height: 6px; background: var(--text-muted); border-radius: 50%; position: absolute; top: 0; right: 0;"></span>
-                        <% } %>
-                    </span>
-                    <span class="tool-name">
-                      <%= t(tool.translationKey + '.title' ) %>
-                    </span>
             </a>
             <% }); %>
         </div>

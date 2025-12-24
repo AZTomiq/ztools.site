@@ -2,7 +2,7 @@ id: text-formatter
 category: text
 icon: wand-2
 translationKey: textFormatter
-status: not-ready
+status: active
 link: /text-formatter/
 meta:
   version: 1.1.0

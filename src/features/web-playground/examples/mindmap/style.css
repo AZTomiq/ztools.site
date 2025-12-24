@@ -1,17 +1,99 @@
-body { background: #0f172a; color: #fff; margin: 0; font-family: sans-serif; }
+body { background: #0f172a; color: #fff; margin: 0; font-family: 'Inter', sans-serif; overflow: hidden; }
 .mindmap-container { display: flex; height: 100vh; }
-.sidebar { width: 250px; background: #1e293b; padding: 20px; border-right: 1px solid #334155; }
-.sidebar h4 { margin: 0 0 10px; color: #38bdf8; }
-textarea { width: 100%; height: 80%; background: #0f172a; border: 1px solid #334155; color: #94a3b8; padding: 10px; border-radius: 4px; font-family: monospace; resize: none; }
-.map-view { flex: 1; position: relative; overflow: auto; padding: 50px; display: flex; align-items: center; justify-content: center; }
-.node { background: #1e293b; padding: 10px 15px; border-radius: 8px; border: 1px solid #0ea5e9; color: #fff; position: relative; white-space: nowrap; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-.map-tree-wrapper ul { display: flex; padding-top: 20px; position: relative; transition: all 0.5s; padding-left: 0; }
-.map-tree-wrapper li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
-.map-tree-wrapper li::before, .map-tree-wrapper li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 1px solid #334155; width: 50%; height: 20px; }
-.map-tree-wrapper li::after { right: auto; left: 50%; border-left: 1px solid #334155; }
-.map-tree-wrapper li:only-child::after, .map-tree-wrapper li:only-child::before { display: none; }
-.map-tree-wrapper li:only-child { padding-top: 0; }
-.map-tree-wrapper li:first-child::before, .map-tree-wrapper li:last-child::after { border: 0 none; }
-.map-tree-wrapper li:last-child::before { border-right: 1px solid #334155; border-radius: 0 5px 0 0; }
-.map-tree-wrapper li:first-child::after { border-radius: 5px 0 0 0; }
-.map-tree-wrapper ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 1px solid #334155; width: 0; height: 20px; }
+.sidebar { width: 300px; background: #1e293b; padding: 25px; border-right: 1px solid #334155; display: flex; flex-direction: column; gap: 20px; box-shadow: 10px 0 30px rgba(0,0,0,0.2); z-index: 10; }
+.sidebar h4 { margin: 0; color: #0ea5e9; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+.sidebar p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
+textarea { flex: 1; background: #0f172a; border: 1px solid #334155; color: #e2e8f0; padding: 15px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; resize: none; line-height: 1.6; outline: none; transition: border-color 0.3s; }
+textarea:focus { border-color: #0ea5e9; }
+
+.map-view { flex: 1; overflow: auto; padding: 80px; background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 30px 30px; display: flex; align-items: center; }
+
+/* The Tree Base */
+.map-tree-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding-left: 60px; /* Space for horizontal lines */
+  position: relative;
+}
+
+.map-tree-wrapper li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding: 12px 0;
+}
+
+/* Curly Connectors */
+.map-tree-wrapper li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 60px;
+  height: 0;
+  border-top: 2px solid #334155;
+  z-index: 1;
+}
+
+/* The vertical sibling curved line */
+.map-tree-wrapper li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -50%;
+  width: 60px;
+  height: 100%;
+  border-left: 2px solid #334155;
+  border-bottom: 2px solid #334155;
+  border-bottom-left-radius: 25px; /* THE CURLY PART */
+  z-index: 0;
+}
+
+/* Adjustments for first and last children */
+.map-tree-wrapper li:first-child::after {
+  border-left: 0;
+  border-bottom: 0;
+}
+
+/* Hide line from root node */
+.map-tree-wrapper > ul > li::after, 
+.map-tree-wrapper > ul > li::before {
+  display: none;
+}
+
+.node {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  padding: 12px 24px;
+  border-radius: 50px; /* Pill shape */
+  border: 2px solid #38bdf8;
+  color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);
+  position: relative;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 5;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+
+.node:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(14, 165, 233, 0.3);
+  border-color: #7dd3fc;
+}
+
+/* Line from node to its children */
+.node:not(:only-child)::after {
+  content: '';
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  width: 60px;
+  height: 2px;
+  background: #334155;
+}

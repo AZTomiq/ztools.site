@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <% var baseUrl=global.site.url; var allPages=[]; var i, j, k, loc, tool, page, alts, alt; for (i=0; i <
-    locales.length; i++) { loc=locales[i]; alts=[]; for (j=0; j < locales.length; j++) { alts.push({ hreflang:
-    locales[j]==='vi' ? 'vi-VN' : 'en-US' , href: baseUrl + '/' + locales[j] + '/' }); } allPages.push({ loc: baseUrl
-    + '/' + loc + '/' , priority: '1.0' , changefreq: 'weekly' , alternates: alts }); } for (i=0; i < tools.length; i++)
-    { tool=tools[i]; if (tool.status==='active' ) { for (k=0; k < locales.length; k++) { loc=locales[k]; alts=[]; for
-    (j=0; j < locales.length; j++) { alts.push({ hreflang: locales[j]==='vi' ? 'vi-VN' : 'en-US' , href: baseUrl + '/' +
-    locales[j] + '/' + tool.id + '/' }); } allPages.push({ loc: baseUrl + '/' + loc + '/' + tool.id + '/' ,
-    priority: '0.8' , changefreq: 'monthly' , alternates: alts }); } } } %>
-    <% for (i=0; i < allPages.length; i++) { page=allPages[i]; %>
+  <% var baseUrl=global.site.url; var allPages=[]; // 1. Root and Static Pages for each locale var
+    staticPages=['', 'about/' , 'categories/' , 'changelog/' , 'privacy/' , 'terms/' ]; locales.forEach(loc=> {
+    staticPages.forEach(page => {
+    var alts = locales.map(l => ({
+    hreflang: l === 'vi' ? 'vi-VN' : 'en-US',
+    href: baseUrl + '/' + l + '/' + page
+    }));
+
+    allPages.push({
+    loc: baseUrl + '/' + loc + '/' + page,
+    priority: page === '' ? '1.0' : '0.6',
+    changefreq: 'weekly',
+    alternates: alts
+    });
+    });
+    });
+
+    // 2. Blog (Feature page)
+    locales.forEach(loc => {
+    var alts = locales.map(l => ({
+    hreflang: l === 'vi' ? 'vi-VN' : 'en-US',
+    href: baseUrl + '/' + l + '/blog/'
+    }));
+    allPages.push({
+    loc: baseUrl + '/' + loc + '/blog/',
+    priority: '0.7',
+    changefreq: 'weekly',
+    alternates: alts
+    });
+    });
+
+    // 3. Active Tools
+    tools.forEach(tool => {
+    if (tool.status === 'active') {
+    locales.forEach(loc => {
+    var alts = locales.map(l => ({
+    hreflang: l === 'vi' ? 'vi-VN' : 'en-US',
+    href: baseUrl + '/' + l + tool.link
+    }));
+
+    allPages.push({
+    loc: baseUrl + '/' + loc + tool.link,
+    priority: '0.8',
+    changefreq: 'monthly',
+    alternates: alts
+    });
+    });
+    }
+    });
+    %>
+    <% for (var i=0; i < allPages.length; i++) { var page=allPages[i]; %>
       <url>
         <loc>
           <%= page.loc %>
@@ -19,7 +61,7 @@
         <priority>
           <%= page.priority %>
         </priority>
-        <% for (j=0; j < page.alternates.length; j++) { alt=page.alternates[j]; %>
+        <% for (var j=0; j < page.alternates.length; j++) { var alt=page.alternates[j]; %>
           <xhtml:link rel="alternate" hreflang="<%= alt.hreflang %>" href="<%= alt.href %>" />
           <% } %>
       </url>

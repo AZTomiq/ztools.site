@@ -32,10 +32,11 @@ main.container {
 }
 
 /* Wall Calendar Block */
-.wall-calendar-card {
-  display: flex;
+/* Wall Calendar Block */
+.wall-calendar-wrapper {
+  display: flex !important;
   justify-content: center;
-  padding: 0 !important;
+  width: 100%;
 }
 
 .wall-calendar-block {
@@ -48,6 +49,101 @@ main.container {
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   text-align: center;
   position: relative;
+  border: 1px solid var(--border-color);
+}
+
+.btn-view-hours {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-view-hours:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Modal Hours Grid */
+.hours-modal-body {
+  padding: 1rem;
+}
+
+.modal-hours-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.hour-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  transition: all 0.2s;
+}
+
+.hour-item.good {
+  background: rgba(13, 148, 136, 0.03);
+  border-left: 4px solid #0d9488;
+}
+
+.hour-item.bad {
+  opacity: 0.5;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .hour-item.good {
+  background: rgba(13, 148, 136, 0.1);
+}
+
+[data-theme="dark"] .hour-item.bad {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.hour-chi {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.hour-range {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.hour-status {
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.hour-item.good .hour-status {
+  background: #0d9488;
+  color: white;
+}
+
+.hour-item.bad .hour-status {
+  color: var(--text-muted);
   border: 1px solid var(--border-color);
 }
 
@@ -835,6 +931,21 @@ main.container {
 
   .lunar-header h1 {
     font-size: 2rem;
+  }
+
+  .wall-calendar-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .wall-calendar-block {
+    max-width: 100%;
+  }
+
+  .wall-calendar-side {
+    width: 100%;
+    max-height: none;
   }
 
   .today-grid {

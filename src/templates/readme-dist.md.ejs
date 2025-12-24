@@ -1,4 +1,4 @@
-# ZTools - Production Build
+# AZtomiq - Production Build
 
 [Tiếng Việt](#tiếng-viet) | [English](#english)
 
@@ -7,10 +7,11 @@
 <a name="tiếng-viet"></a>
 ## 🇻🇳 Tiếng Việt
 
-Đây là kho lưu trữ chứa các tệp tin đã được biên dịch (build) cho trang web [ZTools.site](https://ztools.site).
+Đây là kho lưu trữ chứa các tệp tin đã được biên dịch (build) cho trang web [AZtomiq.site](https://ztools.site).
 
 ### 🚀 Về Dự Án
-ZTools là một bộ công cụ số toàn diện, ưu tiên quyền riêng tư, được thiết kế để cung cấp các tiện ích chất lượng cao cho
+AZtomiq là một bộ công cụ số toàn diện, ưu tiên quyền riêng tư, được thiết kế để cung cấp các tiện ích chất lượng cao
+cho
 các tác vụ hàng ngày.
 
 - **Quyền riêng tư là trên hết**: Tất cả các xử lý được thực hiện cục bộ trong trình duyệt của bạn. Không có dữ liệu nào
@@ -32,10 +33,10 @@ các tác vụ hàng ngày.
 <a name="english"></a>
 ## 🇺🇸 English
 
-This repository contains the production-ready assets for [ZTools.site](https://ztools.site).
+This repository contains the production-ready assets for [AZtomiq.site](https://ztools.site).
 
 ### 🚀 About the Project
-ZTools is a comprehensive, privacy-first digital toolbox designed to provide high-quality utility tools for everyday
+AZtomiq is a comprehensive, privacy-first digital toolbox designed to provide high-quality utility tools for everyday
 tasks.
 
 - **Privacy-First**: All processing is done locally in your browser. Nothing is sent to our servers.

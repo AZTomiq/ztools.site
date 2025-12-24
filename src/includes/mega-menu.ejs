@@ -1,17 +1,12 @@
 <div class="dropdown-menu mega-menu">
   <div class="mega-sidebar">
     <div class="mega-sidebar-header">
-      <div class="sidebar-logo">
-        <span class="logo-text">zTools</span><span class="logo-dot">.</span>
-      </div>
+      <a href="<%= rootPath %><%= locale %>/" class="sidebar-logo logo-link">
+        <img src="<%= rootPath %>assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
+        <span class="logo-text">ZTools</span>
+      </a>
     </div>
     <div class="mega-sidebar-links">
-      <a href="<%= rootPath %><%= locale %>/" class="mega-side-link <%= pageUrl === '' ? 'active' : '' %>">
-        <span class="icon-wrap"><i data-lucide="home"></i></span>
-        <span class="link-text">
-          <%= t('nav.home') %>
-        </span>
-      </a>
       <a href="<%= rootPath %><%= locale %>/categories/"
         class="mega-side-link <%= pageUrl === 'categories/' ? 'active' : '' %>">
         <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
@@ -35,9 +30,7 @@
       <a href="<%= rootPath %><%= locale %>/changelog/"
         class="mega-side-link <%= pageUrl === 'changelog/' ? 'active' : '' %>">
         <span class="icon-wrap"><i data-lucide="history"></i></span>
-        <span class="link-text">
-          <%= t('changelog.title') || 'Changelog' %>
-        </span>
+        <span class="link-text">Changelogs</span>
       </a>
     </div>
   </div>
@@ -78,10 +71,12 @@
                     <%= t(tool.translationKey + '.title' ) %>
                   </span>
                   <% if (tool.status==='not-ready' ) { %>
-                    <span class="menu-badge beta">BETA</span>
+                    <span class="tool-badge beta"
+                      style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     <% } else if (tool.highlight) { %>
-                      <span class="menu-badge hot" style="background: transparent; padding: 0;">
-                        <i data-lucide="sparkles" style="width: 12px; height: 12px; color: #f59e0b; fill: #f59e0b;"></i>
+                      <span class="tool-badge hot"
+                        style="font-size: 0.6rem; padding: 2px 6px; margin-left: auto; position: static; width: auto; transform: none; background: #fff7ed; color: #c2410c; border: 1px solid #fb923c; border-radius: 4px; display: flex; align-items: center; gap: 3px; font-weight: 700;">
+                        <i data-lucide="sparkles" style="width: 10px; height: 10px;"></i> HOT
                       </span>
                       <% } %>
                 </a>

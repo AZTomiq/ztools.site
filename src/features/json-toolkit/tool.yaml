@@ -7,3 +7,5 @@ status: active
 link: /json-toolkit/
 meta:
   version: 1.1.0
+mode: advanced
+tags: [json, dev, formatter, programming, data, web]

@@ -2,7 +2,15 @@ id: bmi
 category: daily
 icon: scale
 translationKey: bmi
-status: not-ready
+status: active
 link: /bmi/
 meta:
   version: 1.0.0
+keywords:
+  - bmi calculator
+  - tính bmi
+  - chỉ số khối cơ thể
+  - sức khỏe
+  - body mass index
+  - chuẩn châu á
+tags: [health, bmi, fitness, weight, daily]

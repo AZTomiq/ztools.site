@@ -70,6 +70,23 @@ document.addEventListener('DOMContentLoaded', function () {
     currentViewYear = now.getFullYear();
     renderMonthView(currentViewMonth, currentViewYear);
   });
+
+  // Modal Logic
+  const viewHoursBtn = document.getElementById('view-hours-btn');
+  const hoursModal = document.getElementById('lunar-hours-modal');
+  const closeHoursModal = document.getElementById('close-hours-modal');
+  const closeHoursOverlay = document.getElementById('close-hours-overlay');
+
+  if (viewHoursBtn && hoursModal) {
+    viewHoursBtn.addEventListener('click', () => {
+      hoursModal.style.display = 'flex';
+      displayGoodHours(currentSelectedDate.getDate(), currentSelectedDate.getMonth() + 1, currentSelectedDate.getFullYear());
+    });
+  }
+
+  const hideModal = () => { if (hoursModal) hoursModal.style.display = 'none'; };
+  if (closeHoursModal) closeHoursModal.addEventListener('click', hideModal);
+  if (closeHoursOverlay) closeHoursOverlay.addEventListener('click', hideModal);
 });
 
 let currentSelectedDate = new Date();
@@ -129,17 +146,34 @@ function displayTodayLunar(dd, mm, yy) {
 function displayGoodHours(dd, mm, yy) {
   const jd = jdFromDate(dd, mm, yy);
   const goodHours = getGoodHours(jd);
-  const hoursContainer = document.getElementById('good-hours-list');
-  if (!hoursContainer) return;
+  const modalContainer = document.getElementById('modal-good-hours-list');
+  const sideContainer = document.getElementById('side-good-hours-list');
 
-  hoursContainer.innerHTML = '';
+  if (!modalContainer && !sideContainer) return;
+
+  const ranges = [
+    '23:00 - 01:00', '01:00 - 03:00', '03:00 - 05:00', '05:00 - 07:00',
+    '07:00 - 09:00', '09:00 - 11:00', '11:00 - 13:00', '13:00 - 15:00',
+    '15:00 - 17:00', '17:00 - 19:00', '19:00 - 21:00', '21:00 - 23:00'
+  ];
+
+  const content = [];
   for (let i = 0; i < 12; i++) {
     const isGood = goodHours.includes(i);
-    const hourDiv = document.createElement('div');
-    hourDiv.className = `hour-item ${isGood ? 'good' : 'bad'}`;
-    hourDiv.innerHTML = `<span class="hour-chi">${CHI[i]}</span><span class="hour-status">${isGood ? '✓' : '✗'}</span>`;
-    hoursContainer.appendChild(hourDiv);
+    const label = isGood ? 'Hoàng Đạo' : 'Hắc Đạo';
+    content.push(`
+      <div class="hour-item ${isGood ? 'good' : 'bad'}">
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span class="hour-chi">Giờ ${CHI[i]}</span>
+          <span class="hour-range">${ranges[i]}</span>
+        </div>
+        <span class="hour-status">${label}</span>
+      </div>
+    `);
   }
+
+  if (modalContainer) modalContainer.innerHTML = content.join('');
+  if (sideContainer) sideContainer.innerHTML = content.join('');
 }
 
 function handleDateConversion() {

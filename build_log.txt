@@ -1,0 +1,67 @@
+
+> ztools-site@1.5.1 build:dev
+> node bin/ztools.js build
+
+🚀 Starting build (Secure Mode: OFF)...
+📝 Building Playground Examples: 16.356ms
+🎨 Assets Build: 61.379ms
+❌ Error building page /Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs: SyntaxError: /Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs:201
+    199|             <% }); %>
+    200| 
+ >> 201|               <%- include('cloud-tags.ejs') %>
+    202| 
+    203|                 <script src="<%= asset('assets/js/home.js') %>"></script>
+    204| 
+
+Unexpected token ')' in /Volumes/FlexibleWorkplace/side-pr/ztools.site/src/includes/cloud-tags.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:673:12)
+    at Object.compile (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:398:16)
+    at handleCache (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:235:18)
+    at includeFile (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:323:10)
+    at include (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:701:16)
+    at eval ("/Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs":168:17)
+    at index (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:703:17)
+    at exports.render (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:425:37)
+    at buildPage (/Volumes/FlexibleWorkplace/side-pr/ztools.site/scripts/builds/pages.js:151:30) {
+  path: '/Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs'
+}
+❌ Error building page /Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs: SyntaxError: /Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs:201
+    199|             <% }); %>
+    200| 
+ >> 201|               <%- include('cloud-tags.ejs') %>
+    202| 
+    203|                 <script src="<%= asset('assets/js/home.js') %>"></script>
+    204| 
+
+Unexpected token ')' in /Volumes/FlexibleWorkplace/side-pr/ztools.site/src/includes/cloud-tags.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:673:12)
+    at Object.compile (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:398:16)
+    at handleCache (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:235:18)
+    at includeFile (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:323:10)
+    at include (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:701:16)
+    at eval ("/Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs":168:17)
+    at index (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:703:17)
+    at exports.render (/Volumes/FlexibleWorkplace/side-pr/ztools.site/node_modules/ejs/lib/ejs.js:425:37)
+    at buildPage (/Volumes/FlexibleWorkplace/side-pr/ztools.site/scripts/builds/pages.js:151:30) {
+  path: '/Volumes/FlexibleWorkplace/side-pr/ztools.site/src/pages/index.ejs'
+}
+📄 Pages Build: 384.643ms
+📄 Created root redirect index.html
+📄 Generated: manifest.json
+📄 Generated: readme-dist.md
+📄 Generated: robots.txt
+📄 Generated: sitemap.xml
+📄 Generated: sw.js
+📝 Templates Build: 4.833ms
+✅ Build complete!
+🚀 Build Duration: 463.01ms

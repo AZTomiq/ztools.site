@@ -1,17 +1,17 @@
-<!-- title: <%= t('tax.title') %> - ZTools -->
+<!-- title: <%= t('tax.title') %> - AZtomiq -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
   <%- include('legacy-banner') %>
     <div class="page-header">
-      <h1>💸 <%= t('tax.title') %>
-
-          <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-            <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version
-                %>
-            </button>
-            <% } %>
-      </h1>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+        <h1 style="margin-bottom: 0;">💸 <%= t('tax.title') %>
+        </h1>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+      </div>
       <p>
         <%= t('tax.desc') %>
       </p>

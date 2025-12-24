@@ -4,6 +4,18 @@ const yaml = require('js-yaml');
 const { paths } = require('./config');
 const { parseFrontmatter } = require('./utils');
 
+function deepMerge(target, source) {
+  for (const key in source) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      if (!target[key]) target[key] = {};
+      deepMerge(target[key], source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+
 // Load Global Config
 let GLOBAL_CONFIG = {
   build: { locales: ['vi', 'en'], default_locale: 'vi' },
@@ -66,7 +78,7 @@ function loadLocales(lang) {
       if (fs.existsSync(localePath)) {
         try {
           const content = yaml.load(fs.readFileSync(localePath, 'utf8'));
-          Object.assign(translations, content);
+          deepMerge(translations, content);
         } catch (e) {
           console.error(`Error loading feature locale ${feature}/${lang}.yaml`, e);
         }

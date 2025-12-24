@@ -1,0 +1,32 @@
+<div class="chart-container">
+  <div class="sidebar">
+    <h3>Data Config</h3>
+    <div class="input-group">
+      <label>Chart Title</label>
+      <input type="text" id="chart-title" value="My Awesome Statistics">
+    </div>
+    <div class="input-group">
+      <label>Chart Type</label>
+      <select id="chart-type">
+        <option value="bar">Bar Chart</option>
+        <option value="line">Line Chart</option>
+        <option value="pie">Pie Chart</option>
+        <option value="doughnut">Doughnut</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Data (Label:Value per line)</label>
+      <textarea id="chart-data" spellcheck="false">Apples:45
+Oranges:32
+Bananas:60
+Berries:15
+Melons:25</textarea>
+    </div>
+  </div>
+  <div class="chart-view">
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+
+<!-- Load Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

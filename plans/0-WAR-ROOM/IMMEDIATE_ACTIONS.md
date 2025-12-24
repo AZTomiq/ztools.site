@@ -14,22 +14,24 @@ _No critical bugs currently identified._
 
 ## 🎯 HIGH PRIORITY (This Week)
 
-### 1. **Testing Infrastructure Setup** (In Progress)
+### 1. **Testing Infrastructure & DX Core** (Completed)
 
-**Ref**: `plans/in-progress/testing.md`
-**Priority**: HIGH - Prevent regressions
+**Ref**: `bin/ztools.js`, `DEVELOPMENT.md`
+**Priority**: HIGH - Prevent regressions & Speed up scaffolding
 
-- [ ] Create `tests/integrity.test.js` (Check if broken logic is fixed)
-- [ ] Create `tests/locales.test.js` (Verify missing keys again)
-- [ ] Implement `npm test` command
+- [x] Create `tests/integrity.test.js` (Check if broken logic is fixed)
+- [x] Create `tests/locales.test.js` (Verify missing keys again)
+- [x] Implement `npm test` command
+- [x] **ZTools CLI**: Implement `ztools status`, `analyze`, `cleanup`, `version`, and `tool:create` scaffolding.
+- [x] **Framework Portability**: Standardized `bin/` structure for easier core migration.
 
 ### 2. **SEO Enhancements - Schema & Content**
 
 **Ref**: `plans/in-progress/SEO.plan.md`
 
-- [ ] Add Schema.org markup (SoftwareApplication) to top 10 tools
-- [ ] Verify Open Graph images for shared links
-- [ ] Enrich content for: Tax Calculator, BMI, Loan Calculator
+- [x] Add Schema.org markup (SoftwareApplication) to top 10 tools
+- [x] Verify Open Graph images for shared links
+- [x] Enrich content for: Tax Calculator, BMI, Loan Calculator
 
 ### 3. **User Mode System - Deep Integration**
 
@@ -38,8 +40,8 @@ _No critical bugs currently identified._
 - [x] Mega Menu badges (Beta/Hot) - **Completed v1.5.0**
 - [x] UI Standardization (Sparkles Icon, Layouts) - **Completed v1.5.1**
 - [x] Bookmark Creator Polish (Masonry, Toggles) - **Completed v1.5.1**
-- [ ] Add mode toggle logic to individual tools (Standard vs Advanced)
-- [ ] Implement filtered view in Homepage based on mode
+- [x] Add mode toggle logic to individual tools (Standard vs Advanced)
+- [x] Implement filtered view in Homepage based on mode
 
 ---
 
@@ -49,13 +51,28 @@ _No critical bugs currently identified._
 
 - [x] IDE Master Toolbar - **Completed v1.5.0**
 - [x] Advanced Todo Master - **Completed v1.5.0**
-- [ ] Add "Mindmap Creator" example
-- [ ] Add "Chart Visualizer" example
+- [x] Add "Mindmap Creator" example (LR Layout + Curly Lines) - **v1.5.1**
+- [x] Add "Chart Visualizer" example (Chart.js Integration) - **v1.5.1**
 
 ### 5. **Theme System Polish**
 
 - [ ] Refine Dark Mode colors for better contrast
 - [ ] Standardize consistent spacing variables
+- [ ] **Advanced Theme System**: Detailed plan in `plans/2-STRATEGY/STRATEGIC_NOTES.md#3`
+
+### 6. **New Core Features (ZTools v1.6.0)**
+
+- [ ] **Favorite Tools**: Add "Star" button to tools. Keep favorites at Top of Home.
+- [ ] **Tool Request**: Add "Request a Tool" form to Footer/Header.
+- [ ] **Result Sharing**: Create secret link for tool results (JSON/Tax).
+- [ ] **PWA Install**: Add "Install App" popup for Mobile browsers.
+- [ ] **Tool Breadcrumbs**: Add "Home > Category > Tool" links inside pages.
+
+### 7. **Tool Expansion Roadmap**
+
+- [ ] **Dev Tools**: Add URL Encoder/Decoder, Base64 Converter.
+- [ ] **Image Tools**: Add "Convert WebP to PNG/JPG" simple tool.
+- [ ] **PDF Tools**: Basic PDF Split/Merge tool intro.
 
 ---
 
@@ -70,10 +87,11 @@ _No critical bugs currently identified._
 
 ### Current Status (2025-12-23)
 
-- **Active Tools**: 40/334 (12%)
+- **Active Tools**: 42/334 (12%)
 - **Lighthouse**: ~95 (Need re-check after UI updates)
-- **Test Coverage**: ~10% (Manual testing mostly)
-- **Translation Coverage**: 100% (Fixed in v1.5.0)
+- **Framework Health**: 100% (Verfied via `ztools status`)
+- **Test Coverage**: ~35% (Automated integrity & locale checks + 21 feature tests)
+- **Translation Coverage**: 100% (Atomic YAML system in place)
 
 ### Targets (End of Month)
 

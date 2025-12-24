@@ -2,9 +2,10 @@ id: jwt-toolkit
 link: /jwt-toolkit/
 icon: key
 category: dev
-status: not-ready
+status: active
 translationKey: jwt
 meta:
   version: 1.0.0
   author: ph4n4n
   description: Decode and inspect JSON Web Tokens (JWT) locally in your browser.
+mode: advanced

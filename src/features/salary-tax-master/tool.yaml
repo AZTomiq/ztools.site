@@ -6,7 +6,8 @@ description: >-
 icon: wallet
 highlight: false
 category: job
-status: not-ready
+status: active
 translationKey: salaryTaxMaster
 link: /salary-tax-master/
 mode: advanced
+tags: [salary, tax, master, finance, vietnam, income, business]

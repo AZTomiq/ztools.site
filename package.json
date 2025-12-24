@@ -3,19 +3,24 @@
   "version": "1.5.1",
   "description": "zTools - Multi-tool utility site with secure, fast, and modern UI",
   "main": "scripts/build.js",
+  "bin": {
+    "aztomiq": "bin/aztomiq.js"
+  },
   "scripts": {
-    "test": "npm run test:integrity && npm run test:feature && npm run test:build",
-    "test:integrity": "node tests/integrity.js",
+    "aztomiq": "node bin/aztomiq.js",
+    "test": "npm run test:integrity && npm run test:locales && npm run test:feature && npm run test:build",
+    "test:integrity": "vitest run tests/integrity.test.js",
+    "test:locales": "vitest run tests/locales.test.js",
     "test:feature": "vitest run tests/feature",
     "test:build": "vitest run tests/build",
-    "test:ui": "node scripts/ui-test.js",
+    "test:ui": "node bin/aztomiq.js test ui",
     "test:ui:vi": "node scripts/ui-test.js --lang=vi",
     "test:ui:en": "node scripts/ui-test.js --lang=en",
-    "build:dev": "node scripts/build.js",
-    "build:force": "node scripts/build.js --force",
-    "build": "node scripts/build.js --obfuscate",
-    "dev": "node scripts/build.js && node server.js",
-    "deploy": "node scripts/deploy.js"
+    "build:dev": "node bin/aztomiq.js build",
+    "build:force": "node bin/aztomiq.js build --force",
+    "build": "node bin/aztomiq.js build --obfuscate",
+    "dev": "node bin/aztomiq.js dev",
+    "deploy": "node bin/aztomiq.js deploy"
   },
   "keywords": [
     "tools",

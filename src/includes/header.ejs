@@ -1,17 +1,16 @@
 <header class="site-header">
   <div class="header-inner container">
     <div class="nav-item logo-wrapper">
-      <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false"
-        aria-label="<%= locale === 'vi' ? 'Menu danh mục công cụ' : 'Tool categories menu' %>"
-        style="background: none; border: none; padding: 0; cursor: pointer;">
-        <img src="<%= rootPath %>assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="32" height="32">
-        <span class="logo-text">ZTools</span>
-        <% if (category) { %>
-          <span class="logo-sub hide-mobile">
-            <%= category %>
-          </span>
-          <% } %>
+      <a href="<%= rootPath %><%= locale %>/" class="logo-link">
+        <img src="<%= rootPath %>assets/images/logo.svg" alt="AZtomiq Logo" class="logo-icon" width="28" height="28">
+        <span class="logo-text">AZtomiq</span>
+      </a>
+
+      <button class="menu-trigger dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Tools Menu"
+        style="background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; margin-left: 5px;">
+        <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted); opacity: 0.6;"></i>
       </button>
+
 
       <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
         <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="nav-link-prominent"

@@ -1,17 +1,19 @@
-<% var websiteSchema={ "@context" : "https://schema.org" , "@type" : "WebSite" , "name" : "ZTools" , "url" :
-  global.site.url, "description" : t('meta.description'), "inLanguage" : locale==='vi' ? 'vi-VN' : 'en-US' , "author" :
-  { "@type" : "Person" , "name" : global.site.author } }; var toolSchema=null; if (typeof toolConfig !=='undefined' &&
-  toolConfig.id) { toolSchema={ "@context" : "https://schema.org" , "@type" : "WebApplication" , "name" :
+<% var baseUrl=global.site.url; var currentUrl=baseUrl + '/' + locale + '/' + (pageUrl || '' ); /* 1. WebSite Schema */
+  var websiteSchema={ "@context" : "https://schema.org" , "@type" : "WebSite" , "name" : "ZTools" , "url" :
+  baseUrl, "description" : t('meta.description'), "inLanguage" : locale==='vi' ? 'vi-VN' : 'en-US' , "author" :
+  { "@type" : "Person" , "name" : global.site.author } }; /* 2. Breadcrumb Schema */ var breadcrumbSchema={ "@context"
+  : "https://schema.org" , "@type" : "BreadcrumbList" , "itemListElement" : [ { "@type" : "ListItem" , "position" :
+  1, "name" : "Home" , "item" : baseUrl + '/' + locale + '/' } ] }; if (toolConfig && toolConfig.id) {
+  breadcrumbSchema.itemListElement.push({ "@type" : "ListItem" , "position" : 2, "name" : t(toolConfig.translationKey
+  + '.title' ), "item" : currentUrl }); } /* 3. Application Schema */ var appSchema=null; if (toolConfig &&
+  toolConfig.id) { appSchema={ "@context" : "https://schema.org" , "@type" : "WebApplication" , "name" :
   t(toolConfig.translationKey + '.title' ), "description" : t(toolConfig.translationKey + '.desc' ), "url" :
-  global.site.url + '/' + locale + '/' + toolConfig.id + '/' , "applicationCategory" : "UtilityApplication"
-  , "operatingSystem" : "Any" , "offers" : { "@type" : "Offer" , "price" : "0" , "priceCurrency" : "USD" }, "author" :
-  { "@type" : "Person" , "name" : global.site.author }, "inLanguage" : locale==='vi' ? 'vi-VN' : 'en-US' }; } var
-  breadcrumbSchema={ "@context" : "https://schema.org" , "@type" : "BreadcrumbList" , "itemListElement" : [ { "@type"
-  : "ListItem" , "position" : 1, "name" : "Home" , "item" : global.site.url + '/' + locale + '/' } ] }; if (typeof
-  toolConfig !=='undefined' && toolConfig.id) { breadcrumbSchema.itemListElement.push({ "@type" : "ListItem"
-  , "position" : 2, "name" : t(toolConfig.translationKey + '.title' ), "item" : global.site.url + '/' + locale + '/' +
-  toolConfig.id + '/' }); } var allSchemas=[websiteSchema, breadcrumbSchema]; if (toolSchema) {
-  allSchemas.push(toolSchema); } %>
+  currentUrl, "applicationCategory" : "UtilityApplication" , "operatingSystem" : "Any" , "browserRequirements"
+  : "Requires JavaScript. Works on all modern browsers (Chrome, Firefox, Safari, Edge)." , "softwareVersion" :
+  toolConfig.meta ? toolConfig.meta.version : "1.0.0" , "offers" : { "@type" : "Offer" , "price" : "0" , "priceCurrency"
+  : "USD" }, "author" : { "@type" : "Person" , "name" : global.site.author }, "inLanguage" : locale==='vi' ? 'vi-VN'
+  : 'en-US' }; if (toolConfig && toolConfig.icon) { appSchema.image=baseUrl + '/assets/images/logo.svg' ; } } var
+  allSchemas=[websiteSchema, breadcrumbSchema]; if (appSchema) allSchemas.push(appSchema); %>
 
   <script type="application/ld+json">
 <%- JSON.stringify(allSchemas, null, 2) %>

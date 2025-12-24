@@ -5,6 +5,7 @@ description: >-
   thi.
 icon: terminal
 category: dev
-status: not-ready
+status: active
 translationKey: cronParser
 link: /cron-parser/
+mode: advanced

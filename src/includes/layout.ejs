@@ -13,17 +13,18 @@
         <% } %>
 
           <main class="<%= (typeof toolConfig !== 'undefined' && toolConfig.hideStandardHeader) ? '' : 'container' %>">
-            <%- body %>
+            <%- include('breadcrumbs.ejs') %>
+              <%- body %>
 
-              <% if (typeof howToUseHtml !=='undefined' && howToUseHtml) { %>
-                <section class="card how-to-use-section" style="margin-top: 3rem;">
-                  <h2 style="margin-bottom: 1rem;">📖 <%= t('nav.how_to_use') || 'How to use' %>
-                  </h2>
-                  <div class="markdown-body">
-                    <%- howToUseHtml %>
-                  </div>
-                </section>
-                <% } %>
+                <% if (typeof howToUseHtml !=='undefined' && howToUseHtml) { %>
+                  <section class="card how-to-use-section" style="margin-top: 3rem;">
+                    <h2 style="margin-bottom: 1rem;">📖 <%= t('nav.how_to_use') || 'How to use' %>
+                    </h2>
+                    <div class="markdown-body">
+                      <%- howToUseHtml %>
+                    </div>
+                  </section>
+                  <% } %>
           </main>
 
           <% if (!(typeof toolConfig !=='undefined' && toolConfig.hideStandardHeader)) { %>
