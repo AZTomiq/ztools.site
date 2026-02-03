@@ -3,6 +3,50 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/blog/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://blog.ph4n4n.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/roadmap/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://roadmap.ph4n4n.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.ph4n4n.xyz"
+        }
+      ],
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/roadmap/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "roadmap.ph4n4n.xyz"
+        }
+      ],
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
       "source": "/web-playground/:path*",
       "has": [
         {
@@ -222,6 +266,46 @@
         }
       ],
       "destination": "/lunar-calendar/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.ph4n4n.xyz"
+        }
+      ],
+      "destination": "/en/blog/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.ph4n4n.xyz"
+        }
+      ],
+      "destination": "/blog/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "roadmap.ph4n4n.xyz"
+        }
+      ],
+      "destination": "/en/roadmap/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "roadmap.ph4n4n.xyz"
+        }
+      ],
+      "destination": "/roadmap/:path*"
     }
   ]
 }
