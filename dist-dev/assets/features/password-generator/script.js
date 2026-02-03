@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const results = generatePasswordsLogic(options);
     const output = document.getElementById('password-output');
     if (output) {
-      output.value = results.join('\n');
-      output.rows = Math.min(Math.max(options.quantity, 1), 10);
+      // FIX: Use double newline for clearer separation
+      output.value = results.join('\n\n');
+      output.rows = Math.min(Math.max(options.quantity * 2, 2), 15);
     }
 
     if (results.length > 0) {
@@ -77,6 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function generatePasswordsLogic(options) {
   const { length, quantity, useUpper, useLower, useNumbers, useSymbols, excludeAmbiguous, easySay } = options;
+
+  // FIX: Force numbers and symbols OFF when easySay is enabled
   const includeNumbers = easySay ? false : useNumbers;
   const includeSymbols = easySay ? false : useSymbols;
 

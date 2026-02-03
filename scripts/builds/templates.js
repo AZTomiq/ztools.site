@@ -38,6 +38,7 @@ async function buildTemplates() {
 
       const data = {
         global: GLOBAL_CONFIG,
+        siteGlobal: GLOBAL_CONFIG,
         site: GLOBAL_CONFIG.site,
         tools: TOOLS,
         locales: LOCALES,
@@ -63,8 +64,13 @@ async function buildTemplates() {
 }
 
 async function createRootRedirect() {
+  const rootIndex = path.join(paths.DIST, 'index.html');
+  if (fs.existsSync(rootIndex)) {
+    console.log('📄 Root index.html already exists, skipping redirect creation.');
+    return;
+  }
   const entry = GLOBAL_CONFIG.build.entry_point === 'blog' ? 'blog/' : '';
-  const redirectUrl = `/${DEFAULT_LOCALE}/${entry}`;
+  const redirectUrl = `/${DEFAULT_LOCALE === 'vi' ? '' : DEFAULT_LOCALE + '/'}${entry}`;
 
   const html = `<!DOCTYPE html>
 <html lang="${DEFAULT_LOCALE}">
@@ -86,7 +92,7 @@ async function createRootRedirect() {
 async function copyRootFiles() {
   // Logic to copy files from ROOT to DIST if they exist and changed
   // e.g. manual robots.txt override
-  const files = ['manifest.json', 'sw.js', 'robots.txt', 'sitemap.xml'];
+  const files = ['manifest.json', 'sw.js', 'robots.txt', 'sitemap.xml', 'vercel.json'];
   for (const file of files) {
     const srcPath = path.join(paths.ROOT, file);
     if (fs.existsSync(srcPath)) {

@@ -25,19 +25,28 @@
 <!-- Embed i18n data for client-side JS -->
 <script id="i18n-data" type="application/json">
   {
-    "search_no_results": "<%= t('nav.search_no_results') %>"
+    "search_no_results": "<%= t('nav.search_no_results') %>",
+    "feedback_success": "<%= t('footer.feedback.success') %>",
+    "feedback_error": "<%= t('footer.feedback.error') %>",
+    "msg_starred": "<%= t('msg.starred') %>",
+    "msg_unstarred": "<%= t('msg.unstarred') %>",
+    "msg_history_cleared": "<%= t('msg.history_cleared') %>",
+    "subdomains": <%- JSON.stringify(siteGlobal.subdomains || []) %>,
+    "mainDomain": "<%= siteGlobal.site.url.replace('https://', '') %>"
   }
 </script>
 
 <!-- Embed tools data for client-side search -->
 <script id="tools-data" type="application/json">
   <% const translate = t; %>
-  <%- JSON.stringify(tools.filter(t => t.status === 'active' || t.status === 'not-ready' || t.status === 'legacy').map(tool => ({ 
-    id: tool.id, 
-    link: rootPath + locale + tool.link, 
-    icon: tool.icon, 
-    title: translate(tool.translationKey + '.title'),
-    desc: translate(tool.translationKey + '.desc'),
-    category: translate('home.cats.' + tool.category + '.title')
-  }))) %>
+  <%- JSON.stringify(tools.filter(t => t.status === 'active' || t.status === 'not-ready' || t.status === 'legacy').map(tool => {
+    return { 
+      id: tool.id, 
+      link: rootPath + (locale === 'vi' ? '' : 'en/') + tool.link.substring(1),
+      icon: tool.icon, 
+      title: translate(tool.translationKey + '.title'),
+      desc: translate(tool.translationKey + '.desc'),
+      category: translate('home.cats.' + tool.category + '.title')
+    };
+  })) %>
 </script>

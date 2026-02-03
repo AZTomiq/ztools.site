@@ -1,6 +1,6 @@
-# 🛠️ AZtomiq.site
+# 🛠️ ZTools.site
 
-**AZtomiq** is a collection of free, fast, and secure online utility tools designed for Vietnamese users. Built with a focus on privacy, performance, and user experience.
+**ZTools** is a collection of free, fast, and secure online utility tools designed for Vietnamese users. Built with a focus on privacy, performance, and user experience.
 
 ## 🌟 Features
 
@@ -23,7 +23,7 @@
 
 ## 🚀 Tech Stack
 
-- **Core Framework**: Built on [AZtomiq Core](https://github.com/ph4n4n/aztomiq)
+- **Core Framework**: Built on [AZtomiq Core](https://github.com/AZTomiq/aztomiq)
 - **Build System**: Custom Node.js build script with EJS templating
 - **Styling**: Vanilla CSS with CSS variables for theming
 - **JavaScript**: Vanilla JS (no frameworks)
@@ -138,13 +138,11 @@ The production build:
 The custom build script (`scripts/build.js`) performs:
 
 1. **Asset Processing**
-
    - Minifies all CSS files
    - Minifies/obfuscates JavaScript files
    - Copies to `dist/assets/`
 
 2. **Page Generation**
-
    - Renders EJS templates for both `vi` and `en` locales
    - Injects translations using `t()` helper
    - Generates clean URLs (e.g., `/vi/tax/` instead of `/vi/tax.html`)

@@ -15,10 +15,17 @@ document.addEventListener('DOMContentLoaded', function () {
   currencyInputs.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
+      el.addEventListener('focus', (e) => {
+        e.target.select();
+      });
+
       el.addEventListener('input', (e) => {
         let val = e.target.value.replace(/\D/g, '');
         if (val) {
-          e.target.value = parseInt(val, 10).toLocaleString('vi-VN');
+          const formatted = parseInt(val, 10).toLocaleString('vi-VN');
+          if (e.target.value !== formatted) {
+            e.target.value = formatted;
+          }
         }
       });
     }
@@ -38,8 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      const result = calculateCompoundInterest(initial, rate, years, contribution, frequency);
-      updateDisplay(result);
+      // Use the logic from logic.js (loaded in index.ejs)
+      if (typeof calculateCompoundInterest === 'function') {
+        const result = calculateCompoundInterest(initial, rate, years, contribution, frequency);
+        updateDisplay(result);
+      } else {
+        console.error('calculateCompoundInterest function not found. logic.js might not be loaded.');
+      }
     });
   }
 
@@ -83,41 +95,3 @@ document.addEventListener('DOMContentLoaded', function () {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
   }
 });
-
-function calculateCompoundInterest(initial, rate, years, contribution, frequency) {
-  let currentBalance = initial;
-  let totalContributed = initial;
-  let totalInterest = 0;
-
-  const totalMonths = years * 12;
-  const monthsPerCompound = 12 / frequency;
-  const breakdownData = [];
-
-  for (let m = 1; m <= totalMonths; m++) {
-    currentBalance += contribution;
-    totalContributed += contribution;
-
-    if (m % monthsPerCompound === 0) {
-      const periodicRate = (rate / 100) / frequency;
-      const interest = currentBalance * periodicRate;
-      currentBalance += interest;
-      totalInterest += interest;
-    }
-
-    if (m % 12 === 0) {
-      breakdownData.push({
-        year: m / 12,
-        balance: currentBalance,
-        interest: totalInterest,
-        contributed: totalContributed
-      });
-    }
-  }
-
-  return { currentBalance, totalContributed, totalInterest, breakdownData };
-}
-
-// Export for Node.js testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { calculateCompoundInterest };
-}

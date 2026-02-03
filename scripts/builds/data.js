@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
+const { marked } = require('marked');
 const { paths } = require('./config');
 const { parseFrontmatter } = require('./utils');
 
@@ -17,21 +18,33 @@ function deepMerge(target, source) {
 }
 
 // Load Global Config
-let GLOBAL_CONFIG = {
+const GLOBAL_CONFIG = {
   build: { locales: ['vi', 'en'], default_locale: 'vi' },
   site: {},
   categories: {},
-  category_order: []
+  category_order: [],
+  subdomains: []
 };
 
 const globalConfigPath = path.join(paths.SRC, 'data', 'global.yaml');
+const subdomainConfigPath = path.join(paths.SRC, 'data', 'subdomains.yaml');
+
 if (fs.existsSync(globalConfigPath)) {
   try {
     const yamlContent = fs.readFileSync(globalConfigPath, 'utf8');
     const parsed = yaml.load(yamlContent);
-    GLOBAL_CONFIG = { ...GLOBAL_CONFIG, ...parsed };
+    Object.assign(GLOBAL_CONFIG, parsed);
   } catch (e) {
     console.error('⚠️ Could not load global.yaml:', e);
+  }
+}
+
+if (fs.existsSync(subdomainConfigPath)) {
+  try {
+    const subdomains = yaml.load(fs.readFileSync(subdomainConfigPath, 'utf8'));
+    GLOBAL_CONFIG.subdomains = subdomains.subdomains || [];
+  } catch (e) {
+    console.error('⚠️ Could not load subdomains.yaml:', e);
   }
 }
 
@@ -106,6 +119,20 @@ if (fs.existsSync(featuresDir)) {
         const config = yaml.load(fs.readFileSync(configPath, 'utf8'));
         if (!config.id) config.id = feature;
         if (!config.link) config.link = `/${feature}/`;
+
+        // Scan for assets
+        const featureDir = path.join(featuresDir, feature);
+        const assets = fs.readdirSync(featureDir).filter(f => f.endsWith('.js') || f.endsWith('.css'));
+        config._assets_list = assets;
+
+        // Check for specific domain mapping
+        if (GLOBAL_CONFIG.subdomains) {
+          const sub = GLOBAL_CONFIG.subdomains.find(s => s.path === config.link);
+          if (sub) {
+            config.domain = sub.domain;
+          }
+        }
+
         TOOLS.push(config);
       } catch (e) {
         console.error(`❌ Error parsing ${feature}/tool.yaml:`, e);
@@ -161,23 +188,64 @@ function getFeatureConfig(filePath) {
   return null;
 }
 
-function getBlogPosts() {
+function getBlogPosts(targetLocale) {
   const postsDir = path.join(paths.SRC, 'features/blog/posts');
   if (!fs.existsSync(postsDir)) return [];
 
   const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.md'));
-  const posts = [];
 
-  files.forEach(file => {
-    const content = fs.readFileSync(path.join(postsDir, file), 'utf-8');
+  // Group files by base name (slug)
+  const groups = {};
+  files.forEach(f => {
+    const name = f.replace(/\.md$/, '');
+    const parts = name.split('.');
+
+    let slug = name;
+    let fileLocale = 'default';
+
+    if (parts.length > 1) {
+      const possibleLocale = parts[parts.length - 1];
+      if (['en', 'vi'].includes(possibleLocale)) {
+        fileLocale = possibleLocale;
+        slug = parts.slice(0, -1).join('.');
+      }
+    }
+
+    if (!groups[slug]) groups[slug] = {};
+    groups[slug][fileLocale] = f;
+  });
+
+  const posts = [];
+  for (const slug in groups) {
+    const group = groups[slug];
+    // Version selection: requested locale > default (default usually means .md)
+    const finalFile = group[targetLocale] || group['default'];
+    if (!finalFile) continue;
+
+    const content = fs.readFileSync(path.join(postsDir, finalFile), 'utf-8');
     const { attributes, body } = parseFrontmatter(content);
-    if (!attributes.slug) attributes.slug = file.replace('.md', '');
+    if (!attributes.slug) attributes.slug = slug;
+
+    // Tag the post with its actual locale (for UI hints)
+    attributes.locale = group[targetLocale] ? targetLocale : (group['default'] ? 'default' : 'unknown');
+
+    // Format date if it's a valid date string
+    let displayDate = attributes.date || '';
+    if (displayDate) {
+      try {
+        const d = new Date(displayDate);
+        if (!isNaN(d.getTime())) {
+          displayDate = d.toLocaleDateString('en-CA'); // YYYY-MM-DD
+        }
+      } catch (e) { }
+    }
 
     posts.push({
       ...attributes,
-      body: body
+      date: displayDate,
+      body: marked.parse(body)
     });
-  });
+  }
 
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }

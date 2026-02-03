@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const wordCounter = require('../../src/features/word-counter/script.js');
+const wordCounter = require('../../src/features/word-counter/logic.js');
 
 describe('Word Counter & Case Conversion Logic', () => {
   describe('Text Analysis (getTextStats)', () => {

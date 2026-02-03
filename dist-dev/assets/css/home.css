@@ -20,6 +20,29 @@
   transition: all 0.3s ease;
 }
 
+.tools-grid-horizontal {
+  display: flex;
+  gap: var(--s-5);
+  overflow-x: auto;
+  padding: var(--s-2) 0 var(--s-5) 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
+}
+
+.tools-grid-horizontal::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tools-grid-horizontal::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.tools-grid-horizontal .tool-card-wrapper {
+  min-width: 280px;
+  flex-shrink: 0;
+}
+
 /* Base Tool Card Structure */
 .tool-card {
   position: relative;
@@ -90,7 +113,7 @@
 }
 
 /* Kill borders/backgrounds ONLY for the logo and trigger button, NOT the menu content */
-.logo-link, 
+.logo-link,
 .menu-trigger {
   border: none !important;
   background: none !important;
@@ -111,7 +134,7 @@
 .logo-link {
   display: flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
   text-decoration: none !important;
   color: inherit !important;
 }
@@ -124,7 +147,7 @@
 .logo-link {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
   color: inherit;
   font-weight: 800;
@@ -148,7 +171,11 @@
 }
 
 .mega-sidebar .logo-text {
-  background: linear-gradient(135deg, var(--text-color), var(--primary-color)) !important;
+  background: linear-gradient(
+    135deg,
+    var(--text-color),
+    var(--primary-color)
+  ) !important;
   background-clip: text !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -160,6 +187,11 @@
   height: 28px;
   object-fit: contain;
   flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .logo-text {
@@ -327,11 +359,13 @@
 
 .tools-grid.list-view .tool-card p {
   text-align: left;
+  line-clamp: 1;
   -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .tools-grid.list-view .tool-badge-row {
-  display: none; 
+  display: none;
 }
 
 /* Hero & Search */
@@ -482,24 +516,22 @@
 
 /* Sleek Full Border Shimmer */
 .highlight-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   padding: 2px;
   /* Border thickness */
   border-radius: inherit;
-  background: linear-gradient(90deg,
-      transparent,
-      var(--primary-color),
-      #d8b4fe,
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary-color),
+    #d8b4fe,
+    transparent
+  );
   background-size: 200% 100%;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;

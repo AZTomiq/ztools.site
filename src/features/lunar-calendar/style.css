@@ -997,3 +997,44 @@ main.container {
     font-size: 0.65rem;
   }
 }
+/* Zodiac Summary Inline Styles */
+.zodiac-summary {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  text-align: left;
+}
+
+[data-theme="dark"] .zodiac-summary {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: #334155;
+}
+
+.zodiac-summary-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0d9488;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.zodiac-hours-list {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+[data-theme="dark"] .zodiac-hours-list {
+  color: #94a3b8;
+}
+
+/* Cleanup: Remove old modal buttons and styles */
+.btn-view-hours {
+  display: none !important;
+}

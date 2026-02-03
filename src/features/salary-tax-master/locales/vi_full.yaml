@@ -1,12 +1,12 @@
 tax:
   title: Tính thuế TNCN
-  desc: Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.
+  desc: Tính thuế thu nhập cá nhân 2026 mới nhất, hỗ trợ lương Net/Gross.
 business_tax:
   title: Tính thuế TNDN
   desc: Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.
   method:
     title: Chọn phương pháp tính thuế
-    detailed: 
+    detailed:
       label: 📊 Phương pháp chi tiết
       desc: Dành cho doanh nghiệp xác định rõ chi phí (Phổ biến)
     simple:
@@ -14,7 +14,7 @@ business_tax:
       desc: Tính theo % trên doanh thu (Không xác định được chi phí)
   detailed_form:
     title: Thông tin tính thuế chi tiết
-    revenue: 
+    revenue:
       label: Tổng doanh thu (VNĐ)
       hint: Tổng giá trị lợi ích kinh tế từ bán hàng, dịch vụ
     expenses:
@@ -120,7 +120,7 @@ freelancer_tax:
     household: Hộ kinh doanh cá thể (HKD)
   form:
     amount: Tổng số tiền doanh thu/hợp đồng
-    amount_ph: 'Ví dụ: 10,000,000'
+    amount_ph: "Ví dụ: 10,000,000"
     sector: Nhóm ngành nghề kinh doanh
     calculate: Tính thuế
   sectors:
@@ -141,7 +141,7 @@ ot:
   desc: Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất
   form:
     salary: Mức lương tháng (Gross)
-    salary_ph: 'Ví dụ: 15,000,000'
+    salary_ph: "Ví dụ: 15,000,000"
     working_days: Số ngày làm việc/tháng
     working_hours: Số giờ làm việc/ngày
     ot_hours: Số giờ tăng ca

@@ -10,7 +10,7 @@
         <%= t('nav.mode_advanced') || 'Advanced Mode' %>
       </strong>:
       <%= t('nav.mode_advanced_desc') %>
-        <a href="<%= rootPath %><%= locale %>/<%= masterId %>/" class="btn-link"
+        <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %><%= masterId %>/" class="btn-link"
           style="font-weight: bold; margin-left: 0.5rem; color: var(--primary-color);">
           <%= t('common.try_master') || 'Open Master Tool' %> →
         </a>

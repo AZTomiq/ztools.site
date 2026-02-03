@@ -1,4 +1,4 @@
-<!-- title: <%= t('bookmarkCreator.title') %> - AZtomiq -->
+<!-- title: <%= t('bookmarkCreator.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
@@ -46,8 +46,8 @@
   </div>
 
   <div class="bookmark-grid" id="bookmark-list">
-    <% const catOrder=global.category_order || ['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const
-      catMap=global.categories; catOrder.forEach(catId=> {
+    <% const catOrder=siteGlobal.category_order || ['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const
+      catMap=siteGlobal.categories; catOrder.forEach(catId=> {
       const catTools = tools.filter(t => t.category === catId && (t.status === 'active' || t.status === 'not-ready' ||
       t.status === 'legacy'));
       if (catTools.length === 0) return;

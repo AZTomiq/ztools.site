@@ -1,8 +1,8 @@
 meta:
-  title: AZtomiq - Bộ Công Cụ Tiện Ích Online Miễn Phí
+  title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
   description: Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.
 about:
-  title: Về AZtomiq
+  title: Về ZTools
 privacy:
   title: Chính Sách Bảo Mật
 terms:
@@ -27,6 +27,7 @@ nav:
   menu_categories: Danh mục
   menu_dev: Công cụ Lập trình
   blog: Dev ký sự
+  roadmap: Lộ trình (Skill Tree)
   search_placeholder: Tìm kiếm công cụ... (Ctrl + K)
   search_no_results: Không tìm thấy kết quả cho
   search_title: Tìm kiếm công cụ
@@ -37,6 +38,15 @@ nav:
   mode_advanced: Advanced
   mode_standard_desc: Chế độ Tiêu chuẩn (Đơn giản, tập trung)
   mode_advanced_desc: Chế độ Nâng cao (Đầy đủ, Master Tools)
+  select_identity: Định danh của bạn
+  who_are_you: Bạn là ai?
+  preferences: Tùy chỉnh
+  appearance: Giao diện
+  theme: Chủ đề
+  theme_dark: Chế độ tối
+  language: Ngôn ngữ
+  user_mode: Chế độ dùng
+  identity: Bạn là ai?
 home:
   hero_title: Small tools. Big help.
   hero_desc: Fast • Secure • Free
@@ -74,15 +84,58 @@ home:
       encoder: Encoder / Decoder
       generator: Generators
       tester: Testers & Formatters
+    memes:
+      title: DEV Memes
+      desc: Giải trí cho Developer
   sort:
     default: Mặc định
     az: Tên (A-Z)
     za: Tên (Z-A)
     recent: Vừa xem gần đây
     popular: Phổ biến nhất
+  recent: Vừa sử dụng
+  clear_history: Xóa lịch sử
   reset: Đặt lại
+  premium:
+    title: Hệ sinh thái công cụ chuyên biệt
+    desc: Trải nghiệm tối ưu với môi trường riêng biệt, tốc độ cao và giao diện chuyên nghiệp.
+    launch: Truy cập ngay
+  apple:
+    hero_headline: "zTools.\nCông cụ được thiết kế để suy nghĩ rõ hơn."
+    hero_subheadline: "Một hệ sinh thái công cụ tối giản — được tinh chỉnh cho tốc độ, độ chính xác và trải nghiệm mượt mà."
+    hero_explore: "Khám phá hệ sinh thái →"
+    philosophy_title: "Không phải nhiều hơn. Mà tốt hơn."
+    philosophy_body: "Mỗi công cụ trong zTools được xây dựng với một mục tiêu duy nhất: giảm độ phức tạp, tăng độ rõ ràng. Bạn tập trung vào tư duy — phần còn lại, chúng tôi lo."
+    story:
+      playground:
+        title: "zTool Playground"
+        subtitle: "Không gian thử nghiệm của bạn."
+        desc: "Viết. Chạy. Quan sát. Không setup, không ma sát, không phiền nhiễu. Chỉ bạn và ý tưởng của mình."
+      compound:
+        title: "Tính Lãi Kép"
+        subtitle: "Thời gian là đòn bẩy mạnh nhất."
+        desc: "Những con số không chỉ là dữ liệu. Chúng kể câu chuyện về kiên nhẫn, kỷ luật và tăng trưởng."
+      json:
+        title: "Bộ công cụ JSON"
+        subtitle: "Từ hỗn loạn đến trật tự."
+        desc: "Dữ liệu phức tạp trở nên dễ đọc. Một cú nhấn — mọi thứ ngay ngắn."
+      lunar:
+        title: "Xem Âm Lịch"
+        subtitle: "Nhịp điệu của thời gian."
+        desc: "Giữa thế giới số hóa, bạn vẫn có thể chạm vào truyền thống. Âm lịch, gọn gàng và hiện đại."
+      tax:
+        title: "Tính Thuế Thu Nhập"
+        subtitle: "Rõ ràng. Minh bạch. Đúng đắn."
+        desc: "Thuế không cần phức tạp. Nhập số liệu. Nhận kết quả. Hiểu ngay."
+    closing_headline: "zTools — công cụ, được thiết kế."
+    closing_subheadline: "Không ồn ào. Không phô trương. Chỉ đơn giản là hoạt động thật tốt."
+    closing_cta: "Trải nghiệm zTools"
+msg:
+  starred: "Đã thêm vào yêu thích"
+  unstarred: "Đã xóa khỏi yêu thích"
+  history_cleared: "Đã xóa lịch sử"
 footer:
-  about_title: AZtomiq.site
+  about_title: ZTools.site
   about_desc: Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
   links_title: Liên kết
   intro: Giới thiệu
@@ -90,6 +143,21 @@ footer:
   terms: Điều khoản
   changelog: Nhật ký cập nhật
   copyright: © 2025 AZtomiq. Built with ❤️.
+  feedback:
+    title: "Nhắn nhủ ZTools"
+    desc: "Chúng tôi luôn ở đây để lắng nghe! Bạn có điều gì muốn nhắn nhủ đến đội ngũ ZTools.site?"
+    slogan: "Những góp ý của bạn là động lực của chúng tôi! Xin chân thành cảm ơn!"
+    name: "Tên của bạn (không bắt buộc)"
+    email: "Email liên hệ (không bắt buộc)"
+    topic_label: "Bạn muốn nói về:"
+    topic_general: "Góp ý chung"
+    topic_new_tool: "Yêu cầu tool mới"
+    topic_bug: "Báo lỗi hệ thống"
+    topic_ui: "Góp ý giao diện"
+    message: "Nhập nội dung chi tiết..."
+    submit: "Gửi lời nhắn đến đội ngũ"
+    success: "Cảm ơn bạn đã nhắn nhủ! Ý kiến của bạn đã được gửi đến đội ngũ."
+    error: "Có lỗi xảy ra, vui lòng thử lại sau."
 
 # Master Tools Translations
 salaryTaxMaster:
@@ -156,3 +224,13 @@ bookmarkCreator:
     step1: Chọn các công cụ bạn muốn thêm vào bookmark
     step2: Nhấn nút "Xuất file Bookmark" để tải về
     step3: Nhập file vào trình duyệt (Chrome, Safari,...)
+
+blog:
+  title: Dev ký sự
+  desc: Chuyện hậu trường, kỹ thuật code và những cập nhật từ đội ngũ zTools.
+  hero_title: "Dev Diary & <br>Coding Tales"
+  back: Quay lại
+  more: Xem thêm bài viết
+  playground_promo_title: Thực hành ngay!
+  playground_promo_desc: Mã nguồn bài viết này đã có sẵn trên Web Playground để bạn vọc vạch.
+  playground_promo_btn: Mở Playground ➔

@@ -137,4 +137,28 @@ document.addEventListener('DOMContentLoaded', () => {
     a.click();
     URL.revokeObjectURL(url);
   }
+
+  // PATCH: Register missing emoji icons (from verified bug report)
+  if (window.lucide && window.lucide.icons) {
+    const iconMap = {
+      '🛠️': 'hammer',
+      '💰': 'coins',
+      '📝': 'file-text', // notepad/memo
+      '⚙️': 'settings',
+      '🗓️': 'calendar',
+      '💻': 'laptop',
+      '🐸': 'message-circle-question' // Fallback for frog
+    };
+
+    // Attempt to register mappings if target icon exists
+    Object.keys(iconMap).forEach(emoji => {
+      const targetName = iconMap[emoji];
+      if (window.lucide.icons[targetName]) {
+        window.lucide.icons[emoji] = window.lucide.icons[targetName];
+      }
+    });
+
+    // Re-scan incase icons are already in DOM
+    window.lucide.createIcons();
+  }
 });

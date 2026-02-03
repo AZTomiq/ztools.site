@@ -1,35 +1,38 @@
 <% const isHome=(typeof pageUrl==='undefined' || pageUrl==='' || pageUrl==='/' ); const hasValidConfig=typeof toolConfig
   !=='undefined' && (toolConfig.translationKey || toolConfig.defaultTitle); if (!isHome && hasValidConfig &&
-  !toolConfig.hideBreadcrumbs) { const catId=toolConfig.category; const cat=global.categories && catId ?
-  global.categories[catId] : null; const toolTitle=toolConfig.translationKey ? t(toolConfig.translationKey + '.title' )
-  : toolConfig.defaultTitle; %>
+  !toolConfig.hideBreadcrumbs) { const catId=toolConfig.category; const cat=siteGlobal.categories && catId ?
+  siteGlobal.categories[catId] : null; const toolTitle=toolConfig.translationKey ? t(toolConfig.translationKey
+  + '.title' ) : toolConfig.defaultTitle; %>
   <nav class="breadcrumbs-container" aria-label="Breadcrumb">
     <ol class="breadcrumbs-list">
-      <li class="breadcrumb-item">
-        <a href="<%= rootPath %><%= locale %>/" class="breadcrumb-link" title="<%= t('nav.home') || 'Home' %>">
-          <i data-lucide="home"></i>
-        </a>
-      </li>
-
-      <% if (cat) { %>
-        <li class="breadcrumb-separator">
-          <i data-lucide="chevron-right"></i>
-        </li>
+      <% const navBase=isDev ? rootPath : siteGlobal.site.url + '/' ; %>
         <li class="breadcrumb-item">
-          <a href="<%= rootPath %><%= locale %>/categories/#cat-<%= catId %>" class="breadcrumb-link">
-            <%= t(cat.translation_key) %>
+          <a href="<%= navBase %><%= locale === 'vi' ? '' : 'en/' %>" class="breadcrumb-link"
+            title="<%= t('nav.home') || 'Home' %>">
+            <i data-lucide="home"></i>
           </a>
         </li>
-        <% } %>
 
+        <% if (cat) { %>
           <li class="breadcrumb-separator">
             <i data-lucide="chevron-right"></i>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            <span class="breadcrumb-current">
-              <%= toolTitle %>
-            </span>
+          <li class="breadcrumb-item">
+            <a href="<%= navBase %><%= locale === 'vi' ? '' : 'en/' %>categories/#cat-<%= catId %>"
+              class="breadcrumb-link">
+              <%= t(cat.translation_key) %>
+            </a>
           </li>
+          <% } %>
+
+            <li class="breadcrumb-separator">
+              <i data-lucide="chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <span class="breadcrumb-current">
+                <%= toolTitle %>
+              </span>
+            </li>
     </ol>
   </nav>
 

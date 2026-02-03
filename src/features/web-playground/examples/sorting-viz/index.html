@@ -1,0 +1,62 @@
+<div class="sorting-app">
+  <div class="app-header">
+    <div class="status-badge">Algo Visualizer</div>
+    <h1>Visual Sorting Pro</h1>
+    <p>Watch how algorithms organize data in real-time.</p>
+  </div>
+
+  <div class="visualizer-box">
+    <div id="array-container" class="array-container"></div>
+  </div>
+
+  <div class="ui-controls">
+    <div class="control-group">
+      <label>Algorithm</label>
+      <select id="algo-select" class="select-pro">
+        <option value="bubble">Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="quick">Quick Sort (Master)</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label>Array Size</label>
+      <input type="range" id="size-slider" min="5" max="50" value="25" class="slider-pro">
+    </div>
+
+    <div class="control-group">
+      <label>Speed (ms)</label>
+      <input type="range" id="speed-slider" min="10" max="500" value="50" dir="rtl" class="slider-pro">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="btn-shuffle" class="btn btn-outline">
+      <i data-lucide="shuffle"></i>
+      Shuffle
+    </button>
+    <button id="btn-start" class="btn btn-glow">
+      <i data-lucide="play"></i>
+      Start Sorting
+    </button>
+  </div>
+
+  <div class="stats-box">
+    <div class="stat">
+      <span class="label">Time</span>
+      <span class="value" id="stat-time">0.0s</span>
+    </div>
+    <div class="stat">
+      <span class="label">Swaps</span>
+      <span class="value" id="stat-swaps">0</span>
+    </div>
+    <div class="stat">
+      <span class="label">Compares</span>
+      <span class="value" id="stat-compares">0</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>

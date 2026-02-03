@@ -69,4 +69,34 @@ describe('Tax Logic', () => {
       expect(Math.abs(verify.netOld - targetNet)).toBeLessThan(5);
     });
   });
+
+  describe('calculateYearlyPIT', () => {
+    it('should calculate correctly for 50M gross, 1 month bonus', () => {
+      const monthlyGross = 50_000_000;
+      const bonusMonths = 1;
+      const res = TaxLogic.calculateYearlyPIT(monthlyGross, 0, bonusMonths, 1);
+
+      // Yearly Gross = 50M * 13 = 650,000,000
+      expect(res.yearlyGross).toBe(650_000_000);
+
+      // Bonus Gross = 50M
+      expect(res.bonusGross).toBe(50_000_000);
+
+      // Yearly Insurance = Monthly Insurance * 12
+      const monthly = TaxLogic.calculatePIT(monthlyGross, 0, 1);
+      expect(res.yearlyInsurance).toBe(monthly.insurance * 12);
+
+      // Yearly Tax Old:
+      // Yearly Taxable = 650M - (4,946,000 * 12) - (11M * 12) = 650M - 59,352,000 - 132,000,000 = 458,648,000
+      // Brackets (Yearly):
+      // 60M @ 5% = 3M
+      // 60M @ 10% = 6M
+      // 96M @ 15% = 14.4M
+      // 168M @ 20% = 33.6M
+      // Remaining = 458,648,000 - 384,000,000 = 74,648,000
+      // 74,648,000 @ 25% = 18,662,000
+      // Total Yearly Tax Old = 3M + 6M + 14.4M + 33.6M + 18.662M = 75,662,000
+      expect(res.yearlyTaxOld).toBe(75_662_000);
+    });
+  });
 });

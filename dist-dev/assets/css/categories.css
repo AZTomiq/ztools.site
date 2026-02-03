@@ -1,23 +1,124 @@
-/* Masonry Grid Layout */
-.categories-grid {
+/* Toolbar & Controls */
+.categories-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  background: var(--card-bg);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cat-search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.cat-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+}
+
+#cat-tool-search {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-body);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+#cat-tool-search:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.view-switcher {
+  display: flex;
+  background: var(--bg-hover);
+  padding: 4px;
+  border-radius: 10px;
+  gap: 2px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.view-btn:hover {
+  color: var(--text-color);
+}
+
+.view-btn.active {
+  background: var(--card-bg);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Layout Containers */
+.categories-container.grid-view {
   column-count: 2;
   column-gap: 2rem;
 }
 
+.categories-container.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 @media (max-width: 900px) {
-  .categories-grid {
+  .categories-container.grid-view {
     column-count: 1;
+  }
+  .categories-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cat-search-box {
+    max-width: none;
   }
 }
 
 .category-card {
-  break-inside: avoid; /* Prevent card splitting */
+  break-inside: avoid;
   margin-bottom: 2rem;
   padding: 1.5rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.list-view .category-card {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .category-title {
@@ -48,35 +149,48 @@
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
   color: var(--text-muted);
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
   border: 1px solid var(--border-color);
 }
 
+/* Tools List */
 .cat-tools-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+.grid-view .cat-tools-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.cat-tool-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.cat-tool-wrapper:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-color);
+}
+
 .cat-tool-item {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 8px;
-  color: var(--text-color); /* Updated text color */
-  transition: all 0.2s;
-  border: 1px solid transparent; /* Prevent layout shift on hover border */
-  position: relative;
+  padding: 0.75rem 1rem;
+  color: var(--text-color);
+  text-decoration: none;
 }
 
 .cat-tool-item:hover {
-  background: var(--bg-hover);
   color: var(--primary-color);
-  transform: translateX(5px);
-  border-color: var(--border-color);
 }
 
 .tool-icon {
@@ -87,4 +201,66 @@
 
 .cat-tool-item:hover .tool-icon {
   color: var(--primary-color);
+}
+
+.tool-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.tool-badge.beta {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.tool-badge.hot {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+/* List View Actions - Live Demo Button */
+.list-tool-actions {
+  display: none;
+  padding-right: 1rem;
+}
+
+.list-view .list-tool-actions {
+  display: block;
+}
+
+.btn-demo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.btn-demo:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+.btn-demo i {
+  width: 14px;
+  height: 14px;
+}
+
+/* Animations */
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

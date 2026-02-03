@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const compound = require('../../src/features/compound-interest/script.js');
+const compound = require('../../src/features/compound-interest/logic.js');
 
 describe('Compound Interest Logic', () => {
   it('should calculate compound interest correctly (no contribution, annual)', () => {

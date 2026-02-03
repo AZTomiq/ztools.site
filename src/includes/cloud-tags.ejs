@@ -28,7 +28,7 @@
           const count = tagMap[tag];
           const sizeClass = count > 3 ? 'tag-lg' : (count > 1 ? 'tag-md' : 'tag-sm');
           %>
-          <a href="<%= rootPath %><%= locale %>/categories/" class="cloud-tag <%= sizeClass %>">
+          <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>categories/" class="cloud-tag <%= sizeClass %>">
             #<%= tag %>
           </a>
           <% }); %>

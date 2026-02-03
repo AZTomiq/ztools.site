@@ -1,14 +1,16 @@
-<!-- title: <%= t('loan.title') %> - AZtomiq -->
+<!-- title: <%= t('loan.title') %> - ZTools -->
 
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
   <div class="page-header">
     <h1>💸 <%= t('loan.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
-      <% } %></h1>
+
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('loan.desc') %>
     </p>
@@ -179,4 +181,5 @@
   </section>
 </section>
 
+<script src="<%= asset('assets/features/loan-calculator/logic.js') %>"></script>
 <script src="<%= toolConfig._assets.js %>"></script>

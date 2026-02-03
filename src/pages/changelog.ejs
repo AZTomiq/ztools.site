@@ -8,7 +8,7 @@
   </div>
 
   <div style="text-align: center; margin-top: 3rem;">
-    <a href="<%= rootPath %><%= locale %>/" class="btn-primary" style="text-decoration: none;">
+    <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>" class="btn-primary" style="text-decoration: none;">
       ← <%= t('nav.home') || 'Quay về trang chủ' %>
     </a>
   </div>

@@ -35,7 +35,7 @@ function processJs(srcPath, destPath, fileName) {
         const cmd = `npx javascript-obfuscator "${srcPath}" --output "${destPath}" \
             --compact true --control-flow-flattening true --control-flow-flattening-threshold 0.5 \
             --dead-code-injection true --identifier-names-generator hexadecimal \
-            --rename-globals true --string-array true --string-array-threshold 0.5 \
+            --rename-globals false --string-array true --string-array-threshold 0.5 \
             --transform-object-keys true`;
         execSync(cmd);
       } catch (e) {
@@ -145,10 +145,15 @@ async function buildAssets() {
       // Feature JS
       const files = fs.readdirSync(featDir);
       for (const file of files) {
-        if (file.endsWith('.js') && file !== 'toolConfig.js') {
+        if (file.endsWith('.js') && !file.endsWith('.test.js') && file !== 'toolConfig.js') {
           const jsSrcPath = path.join(featDir, file);
           const jsDestPath = path.join(featDistDir, file);
           processJs(jsSrcPath, jsDestPath, `${feature}/${file}`);
+        }
+        if (file.endsWith('.json')) {
+          const srcPath = path.join(featDir, file);
+          const destPath = path.join(featDistDir, file);
+          fs.copySync(srcPath, destPath);
         }
       }
     }

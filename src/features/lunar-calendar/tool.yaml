@@ -1,5 +1,6 @@
 id: lunar-calendar
 category: daily
+vn_only: true
 icon: moon
 translationKey: lunarCalendar
 status: not-ready

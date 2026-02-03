@@ -26,7 +26,7 @@ các tác vụ hàng ngày.
 
 ### 🔗 Liên kết
 - **Trang chủ**: [https://ztools.site](https://ztools.site)
-- **Tác giả**: [Anph](https://github.com/ph4n4n)
+- **Tác giả**: [Anph](https://github.com/AZTomiq)
 
 ---
 
@@ -50,7 +50,7 @@ tasks.
 
 ### 🔗 Links
 - **Main Site**: [https://ztools.site](https://ztools.site)
-- **Author**: [Anph](https://github.com/ph4n4n)
+- **Author**: [Anph](https://github.com/AZTomiq)
 
 ---
 *Lưu ý: Kho lưu trữ này được cập nhật tự động. Để xem mã nguồn hoặc đóng góp, vui lòng liên hệ với tác giả.*

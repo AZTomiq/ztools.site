@@ -1,3 +1,8 @@
+if (typeof TaxLogic === 'undefined') {
+  console.error('TaxLogic is not defined! Please check if logic.js is loaded correctly.');
+  window.TaxLogic = { TAX_CONFIG: { personalDeduction: {}, dependentDeduction: {}, bracketsOld: [], bracketsNew: [], bhtnCaps: {} } };
+}
+
 const TAX_CONFIG = TaxLogic.TAX_CONFIG;
 
 // Proxy functions to TaxLogic
@@ -6,6 +11,7 @@ const calculateTaxBreakdown = TaxLogic.calculateTaxBreakdown;
 const calcInsurance = TaxLogic.calcInsurance;
 const calculatePIT = (g, d) => TaxLogic.calculatePIT(g, d, getRegion());
 const netToGross = (n, d, u) => TaxLogic.netToGross(n, d, getRegion(), u);
+const calculateYearlyPIT = (g, d, b) => TaxLogic.calculateYearlyPIT(g, d, b, getRegion());
 const calcCompanyInsuranceDetail = (i) => {
   const cfg = TAX_CONFIG;
   const region = getRegion();
@@ -135,7 +141,7 @@ function renderHistory() {
     const dep = h.dependents > 0 ? `, ${h.dependents} NPT` : '';
     const bonus = h.bonus > 0 ? `, +${h.bonus}th` : '';
     return `
-      <button class="history-item" onclick="loadFromHistory('${h.id}')">
+      <button class="history-item" data-id="${h.id}">
         <span class="history-value">${income}đ</span>
         <span class="history-meta">${type}${dep}${bonus}</span>
       </button>
@@ -442,13 +448,13 @@ function calculate() {
 
   // Yearly calculation with bonus
   if (bonusMonths > 0) {
-    const yearly = calculateYearlyPIT(grossIncome, dependents, bonusMonths);
+    const yearly = calculateYearlyPIT(grossOld, dependents, bonusMonths);
 
     document.getElementById('yearlyBody').innerHTML = `
       <tr>
         <td class="col-label">Lương 12 tháng</td>
-        <td class="col-old">${formatMoney(grossIncome * 12)}</td>
-        <td class="col-new">${formatMoney(grossIncome * 12)}</td>
+        <td class="col-old">${formatMoney(r.grossIncome * 12)}</td>
+        <td class="col-new">${formatMoney(r.grossIncome * 12)}</td>
       </tr>
       <tr>
         <td class="col-label">Bonus (${bonusMonths} tháng lương)</td>
@@ -595,6 +601,58 @@ function initEvents() {
   const regionEl = document.getElementById('region');
   if (regionEl) {
     regionEl.addEventListener('change', updateBhtnCapDisplay);
+  }
+
+  // Modal close on Close Button
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', toggleRegionNote);
+  }
+
+  // Toggle Region Button
+  const toggleRegionBtn = document.getElementById('toggleRegionBtn');
+  if (toggleRegionBtn) {
+    toggleRegionBtn.addEventListener('click', toggleRegionNote);
+  }
+
+  // Calculate Button
+  const calculateBtn = document.getElementById('calculateBtn');
+  if (calculateBtn) {
+    calculateBtn.addEventListener('click', calculate);
+  }
+
+  // Compare Button
+  const compareBtn = document.getElementById('compareBtn');
+  if (compareBtn) {
+    compareBtn.addEventListener('click', compareMultiple);
+  }
+
+  // Share Button
+  const shareBtn = document.getElementById('shareBtn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', copyShareUrl);
+  }
+
+  // History Clear Button
+  const historyClearBtn = document.getElementById('historyClearBtn');
+  if (historyClearBtn) {
+    historyClearBtn.addEventListener('click', confirmClearHistory);
+  }
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  // History item delegation
+  const historyList = document.getElementById('historyList');
+  if (historyList) {
+    historyList.addEventListener('click', (e) => {
+      const item = e.target.closest('.history-item');
+      if (item && item.dataset.id) {
+        loadFromHistory(item.dataset.id);
+      }
+    });
   }
 
   // Close modal on backdrop click

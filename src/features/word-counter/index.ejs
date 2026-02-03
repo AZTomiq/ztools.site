@@ -1,4 +1,4 @@
-<!-- title: <%= t('word_counter.title') %> - AZtomiq -->
+<!-- title: <%= t('word_counter.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
@@ -9,7 +9,7 @@
       </h1>
       <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
         <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
-            </button>
+        </button>
         <% } %>
     </div>
     <p>
@@ -201,4 +201,5 @@
   </section>
 </section>
 
+<script src="<%= asset('assets/features/word-counter/logic.js') %>"></script>
 <script src="<%= toolConfig._assets.js %>"></script>

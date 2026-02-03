@@ -1,214 +1,321 @@
-<!-- title: AZtomiq - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
-<% if (global.build.entry_point==='blog' ) { %>
-  <script>
-    // Redirect to blog if this is the entry point
-    if (window.location.pathname.endsWith('/<%= locale %>/') || window.location.pathname.endsWith('/<%= locale %>')) {
-      window.location.href = '<%= rootPath %><%= locale %>/blog/';
-    }
-  </script>
-  <% } %>
-    <% var categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , icon: 'briefcase'
-      }, { id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , icon: 'line-chart' }, {
-      id: 'text' , titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , icon: 'type' }, { id: 'generator' ,
-      titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , icon: 'wand-2' }, { id: 'daily' ,
-      titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , icon: 'calendar' }, { id: 'dev' ,
-      titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , icon: 'code' } ]; %>
+<!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
+<% var categories=[ { id: 'job' , titleKey: 'home.cats.job.title' , defaultTitle: 'Job & Income' , icon: 'briefcase' },
+  { id: 'finance' , titleKey: 'home.cats.finance.title' , defaultTitle: 'Finance' , icon: 'line-chart' }, { id: 'text' ,
+  titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , icon: 'type' }, { id: 'generator' ,
+  titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , icon: 'wand-2' }, { id: 'daily' ,
+  titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , icon: 'calendar' }, { id: 'dev' ,
+  titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , icon: 'code' } ]; %>
 
+  <div class="home-page-body">
+    <!-- SECTION 1: Hero -->
+    <section class="hero-apple">
+      <h1 class="headline">
+        <%- (t('home.apple.hero_headline') || 'zTools.' ).replace(/\n/g, '<br>' ) %>
+      </h1>
+      <p class="sub-headline">
+        <%= t('home.apple.hero_subheadline') %>
+      </p>
 
-      <section class="hero">
-        <h1>
-          <%= t('home.hero_title') %>
-        </h1>
-        <p>
-          <%= t('home.hero_desc') %>
+      <div class="hero-search-minimal">
+        <input type="text" id="home-search" placeholder="<%= t('nav.search_placeholder') %>" autocomplete="off">
+        <div class="search-hints"
+          style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); opacity: 0.4;">
+          <kbd>Ctrl K</kbd>
+        </div>
+      </div>
+
+      <div class="cta-wrap" style="margin-top: 3rem;">
+        <a href="#all-tools" class="btn btn-primary" style="padding: 1rem 2rem; border-radius: 30px; font-weight: 700;">
+          <%= t('home.apple.hero_explore') %>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Philosophy -->
+    <section class="section-philosophy">
+      <div class="container">
+        <h2 class="title">
+          <%= t('home.apple.philosophy_title') %>
+        </h2>
+        <p class="body-copy">
+          <%= t('home.apple.philosophy_body') %>
         </p>
-      </section>
+      </div>
+    </section>
 
-      <!-- Big Hero Search Section -->
-      <div class="hero-search-wrap">
-        <div class="search-box-hero">
-          <span class="search-icon"><i data-lucide="search"></i></span>
-          <input type="text" id="home-search" placeholder="<%= t('nav.search_placeholder') %>"
-            aria-label="Search tools">
-          <div class="search-hints">
-            <kbd>Ctrl</kbd>
-            <span>+</span>
-            <kbd>K</kbd>
+    <!-- SECTION 3: Product Narrative -->
+    <section class="product-narrative">
+      <!-- 01: Playground -->
+      <div class="narrative-section">
+        <div class="narrative-content">
+          <div class="narrative-text">
+            <span class="tag">01 — <%= t('home.apple.story.playground.title') %></span>
+            <h3>
+              <%= t('home.apple.story.playground.subtitle') %>
+            </h3>
+            <p>
+              <%= t('home.apple.story.playground.desc') %>
+            </p>
+            <a href="<%= rootPath %>playground/" class="btn-explore" style="margin-top: 2rem;">
+              Try Playground <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+          <div class="narrative-visual">
+            <div class="visual-terminal">
+              <div class="terminal-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+              </div>
+              <div class="terminal-content">
+                <p style="color: #6a9955;">// Welcome to zTool Playground</p>
+                <p><span style="color: #569cd6;">const</span> ideas = [];</p>
+                <p><span style="color: #569cd6;">function</span> create() {</p>
+                <p>&nbsp;&nbsp;ideas.<span style="color: #dcdcaa;">push</span>(<span
+                    style="color: #ce9178;">'Innovation'</span>);</p>
+                <p>&nbsp;&nbsp;<span style="color: #c586c0;">return</span> ideas;</p>
+                <p>}</p>
+                <p><span style="color: #dcdcaa;">console</span>.<span style="color: #dcdcaa;">log</span>(<span
+                    style="color: #dcdcaa;">create</span>());</p>
+                <p class="cursor-blink"
+                  style="border-right: 2px solid var(--primary-color); width: 8px; height: 1.2em; display: inline-block; vertical-align: middle;">
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Highlight Section -->
-      <% const highlightedTools=tools.filter(t=> t.highlight === true); %>
-        <% if (highlightedTools.length> 0) { %>
-          <div class="container highlight-section">
-            <div class="highlight-header">
-              <span class="badge-new">FEATURED</span>
-              <h2>Phổ biến & Nổi bật <i data-lucide="sparkles"
-                  style="width: 24px; height: 24px; vertical-align: middle; color: #f59e0b;"></i></h2>
+      <!-- 02: Compound Interest -->
+      <div class="narrative-section" style="background: var(--bg-hover);">
+        <div class="narrative-content">
+          <div class="narrative-visual">
+            <div class="visual-slider">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="font-weight: 700;">Duration</span>
+                <span class="value" style="color: var(--primary-color);">30 Years</span>
+              </div>
+              <div class="slider-bar">
+                <div class="slider-handle"></div>
+              </div>
+              <div class="visual-chart">
+                <div class="chart-bar" style="height: 10%;"></div>
+                <div class="chart-bar" style="height: 15%;"></div>
+                <div class="chart-bar" style="height: 25%;"></div>
+                <div class="chart-bar" style="height: 40%;"></div>
+                <div class="chart-bar" style="height: 65%;"></div>
+                <div class="chart-bar" style="height: 95%;"></div>
+              </div>
             </div>
-            <div class="highlight-grid">
-              <% highlightedTools.forEach(tool=> { %>
-                <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="highlight-card">
-                  <div class="highlight-icon">
-                    <i data-lucide="<%= tool.icon %>"></i>
-                  </div>
-                  <div class="highlight-info">
-                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                      <h3>
-                        <%= t(tool.translationKey + '.title' ) || tool.defaultTitle %>
-                      </h3>
-                      <button class="star-btn" data-tool-id="<%= tool.id %>" aria-label="Add to favorites"
-                        title="Add to favorites">
-                        <i data-lucide="star" style="width: 20px; height: 20px;"></i>
-                      </button>
+          </div>
+          <div class="narrative-text">
+            <span class="tag">02 — <%= t('home.apple.story.compound.title') %></span>
+            <h3>
+              <%= t('home.apple.story.compound.subtitle') %>
+            </h3>
+            <p>
+              <%= t('home.apple.story.compound.desc') %>
+            </p>
+            <a href="<%= rootPath %>finance/compound-interest/" class="btn-explore" style="margin-top: 2rem;">
+              Calculate Interest <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03: JSON -->
+      <div class="narrative-section">
+        <div class="narrative-content">
+          <div class="narrative-text">
+            <span class="tag">03 — <%= t('home.apple.story.json.title') %></span>
+            <h3>
+              <%= t('home.apple.story.json.subtitle') %>
+            </h3>
+            <p>
+              <%= t('home.apple.story.json.desc') %>
+            </p>
+            <a href="<%= rootPath %>dev/json-toolkit/" class="btn-explore" style="margin-top: 2rem;">
+              Format JSON <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+          <div class="narrative-visual" style="background: #fafafa;">
+            <div style="width: 100%; height: 100%; display: flex;">
+              <div
+                style="flex: 1; padding: 1rem; border-right: 1px solid var(--border-color); font-family: monospace; font-size: 0.7rem; opacity: 0.5;">
+                {"id":1,"name":"Test","active":true}
+              </div>
+              <div style="flex: 1; padding: 1rem; font-family: monospace; font-size: 0.7rem;">
+                {<br>
+                &nbsp;&nbsp;"id": 1,<br>
+                &nbsp;&nbsp;"name": "Test",<br>
+                &nbsp;&nbsp;"active": true<br>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04: Lunar -->
+      <div class="narrative-section" style="background: var(--bg-hover);">
+        <div class="narrative-content">
+          <div class="narrative-visual">
+            <div style="text-align: center;">
+              <div style="font-size: 3rem; font-weight: 800; color: var(--primary-color);">01</div>
+              <div style="font-size: 1rem; color: var(--text-muted);">Tháng Giêng</div>
+              <div
+                style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary-subtle); border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
+                Tết Nguyên Đán</div>
+            </div>
+          </div>
+          <div class="narrative-text">
+            <span class="tag">04 — <%= t('home.apple.story.lunar.title') %></span>
+            <h3>
+              <%= t('home.apple.story.lunar.subtitle') %>
+            </h3>
+            <p>
+              <%= t('home.apple.story.lunar.desc') %>
+            </p>
+            <a href="<%= rootPath %>daily/lunar-calendar/" class="btn-explore" style="margin-top: 2rem;">
+              View Calendar <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05: Tax -->
+      <div class="narrative-section">
+        <div class="narrative-content">
+          <div class="narrative-text">
+            <span class="tag">05 — <%= t('home.apple.story.tax.title') %></span>
+            <h3>
+              <%= t('home.apple.story.tax.subtitle') %>
+            </h3>
+            <p>
+              <%= t('home.apple.story.tax.desc') %>
+            </p>
+            <a href="<%= rootPath %>job/tax/" class="btn-explore" style="margin-top: 2rem;">
+              Calculate Tax <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+          <div class="narrative-visual">
+            <div style="padding: 2rem; width: 100%;">
+              <div
+                style="height: 12px; background: var(--bg-hover); border-radius: 6px; width: 60%; margin-bottom: 1rem;">
+              </div>
+              <div
+                style="height: 40px; border: 2px solid var(--primary-color); border-radius: 8px; width: 100%; margin-bottom: 1.5rem;">
+              </div>
+              <div style="height: 80px; background: var(--primary-subtle); border-radius: 12px; width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Power Grid (All Tools) -->
+    <section class="section-all-tools" id="all-tools">
+      <div class="container">
+        <div class="category-header" style="text-align: center; margin-bottom: 5rem;">
+          <h2 style="font-size: 3rem; font-weight: 800;">
+            <%= t('nav.menu_categories') %>
+          </h2>
+          <p style="color: var(--text-muted); font-size: 1.2rem;">Một thư viện công cụ khổng lồ, luôn sẵn sàng.</p>
+        </div>
+
+        <div id="favorites-section" style="display: none; margin-bottom: 5rem;">
+          <h3 class="category-title" style="margin-bottom: 2rem;">
+            <i data-lucide="star" style="color: #f59e0b; fill: #f59e0b;"></i>
+            <%= t('home.favorites') %>
+          </h3>
+          <div class="tools-grid" id="favorites-grid"></div>
+        </div>
+
+        <div id="recent-section" style="display: none; margin-bottom: 5rem;">
+          <h3 class="category-title" style="margin-bottom: 2rem;">
+            <i data-lucide="history" style="color: var(--primary-color);"></i>
+            <%= t('home.recent') %>
+          </h3>
+          <div class="tools-grid-horizontal" id="recent-grid"></div>
+        </div>
+
+        <% categories.forEach(cat=> {
+          const catTools = tools.filter(t => t.category === cat.id);
+          if (catTools.length === 0) return;
+          %>
+          <div class="category-section" id="<%= cat.id %>-tools" style="margin-bottom: 6rem;">
+            <h3 class="category-title"
+              style="font-size: 1.75rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="<%= cat.icon %>"></i>
+              <%= t(cat.titleKey) || cat.defaultTitle %>
+            </h3>
+            <div class="tools-grid">
+              <% catTools.forEach(tool=> { %>
+                <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %><%= tool.link.substring(1) %>"
+                  class="tool-card-modern tool-card-wrapper" data-personas="<%= (tool.personas || []).join(',') %>"
+                  data-vn-only="<%= tool.vn_only || false %>">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="<%= tool.icon || 'tool' %>" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <p>
-                      <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
-                    </p>
-                    <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
-                        style="width: 16px; height: 16px;"></i></span>
+                    <button class="star-btn" data-tool-id="<%= tool.id %>"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
                   </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    <%= t(tool.translationKey + '.title' ) || tool.defaultTitle %>
+                  </h4>
+                  <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                    <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
+                  </p>
                 </a>
                 <% }); %>
             </div>
           </div>
-          <% } %>
+          <% }); %>
+      </div>
+    </section>
 
-            <!-- Favorites Section (Dynamic) -->
-            <div class="container favorites-section" id="favorites-section" style="display: none; margin-bottom: 3rem;">
-              <div class="category-header">
-                <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                  <i data-lucide="star" style="color: #f59e0b; fill: #f59e0b;"></i>
-                  <%= t('home.favorites') || 'Công cụ của tôi' %>
-                </h2>
-              </div>
-              <div class="tools-grid" id="favorites-grid">
-                <!-- Dynamically populated -->
-              </div>
-            </div>
+    <!-- SECTION 5: Closing -->
+    <section class="section-closing">
+      <div class="container">
+        <h2>
+          <%= t('home.apple.closing_headline') %>
+        </h2>
+        <p>
+          <%= t('home.apple.closing_subheadline') %>
+        </p>
+        <a href="#home-search" class="btn btn-primary"
+          style="padding: 1.25rem 3rem; border-radius: 40px; font-weight: 800; font-size: 1.1rem;">
+          <%= t('home.apple.closing_cta') %>
+        </a>
+      </div>
+    </section>
 
-            <!-- View Options Toolbar -->
-            <div class="container view-toolbar"
-              style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
-              <div class="view-toggles"
-                style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
-                <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    aria-hidden="true">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                  </svg>
-                </button>
-                <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    aria-hidden="true">
-                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
+    <%- include('cloud-tags.ejs') %>
+  </div>
 
-              <div class="sort-options" style="display: flex; gap: 0.5rem;">
-                <!-- Category Filter Dropdown -->
-                <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
-                  aria-label="Filter by category">
-                  <option value="all">
-                    <%= t('nav.menu_categories') %>
-                  </option>
-                  <% categories.forEach(cat=> { %>
-                    <option value="<%= cat.id %>">
-                      <%= t(cat.titleKey) || cat.defaultTitle %>
-                    </option>
-                    <% }); %>
-                </select>
+  <script src="<%= asset('assets/js/home.js') %>"></script>
+  <link rel="stylesheet" href="<%= asset('assets/css/home.css') %>">
 
-                <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
-                  aria-label="Sort tools by">
-                  <option value="default">
-                    <%= t('home.sort.default') || 'Default' %>
-                  </option>
-                  <option value="recent">
-                    <%= t('home.sort.recent') || 'Recently Used' %>
-                  </option>
-                  <option value="popular">
-                    <%= t('home.sort.popular') || 'Most Used' %>
-                  </option>
-                  <option value="az">
-                    <%= t('home.sort.az') || 'Name (A-Z)' %>
-                  </option>
-                  <option value="za">
-                    <%= t('home.sort.za') || 'Name (Z-A)' %>
-                  </option>
-                </select>
-              </div>
-            </div>
+  <style>
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
 
-            <% /* The manual job-income block was removed to avoid duplication. The dynamic loop below handles all
-              categories. */ %>
-              <% categories.forEach(cat=> {
-                const catTools = tools.filter(t => t.category === cat.id);
-                if (catTools.length === 0) return;
-                %>
-                <div class="category-section" id="<%= cat.id %>-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="<%= cat.icon %>"></i>
-                    <%= t(cat.titleKey) || cat.defaultTitle %>
-                  </h2>
-                  <div class="tools-grid">
-                    <% catTools.forEach(tool=> { %>
-                      <% let modeClass='' ; if (tool.mode==='standard' ) modeClass='mode-standard-only' ; else if
-                        (tool.mode==='advanced' ) modeClass='mode-advanced-only' ; %>
-                        <div class="tool-card-wrapper <%= modeClass %>">
-                          <div
-                            class="tool-card <%= (tool.status==='legacy' || tool.status==='not-ready') ? 'legacy-item' : '' %>">
-                            <button class="star-btn" data-tool-id="<%= tool.id %>" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
+    @keyframes blink {
 
-                            <div class="tool-badge-row">
-                              <% if (tool.status==='legacy' ) { %>
-                                <span class="tool-badge legacy">LEGACY</span>
-                                <% } else if (tool.status==='not-ready' ) { %>
-                                  <span class="tool-badge beta">BETA</span>
-                                  <% } %>
+      from,
+      to {
+        border-color: transparent;
+      }
 
-                                    <% if (tool.highlight) { %>
-                                      <span class="tool-badge hot">
-                                        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-                                        HOT
-                                      </span>
-                                      <% } %>
-                            </div>
-
-                            <a href="<%= rootPath %><%= locale %><%= tool.link %>" class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="<%= tool.icon || 'tool' %>" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                <%= t(tool.translationKey + '.title' ) || tool.defaultTitle %>
-                              </h3>
-                              <p>
-                                <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        <% }); %>
-                  </div>
-                </div>
-                <% }); %>
-
-                  <%- include('cloud-tags.ejs') %>
-
-                    <script src="<%= asset('assets/js/home.js') %>"></script>
-
-                    <link rel="stylesheet" href="<%= asset('assets/css/home.css') %>">
+      50% {
+        border-color: var(--primary-color);
+      }
+    }
+  </style>

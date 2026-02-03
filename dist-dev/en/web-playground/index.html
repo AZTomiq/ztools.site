@@ -4,73 +4,144 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>
-  AZtomiq - Free Online Utility Tools
-</title>
 
-  <meta name="description" content="Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.">
-  
-    <meta name="keywords" content="codepen, jsfiddle, html editor, css editor, javascript editor, playground, code">
-    
 
-      <!-- Canonical URL -->
-      <link rel="canonical" href="https://ztools.site/en/web-playground/" />
-
-      <!-- Hreflang Tags for Multi-language -->
-      
-        <link rel="alternate" hreflang="vi" href="https://ztools.site/vi/web-playground/" />
-        <link rel="alternate" hreflang="en" href="https://ztools.site/en/web-playground/" />
-        <link rel="alternate" hreflang="x-default" href="https://ztools.site/vi/web-playground/" />
-
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://ztools.site/en/web-playground/" />
-        <meta property="og:title" content="AZtomiq - Free Online Utility Tools" />
-        <meta property="og:description" content="Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing." />
-        <meta property="og:image" content="https://ztools.site/assets/images/og-default.png" />
-        <meta property="og:site_name" content="ZTools" />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:locale:alternate" content="vi_VN" />
-
-        <!-- Twitter Card -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://ztools.site/en/web-playground/" />
-        <meta name="twitter:title" content="AZtomiq - Free Online Utility Tools" />
-        <meta name="twitter:description" content="Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing." />
-        <meta name="twitter:image" content="https://ztools.site/assets/images/og-default.png" />
-
-        <!-- Author & Copyright -->
-        <meta name="author" content="Anph" />
-        <meta name="robots" content="index, follow" />
-
-        <!-- Stylesheets -->
-        <link rel="stylesheet" href="../../assets/css/global.css?h=a8a4c0c4">
-        
-          <link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=551000be">
-          
-            <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
-            <link rel="manifest" href="../../manifest.json">
-
-            <!-- Lucide Icons Library -->
-            <script src="https://unpkg.com/lucide@latest"></script>
-
-            <script src="../../assets/js/user-mode.js?h=e15180be"></script>
-
-            <!-- Dark Mode Script (Blocking) -->
-            <script>
-              const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-              document.documentElement.setAttribute('data-theme', savedTheme);
-            </script>
-
-            <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQ06SN6YNW"></script>
   <script>
-    window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-JQ06SN6YNW');
   </script>
-  <script defer src="/_vercel/analytics/script.js"></script>
-  -->
+  
 
-            <!-- Schema.org Structured Data -->
+    <!-- Subdomain Routing (Shared-Code Strategy) -->
+    <script>
+      (function () {
+        const subdomains = ;
+        const host = window.location.hostname;
+        const path = window.location.pathname;
+        const mainDomain = "ztools.site";
+
+        // 0. Bypasses for development
+        if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
+
+        // 1. Redirection: Path -> Clean Subdomain
+        const mappedSub = subdomains.find(s => path.startsWith(s.path));
+
+        // If on main domain but path has a dedicated subdomain -> Redirect to clean subdomain
+        if (mappedSub && host === mainDomain) {
+          window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
+          return;
+        }
+
+        // 2. Redirection: Wrong Subdomain -> Correct Clean Subdomain (Cross-transition)
+        if (mappedSub && mappedSub.domain !== host) {
+          window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
+          return;
+        }
+
+        // 3. Redirection: If on subdomain but path still has the prefix (safety for old links)
+        const currentSub = subdomains.find(s => s.domain === host);
+        if (currentSub && path.startsWith(currentSub.path)) {
+          window.location.replace("https://" + host + path.replace(currentSub.path, '/'));
+          return;
+        }
+      })();
+    </script>
+
+    <title>
+      ZTools - Free Online Utility Tools
+    </title>
+    
+      <meta name="description" content="Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.">
+      
+        <meta name="keywords" content="codepen, jsfiddle, html editor, css editor, javascript editor, playground, code">
+        
+
+          <!-- Canonical URL (Dynamic Subdomain Support) -->
+          
+            <link rel="canonical" href="https://playground.ztools.site/" />
+
+            <!-- Hreflang Tags (Cross-Domain Support) -->
             
+              <link rel="alternate" hreflang="vi" href="https://playground.ztools.site/" />
+              <link rel="alternate" hreflang="en" href="https://playground.ztools.site/en/" />
+              <link rel="alternate" hreflang="x-default" href="https://playground.ztools.site/en/" />
+
+              <!-- Open Graph / Facebook -->
+              <meta property="og:type" content="article" />
+              <meta property="og:url" content="https://playground.ztools.site/" />
+              <meta property="og:title" content="ZTools - Free Online Utility Tools" />
+              <meta property="og:description" content="Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing." />
+              <meta property="og:image" content="https://ztools.site/assets/images/og-default.png" />
+              <meta property="og:site_name" content="ZTools" />
+              
+                <meta property="og:locale" content="en_US" />
+                <meta property="og:locale:alternate" content="vi_VN" />
+
+                <!-- Twitter Card -->
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:url" content="https://playground.ztools.site/" />
+                <meta name="twitter:title" content="ZTools - Free Online Utility Tools" />
+                <meta name="twitter:description" content="Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing." />
+                <meta name="twitter:image" content="https://ztools.site/assets/images/og-default.png" />
+
+                <!-- Author & Copyright -->
+                <meta name="author" content="Anph" />
+                <meta name="robots" content="index, follow" />
+
+                <!-- Fonts -->
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link
+                  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Outfit:wght@400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap"
+                  rel="stylesheet">
+
+                <!-- Prism.js for Code Highlighting -->
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+                  rel="stylesheet" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+                  defer></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
+                  defer></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
+                  defer></script>
+
+                <!-- Stylesheets -->
+                <link rel="stylesheet" href="../../assets/css/global.css?h=fe3ebb6f&amp;v=1.5.2">
+                
+                  <link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=551000be&amp;v=1.5.2">
+                  
+                    <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
+                    <link rel="manifest" href="../../manifest.json">
+
+                    <!-- Lucide Icons Library -->
+                    <script src="https://unpkg.com/lucide@latest"></script>
+
+                    <script src="../../assets/js/user-mode.js?h=e15180be&amp;v=1.5.2"></script>
+                    <script src="../../assets/js/persona.js?h=a2143c7d&amp;v=1.5.2"></script>
+
+                    <!-- Dark Mode Script (Blocking) -->
+                    <script>
+                      const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                      document.documentElement.setAttribute('data-theme', savedTheme);
+                    </script>
+
+                    <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+<script>
+  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+</script>
+<script defer src="/_vercel/analytics/script.js"></script>
+-->
+
+                    <!-- Vercel Speed Insights -->
+                    <script defer src="/_vercel/insights/script.js"></script>
+
+                    <!-- Schema.org Structured Data -->
+                    
 
   <script type="application/ld+json">
 [
@@ -140,7 +211,8 @@
   <nav class="breadcrumbs-container" aria-label="Breadcrumb">
     <ol class="breadcrumbs-list">
       <li class="breadcrumb-item">
-        <a href="../../en/" class="breadcrumb-link" title="Home">
+        <a href="../../en/" class="breadcrumb-link"
+          title="Home">
           <i data-lucide="home"></i>
         </a>
       </li>
@@ -150,7 +222,8 @@
           <i data-lucide="chevron-right"></i>
         </li>
         <li class="breadcrumb-item">
-          <a href="../../en/categories/#cat-dev" class="breadcrumb-link">
+          <a href="../../en/categories/#cat-dev"
+            class="breadcrumb-link">
             Dev Tools
           </a>
         </li>
@@ -232,8 +305,8 @@
     }
   </style>
   
-              <!-- title: zTool Playground - AZtomiq -->
-<link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=551000be">
+              <!-- title: zTool Playground - ZTools -->
+<link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=551000be&amp;v=1.5.2">
 
 <div class="playground-container">
   <!-- Master IDE Toolbar -->
@@ -261,10 +334,18 @@
           Categories
         </span>
       </a>
-      <a href="../../en/blog/" class="mega-side-link ">
+      <a href="../../en/blog/"
+        class="mega-side-link ">
         <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
         <span class="link-text">
           Dev Blog
+        </span>
+      </a>
+      <a href="../../en/roadmap/"
+        class="mega-side-link ">
+        <span class="icon-wrap"><i data-lucide="map"></i></span>
+        <span class="link-text">
+          Skill Tree
         </span>
       </a>
       <a href="../../en/bookmark-creator/"
@@ -295,6 +376,7 @@
             </div>
             <div class="mega-cat-links">
               
+                
                 <a href="../../en/business-tax/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -306,6 +388,7 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
+                
                 
                 <a href="../../en/freelancer-tax/"
                   class="mega-tool-link mode-standard-only ">
@@ -319,6 +402,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/ot-calculator/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -331,6 +415,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/salary-tax-master/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -339,6 +424,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/social-insurance/"
                   class="mega-tool-link mode-standard-only ">
@@ -352,11 +438,12 @@
                     
                 </a>
                 
-                <a href="../../en/tax/"
+                
+                <a href="https://tncn.ztools.site/en/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
-                    PIT Calculator
+                    VIETNAM PIT Calculator
                   </span>
                   
                       <span class="tool-badge hot"
@@ -378,17 +465,21 @@
             </div>
             <div class="mega-cat-links">
               
-                <a href="../../en/compound-interest/"
+                
+                <a href="https://laikep.ztools.site/en/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
                     Compound Interest Calculator
                   </span>
                   
-                    <span class="tool-badge beta"
-                      style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
-                    
+                      <span class="tool-badge hot"
+                        style="font-size: 0.6rem; padding: 2px 6px; margin-left: auto; position: static; width: auto; transform: none; background: #fff7ed; color: #c2410c; border: 1px solid #fb923c; border-radius: 4px; display: flex; align-items: center; gap: 3px; font-weight: 700;">
+                        <i data-lucide="sparkles" style="width: 10px; height: 10px;"></i> HOT
+                      </span>
+                      
                 </a>
+                
                 
                 <a href="../../en/inflation-calculator/"
                   class="mega-tool-link  ">
@@ -402,6 +493,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/investment-calc/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -414,6 +506,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/loan-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -423,6 +516,7 @@
                   
                 </a>
                 
+                
                 <a href="../../en/percentage-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -431,6 +525,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/savings-interest/"
                   class="mega-tool-link  ">
@@ -456,6 +551,7 @@
             </div>
             <div class="mega-cat-links">
               
+                
                 <a href="../../en/lorem-ipsum/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -468,6 +564,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/text-diff/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -476,6 +573,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/text-formatter/"
                   class="mega-tool-link  ">
@@ -486,7 +584,8 @@
                   
                 </a>
                 
-                <a href="../../en/word-counter/"
+                
+                <a href="../../en/word-counter/d"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -507,6 +606,7 @@
             </div>
             <div class="mega-cat-links">
               
+                
                 <a href="../../en/password-generator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -515,6 +615,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/uuid-generator/"
                   class="mega-tool-link  ">
@@ -537,6 +638,7 @@
             </div>
             <div class="mega-cat-links">
               
+                
                 <a href="../../en/bmi/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -546,6 +648,7 @@
                   
                 </a>
                 
+                
                 <a href="../../en/bookmark-creator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -554,6 +657,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/date-time-master/"
                   class="mega-tool-link mode-advanced-only ">
@@ -567,6 +671,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/date-toolkit/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -578,6 +683,7 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
+                
                 
                 <a href="../../en/lunar-calendar/"
                   class="mega-tool-link  ">
@@ -591,6 +697,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/random-toolkit/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -602,6 +709,7 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
+                
                 
                 <a href="../../en/unit-converter/"
                   class="mega-tool-link  ">
@@ -624,6 +732,7 @@
             </div>
             <div class="mega-cat-links">
               
+                
                 <a href="../../en/cron-parser/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -633,6 +742,7 @@
                   
                 </a>
                 
+                
                 <a href="../../en/dev-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -641,6 +751,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/hash-toolkit/"
                   class="mega-tool-link  ">
@@ -654,7 +765,8 @@
                     
                 </a>
                 
-                <a href="../../en/json-toolkit/"
+                
+                <a href="https://json.ztools.site/en/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -668,6 +780,7 @@
                       
                 </a>
                 
+                
                 <a href="../../en/jwt-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -676,6 +789,7 @@
                   </span>
                   
                 </a>
+                
                 
                 <a href="../../en/qr-generator/"
                   class="mega-tool-link  ">
@@ -689,6 +803,7 @@
                     
                 </a>
                 
+                
                 <a href="../../en/timestamp-converter/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -700,6 +815,7 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
+                
                 
                 <a href="../../en/url-toolkit/"
                   class="mega-tool-link  ">
@@ -713,7 +829,8 @@
                     
                 </a>
                 
-                <a href="../../en/web-playground/"
+                
+                <a href="https://playground.ztools.site/en/"
                   class="mega-tool-link mode-advanced-only active">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -952,8 +1069,8 @@
 <!-- LZ-String for URL Compression -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
 <!-- External Examples Data -->
-<script src="../../assets/features/web-playground/examples.js?h=5df08c15"></script>
-<script src="../../assets/features/web-playground/script.js?h=5df08c15"></script>
+<script src="../../assets/features/web-playground/examples.js?h=e07594df&amp;v=1.5.2"></script>
+<script src="../../assets/features/web-playground/script.js?h=e07594df&amp;v=1.5.2"></script>
 
                 
           </main>
@@ -962,7 +1079,7 @@
 
                 
 
-                    <script src="../../assets/js/global.js?h=9f6288c7"></script>
+                    <script src="../../assets/js/global.js?h=b0d7d4cb&amp;v=1.5.2"></script>
                     <script>
                       // Initialize Lucide icons
                       if (window.lucide) {
@@ -999,14 +1116,21 @@
 <!-- Embed i18n data for client-side JS -->
 <script id="i18n-data" type="application/json">
   {
-    "search_no_results": "No results found for"
+    "search_no_results": "No results found for",
+    "feedback_success": "Thank you! Your message has been sent to the team.",
+    "feedback_error": "Something went wrong, please try again.",
+    "msg_starred": "Added to favorites",
+    "msg_unstarred": "Removed from favorites",
+    "msg_history_cleared": "History cleared",
+    "subdomains": [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"}],
+    "mainDomain": "ztools.site"
   }
 </script>
 
 <!-- Embed tools data for client-side search -->
 <script id="tools-data" type="application/json">
   
-  [{"id":"blog","link":"../../en/blog/","icon":"pen-tool","title":"Dev Stories","desc":"Behind the scenes, coding techniques, and updates from the team.","category":"home.cats.legacy.title"},{"id":"bmi","link":"../../en/bmi/","icon":"scale","title":"BMI Calculator","desc":"Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.","category":"Daily Utilities"},{"id":"bookmark-creator","link":"../../en/bookmark-creator/","icon":"bookmark","title":"Bookmark Creator","desc":"Create a personal bookmark set for your browser with your favorite ZTools.","category":"Daily Utilities"},{"id":"business-tax","link":"../../en/business-tax/","icon":"briefcase","title":"Corporate Income Tax (CIT) Calc","desc":"Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.","category":"Job & Income"},{"id":"compound-interest","link":"../../en/compound-interest/","icon":"trending-up","title":"Compound Interest Calculator","desc":"Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.","category":"Finance & Banking"},{"id":"cron-parser","link":"../../en/cron-parser/","icon":"terminal","title":"Cron Expression Parser","desc":"Convert Cron expressions into human-readable text.","category":"Dev Tools"},{"id":"date-time-master","link":"../../en/date-time-master/","icon":"calendar-clock","title":"Date & Time Master","desc":"All-in-one time tool: Calculate distance, add/subtract dates, and Unix conversion.","category":"Daily Utilities"},{"id":"date-toolkit","link":"../../en/date-toolkit/","icon":"calendar-days","title":"Date Toolkit","desc":"Calculate distance between dates, add/subtract time, and countdown.","category":"Daily Utilities"},{"id":"dev-toolkit","link":"../../en/dev-toolkit/","icon":"code","title":"Developer Toolkit","desc":"Comprehensive toolkit for developers","category":"Dev Tools"},{"id":"freelancer-tax","link":"../../en/freelancer-tax/","icon":"receipt","title":"Freelancer & Business Tax","desc":"Calculate tax for withholding (10%) or personal business households.","category":"Job & Income"},{"id":"glassmorphism-generator","link":"../../en/glassmorphism-generator/","icon":"sparkles","title":"Glassmorphism Generator","desc":"Create stunning frosted glass UI effects with real-time preview","category":"home.cats.dev-tools.title"},{"id":"hash-toolkit","link":"../../en/hash-toolkit/","icon":"lock","title":"Base64 & Hash Toolkit","desc":"Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.","category":"Dev Tools"},{"id":"inflation-calculator","link":"../../en/inflation-calculator/","icon":"line-chart","title":"Inflation Calculator (Vietnam)","desc":"See how much your money has lost or gained value over time.","category":"Finance & Banking"},{"id":"investment-calc","link":"../../en/investment-calc/","icon":"piggy-bank","title":"Investment ROI Calculator","desc":"Calculate your Return on Investment (ROI) and Annual Yield.","category":"Finance & Banking"},{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"braces","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"jwt-toolkit","link":"../../en/jwt-toolkit/","icon":"key","title":"JWT Debugger & Decoder","desc":"Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.","category":"Dev Tools"},{"id":"loan-calculator","link":"../../en/loan-calculator/","icon":"home","title":"Loan Calculator","desc":"Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.","category":"Finance & Banking"},{"id":"lorem-ipsum","link":"../../en/lorem-ipsum/","icon":"pilcrow","title":"Lorem Ipsum Generator","desc":"Generate placeholder text for designs and mockups.","category":"Text Tools"},{"id":"lunar-calendar","link":"../../en/lunar-calendar/","icon":"moon","title":"Lunar Calendar","desc":"Convert Solar to Lunar calendar, view Can Chi and Good Hours","category":"Daily Utilities"},{"id":"ot-calculator","link":"../../en/ot-calculator/","icon":"clock","title":"Overtime Calculator","desc":"Calculate accurately your overtime pay based on Vietnam Labor Law","category":"Job & Income"},{"id":"password-generator","link":"../../en/password-generator/","icon":"key-round","title":"Strong Password Generator","desc":"Generate secure, random passwords instantly.","category":"Generator Tools"},{"id":"percentage-calculator","link":"../../en/percentage-calculator/","icon":"percent","title":"Percentage Calculator","desc":"Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.","category":"Finance & Banking"},{"id":"qr-generator","link":"../../en/qr-generator/","icon":"qr-code","title":"QR Code Generator","desc":"Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.","category":"Dev Tools"},{"id":"random-toolkit","link":"../../en/random-toolkit/","icon":"dices","title":"Random Toolkit","desc":"Generate random numbers, pick items from list, and roll dice.","category":"Daily Utilities"},{"id":"salary-tax-master","link":"../../en/salary-tax-master/","icon":"wallet","title":"Salary & Tax Master","desc":"Full Salary & Tax Suite","category":"Job & Income"},{"id":"savings-interest","link":"../../en/savings-interest/","icon":"coins","title":"Savings Interest Calculator","desc":"Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.","category":"Finance & Banking"},{"id":"social-insurance","link":"../../en/social-insurance/","icon":"shield-plus","title":"Social Insurance","desc":"Social Insurance & Pension Calculator.","category":"Job & Income"},{"id":"tax","link":"../../en/tax/","icon":"banknote","title":"PIT Calculator","desc":"Calculate Personal Income Tax 2024, Net/Gross salary converter.","category":"Job & Income"},{"id":"text-diff","link":"../../en/text-diff/","icon":"file-diff","title":"Text Diff Checker","desc":"Compare two texts and highlight differences (additions, deletions, changes).","category":"Text Tools"},{"id":"text-formatter","link":"../../en/text-formatter/","icon":"wand-2","title":"Text Formatter - Clear Style","desc":"Remove formatting and clean up text copied from web pages.","category":"Text Tools"},{"id":"timestamp-converter","link":"../../en/timestamp-converter/","icon":"clock","title":"Timestamp Converter","desc":"Convert between Unix timestamps and human-readable dates.","category":"Dev Tools"},{"id":"unit-converter","link":"../../en/unit-converter/","icon":"ruler","title":"Unit Converter","desc":"Convert length, weight, volume, area, temperature, and more.","category":"Daily Utilities"},{"id":"url-toolkit","link":"../../en/url-toolkit/","icon":"link","title":"URL & Base64 Toolkit","desc":"Encode/Decode URL, Base64 and parse URL structure quickly.","category":"Dev Tools"},{"id":"uuid-generator","link":"../../en/uuid-generator/","icon":"fingerprint","title":"UUID Generator","desc":"Generate random UUIDs/GUIDs (V1, V4, V7) instantly.","category":"Generator Tools"},{"id":"web-playground","link":"../../en/web-playground/","icon":"code-2","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"},{"id":"word-counter","link":"../../en/word-counter/","icon":"bar-chart-3","title":"Word Counter & Analyzer","desc":"Count words, analyze frequency, and convert case (Case Converter).","category":"Text Tools"}]
+  [{"id":"blog","link":"../../en/blog/","icon":"pen-tool","title":"Dev Stories","desc":"Behind the scenes, coding techniques, and updates from the team.","category":"home.cats.legacy.title"},{"id":"bmi","link":"../../en/bmi/","icon":"scale","title":"BMI Calculator","desc":"Calculate Body Mass Index (BMI). Evaluate your weight status based on international standards.","category":"Daily Utilities"},{"id":"bookmark-creator","link":"../../en/bookmark-creator/","icon":"bookmark","title":"Bookmark Creator","desc":"Create a personal bookmark set for your browser with your favorite ZTools.","category":"Daily Utilities"},{"id":"business-tax","link":"../../en/business-tax/","icon":"briefcase","title":"Corporate Income Tax (CIT) Calc","desc":"Calculate Corporate Income Tax (CIT) for businesses quickly and accurately. Supports both direct and indirect methods.","category":"Job & Income"},{"id":"compound-interest","link":"../../en/compound-interest/","icon":"trending-up","title":"Compound Interest Calculator","desc":"Calculate the future value of your investment with compound interest. Includes monthly contributions and customizable compounding frequency.","category":"Finance & Banking"},{"id":"cron-parser","link":"../../en/cron-parser/","icon":"terminal","title":"Cron Expression Parser","desc":"Convert Cron expressions into human-readable text.","category":"Dev Tools"},{"id":"date-time-master","link":"../../en/date-time-master/","icon":"calendar-clock","title":"Date & Time Master","desc":"All-in-one time tool: Calculate distance, add/subtract dates, and Unix conversion.","category":"Daily Utilities"},{"id":"date-toolkit","link":"../../en/date-toolkit/","icon":"calendar-days","title":"Date Toolkit","desc":"Calculate distance between dates, add/subtract time, and countdown.","category":"Daily Utilities"},{"id":"dev-memes","link":"../../en/dev-memes/","icon":"smile","title":"DEV Memes","desc":"Stress relief for Developers","category":"DEV Memes"},{"id":"dev-toolkit","link":"../../en/dev-toolkit/","icon":"code","title":"Developer Toolkit","desc":"Comprehensive toolkit for developers","category":"Dev Tools"},{"id":"freelancer-tax","link":"../../en/freelancer-tax/","icon":"receipt","title":"Freelancer & Business Tax","desc":"Calculate tax for withholding (10%) or personal business households.","category":"Job & Income"},{"id":"glassmorphism-generator","link":"../../en/glassmorphism-generator/","icon":"sparkles","title":"Glassmorphism Generator","desc":"Create stunning frosted glass UI effects with real-time preview","category":"home.cats.dev-tools.title"},{"id":"hash-toolkit","link":"../../en/hash-toolkit/","icon":"lock","title":"Base64 & Hash Toolkit","desc":"Quickly encode/decode Base64 and generate cryptographic hashes like MD5 and SHA256.","category":"Dev Tools"},{"id":"inflation-calculator","link":"../../en/inflation-calculator/","icon":"line-chart","title":"Inflation Calculator (Vietnam)","desc":"See how much your money has lost or gained value over time.","category":"Finance & Banking"},{"id":"investment-calc","link":"../../en/investment-calc/","icon":"piggy-bank","title":"Investment ROI Calculator","desc":"Calculate your Return on Investment (ROI) and Annual Yield.","category":"Finance & Banking"},{"id":"json-toolkit","link":"../../en/json-toolkit/","icon":"braces","title":"JSON Toolkit","desc":"Format, validate, and convert JSON. Includes Tree View and data processing tools.","category":"Dev Tools"},{"id":"jwt-toolkit","link":"../../en/jwt-toolkit/","icon":"key","title":"JWT Debugger & Decoder","desc":"Decode, verify and inspect JSON Web Tokens (JWT) safely in your browser.","category":"Dev Tools"},{"id":"loan-calculator","link":"../../en/loan-calculator/","icon":"home","title":"Loan Calculator","desc":"Calculate monthly payments for loans, amortized schedule with reducing balance or flat rate options.","category":"Finance & Banking"},{"id":"lorem-ipsum","link":"../../en/lorem-ipsum/","icon":"pilcrow","title":"Lorem Ipsum Generator","desc":"Generate placeholder text for designs and mockups.","category":"Text Tools"},{"id":"lunar-calendar","link":"../../en/lunar-calendar/","icon":"moon","title":"Lunar Calendar","desc":"Convert Solar to Lunar calendar, view Can Chi and Good Hours","category":"Daily Utilities"},{"id":"ot-calculator","link":"../../en/ot-calculator/","icon":"clock","title":"Overtime Calculator","desc":"Calculate accurately your overtime pay based on Vietnam Labor Law","category":"Job & Income"},{"id":"password-generator","link":"../../en/password-generator/","icon":"key-round","title":"Strong Password Generator","desc":"Generate secure, random passwords instantly.","category":"Generator Tools"},{"id":"percentage-calculator","link":"../../en/percentage-calculator/","icon":"percent","title":"Percentage Calculator","desc":"Calculate percentages easily. Find percentage of a number, percentage change, or what percentage one number is of another.","category":"Finance & Banking"},{"id":"qr-generator","link":"../../en/qr-generator/","icon":"qr-code","title":"QR Code Generator","desc":"Generate high-quality QR codes for URLs, text, and more. Works entirely offline for privacy.","category":"Dev Tools"},{"id":"random-toolkit","link":"../../en/random-toolkit/","icon":"dices","title":"Random Toolkit","desc":"Generate random numbers, pick items from list, and roll dice.","category":"Daily Utilities"},{"id":"salary-tax-master","link":"../../en/salary-tax-master/","icon":"wallet","title":"Salary & Tax Master","desc":"Full Salary & Tax Suite","category":"Job & Income"},{"id":"savings-interest","link":"../../en/savings-interest/","icon":"coins","title":"Savings Interest Calculator","desc":"Calculate bank savings interest quickly. Supports term deposits with end-of-term or monthly interest payout.","category":"Finance & Banking"},{"id":"social-insurance","link":"../../en/social-insurance/","icon":"shield-plus","title":"Social Insurance","desc":"Social Insurance & Pension Calculator.","category":"Job & Income"},{"id":"tax","link":"../../en/tax/","icon":"banknote","title":"VIETNAM PIT Calculator","desc":"Comparison between tax law 2025 and earlier vs Resolution 110/2025/UBTVQH15 (effective from Jan 1, 2026)","category":"Job & Income"},{"id":"text-diff","link":"../../en/text-diff/","icon":"file-diff","title":"Text Diff Checker","desc":"Compare two texts and highlight differences (additions, deletions, changes).","category":"Text Tools"},{"id":"text-formatter","link":"../../en/text-formatter/","icon":"wand-2","title":"Text Formatter - Clear Style","desc":"Remove formatting and clean up text copied from web pages.","category":"Text Tools"},{"id":"timestamp-converter","link":"../../en/timestamp-converter/","icon":"clock","title":"Timestamp Converter","desc":"Convert between Unix timestamps and human-readable dates.","category":"Dev Tools"},{"id":"unit-converter","link":"../../en/unit-converter/","icon":"ruler","title":"Unit Converter","desc":"Convert length, weight, volume, area, temperature, and more.","category":"Daily Utilities"},{"id":"url-toolkit","link":"../../en/url-toolkit/","icon":"link","title":"URL & Base64 Toolkit","desc":"Encode/Decode URL, Base64 and parse URL structure quickly.","category":"Dev Tools"},{"id":"uuid-generator","link":"../../en/uuid-generator/","icon":"fingerprint","title":"UUID Generator","desc":"Generate random UUIDs/GUIDs (V1, V4, V7) instantly.","category":"Generator Tools"},{"id":"web-playground","link":"../../en/web-playground/","icon":"code-2","title":"zTool Playground","desc":"Online HTML/CSS/JS editor, runs directly in your browser, server-less sharing.","category":"Dev Tools"},{"id":"word-counter","link":"../../en/word-counter/d","icon":"bar-chart-3","title":"Word Counter & Analyzer","desc":"Count words, analyze frequency, and convert case (Case Converter).","category":"Text Tools"}]
 </script>
                         
 </body>

@@ -159,12 +159,24 @@ function getLanguageForFormat(format) {
   switch (format) {
     case 'xml': return 'xml';
     case 'yaml': return 'yaml';
+    case 'csv': return 'plaintext';
     case 'typescript': return 'typescript';
     case 'go': return 'go';
     case 'java': return 'java';
+    case 'protobuf': return 'protobuf';
     default: return 'plaintext';
   }
 }
+
+window.updateConvertLanguage = () => {
+  const format = document.getElementById('convert-format').value;
+  if (convertOutputEditor) {
+    const model = convertOutputEditor.getModel();
+    if (model) {
+      monaco.editor.setModelLanguage(model, getLanguageForFormat(format));
+    }
+  }
+};
 
 function convertJSONLogic(parsed, format) {
   switch (format) {

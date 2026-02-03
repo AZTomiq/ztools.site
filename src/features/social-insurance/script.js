@@ -2,32 +2,6 @@
  * Social Insurance & Pension Calculator
  */
 
-// Constants
-const INSURANCE_RATES = {
-  employee: {
-    bhxh: 0.08,
-    bhyt: 0.015,
-    bhtn: 0.01
-  },
-  employer: {
-    bhxh: 0.175,
-    bhyt: 0.03,
-    bhtn: 0.01
-  }
-};
-
-const CAPS = {
-  bhxh_bhyt: 46800000,
-  bhtn_multiplier: 20
-};
-
-const MIN_WAGES = {
-  1: 4960000,
-  2: 4410000,
-  3: 3860000,
-  4: 3450000
-};
-
 document.addEventListener('DOMContentLoaded', function () {
   const salaryInput = document.getElementById('salary');
   if (!salaryInput) return;
@@ -67,8 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const region = parseInt(regionSelect.value);
       if (salary === 0) return alert('Vui lòng nhập lương!');
 
-      const res = calculateInsuranceContribution(salary, region);
-      updateContributionDisplay(res, salary);
+      if (typeof calculateInsuranceContribution === 'function') {
+        const res = calculateInsuranceContribution(salary, region);
+        updateContributionDisplay(res, salary);
+      }
     });
   }
 
@@ -94,8 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const gender = genderSelect.value;
       if (avgSalary === 0 || years < 20) return alert('Vui lòng kiểm tra lại thông tin!');
 
-      const res = calculatePensionAmount(avgSalary, years, gender);
-      updatePensionDisplay(res, avgSalary, years);
+      if (typeof calculatePensionAmount === 'function') {
+        const res = calculatePensionAmount(avgSalary, years, gender);
+        updatePensionDisplay(res, avgSalary, years);
+      }
     });
   }
 
@@ -117,12 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
       const post = parseFloat(yearsPost2014Input.value) || 0;
       if (salary === 0 || (pre === 0 && post === 0)) return alert('Vui lòng nhập đầy đủ!');
 
-      const res = calculateOneTimeBHXH(salary, pre, post);
-      document.getElementById('onetime-avg').textContent = formatCurrency(salary);
-      document.getElementById('onetime-total-years').textContent = (pre + post) + ' năm';
-      document.getElementById('onetime-coefficient').textContent = res.coeff.toFixed(2) + ' tháng';
-      document.getElementById('onetime-amount').textContent = formatCurrency(res.amount);
-      onetimeResults.classList.add('show');
+      if (typeof calculateOneTimeBHXH === 'function') {
+        const res = calculateOneTimeBHXH(salary, pre, post);
+        document.getElementById('onetime-avg').textContent = formatCurrency(salary);
+        document.getElementById('onetime-total-years').textContent = (pre + post) + ' năm';
+        document.getElementById('onetime-coefficient').textContent = res.coeff.toFixed(2) + ' tháng';
+        document.getElementById('onetime-amount').textContent = formatCurrency(res.amount);
+        onetimeResults.classList.add('show');
+      }
     });
   }
 
@@ -135,56 +115,3 @@ document.addEventListener('DOMContentLoaded', function () {
     return Math.round(num).toLocaleString('vi-VN') + ' đ';
   }
 });
-
-// Pure Logic Functions
-function calculateInsuranceContribution(salary, region) {
-  const bhxhBhytCap = CAPS.bhxh_bhyt;
-  const bhtnCap = (MIN_WAGES[region] || MIN_WAGES[1]) * CAPS.bhtn_multiplier;
-
-  const salaryForBhxhBhyt = Math.min(salary, bhxhBhytCap);
-  const salaryForBhtn = Math.min(salary, bhtnCap);
-
-  const employee = {
-    bhxh: salaryForBhxhBhyt * INSURANCE_RATES.employee.bhxh,
-    bhyt: salaryForBhxhBhyt * INSURANCE_RATES.employee.bhyt,
-    bhtn: salaryForBhtn * INSURANCE_RATES.employee.bhtn
-  };
-  employee.total = employee.bhxh + employee.bhyt + employee.bhtn;
-
-  const employer = {
-    bhxh: salaryForBhxhBhyt * INSURANCE_RATES.employer.bhxh,
-    bhyt: salaryForBhxhBhyt * INSURANCE_RATES.employer.bhyt,
-    bhtn: salaryForBhtn * INSURANCE_RATES.employer.bhtn
-  };
-  employer.total = employer.bhxh + employer.bhyt + employer.bhtn;
-
-  return { employee, employer };
-}
-
-function calculatePensionAmount(avgSalary, years, gender) {
-  const baseYears = gender === 'female' ? 15 : 20;
-  let rate = 0.45;
-  if (years > baseYears) {
-    rate += (years - baseYears) * 0.02;
-  }
-  rate = Math.min(rate, 0.75);
-  const monthly = avgSalary * rate;
-  return { rate, monthly, yearly: monthly * 12 };
-}
-
-function calculateOneTimeBHXH(avgSalary, yearsPre, yearsPost) {
-  const coeff = (yearsPre * 1.5) + (yearsPost * 2.0);
-  return { coeff, amount: avgSalary * coeff };
-}
-
-// Export for Node.js testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    calculateInsuranceContribution,
-    calculatePensionAmount,
-    calculateOneTimeBHXH,
-    INSURANCE_RATES,
-    CAPS,
-    MIN_WAGES
-  };
-}

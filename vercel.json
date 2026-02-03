@@ -1,0 +1,227 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/web-playground/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://playground.ztools.site/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/tax/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://tncn.ztools.site/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/json-toolkit/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://json.ztools.site/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/compound-interest/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://laikep.ztools.site/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/lunar-calendar/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ztools.site"
+        }
+      ],
+      "destination": "https://amlich.ztools.site/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/sw.js",
+      "destination": "/sw.js"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/manifest.json"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/favicon.ico"
+    },
+    {
+      "source": "/en/",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<subdom>.*)"
+        }
+      ],
+      "destination": "/subdom-en-:subdom.html"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<subdom>.*)"
+        }
+      ],
+      "destination": "/subdom-:subdom.html"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "playground.ztools.site"
+        }
+      ],
+      "destination": "/en/web-playground/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "playground.ztools.site"
+        }
+      ],
+      "destination": "/web-playground/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "tncn.ztools.site"
+        }
+      ],
+      "destination": "/en/tax/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "tncn.ztools.site"
+        }
+      ],
+      "destination": "/tax/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "json.ztools.site"
+        }
+      ],
+      "destination": "/en/json-toolkit/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "json.ztools.site"
+        }
+      ],
+      "destination": "/json-toolkit/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laikep.ztools.site"
+        }
+      ],
+      "destination": "/en/compound-interest/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laikep.ztools.site"
+        }
+      ],
+      "destination": "/compound-interest/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amlich.ztools.site"
+        }
+      ],
+      "destination": "/en/lunar-calendar/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amlich.ztools.site"
+        }
+      ],
+      "destination": "/lunar-calendar/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lunar.ztools.site"
+        }
+      ],
+      "destination": "/en/lunar-calendar/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lunar.ztools.site"
+        }
+      ],
+      "destination": "/lunar-calendar/:path*"
+    }
+  ]
+}

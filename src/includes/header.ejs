@@ -1,72 +1,147 @@
-<header class="site-header">
-  <div class="header-inner container">
-    <div class="nav-item logo-wrapper">
-      <a href="<%= rootPath %><%= locale %>/" class="logo-link">
-        <img src="<%= rootPath %>assets/images/logo.svg" alt="AZtomiq Logo" class="logo-icon" width="28" height="28">
-        <span class="logo-text">AZtomiq</span>
-      </a>
-
-      <button class="menu-trigger dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Tools Menu"
-        style="background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; margin-left: 5px;">
-        <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted); opacity: 0.6;"></i>
-      </button>
-
-
-      <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
-        <a href="<%= rootPath %><%= locale %>/bookmark-creator/" class="nav-link-prominent"
-          style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
-          <%= t('bookmarkCreator.title') %>
+<% const navBase=isDev ? rootPath : siteGlobal.site.url + '/' ; %>
+  <header class="site-header">
+    <div class="header-inner container">
+      <div class="nav-item logo-wrapper">
+        <a href="<%= navBase %><%= locale === 'vi' ? '' : 'en/' %>" class="logo-link">
+          <img src="<%= rootPath %>assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
+          <span class="logo-text">ZTools</span>
         </a>
+
+        <button class="menu-trigger dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Tools Menu"
+          style="background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; margin-left: 5px;">
+          <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted); opacity: 0.6;"></i>
+        </button>
+
+
+        <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
+          <a href="<%= resolveUrl('/bookmark-creator/') %><%= locale === 'vi' ? '' : 'en/' %>"
+            class="nav-link-prominent"
+            style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
+            <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
+            <%= t('bookmarkCreator.title') %>
+          </a>
+          <a href="#feedback-form" class="nav-link-secondary tool-request-link"
+            onclick="const sel = document.querySelector('.feedback-select'); if(sel) { sel.value='new_tool'; sel.dispatchEvent(new Event('change')); } document.querySelector('.feedback-textarea')?.focus();"
+            style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">
+            <i data-lucide="plus-square" style="width: 16px; height: 16px;"></i>
+            <%= t('footer.feedback.topic_new_tool') %>
+          </a>
+        </div>
+
+        <%- include('mega-menu.ejs') %>
       </div>
 
-      <%- include('mega-menu.ejs') %>
-    </div>
+      <div class="header-actions">
+        <!-- Desktop Search Box -->
+        <div class="header-search-box desktop-only" id="header-search-box">
+          <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
+          <input type="text" class="header-search-input" placeholder="<%= t('nav.search_placeholder') %>" readonly>
+          <kbd>Ctrl+K</kbd>
+        </div>
 
-    <div class="header-actions">
-      <!-- Desktop Search Box -->
-      <div class="header-search-box desktop-only" id="header-search-box">
-        <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
-        <input type="text" class="header-search-input" placeholder="<%= t('nav.search_placeholder') %>" readonly>
-        <kbd>Ctrl+K</kbd>
-      </div>
+        <a href="<%= resolveUrl('/categories/') %><%= locale === 'vi' ? '' : 'en/' %>" class="btn-icon"
+          title="<%= t('nav.menu_categories') %>" aria-label="Categories">
+          <i data-lucide="grid-3x3"></i>
+        </a>
 
-      <a href="<%= rootPath %><%= locale %>/categories/" class="btn-icon" title="<%= t('nav.menu_categories') %>"
-        aria-label="Categories">
-        <i data-lucide="grid-3x3"></i>
-      </a>
+        <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="<%= t('nav.search_title') %>"
+          aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
 
-      <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="<%= t('nav.search_title') %>"
-        aria-label="Search">
-        <i data-lucide="search"></i>
-      </button>
+        <div class="nav-item preferences-wrapper">
+          <button class="btn-icon dropdown-toggle" id="prefs-btn" aria-haspopup="true" aria-expanded="false"
+            title="<%= t('nav.preferences') || 'Preferences' %>">
+            <i data-lucide="sliders-horizontal"></i>
+          </button>
 
-      <a href="<%= rootPath %><%= locale === 'vi' ? 'en' : 'vi' %>/<%= pageUrl %>" class="lang-switch"
-        title="Switch Language" aria-label="<%= locale === 'vi' ? 'Chuyển sang Tiếng Anh' : 'Switch to Vietnamese' %>">
-        <span aria-hidden="true">
-          <%= locale==='vi' ? '🇺🇸' : '🇻🇳' %>
-        </span>
-      </a>
-      <button id="mode-toggle" class="mode-toggle-btn" title="<%= t('nav.mode_advanced_desc') %>"
-        aria-label="Toggle User Mode">
-        <span class="mode-text">
-          <%= t('nav.mode_standard') %>
-        </span>
-        <div class="mode-switch">
-          <div class="mode-slider">
-            <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
+          <div class="dropdown-menu preferences-dropdown">
+            <div class="prefs-section">
+              <div class="prefs-label">
+                <%= t('nav.appearance') || 'Appearance' %>
+              </div>
+              <div class="prefs-row">
+                <span class="prefs-row-label">
+                  <%= t('nav.theme') || 'Theme' %>
+                </span>
+                <button id="theme-toggle" class="mode-toggle-btn theme-toggle-compact" aria-label="Toggle Dark Mode">
+                  <i data-lucide="moon" class="theme-icon-light"></i>
+                  <i data-lucide="sun" class="theme-icon-dark"></i>
+                  <span id="theme-text">
+                    <%= t('nav.theme_dark') || 'Dark' %>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div class="prefs-section">
+              <div class="prefs-label">
+                <%= t('nav.language') || 'Language' %>
+              </div>
+              <div class="prefs-row">
+                <% locales.forEach(function(loc) { const isActive=loc===locale; let switchBaseUrl=isDev ? rootPath :
+                  siteGlobal.site.url + '/' ; let switchPath=pageUrl; if (!isDev && typeof toolConfig !=='undefined' ) {
+                  const currentSub=siteGlobal.subdomains.find(s=> s.path === toolConfig.link);
+                  if (currentSub) {
+                  switchBaseUrl = 'https://' + currentSub.domain + '/';
+                  const featurePrefix = toolConfig.link.substring(1);
+                  if (switchPath.startsWith(featurePrefix)) {
+                  switchPath = switchPath.replace(featurePrefix, '');
+                  }
+                  }
+                  }
+
+                  switchPath = switchPath.replace(/^en\//, '');
+                  const targetUrl = loc === 'vi' ? switchBaseUrl + switchPath : switchBaseUrl + 'en/' + switchPath;
+                  %>
+                  <a href="<%= targetUrl %>" class="pref-lang-btn <%= isActive ? 'active' : '' %>"
+                    title="<%= loc === 'vi' ? 'Tiếng Việt' : 'English' %>">
+                    <span class="lang-flag">
+                      <%= loc==='vi' ? '🇻🇳' : '🇺🇸' %>
+                    </span>
+                    <span class="lang-name">
+                      <%= loc==='vi' ? 'Việt' : 'Eng' %>
+                    </span>
+                  </a>
+                  <% }); %>
+              </div>
+            </div>
+
+            <div class="prefs-section">
+              <div class="prefs-label">
+                <%= t('nav.user_mode') || 'User Mode' %>
+              </div>
+              <button id="mode-toggle" class="mode-toggle-btn full-width" title="<%= t('nav.mode_advanced_desc') %>">
+                <span class="mode-text">
+                  <%= t('nav.mode_standard') %>
+                </span>
+                <div class="mode-switch">
+                  <div class="mode-slider">
+                    <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
+                  </div>
+                </div>
+                <span class="mode-text">
+                  <%= t('nav.mode_advanced') %>
+                </span>
+              </button>
+            </div>
+
+            <div class="prefs-section no-border">
+              <div class="prefs-label">
+                <%= t('nav.identity') || 'Your Identity' %>
+              </div>
+              <div class="persona-options-grid">
+                <button class="persona-option" data-value="none">🎯 <span>Just Browsing</span></button>
+                <button class="persona-option" data-value="dev">👨‍💻 <span>Developer</span></button>
+                <button class="persona-option" data-value="pro">👩‍💼 <span>Professional</span></button>
+                <button class="persona-option" data-value="finance">💰 <span>Investor</span></button>
+                <button class="persona-option" data-value="creator">🎨 <span>Creator</span></button>
+              </div>
+            </div>
           </div>
         </div>
-        <span class="mode-text">
-          <%= t('nav.mode_advanced') %>
-        </span>
-      </button>
-
-      <button id="theme-toggle" class="btn-icon" aria-label="Toggle Dark Mode">
-        <i data-lucide="moon"></i>
-      </button>
+      </div>
     </div>
-  </div>
 
-  <%- include('header-data-only.ejs') %>
-</header>
+    <%- include('header-data-only.ejs') %>
+  </header>

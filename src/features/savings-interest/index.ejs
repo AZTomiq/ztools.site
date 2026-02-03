@@ -1,15 +1,15 @@
-<!-- title: <%= t('savings.title') %> - AZtomiq -->
+<!-- title: <%= t('savings.title') %> - ZTools -->
 
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
-<!-- Reusing compound-interest styles as they are identical layout-wise -->
 
 <section class="tool-container">
   <div class="page-header">
     <h1>💰 <%= t('savings.title') %>
-    
-      <% if (typeof toolConfig !== 'undefined' && toolConfig.meta && toolConfig.meta.version) { %>
-        <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %></button>
-      <% } %></h1>
+        <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
+          <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
+              </button>
+          <% } %>
+    </h1>
     <p>
       <%= t('savings.desc') %>
     </p>
@@ -17,7 +17,7 @@
 
   <div class="calculator-card">
     <form id="savings-form" class="finance-form">
-      <!-- Deposit Amount -->
+      <!-- Amount -->
       <div class="form-group">
         <label for="amount">
           <%= t('savings.amount') %>
@@ -29,40 +29,38 @@
       </div>
 
       <div class="form-row">
-        <!-- Interest Rate -->
+        <!-- Annual Rate -->
         <div class="form-group">
           <label for="rate">
-            <%= t('savings.rate') %>
+            <%= t('savings.annual_rate') %>
           </label>
           <div class="input-group">
-            <input type="number" id="rate" placeholder="5.5" step="0.01" min="0">
+            <input type="number" id="rate" placeholder="6.5" step="0.1" min="0">
             <span class="input-suffix">%</span>
           </div>
         </div>
 
-        <!-- Term -->
+        <!-- Term Select -->
         <div class="form-group">
           <label for="term">
             <%= t('savings.term') %>
           </label>
           <select id="term">
-            <option value="1">
-              <%= t('savings.term_options.1') %>
+            <option value="1">1 <%= t('savings.month') %>
             </option>
-            <option value="3">
-              <%= t('savings.term_options.3') %>
+            <option value="3">3 <%= t('savings.months') %>
             </option>
-            <option value="6" selected>
-              <%= t('savings.term_options.6') %>
+            <option value="6">6 <%= t('savings.months') %>
             </option>
-            <option value="12">
-              <%= t('savings.term_options.12') %>
+            <option value="9">9 <%= t('savings.months') %>
             </option>
-            <option value="24">
-              <%= t('savings.term_options.24') %>
+            <option value="12" selected>12 <%= t('savings.months') %>
             </option>
-            <option value="36">
-              <%= t('savings.term_options.36') %>
+            <option value="18">18 <%= t('savings.months') %>
+            </option>
+            <option value="24">24 <%= t('savings.months') %>
+            </option>
+            <option value="36">36 <%= t('savings.months') %>
             </option>
             <option value="custom">
               <%= t('savings.custom_term') %>
@@ -74,10 +72,10 @@
       <!-- Custom Term Input (Hidden by default) -->
       <div class="form-group" id="custom-term-group" style="display: none;">
         <label for="custom-months">
-          <%= t('savings.custom_term') %>
+          <%= t('savings.custom_months_label') %>
         </label>
         <div class="input-group">
-          <input type="number" id="custom-months" placeholder="Enter months" min="1">
+          <input type="number" id="custom-months" placeholder="5" min="1">
           <span class="input-suffix">
             <%= t('savings.months') %>
           </span>
@@ -100,10 +98,10 @@
         <%= t('savings.result_title') %>
       </h3>
 
-      <div class="result-grid" style="grid-template-columns: 1fr 1fr;"> <!-- 2 columns only -->
+      <div class="result-grid">
         <div class="result-card primary">
           <span>
-            <%= t('savings.total_interest') %>
+            <%= t('savings.earned_interest') %>
           </span>
           <strong id="res-interest">0 đ</strong>
         </div>
@@ -126,4 +124,5 @@
   </div>
 </section>
 
+<script src="<%= asset('assets/features/savings-interest/logic.js') %>"></script>
 <script src="<%= toolConfig._assets.js %>"></script>

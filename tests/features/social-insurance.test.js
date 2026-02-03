@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const si = require('../../src/features/social-insurance/script.js');
+const si = require('../../src/features/social-insurance/logic.js');
 
 describe('Social Insurance Logic', () => {
   describe('Contribution', () => {

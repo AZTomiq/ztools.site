@@ -2,46 +2,97 @@
 
   <!-- HOME VIEW: List of Articles -->
   <div id="home-view" class="blog-view">
-    <header class="blog-hero">
-      <div class="hero-chip">✍️ Dev Stories</div>
-      <h1 class="blog-title-main">Dev Stories & Technical Insights</h1>
-      <p class="blog-subtitle">
-        <%= t('blog.desc') %>
-      </p>
+    <header class="blog-hero-v2">
+      <div class="hero-bg-accent"></div>
+      <div class="hero-content">
+        <div class="hero-chip"><i data-lucide="book-open"></i> ✍️ <%= t('blog.title') %>
+        </div>
+        <h1 class="blog-title-main">
+          <%- t('blog.hero_title', 'Dev Diary & <br>Coding Tales' ) %>
+        </h1>
+        <p class="blog-subtitle">
+          <%= t('blog.desc') %>
+        </p>
+      </div>
+      <div class="hero-visual">
+        <div class="cube-wrap">
+          <div class="cube-float"></div>
+        </div>
+      </div>
     </header>
 
-    <div class="post-list">
-      <% if (blogPosts && blogPosts.length> 0) { %>
-        <% blogPosts.forEach(post=> { %>
-          <div onclick="route('<%= post.slug %>')" class="post-card">
-            <div class="post-card-content">
-              <div class="post-meta">
-                <span class="post-tag">
-                  <%= post.tag || 'Tech' %>
-                </span>
-                <span class="post-date">
-                  <%= post.date %>
-                </span>
-                <span class="post-readtime">
-                  <%= post.readTime || '5 min read' %>
-                </span>
-              </div>
-              <h2 class="post-title">
-                <%= post.title %>
-              </h2>
-              <p class="post-excerpt">
-                <%= post.excerpt || 'Discover technical insights and stories from our dev team...' %>
-              </p>
-              <div class="post-footer">
-                <span class="read-more">Read Full Story ➔</span>
-              </div>
+    <div class="diary-list">
+      <% if (blogPosts && blogPosts.length> 0) {
+        // Grouping logic: Year -> MonthIdx -> Posts
+        const groups = {};
+        blogPosts.forEach(post => {
+        const date = new Date(post.date);
+        const year = isNaN(date.getTime()) ? 'Archive' : date.getFullYear();
+        const monthIdx = isNaN(date.getTime()) ? 99 : date.getMonth();
+
+        if (!groups[year]) groups[year] = {};
+        if (!groups[year][monthIdx]) groups[year][monthIdx] = [];
+        groups[year][monthIdx].push(post);
+        });
+
+        // Sort years descending
+        const years = Object.keys(groups).sort((a, b) => b - a);
+        %>
+        <% years.forEach((year, yIdx)=> { %>
+          <div class="year-group" style="--year-delay: <%= yIdx * 0.2 %>s">
+            <h2 class="year-marker">
+              <%= year %>
+            </h2>
+            <div class="months-container">
+              <% const monthIndices=Object.keys(groups[year]).sort((a, b)=> b - a);
+                %>
+                <% monthIndices.forEach(mIdx=> {
+                  const firstPostInMonth = groups[year][mIdx][0];
+                  const dateObj = new Date(firstPostInMonth.date);
+                  const monthName = dateObj.toLocaleString(locale === 'vi' ? 'vi-VN' : 'en-US', { month: 'long' });
+                  %>
+                  <div class="month-block">
+                    <h3 class="month-marker">
+                      <%= monthName %>
+                    </h3>
+                    <div class="posts-list">
+                      <% groups[year][mIdx].forEach((post, pIdx)=> { %>
+                        <div onclick="route('<%= post.slug %>')" class="diary-post-item"
+                          style="--p-delay: <%= pIdx * 0.05 %>s">
+                          <div class="post-dot"></div>
+                          <div class="post-content-mini">
+                            <h4 class="mini-title">
+                              <%= post.title %>
+                            </h4>
+                            <p class="mini-excerpt">
+                              <%= post.excerpt || 'Technical notes and reflections...' %>
+                            </p>
+                            <div class="mini-meta">
+                              <span class="mini-tag">
+                                <%= post.tag || 'Tech' %>
+                              </span>
+                              <span class="mini-readtime">
+                                <%= post.readTime || '5 min' %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                  </div>
+                  <% }); %>
             </div>
           </div>
           <% }); %>
             <% } else { %>
-              <div class="empty-state">
-                <div class="empty-icon">📂</div>
-                <p>No stories published yet. Stay tuned!</p>
+              <div class="blog-empty">
+                <div class="empty-icon"><i data-lucide="folder-open"></i></div>
+                <h3>
+                  <%= t('blog.empty_title', 'Chưa có bài viết nào' ) %>
+                </h3>
+                <p>
+                  <%= t('blog.empty_desc', 'Chúng tôi đang chuẩn bị nội dung tuyệt vời cho bạn.' ) %>
+                </p>
               </div>
               <% } %>
     </div>
@@ -52,7 +103,9 @@
     <div class="article-nav">
       <button onclick="route('')" class="article-back">
         <span class="back-icon">←</span>
-        <span>Back to Stories</span>
+        <span>
+          <%= t('blog.back', 'Back to Stories' ) %>
+        </span>
       </button>
     </div>
 
@@ -60,6 +113,8 @@
       <header class="article-header">
         <div id="article-meta-top" class="post-meta"></div>
         <h1 id="article-title" class="article-title-text"></h1>
+        <!-- Series Nav Container -->
+        <div id="series-nav" class="series-nav hidden"></div>
       </header>
 
       <div id="article-content" class="article-content markdown-body">
@@ -68,7 +123,9 @@
 
       <footer class="article-footer">
         <div class="footer-divider"></div>
-        <button onclick="route('')" class="btn-outline">More stories</button>
+        <button onclick="route('')" class="btn-outline">
+          <%= t('blog.more') %>
+        </button>
       </footer>
     </article>
   </div>
@@ -123,7 +180,94 @@
             <span class="post-date">${post.date || ''}</span>
             <span class="post-readtime">${post.readTime || ''}</span>
           `;
-          contentDiv.innerHTML = post.body || '';
+
+          // Series Navigation Logic
+          const seriesNav = document.getElementById('series-nav');
+          if (seriesNav) {
+            seriesNav.innerHTML = '';
+            seriesNav.classList.add('hidden');
+
+            if (post.series) {
+              const seriesPosts = Object.values(window.POSTS)
+                .filter(p => p.series === post.series && p.locale === post.locale)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+              if (seriesPosts.length > 1) {
+                const seriesTitleMap = {
+                  'vi': 'Chuỗi bài viết:',
+                  'en': 'In this series:'
+                };
+                const seriesLabel = seriesTitleMap['<%= locale %>'] || 'Series:';
+
+                let navHtml = `<div class="series-card"><h3>${seriesLabel} ${post.series}</h3><ul>`;
+                seriesPosts.forEach(p => {
+                  const activeClass = p.slug === slug ? 'active' : '';
+                  navHtml += `<li class="${activeClass}" onclick="route('${p.slug}')">${p.title}</li>`;
+                });
+                navHtml += `</ul></div>`;
+                seriesNav.innerHTML = navHtml;
+                seriesNav.classList.remove('hidden');
+              }
+            }
+          }
+          let playgroundHtml = '';
+          if (post.playground_slug) {
+            playgroundHtml = `
+              <div class="playground-promo-card">
+                <div class="promo-icon"><i data-lucide="play-circle"></i></div>
+                <div class="promo-content">
+                  <h4><%= t('blog.playground_promo_title') %></h4>
+                  <p><%= t('blog.playground_promo_desc') %></p>
+                </div>
+                <a href="${post.locale === 'en' ? '/en' : ''}/web-playground/?example=${post.playground_slug}" class="btn-playground">
+                  <%= t('blog.playground_promo_btn') %>
+                </a>
+              </div>
+            `;
+          }
+
+          contentDiv.innerHTML = playgroundHtml + (post.body || '');
+          if (window.lucide) lucide.createIcons();
+          if (window.Prism) Prism.highlightAll();
+
+          // Roadmap Auto-Unlock Logic
+          if (slug.startsWith('zero-to-hero-') || slug === 'solid' || slug === 'acid' || slug.includes('typescript-all-in-one')) {
+            const roadmapMap = {
+              'zero-to-hero-html-cau-truc-web-co-ban': 'html',
+              'zero-to-hero-css-tu-co-ban-den-nang-cao': 'css',
+              'zero-to-hero-javascript-ngon-ngu-lap-trinh-web': 'js',
+              'typescript-all-in-one-tu-zero-den-hero': 'ts',
+              'zero-to-hero-vue-modern-frontend-framework': 'vue',
+              'dsa-internal-power': ['dsa-base', 'recursion', 'graph'],
+              'sort-in-javascript-professional-style': 'sorting',
+              'zero-to-hero-node-js-tu-co-ban-den-nang-cao': 'node',
+              'zero-to-hero-expressjs-web-framework-tu-co-ban-den-nang-cao': 'express',
+              'zero-to-hero-nestjs-enterprise-framework-cho-node-js': 'nestjs',
+              'zero-to-hero-python': 'python',
+              'zero-to-hero-mysql-database-management-tu-co-ban-den-nang-cao': 'sql',
+              'zero-to-hero-mongodb-nosql-database-cho-ung-dung-hien-dai': 'nosql',
+              'zero-to-hero-prisma-modern-database-toolkit': 'prisma',
+              'zero-to-hero-mongoose': 'mongoose',
+              'zero-to-hero-docker-containerization-tu-co-ban-den-nang-cao': 'docker',
+              'zero-to-hero-docker-compose-multi-container-orchestration': 'compose',
+              'zero-to-hero-kafka': 'kafka',
+              'zero-to-hero-rabbitmq-message-broker-mastery': 'rabbitmq',
+              'solid': 'solid',
+              'acid': 'acid',
+              'zero-to-hero-jest-testing-framework-cho-javascript': 'testing',
+              'zero-to-hero-puppeteer-web-automation-scraping': 'automation'
+            };
+            const nodeIds = roadmapMap[slug];
+            if (nodeIds) {
+              const stored = JSON.parse(localStorage.getItem('ztools_roadmap_progress') || '{}');
+              if (Array.isArray(nodeIds)) {
+                nodeIds.forEach(id => stored[id] = true);
+              } else {
+                stored[nodeIds] = true;
+              }
+              localStorage.setItem('ztools_roadmap_progress', JSON.stringify(stored));
+            }
+          }
 
           if (window.history.pushState) window.history.pushState(null, null, '#' + slug);
           document.title = (post.title || 'Post') + ' - Dev Stories';

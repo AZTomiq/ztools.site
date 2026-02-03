@@ -1,4 +1,4 @@
-<!-- title: <%= t('lunarCalendar.title') %> - AZtomiq -->
+<!-- title: <%= t('lunarCalendar.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
@@ -91,13 +91,18 @@
             </div>
           </div>
 
-          <button id="view-hours-btn" class="btn-view-hours">
-            ⏰ <%= t('lunarCalendar.goodHours.title') %>
-          </button>
+          <div class="zodiac-summary">
+            <h4 class="zodiac-summary-title">
+              <i data-lucide="sun" style="width: 14px; height: 14px;"></i>
+              <%= t('lunarCalendar.goodHours.title') %>
+            </h4>
+            <div id="zodiac-hours-summary" class="zodiac-hours-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
     <!-- Month View Section -->
     <div class="card tool-card" style="margin-top: 2rem;">
       <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-color);">
@@ -130,25 +135,6 @@
       <p style="margin-top: 1rem; color: var(--text-muted); line-height: 1.6;">
         <%= t('lunarCalendar.info.canChiInfo') %>
       </p>
-    </div>
-  </div>
-
-  <!-- Good Hours Modal -->
-  <div id="lunar-hours-modal" class="search-modal" style="display: none;">
-    <div class="search-overlay" id="close-hours-overlay"></div>
-    <div class="search-container" style="max-width: 500px;">
-      <div class="search-header">
-        <span class="search-icon"><i data-lucide="clock" style="width: 20px; height: 20px;"></i></span>
-        <h2 style="flex: 1; margin: 0; font-size: 1.25rem;">
-          <%= t('lunarCalendar.goodHours.title') %>
-        </h2>
-        <button id="close-hours-modal" class="close-search">&times;</button>
-      </div>
-      <div class="modal-body hours-modal-body">
-        <div id="modal-good-hours-list" class="modal-hours-grid">
-          <!-- Populated by JS -->
-        </div>
-      </div>
     </div>
   </div>
 </section>

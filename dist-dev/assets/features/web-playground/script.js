@@ -272,17 +272,27 @@ document.getElementById('click-me').addEventListener('click', () => {
   // Load Monaco
   require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
 
-  require(['vs/editor/editor.main'], function () {
-
-    // Theme config
-    monaco.editor.defineTheme('ztools-dark', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': '#1e1e1e',
-      }
+  // FIX: Check if Monaco is already defined to prevent "Duplicate definition" warning
+  if (window.monaco) {
+    initEditors();
+  } else {
+    require(['vs/editor/editor.main'], function () {
+      initEditors();
     });
+  }
+
+  function initEditors() {
+    // Theme config
+    if (!monaco.editor._themeService?._theme?.themeName?.includes('ztools-dark')) {
+      monaco.editor.defineTheme('ztools-dark', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': '#1e1e1e',
+        }
+      });
+    }
 
     const editorOptions = {
       theme: 'ztools-dark',
@@ -294,50 +304,68 @@ document.getElementById('click-me').addEventListener('click', () => {
       fontFamily: 'Monaco, monospace'
     };
 
-    // Check URL for shared data
+    // Check URL for shared data or example
     let initialHtml = defaultHtml;
     let initialCss = defaultCss;
     let initialJs = defaultJs;
 
-    const hash = window.location.hash;
-    if (hash && hash.startsWith('#code=')) {
-      try {
-        const encoded = hash.substring(6);
-        if (encoded) {
-          const decompressed = LZString.decompressFromEncodedURIComponent(encoded);
-          if (decompressed) {
-            const data = JSON.parse(decompressed);
-            initialHtml = data.html || '';
-            initialCss = data.css || '';
-            initialJs = data.js || '';
+    // 1. Check Query Params for Example ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const exampleId = urlParams.get('example');
+    let exampleLoaded = false;
 
-            // Apply active states if provided
-            if (data.active) {
-              const activeIds = data.active.split(',');
-              activeIds.forEach(id => {
-                const el = document.getElementById(`pane-${id}`);
-                if (el) {
-                  el.classList.add('active');
-                  el.classList.remove('minimized');
-                }
-              });
-              // Minimize others
-              ['html', 'css', 'js'].forEach(id => {
-                if (!activeIds.includes(id)) {
+    if (exampleId && window.PLAYGROUND_EXAMPLES) {
+      const ex = window.PLAYGROUND_EXAMPLES.find(e => e.id === exampleId);
+      if (ex) {
+        initialHtml = ex.html;
+        initialCss = ex.css;
+        initialJs = ex.js;
+        exampleLoaded = true;
+      }
+    }
+
+    // 2. Check Hash for shared code (only if example not loaded)
+    if (!exampleLoaded) {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#code=')) {
+        try {
+          const encoded = hash.substring(6);
+          if (encoded) {
+            const decompressed = LZString.decompressFromEncodedURIComponent(encoded);
+            if (decompressed) {
+              const data = JSON.parse(decompressed);
+              initialHtml = data.html || '';
+              initialCss = data.css || '';
+              initialJs = data.js || '';
+
+              // Apply active states if provided
+              if (data.active) {
+                const activeIds = data.active.split(',');
+                activeIds.forEach(id => {
                   const el = document.getElementById(`pane-${id}`);
                   if (el) {
-                    el.classList.add('minimized');
-                    el.classList.remove('active');
+                    el.classList.add('active');
+                    el.classList.remove('minimized');
                   }
-                }
-              });
+                });
+                // Minimize others
+                ['html', 'css', 'js'].forEach(id => {
+                  if (!activeIds.includes(id)) {
+                    const el = document.getElementById(`pane-${id}`);
+                    if (el) {
+                      el.classList.add('minimized');
+                      el.classList.remove('active');
+                    }
+                  }
+                });
+              }
+            } else {
+              console.warn('Failed to decompress code from URL hash');
             }
-          } else {
-            console.warn('Failed to decompress code from URL hash');
           }
+        } catch (e) {
+          console.error('Error parsing shared code:', e);
         }
-      } catch (e) {
-        console.error('Error parsing shared code:', e);
       }
     }
 
@@ -385,7 +413,8 @@ document.getElementById('click-me').addEventListener('click', () => {
     editorHtml.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, saveAction);
     editorCss.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, saveAction);
     editorJs.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, saveAction);
-  });
+
+  }
 
   // Run Button Logic
   if (runBtn) {

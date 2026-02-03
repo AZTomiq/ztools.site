@@ -23,7 +23,11 @@ function parseFrontmatter(content) {
     const parts = line.split(':');
     if (parts.length >= 2) {
       const key = parts.shift().trim();
-      const value = parts.join(':').trim();
+      let value = parts.join(':').trim();
+      // Strip surrounding quotes
+      if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+        value = value.substring(1, value.length - 1);
+      }
       attributes[key] = value;
     }
   });

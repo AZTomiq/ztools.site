@@ -1,0 +1,221 @@
+<% const premiumTools=tools.filter(t=> t.domain && !['blog.ph4n4n.xyz', 'roadmap.ph4n4n.xyz'].includes(t.domain));
+  premiumTools.sort((a, b) => (a.id === 'web-playground' ? -1 : 1));
+  %>
+
+  <section class="premium-ecosystem">
+    <div class="section-header">
+      <div class="premium-label">
+        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
+        <span>PRO SUITES</span>
+      </div>
+      <h2 class="section-title">
+        <%= t('home.premium.title') %>
+      </h2>
+    </div>
+
+    <div class="premium-grid">
+      <% premiumTools.forEach((tool, index)=> {
+        let accentColor = '#3b82f6';
+        let bgGradient = 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)';
+
+        if (tool.id === 'web-playground') {
+        accentColor = '#8b5cf6';
+        bgGradient = 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)';
+        } else if (tool.id === 'lunar-calendar') {
+        accentColor = '#f59e0b';
+        bgGradient = 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)';
+        } else if (tool.id === 'tax') {
+        accentColor = '#10b981';
+        bgGradient = 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)';
+        } else if (tool.id === 'compound-interest') {
+        accentColor = '#f43f5e';
+        bgGradient = 'linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)';
+        } else if (tool.id === 'json-toolkit') {
+        accentColor = '#0ea5e9';
+        bgGradient = 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)';
+        }
+
+        const langPath = locale === 'vi' ? '' : 'en/';
+        let finalUrl;
+        if (tool.domain) {
+        finalUrl = `https://${tool.domain}/${langPath}`;
+        } else {
+        const baseSubUrl = resolveUrl(tool.link);
+        finalUrl = baseSubUrl.endsWith('/') ? baseSubUrl + langPath : baseSubUrl + '/' + langPath;
+        }
+        %>
+        <a href="<%= finalUrl %>" target="_blank" rel="noopener noreferrer" class="premium-card-link">
+          <div class="premium-card" style="--accent-color: <%= accentColor %>;">
+            <div class="premium-card-bg" style="background: <%= bgGradient %>;"></div>
+
+            <div class="premium-card-content">
+              <div class="premium-icon-box">
+                <i data-lucide="<%= tool.icon || 'star' %>"
+                  style="width: 20px; height: 20px; color: <%= accentColor %>;"></i>
+              </div>
+
+              <div class="premium-text">
+                <div class="premium-domain">
+                  <%= tool.domain %>
+                </div>
+                <h3 class="premium-title">
+                  <%= t(tool.translationKey + '.title' ) %>
+                </h3>
+              </div>
+
+              <div class="premium-arrow">
+                <i data-lucide="arrow-up-right" style="width: 16px; height: 16px;"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+        <% }); %>
+    </div>
+  </section>
+
+  <style>
+    .premium-ecosystem {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .premium-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(var(--primary-rgb), 0.1);
+      color: var(--primary-color);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-color);
+    }
+
+    .premium-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .premium-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .premium-card {
+      position: relative;
+      padding: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .premium-card-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      opacity: 0.6;
+      transition: transform 0.4s ease;
+    }
+
+    [data-theme="dark"] .premium-card-bg {
+      opacity: 0.08;
+      background: var(--accent-color) !important;
+    }
+
+    .premium-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-color);
+      box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    .premium-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .premium-icon-box {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] .premium-icon-box {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .premium-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .premium-domain {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      opacity: 0.7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .premium-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-color);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .premium-arrow {
+      opacity: 0.3;
+      transition: all 0.3s ease;
+    }
+
+    .premium-card:hover .premium-arrow {
+      opacity: 1;
+      color: var(--accent-color);
+      transform: translate(2px, -2px);
+    }
+
+    @media (max-width: 600px) {
+      .premium-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>

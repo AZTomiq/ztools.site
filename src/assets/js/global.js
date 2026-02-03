@@ -4,23 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Update button icon based on current theme
   const updateIcon = (theme) => {
+    if (!toggleBtn) return;
     const iconName = theme === 'dark' ? 'sun' : 'moon';
     toggleBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
     if (window.lucide) lucide.createIcons();
   };
 
-  updateIcon(htmlEl.getAttribute('data-theme'));
+  if (toggleBtn) {
+    updateIcon(htmlEl.getAttribute('data-theme'));
 
-  toggleBtn.addEventListener('click', () => {
-    const currentTheme = htmlEl.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-    htmlEl.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateIcon(newTheme);
-  });
+      htmlEl.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateIcon(newTheme);
+    });
+  }
 
-  console.log('AZtomiq Global JS Loaded');
+  console.log('AZtomiq Global JS v1.5.2-rev2 Loaded');
 
   // Register Service Worker for PWA
   if ('serviceWorker' in navigator) {
@@ -30,48 +33,49 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error('SW Registration Failed', err));
     });
   }
-  // --- Global Navigation & Mega Menu Logic ---
-  const navItems = document.querySelectorAll('.nav-item');
 
-  // 1. Logo/Menu Toggle
-  navItems.forEach(item => {
-    const toggle = item.querySelector('.dropdown-toggle');
-    const menu = item.querySelector('.dropdown-menu');
+  // --- Global Navigation & Dropdown Logic (Unified delegation) ---
+  document.addEventListener('click', (e) => {
+    const toggle = e.target.closest('.dropdown-toggle');
+    const megaHeader = e.target.closest('.mega-cat-header');
 
-    if (toggle && menu) {
-      toggle.addEventListener('click', (e) => {
+    // 1. Handle Dropdown Toggles (Mega Menu, Preferences, etc.)
+    if (toggle) {
+      const item = toggle.closest('.nav-item');
+      const menu = item ? item.querySelector('.dropdown-menu') : null;
+      if (menu) {
         e.preventDefault();
         e.stopPropagation();
+        const isShown = menu.classList.contains('show');
 
-        // Close other open menus first
+        // Close ALL other open menus first
         document.querySelectorAll('.dropdown-menu.show').forEach(m => {
           if (m !== menu) m.classList.remove('show');
         });
+        document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach(btn => {
+          if (btn !== toggle) btn.setAttribute('aria-expanded', 'false');
+        });
 
-        menu.classList.toggle('show');
-        toggle.setAttribute('aria-expanded', menu.classList.contains('show'));
-      });
+        // Toggle current
+        menu.classList.toggle('show', !isShown);
+        toggle.setAttribute('aria-expanded', !isShown);
+        return;
+      }
     }
-  });
 
-  // 2. Mega Menu Category Toggles (Expand/Collapse)
-  document.querySelectorAll('.mega-header').forEach(header => {
-    header.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent closing the menu itself
+    // 2. Handle Mega Menu Column Toggles (Expand/Collapse)
+    if (megaHeader) {
       e.preventDefault();
-      const expanded = header.getAttribute('aria-expanded') === 'true';
-      header.setAttribute('aria-expanded', !expanded);
-    });
-  });
+      e.stopPropagation();
+      const expanded = megaHeader.getAttribute('aria-expanded') === 'true';
+      megaHeader.setAttribute('aria-expanded', !expanded);
+      return;
+    }
 
-  // 3. Close dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-item')) {
-      document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-        menu.classList.remove('show');
-        const toggle = menu.parentElement.querySelector('.dropdown-toggle');
-        if (toggle) toggle.setAttribute('aria-expanded', 'false');
-      });
+    // 3. Handle Outside Clicks (Close all if click is NOT inside a menu or on a toggle)
+    if (!e.target.closest('.dropdown-menu') && !e.target.closest('.dropdown-toggle')) {
+      document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      document.querySelectorAll('.dropdown-toggle[aria-expanded="true"]').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
     }
   });
 
@@ -231,13 +235,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- End Search & Changelog Logic ---
 
-  // Track clicks on tool items (both in Mega Menu and Homepage Grid)
-  document.querySelectorAll('.tool-item, .mega-link, .search-result-item').forEach(link => {
-    link.addEventListener('click', (e) => {
+  // Track clicks on tool items (using delegation for dynamic content)
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.tool-item, .mega-link, .search-result-item, .tool-link');
+    if (link) {
       const url = link.getAttribute('href');
       trackUsage(url);
 
-      // Close any open mega-menu if this was a menu click
+      // Close mega-menu if this was a menu click
       if (link.classList.contains('mega-link')) {
         document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
           menu.classList.remove('show');
@@ -245,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (toggle) toggle.setAttribute('aria-expanded', 'false');
         });
       }
-    });
+    }
   });
 
   function trackUsage(toolUrl) {
@@ -269,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // --- Favorite Tools Logic (Star System) ---
   const FAVORITES_KEY = 'aztomiq_favorites';
+  const RECENT_KEY = 'aztomiq_recent';
   let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
 
   function updateStars() {
@@ -276,10 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = btn.getAttribute('data-tool-id');
       const isActive = favorites.includes(id);
       btn.classList.toggle('active', isActive);
-      const icon = btn.querySelector('i');
-      if (icon && window.lucide) {
-        // We just toggle the class, CSS handles the fill/color
-      }
     });
   }
 
@@ -287,12 +289,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const index = favorites.indexOf(id);
     if (index === -1) {
       favorites.push(id);
+      showToast(i18nData.msg_starred || 'Added to favorites');
     } else {
       favorites.splice(index, 1);
+      showToast(i18nData.msg_unstarred || 'Removed from favorites');
     }
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
     updateStars();
     renderFavorites();
+  }
+
+  function createToolCard(tool, isRecent = false) {
+    if (!tool) return '';
+    let modeClass = '';
+    if (tool.mode === 'standard') modeClass = 'mode-standard-only';
+    else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
+
+    const isStarred = favorites.includes(tool.id);
+
+    return `
+      <div class="tool-card-wrapper ${modeClass}">
+        <div class="tool-card">
+          <button class="star-btn ${isStarred ? 'active' : ''}" data-tool-id="${tool.id}" aria-label="Toggle favorite" title="Toggle favorite">
+            <i data-lucide="star" style="width: 14px; height: 14px; fill: ${isStarred ? 'currentColor' : 'none'};"></i>
+          </button>
+          
+          <div class="tool-badge-row">
+             ${tool.highlight ? `<span class="tool-badge hot"><i data-lucide="sparkles" style="width: 12px; height: 12px;"></i> HOT</span>` : ''}
+             ${tool.status === 'not-ready' ? `<span class="tool-badge beta">BETA</span>` : ''}
+          </div>
+
+          <a href="${tool.link}" class="tool-link">
+            <div class="tool-icon-wrap">
+              <i data-lucide="${tool.icon || 'tool'}" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h3>${tool.title}</h3>
+            <p>${tool.desc}</p>
+          </a>
+        </div>
+      </div>
+    `;
   }
 
   function renderFavorites() {
@@ -306,55 +342,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     favoritesSection.style.display = 'block';
-
-    // Find tool objects from toolsData
     const favoriteTools = favorites.map(id => toolsData.find(t => t.id === id)).filter(Boolean);
-
-    favoritesGrid.innerHTML = favoriteTools.map(tool => {
-      let modeClass = '';
-      if (tool.mode === 'standard') modeClass = 'mode-standard-only';
-      else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
-
-      return `
-          <div class="tool-card-wrapper ${modeClass}">
-            <div class="tool-card">
-              <button class="star-btn active" data-tool-id="${tool.id}" aria-label="Remove from favorites" title="Remove from favorites">
-                <i data-lucide="star" style="width: 14px; height: 14px; fill: currentColor;"></i>
-              </button>
-              
-              <div class="tool-badge-row">
-                 ${tool.highlight ? `<span class="tool-badge hot"><i data-lucide="sparkles" style="width: 12px; height: 12px;"></i> HOT</span>` : ''}
-                 ${tool.status === 'not-ready' ? `<span class="tool-badge beta">BETA</span>` : ''}
-              </div>
-
-              <a href="${tool.link}" class="tool-link">
-                <div class="tool-icon-wrap">
-                  <i data-lucide="${tool.icon}" style="width: 32px; height: 32px;"></i>
-                </div>
-                <h3>${tool.title}</h3>
-                <p>${tool.desc}</p>
-              </a>
-            </div>
-          </div>
-        `;
-    }).join('');
+    favoritesGrid.innerHTML = favoriteTools.map(t => createToolCard(t)).join('');
 
     if (window.lucide) lucide.createIcons();
+  }
 
-    // Re-attach listeners to new buttons in favorites grid
-    favoritesGrid.querySelectorAll('.star-btn').forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleFavorite(btn.getAttribute('data-tool-id'));
-      };
+  function renderRecent() {
+    const recentSection = document.getElementById('recent-section');
+    const recentGrid = document.getElementById('recent-grid');
+    if (!recentGrid) return;
+
+    const recentData = JSON.parse(localStorage.getItem(RECENT_KEY) || '{}');
+    // Sort keys by timestamp descending
+    const sortedIds = Object.keys(recentData).sort((a, b) => recentData[b] - recentData[a]).slice(0, 8);
+
+    if (sortedIds.length === 0) {
+      recentSection.style.display = 'none';
+      return;
+    }
+
+    recentSection.style.display = 'block';
+    const recentTools = sortedIds.map(id => toolsData.find(t => t.id === id)).filter(Boolean);
+    recentGrid.innerHTML = recentTools.map(t => createToolCard(t, true)).join('');
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // --- Toast / Notification System (Stacking) ---
+  function showToast(message) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'az-toast';
+    toast.innerHTML = `< i data - lucide="info" style = "width: 14px; height: 14px;" ></i > <span>${message}</span>`;
+
+    container.appendChild(toast);
+    if (window.lucide) lucide.createIcons();
+
+    // Limit to 2 active notifications
+    const activeToasts = Array.from(container.querySelectorAll('.az-toast:not(.hiding)'));
+    if (activeToasts.length > 2) {
+      const oldest = activeToasts[0];
+      oldest.classList.add('hiding');
+      setTimeout(() => oldest.remove(), 400);
+    }
+
+    setTimeout(() => {
+      if (toast.parentNode && !toast.classList.contains('hiding')) {
+        toast.classList.add('hiding');
+        setTimeout(() => toast.remove(), 400);
+      }
+    }, 3000);
+  }
+
+  // --- End Toast System ---
+
+  // Clear History
+  const clearHistoryBtn = document.getElementById('clear-history');
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+      localStorage.removeItem(RECENT_KEY);
+      renderRecent();
+      showToast(i18nData.msg_history_cleared || 'History cleared');
     });
   }
 
   // Global delegate for stars
   document.addEventListener('click', (e) => {
     const starBtn = e.target.closest('.star-btn');
-    if (starBtn && !starBtn.closest('#favorites-grid')) {
+    if (starBtn) {
       e.preventDefault();
       e.stopPropagation();
       toggleFavorite(starBtn.getAttribute('data-tool-id'));
@@ -364,10 +427,70 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial render
   updateStars();
   renderFavorites();
+  renderRecent();
 
-  // Final Lucide init (for any dynamically added or static icons missed)
+  // Final Lucide init
   if (window.lucide) lucide.createIcons();
 
   // --- End Favorite Tools Logic ---
+
+  // --- Feedback Form Handling ---
+  const feedbackForm = document.getElementById('feedback-form');
+  const feedbackStatus = document.getElementById('feedback-status');
+
+  if (feedbackForm && feedbackStatus) {
+    feedbackForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i data-lucide="loader-2" class="spin" style="width: 14px; height: 14px;"></i>';
+      if (window.lucide) lucide.createIcons();
+
+      const formData = new FormData(feedbackForm);
+      const data = Object.fromEntries(formData.entries());
+
+      // Add metadata
+      data._timestamp = new Date().toISOString();
+      data._url = window.location.href;
+      data._locale = document.documentElement.lang || 'vi';
+
+      try {
+        const response = await fetch(feedbackForm.action, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          feedbackStatus.textContent = i18nData.feedback_success || 'Thank you for your feedback!';
+          feedbackStatus.className = 'feedback-status success';
+          feedbackForm.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Feedback submission error:', error);
+        feedbackStatus.textContent = i18nData.feedback_error || 'Something went wrong, please try again.';
+        feedbackStatus.className = 'feedback-status error';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+        if (window.lucide) lucide.createIcons();
+
+        // Clear status after 5 seconds
+        setTimeout(() => {
+          feedbackStatus.textContent = '';
+          feedbackStatus.className = 'feedback-status';
+        }, 5000);
+      }
+    });
+  }
+
 });
 

@@ -7,6 +7,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // Only proceed if we are on the homepage (elements exist)
   if (toolGrids.length === 0) return;
 
+  let globalUsage = {};
+
+  // --- 1. Fetch Global Usage from API ---
+  async function fetchGlobalUsage() {
+    try {
+      const response = await fetch('/api/stats');
+      if (response.ok) {
+        const data = await response.json();
+        data.forEach(item => {
+          globalUsage[item.tool_id] = item.total_views;
+        });
+
+        if (sortSelect && sortSelect.value === "popular") {
+          applySort("popular");
+        }
+      }
+    } catch (err) {
+      console.warn("zHome: Failed to fetch global stats.");
+    }
+  }
+
+  fetchGlobalUsage();
 
   // --- 3. View Toggle Logic ---
   const savedView = localStorage.getItem("ztools_view_mode") || "grid";
@@ -55,9 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function applySort(sortMode) {
     const recent = JSON.parse(localStorage.getItem('ztools_recent') || '{}');
-    const usage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
-    // Mock global popularity if provided in DOM later, for now defaults to 0
-    // We can assume static popularity is not yet available in DOM dataset.
+    const localUsage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
 
     toolGrids.forEach((grid) => {
       const items = Array.from(grid.children);
@@ -69,39 +89,39 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       items.sort((a, b) => {
-        // Extract ID for usage lookup
-        // Href is safe bet if we can parse it, or we rely on text content for AZ
-        // Better: let's try to infer ID from href
         const getID = (el) => {
           const href = el.getAttribute('href');
           if (!href) return '';
           const parts = href.split('/').filter(Boolean);
-          return parts[parts.length - 1];
+          // Handle /vi/ or /en/ prefix
+          const lastPart = parts[parts.length - 1];
+          if (parts.length > 1 && (parts[0] === 'vi' || parts[0] === 'en')) {
+            return lastPart;
+          }
+          return lastPart;
         };
 
         const idA = getID(a);
         const idB = getID(b);
 
         if (sortMode === "az") {
-          const titleA = a.querySelector("h3")?.innerText.trim() || "";
-          const titleB = b.querySelector("h3")?.innerText.trim() || "";
+          const titleA = a.querySelector("h3, h4")?.innerText.trim() || "";
+          const titleB = b.querySelector("h3, h4")?.innerText.trim() || "";
           return titleA.localeCompare(titleB);
         } else if (sortMode === "za") {
-          const titleA = a.querySelector("h3")?.innerText.trim() || "";
-          const titleB = b.querySelector("h3")?.innerText.trim() || "";
+          const titleA = a.querySelector("h3, h4")?.innerText.trim() || "";
+          const titleB = b.querySelector("h3, h4")?.innerText.trim() || "";
           return titleB.localeCompare(titleA);
         } else if (sortMode === "recent") {
-          // Descending timestamp
           const timeA = recent[idA] || 0;
           const timeB = recent[idB] || 0;
           return timeB - timeA;
         } else if (sortMode === "popular") {
-          // Descending count
-          const countA = usage[idA] || 0;
-          const countB = usage[idB] || 0;
+          // Priority: Global Usage > Local Usage
+          const countA = (globalUsage[idA] || 0) * 1000 + (localUsage[idA] || 0);
+          const countB = (globalUsage[idB] || 0) * 1000 + (localUsage[idB] || 0);
           return countB - countA;
         } else {
-          // Default
           return parseInt(a.dataset.originalIndex) - parseInt(b.dataset.originalIndex);
         }
       });

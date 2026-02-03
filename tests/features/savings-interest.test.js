@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const savings = require('../../src/features/savings-interest/script.js');
+const savings = require('../../src/features/savings-interest/logic.js');
 
 describe('Savings Interest Logic', () => {
   it('should calculate simple interest correctly', () => {

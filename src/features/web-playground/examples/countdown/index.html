@@ -1,0 +1,34 @@
+<div class="glass-timer">
+  <div class="timer-header">
+    <i data-lucide="timer" class="timer-icon"></i>
+    <h2>Mission Start</h2>
+  </div>
+
+  <div class="timer-display" id="display">
+    <div class="time-part">
+      <span class="value" id="hours">00</span>
+      <span class="label">Hours</span>
+    </div>
+    <div class="sep">:</div>
+    <div class="time-part">
+      <span class="value" id="minutes">00</span>
+      <span class="label">Mins</span>
+    </div>
+    <div class="sep">:</div>
+    <div class="time-part">
+      <span class="value" id="seconds">00</span>
+      <span class="label">Secs</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="btn-start" class="btn btn-glow">Start Mission</button>
+    <button id="btn-reset" class="btn btn-outline">Aborted</button>
+  </div>
+
+  <p class="footer-note">Experience the Pro Countdown by ZTools</p>
+</div>
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>

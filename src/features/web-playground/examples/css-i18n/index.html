@@ -1,13 +1,25 @@
-<div class="container" lang="en">
-<div class="lang-switch">
-<button onclick="setLang('en')">🇺🇸 English</button>
-<button onclick="setLang('vi')">🇻🇳 Tiếng Việt</button>
-<button onclick="setLang('jp')">🇯🇵 日本語</button>
+<div class="i18n-app">
+  <div class="lang-selector">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="vi">VI</button>
+    <button class="lang-btn" data-lang="jp">JP</button>
+  </div>
+
+  <div class="glass-card">
+    <div class="card-image">
+      <div class="shimmer"></div>
+    </div>
+    <div class="card-content">
+      <h1 class="greeting"></h1>
+      <p class="description"></p>
+      <button class="cta"></button>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <p>Powered by CSS Variables & Pseudo-elements</p>
+  </div>
 </div>
 
-<div class="card">
-<h1 class="greeting"></h1>
-<p class="description"></p>
-<button class="cta"></button>
-</div>
-</div>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>

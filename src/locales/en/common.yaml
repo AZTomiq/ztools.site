@@ -1,8 +1,8 @@
 meta:
-  title: AZtomiq - Free Online Utility Tools
+  title: ZTools - Free Online Utility Tools
   description: "Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more."
 about:
-  title: About AZtomiq
+  title: About ZTools
 privacy:
   title: Privacy Policy
 terms:
@@ -27,6 +27,7 @@ nav:
   menu_categories: Categories
   menu_dev: Dev Tools
   blog: Dev Blog
+  roadmap: Skill Tree
   search_placeholder: "Search tools... (Ctrl + K)"
   search_no_results: No results found for
   search_title: Search Tools
@@ -37,6 +38,15 @@ nav:
   mode_advanced: Advanced
   mode_standard_desc: Standard Mode (Simplified, focused)
   mode_advanced_desc: Advanced Mode (Comprehensive, Master Tools)
+  select_identity: Your Identity
+  who_are_you: Who are you?
+  preferences: Preferences
+  appearance: Appearance
+  theme: Theme
+  theme_dark: Dark Mode
+  language: Language
+  user_mode: User Mode
+  identity: Your Identity
 home:
   hero_title: Small tools. Big help.
   hero_desc: "Fast • Secure • Free"
@@ -74,15 +84,59 @@ home:
       encoder: Encoder / Decoder
       generator: Generators
       tester: Testers & Formatters
+    memes:
+      title: DEV Memes
+      desc: Just for Fun
   sort:
     default: Default
     az: Name (A-Z)
     za: Name (Z-A)
     recent: Recently Used
     popular: Most Used
+  recent: Recently Used
+  clear_history: Clear History
   reset: Reset
+  premium:
+    title: Specialized Tool Ecosystem
+    desc: Optimized performance with specialized environments, high speed, and professional UI.
+    launch: Launch Now
+  apple:
+    hero_headline: "zTools.\nTools designed to think clearer."
+    hero_subheadline: "A minimalist ecosystem — refined for speed, precision, and a seamless experience."
+    hero_explore: "Explore Ecosystem →"
+    philosophy_title: "Not more. Just better."
+    philosophy_body: "Every tool in zTools is built with a single goal: reduce complexity, increase clarity. You focus on thinking — we handle the rest."
+    story:
+      playground:
+        title: "zTool Playground"
+        subtitle: "Your personal sandbox."
+        desc: "Write. Run. Observe. No setup, no friction, no distractions. Just you and your ideas."
+      compound:
+        title: "Compound Interest"
+        subtitle: "Time is the strongest lever."
+        desc: "Numbers aren't just data. They tell a story of patience, discipline, and growth."
+      json:
+        title: "JSON Toolkit"
+        subtitle: "From chaos to order."
+        desc: "Complex data becomes readable. One click — everything in place."
+      lunar:
+        title: "Lunar Calendar"
+        subtitle: "Rhythm of time."
+        desc: "Amidst a digitized world, stay connected to tradition. Modern, clean Lunar calendar."
+      tax:
+        title: "Income Tax Calc"
+        subtitle: "Clear. Transparent. Correct."
+        desc: "Tax doesn't have to be complex. Input data. Get results. Understand immediately."
+    closing_headline: "zTools — tools, designed."
+    closing_subheadline: "No noise. No flash. It just works, beautifully."
+    closing_cta: "Experience zTools"
+
+msg:
+  starred: "Added to favorites"
+  unstarred: "Removed from favorites"
+  history_cleared: "History cleared"
 footer:
-  about_title: AZtomiq.site
+  about_title: ZTools.site
   about_desc: "Free, simple, and secure utility tools."
   links_title: Links
   intro: About
@@ -90,6 +144,21 @@ footer:
   terms: Terms of Service
   changelog: Versions
   copyright: "© 2025 AZtomiq. Built with ❤️."
+  feedback:
+    title: "Message ZTools"
+    desc: "We are always here to listen! Is there anything you'd like to share with the ZTools.site team?"
+    slogan: "Your feedback is our greatest motivation! Thank you so much!"
+    name: "Your Name (optional)"
+    email: "Contact email (optional)"
+    topic_label: "I want to talk about:"
+    topic_general: "General Feedback"
+    topic_new_tool: "Request New Tool"
+    topic_bug: "Bug Report"
+    topic_ui: "UI/UX Suggestion"
+    message: "Enter detailed content..."
+    submit: "Send message to team"
+    success: "Thank you! Your message has been sent to the team."
+    error: "Something went wrong, please try again."
 
 # Master Tools Translations
 salaryTaxMaster:
@@ -156,3 +225,13 @@ bookmarkCreator:
     step1: Select the tools you want to bookmark
     step2: Click "Export Bookmarks" to download
     step3: Import the file into your browser (Chrome, Safari,...)
+
+blog:
+  title: Dev Stories
+  desc: Behind the scenes, coding techniques, and updates from the team.
+  hero_title: "Dev Diary & <br>Coding Tales"
+  back: Back to Stories
+  more: More stories
+  playground_promo_title: Practice now!
+  playground_promo_desc: The source code for this article is available on Web Playground for you to explore.
+  playground_promo_btn: Open Playground ➔

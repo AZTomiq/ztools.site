@@ -1,0 +1,10 @@
+id: dev-memes
+category: memes
+personas: ["dev"]
+icon: smile
+translationKey: dev_memes
+status: active
+link: /dev-memes/
+meta:
+  version: 1.0.0
+tags: [memes, fun, dev, humor]

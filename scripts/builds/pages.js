@@ -10,8 +10,11 @@ const {
   GLOBAL_CONFIG, LOCALES, TOOLS
 } = require('./data');
 
-async function buildPage(filePath, locale, baseDir, blogPostsArg) {
-  const blogPosts = blogPostsArg || getBlogPosts();
+async function buildPage(filePath, locale, baseDir) {
+  const packageJson = fs.readJsonSync(path.join(paths.ROOT, 'package.json'));
+  const packageVersion = packageJson.version;
+
+  const blogPosts = getBlogPosts(locale);
   const relativePath = path.relative(baseDir, filePath);
 
   const pageContent = await fs.readFile(filePath, 'utf-8');
@@ -27,7 +30,14 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     outputDirRel = path.join(outputDirRel, slug);
   }
 
-  let outputRelPath = path.join(locale, outputDirRel, outputFileName);
+  let outputRelPath = '';
+  if (locale === 'vi') {
+    // Default locale goes to root
+    outputRelPath = path.join(outputDirRel, outputFileName);
+  } else {
+    // Other locales go to /locale/ segment
+    outputRelPath = path.join(locale, outputDirRel, outputFileName);
+  }
 
   const depth = outputRelPath.split(path.sep).length - 1;
   const rootPath = depth > 0 ? '../'.repeat(depth) : './';
@@ -61,9 +71,14 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     const jsHash = getAssetHash(featureBase + 'script.js');
     assetPath = rootPath + featureBase;
 
+    const asset = (relPath) => {
+      const hash = getAssetHash(relPath);
+      return rootPath + relPath + (hash ? '?h=' + hash : '?') + '&v=' + packageVersion;
+    };
+
     toolConfig._assets = {
-      css: assetPath + 'style.css' + (cssHash ? '?h=' + cssHash : ''),
-      js: assetPath + 'script.js' + (jsHash ? '?h=' + jsHash : '')
+      css: asset(featureBase + 'style.css'),
+      js: asset(featureBase + 'script.js')
     };
 
     toolConfig = { ...toolConfig, ...TOOLS.find(t => t.id === featureName) || {} }; // Merge with global loaded tools
@@ -97,9 +112,6 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     }
   }
 
-  const packageJson = fs.readJsonSync(path.join(paths.ROOT, 'package.json'));
-  const packageVersion = packageJson.version;
-
   const catMapping = {
     'job': 'nav.menu_job',
     'finance': 'nav.menu_finance',
@@ -131,6 +143,7 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     currentPath: relativePath === 'index.ejs' ? 'home' : path.dirname(relativePath),
     pageUrl,
     locale,
+    locales: LOCALES,
     category,
     tools: TOOLS,
     toolConfig,
@@ -138,12 +151,28 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     changelogHtml,
     howToUseHtml,
     packageVersion,
-    global: GLOBAL_CONFIG,
+    siteGlobal: GLOBAL_CONFIG,
+    subdomainsJson: JSON.stringify(GLOBAL_CONFIG.subdomains || []),
     t,
     blogPosts,
+    isDev,
+    resolveUrl: (path) => {
+      const cleanPath = '/' + path.replace(/^\/+|\/+$/g, '') + '/';
+      if (isDev) return rootPath + cleanPath.substring(1);
+
+      const sub = GLOBAL_CONFIG.subdomains.find(s => {
+        const subPath = '/' + s.path.replace(/^\/+|\/+$/g, '') + '/';
+        return subPath === cleanPath;
+      });
+
+      if (sub) {
+        return `https://${sub.domain}/`;
+      }
+      return GLOBAL_CONFIG.site.url + cleanPath;
+    },
     asset: (relPath) => {
       const hash = getAssetHash(relPath);
-      return rootPath + relPath + (hash ? '?h=' + hash : '');
+      return rootPath + relPath + (hash ? '?h=' + hash : '?') + '&v=' + packageVersion;
     }
   };
 
@@ -164,6 +193,20 @@ async function buildPage(filePath, locale, baseDir, blogPostsArg) {
     const distPath = path.join(paths.DIST, outputRelPath);
     await fs.ensureDir(path.dirname(distPath));
     await fs.writeFile(distPath, fullHtml);
+
+    // Also generate flat files for subdomain mapping to avoid Vercel directory routing issues
+    if (outputRelPath.endsWith('index.html')) {
+      const normalizedPath = '/' + outputRelPath.replace('index.html', '').replace(/^(en|vi)\//, '');
+      const subdomain = GLOBAL_CONFIG.subdomains.find(s => s.path === normalizedPath);
+      if (subdomain) {
+        // Create a flat file name, e.g., playground.ztools.site -> subdom-playground.ztools.site.html
+        // If it's English, name it subdom-en-playground.ztools.site.html
+        const isEn = outputRelPath.startsWith('en/');
+        const flatFileName = `subdom-${isEn ? 'en-' : ''}${subdomain.domain}.html`;
+        await fs.writeFile(path.join(paths.DIST, flatFileName), fullHtml);
+      }
+    }
+
     return true;
   } catch (e) {
     console.error(`❌ Error building page ${filePath}:`, e);
@@ -227,7 +270,7 @@ async function buildPages() {
   const globalRebuild = globalDataChanged || includesChanged; // || toolsChanged (toolsChanged logic specific to pages? no, global)
 
   console.time('📄 Pages Build');
-  const blogPosts = getBlogPosts();
+  // Removed global getBlogPosts here to fetch per locale in buildPage
   let changedFiles = []; // To mark updates at end
 
   async function recursiveWalk(dir, baseDir) {
@@ -245,7 +288,7 @@ async function buildPages() {
         if (mustRebuild) {
           let allSubPagesSuccess = true;
           for (const locale of LOCALES) {
-            const success = await buildPage(filePath, locale, baseDir, blogPosts);
+            const success = await buildPage(filePath, locale, baseDir);
             if (!success) allSubPagesSuccess = false;
           }
           if (allSubPagesSuccess) {

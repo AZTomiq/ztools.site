@@ -1,4 +1,4 @@
-<!-- title: <%= t('tax.title') %> - AZtomiq -->
+<!-- title: <%= t('tax.title') %> - ZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
 <section class="tool-container">
@@ -9,17 +9,25 @@
         </h1>
         <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
           <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
-              </button>
+          </button>
           <% } %>
       </div>
       <p>
         <%= t('tax.desc') %>
       </p>
+      <% if (t('tax.law_link')) { %>
+        <p style="margin-top: 0.25rem; font-size: 0.85rem;">
+          <a href="<%= t('tax.law_link') %>" target="_blank" rel="noopener noreferrer"
+            style="color: var(--primary-color); text-decoration: none;">
+            📜 <%= t('tax.law_label') %> →
+          </a>
+        </p>
+        <% } %>
     </div>
 
     <nav class="tab-nav">
-      <button class="tab-btn active" data-tab="main" onclick="switchTab('main')">🧮 Tính thuế</button>
-      <button class="tab-btn" data-tab="compare" onclick="switchTab('compare')">📊 So sánh lương</button>
+      <button class="tab-btn active" data-tab="main">🧮 Tính thuế</button>
+      <button class="tab-btn" data-tab="compare">📊 So sánh lương</button>
     </nav>
 
     <!-- Tab: Main Calculator -->
@@ -60,7 +68,7 @@
                 <option value="4">Vùng IV</option>
               </select>
             </div>
-            <button class="btn" onclick="calculate()">Tính thuế</button>
+            <button id="calculateBtn" class="btn">Tính thuế</button>
           </div>
 
           <div class="history-section">
@@ -77,7 +85,7 @@
             </div>
             <div class="history-list-wrapper" id="historyWrapper">
               <div class="history-list" id="historyList"></div>
-              <button class="history-clear" id="historyClearBtn" onclick="confirmClearHistory()" title="Xóa tất cả">🗑️
+              <button class="history-clear" id="historyClearBtn" title="Xóa tất cả">🗑️
                 Xóa</button>
             </div>
           </div>
@@ -91,7 +99,7 @@
             <div class="result-header-row">
               <h2>📊 Kết quả chi tiết</h2>
               <div class="result-actions">
-                <button id="shareBtn" class="share-btn" onclick="copyShareUrl()">🔗 Share Link</button>
+                <button id="shareBtn" class="share-btn">🔗 Share Link</button>
               </div>
             </div>
           </div>
@@ -227,7 +235,7 @@
                 <option value="4">Vùng IV</option>
               </select>
             </div>
-            <button class="btn" onclick="compareMultiple()">So sánh</button>
+            <button id="compareBtn" class="btn">So sánh</button>
           </div>
         </div>
       </section>
@@ -251,7 +259,7 @@
     <div style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-secondary);">
       <p>BHXH 8% · BHYT 1.5% · BHTN 1% · Trần BHXH/BHYT: 46.8M · Trần BHTN: <span id="bhtnCapDisplay">99.2M</span></p>
       <div style="margin-top: 0.5rem;">
-        <button class="btn-link" onclick="toggleRegionNote()"
+        <button id="toggleRegionBtn" class="btn-link"
           style="background:none; border:none; color:var(--primary-color); cursor:pointer;">📋 Xem danh sách vùng
           lương</button>
       </div>
@@ -262,7 +270,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3>Mức lương tối thiểu vùng (từ 01/07/2024)</h3>
-          <button class="modal-close" onclick="toggleRegionNote()">×</button>
+          <button id="modalCloseBtn" class="modal-close">×</button>
         </div>
         <div class="modal-body">
           <div class="region-info">

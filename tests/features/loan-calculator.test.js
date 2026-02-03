@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const loanLogic = require('../../src/features/loan-calculator/script.js');
+const loanLogic = require('../../src/features/loan-calculator/logic.js');
 
 describe('Loan Calculator Logic', () => {
   const principal = 100000000; // 100M

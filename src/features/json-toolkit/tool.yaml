@@ -1,5 +1,6 @@
 id: json-toolkit
 category: dev
+personas: ["dev"]
 icon: braces
 highlight: true
 translationKey: json

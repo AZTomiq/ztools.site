@@ -15,10 +15,17 @@ document.addEventListener('DOMContentLoaded', function () {
   currencyInputs.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
+      el.addEventListener('focus', (e) => {
+        e.target.select();
+      });
+
       el.addEventListener('input', (e) => {
         let val = e.target.value.replace(/\D/g, '');
         if (val) {
-          e.target.value = parseInt(val, 10).toLocaleString('vi-VN');
+          const formatted = parseInt(val, 10).toLocaleString('vi-VN');
+          if (e.target.value !== formatted) {
+            e.target.value = formatted;
+          }
         }
       });
     }

@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const converter = require('../../src/features/unit-converter/script.js');
+const converter = require('../../src/features/unit-converter/logic.js');
 
 describe('Unit Converter Logic', () => {
   describe('Length Conversions', () => {

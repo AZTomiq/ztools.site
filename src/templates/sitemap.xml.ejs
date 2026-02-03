@@ -1,68 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <% var baseUrl=global.site.url; var allPages=[]; // 1. Root and Static Pages for each locale var
-    staticPages=['', 'about/' , 'categories/' , 'changelog/' , 'privacy/' , 'terms/' ]; locales.forEach(loc=> {
-    staticPages.forEach(page => {
-    var alts = locales.map(l => ({
-    hreflang: l === 'vi' ? 'vi-VN' : 'en-US',
-    href: baseUrl + '/' + l + '/' + page
-    }));
-
-    allPages.push({
-    loc: baseUrl + '/' + loc + '/' + page,
-    priority: page === '' ? '1.0' : '0.6',
-    changefreq: 'weekly',
-    alternates: alts
-    });
-    });
-    });
-
-    // 2. Blog (Feature page)
-    locales.forEach(loc => {
-    var alts = locales.map(l => ({
-    hreflang: l === 'vi' ? 'vi-VN' : 'en-US',
-    href: baseUrl + '/' + l + '/blog/'
-    }));
-    allPages.push({
-    loc: baseUrl + '/' + loc + '/blog/',
-    priority: '0.7',
-    changefreq: 'weekly',
-    alternates: alts
-    });
-    });
-
-    // 3. Active Tools
-    tools.forEach(tool => {
-    if (tool.status === 'active') {
-    locales.forEach(loc => {
-    var alts = locales.map(l => ({
-    hreflang: l === 'vi' ? 'vi-VN' : 'en-US',
-    href: baseUrl + '/' + l + tool.link
-    }));
-
-    allPages.push({
-    loc: baseUrl + '/' + loc + tool.link,
-    priority: '0.8',
-    changefreq: 'monthly',
-    alternates: alts
-    });
-    });
-    }
-    });
-    %>
+  <% var baseUrl=siteGlobal.site.url; var subdomains=siteGlobal.subdomains || []; var allPages=[]; var
+    sPages=['', 'about/' , 'categories/' , 'changelog/' , 'privacy/' , 'terms/' , 'roadmap/' ]; function getUrl(loc,
+    pPath) { var mappedS=subdomains.find(function(s) { return pPath.startsWith(s.path.substring(1)); }); var b=baseUrl;
+    var p=pPath; if (mappedS) { b="https://" + mappedS.domain; p=pPath.replace(mappedS.path.substring(1), '' ); }
+    p=p.replace(/^\/|\/$/g, '' ); if (loc==='vi' ) { return b + '/' + (p ? p + '/' : '' ); } return b + '/' + loc + '/'
+    + (p ? p + '/' : '' ); } sPages.forEach(function(pg) { locales.forEach(function(l) { var
+    alts=locales.map(function(lc) { return { h: lc, u: getUrl(lc, pg) }; }); alts.push({ h: 'x-default' , u:
+    getUrl('en', pg) }); allPages.push({ loc: getUrl(l, pg), pri: pg==='' ? '1.0' : '0.6' , ch: 'weekly' , alts: alts
+    }); }); }); locales.forEach(function(l) { var pg='blog/' ; var alts=locales.map(function(lc) { return { h: lc, u:
+    getUrl(lc, pg) }; }); alts.push({ h: 'x-default' , u: getUrl('en', pg) }); allPages.push({ loc: getUrl(l, pg),
+    pri: '0.7' , ch: 'weekly' , alts: alts }); }); tools.forEach(function(t) { if (t.status==='active' ) { var
+    pg=t.link.substring(1); locales.forEach(function(l) { var alts=locales.map(function(lc) { return { h: lc, u:
+    getUrl(lc, pg) }; }); alts.push({ h: 'x-default' , u: getUrl('en', pg) }); allPages.push({ loc: getUrl(l, pg),
+    pri: '0.8' , ch: 'monthly' , alts: alts }); }); } }); %>
     <% for (var i=0; i < allPages.length; i++) { var page=allPages[i]; %>
       <url>
         <loc>
           <%= page.loc %>
         </loc>
         <changefreq>
-          <%= page.changefreq %>
+          <%= page.ch %>
         </changefreq>
         <priority>
-          <%= page.priority %>
+          <%= page.pri %>
         </priority>
-        <% for (var j=0; j < page.alternates.length; j++) { var alt=page.alternates[j]; %>
-          <xhtml:link rel="alternate" hreflang="<%= alt.hreflang %>" href="<%= alt.href %>" />
+        <% for (var j=0; j < page.alts.length; j++) { var alt=page.alts[j]; %>
+          <xhtml:link rel="alternate" hreflang="<%= alt.h %>" href="<%= alt.u %>" />
           <% } %>
       </url>
       <% } %>

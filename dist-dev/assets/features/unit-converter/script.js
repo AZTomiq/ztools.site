@@ -154,7 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function calculate() {
-    const val = parseFloat(valFromInput.value);
+    // FIX: Handle numbers with commas (e.g. 1,000)
+    const val = parseFloat(valFromInput.value.replace(/,/g, ''));
     if (isNaN(val)) {
       valToInput.value = '';
       formulaBox.textContent = '---';

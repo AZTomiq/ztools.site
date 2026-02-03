@@ -13,7 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const heightCm = parseFloat(document.getElementById('height').value);
     const weightKg = parseFloat(document.getElementById('weight').value);
 
-    if (!heightCm || !weightKg) return;
+    // FIX: Add validation for zero or negative values
+    if (!heightCm || !weightKg || heightCm <= 0 || weightKg <= 0) {
+      // Show feedback for invalid input if elements exist
+      if (feedbackEl) {
+        feedbackEl.textContent = (document.documentElement.lang === 'vi')
+          ? 'Vui lòng nhập chiều cao và cân nặng hợp lệ (> 0).'
+          : 'Please enter valid height and weight (> 0).';
+        if (bmiCategoryEl) {
+          bmiCategoryEl.textContent = 'Error';
+          bmiCategoryEl.className = 'text-danger';
+        }
+        resultBox.style.display = 'block';
+      }
+      return;
+    }
 
     // Use shared logic
     const bmiValue = BMILogic.calculateBMI(heightCm, weightKg);

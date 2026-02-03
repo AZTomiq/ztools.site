@@ -32,10 +32,27 @@ function processBase64(action) {
     if (action === 'encode') {
       outputEl.value = btoa(unescape(encodeURIComponent(input)));
     } else {
-      outputEl.value = decodeURIComponent(escape(atob(input)));
+      // FIX: Smart Decode - Prioritize Output field (as previous result) if available
+      // If Output is empty, fallback to reading from Input field (for "Paste to Decode" flow)
+      const source = outputEl.value.trim() ? outputEl.value : input;
+
+      const decoded = decodeURIComponent(escape(atob(source)));
+
+      // If we read from Output, put result back into Input (Un-do operation)
+      // If we read from Input, put result into Output (Standard operation)
+      if (outputEl.value.trim()) {
+        document.getElementById('input-text').value = decoded;
+        // Optional: Clear status to indicate success
+        statusEl.textContent = isVi ? 'Đã giải mã về ô Nhập liệu' : 'Decoded back to Input field';
+        statusEl.className = 'status-msg success';
+        setTimeout(() => statusEl.textContent = '', 3000);
+      } else {
+        outputEl.value = decoded;
+      }
     }
   } catch (e) {
     statusEl.textContent = isVi ? 'Lỗi: Định dạng Base64 không hợp lệ' : 'Error: Invalid Base64 string';
+    statusEl.className = 'status-msg error';
   }
 }
 

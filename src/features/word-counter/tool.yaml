@@ -1,9 +1,10 @@
 id: word-counter
 category: text
+personas: ["creator"]
 icon: bar-chart-3
 translationKey: word_counter
 status: active
-link: /word-counter/
+link: /word-counter/d
 meta:
   version: 1.0.0
 tags: [text, writing, counter, words, utility]

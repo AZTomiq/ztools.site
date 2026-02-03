@@ -1,8 +1,10 @@
 id: compound-interest
 category: finance
+personas: ["finance"]
 icon: trending-up
+highlight: true
 translationKey: compound
-status: not-ready
+status: active
 link: /compound-interest/
 meta:
   version: 1.0.0

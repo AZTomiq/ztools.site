@@ -1,0 +1,24 @@
+<!-- title: <%= t('dev_memes.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container">
+  <div class="page-header">
+    <h1>
+      <%- toolConfig.icon ? `<i data-lucide="${toolConfig.icon}"></i>` : '🐸' %> <%= t('dev_memes.title') %>
+    </h1>
+    <p>
+      <%= t('dev_memes.desc') %>
+    </p>
+  </div>
+
+  <!-- Interface -->
+  <div id="meme-gallery" class="meme-gallery">
+    <!-- Content injected by script.js -->
+    <div class="empty-state">
+      <div class="spinner"></div>
+      <p>Loading memes...</p>
+    </div>
+  </div>
+</section>
+
+<script src="<%= toolConfig._assets.js %>"></script>

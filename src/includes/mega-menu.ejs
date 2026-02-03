@@ -1,37 +1,46 @@
 <div class="dropdown-menu mega-menu">
   <div class="mega-sidebar">
     <div class="mega-sidebar-header">
-      <a href="<%= rootPath %><%= locale %>/" class="sidebar-logo logo-link">
+      <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>" class="sidebar-logo logo-link">
         <img src="<%= rootPath %>assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
         <span class="logo-text">ZTools</span>
       </a>
     </div>
     <div class="mega-sidebar-links">
-      <a href="<%= rootPath %><%= locale %>/categories/"
-        class="mega-side-link <%= pageUrl === 'categories/' ? 'active' : '' %>">
-        <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
-        <span class="link-text">
-          <%= t('nav.menu_categories') %>
-        </span>
-      </a>
-      <a href="<%= rootPath %><%= locale %>/blog/" class="mega-side-link <%= pageUrl === 'blog/' ? 'active' : '' %>">
-        <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
-        <span class="link-text">
-          <%= t('nav.blog') || 'Blog' %>
-        </span>
-      </a>
-      <a href="<%= rootPath %><%= locale %>/bookmark-creator/"
-        class="mega-side-link <%= pageUrl === 'bookmark-creator/' ? 'active' : '' %>">
-        <span class="icon-wrap"><i data-lucide="star"></i></span>
-        <span class="link-text">
-          <%= t('bookmarkCreator.title') || 'Bookmarks' %>
-        </span>
-      </a>
-      <a href="<%= rootPath %><%= locale %>/changelog/"
-        class="mega-side-link <%= pageUrl === 'changelog/' ? 'active' : '' %>">
-        <span class="icon-wrap"><i data-lucide="history"></i></span>
-        <span class="link-text">Changelogs</span>
-      </a>
+      <% const navBase=isDev ? rootPath : siteGlobal.site.url + '/' ; %>
+        <a href="<%= navBase %><%= locale === 'vi' ? '' : 'en/' %>categories/"
+          class="mega-side-link <%= pageUrl === 'categories/' ? 'active' : '' %>">
+          <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
+          <span class="link-text">
+            <%= t('nav.menu_categories') %>
+          </span>
+        </a>
+        <a href="<%= resolveUrl('/blog/') %><%= locale === 'vi' ? '' : 'en/' %>"
+          class="mega-side-link <%= pageUrl === 'blog/' ? 'active' : '' %>">
+          <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
+          <span class="link-text">
+            <%= t('nav.blog') || 'Blog' %>
+          </span>
+        </a>
+        <a href="<%= resolveUrl('/roadmap/') %><%= locale === 'vi' ? '' : 'en/' %>"
+          class="mega-side-link <%= pageUrl === 'roadmap/' ? 'active' : '' %>">
+          <span class="icon-wrap"><i data-lucide="map"></i></span>
+          <span class="link-text">
+            <%= t('nav.roadmap') || 'Roadmap' %>
+          </span>
+        </a>
+        <a href="<%= resolveUrl('/bookmark-creator/') %><%= locale === 'vi' ? '' : 'en/' %>"
+          class="mega-side-link <%= pageUrl === 'bookmark-creator/' ? 'active' : '' %>">
+          <span class="icon-wrap"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
+          <span class="link-text">
+            <%= t('bookmarkCreator.title') || 'Bookmarks' %>
+          </span>
+        </a>
+        <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>changelog/"
+          class="mega-side-link <%= pageUrl === 'changelog/' ? 'active' : '' %>">
+          <span class="icon-wrap"><i data-lucide="history"></i></span>
+          <span class="link-text">Changelogs</span>
+        </a>
     </div>
   </div>
 
@@ -44,12 +53,9 @@
       t('home.cats.daily.title') || 'Daily Utilities' , icon: 'calendar' , color: 'orange' }, 'dev' : { title:
       t('home.cats.dev.title') || 'Dev Tools' , icon: 'code' , color: 'purple' } }; %>
       <div class="mega-grid">
-        <% catOrder.forEach(catId=> {
-          const catTools = tools.filter(t => t.category === catId && (t.status === 'active' || t.status === 'legacy' ||
-          t.status === 'not-ready'));
-          if (catTools.length === 0) return;
-          const meta = catMap[catId];
-          %>
+        <% catOrder.forEach(function(catId) { const catTools=tools.filter(function(t) { return t.category===catId &&
+          (t.status==='active' || t.status==='legacy' || t.status==='not-ready' ); }); if (catTools.length===0) return;
+          const meta=catMap[catId]; %>
           <div class="mega-cat-card accent-<%= meta.color %>">
             <div class="mega-cat-header">
               <span class="mega-cat-icon"><i data-lucide="<%= meta.icon %>"></i></span>
@@ -58,13 +64,10 @@
               </span>
             </div>
             <div class="mega-cat-links">
-              <% catTools.forEach(tool=> {
-                let modeClass = '';
-                if (tool.mode === 'standard') modeClass = 'mode-standard-only';
-                else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
-                const isToolActive=pageUrl===tool.link.substring(1);
-                %>
-                <a href="<%= rootPath %><%= locale %><%= tool.link %>"
+              <% catTools.forEach(function(tool) { let modeClass='' ; if (tool.mode==='standard' )
+                modeClass='mode-standard-only' ; else if (tool.mode==='advanced' ) modeClass='mode-advanced-only' ;
+                const isToolActive=pageUrl===tool.link.substring(1); %>
+                <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %><%= tool.link.substring(1) %>"
                   class="mega-tool-link <%= modeClass %> <%= isToolActive ? 'active' : '' %>">
                   <span class="tool-dot"></span>
                   <span class="tool-label">

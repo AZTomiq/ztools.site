@@ -1,6 +1,6 @@
 <%- (function() { const manifest={ name: "ZTools - Tiện ích cho mọi người" , short_name: "ZTools" ,
   description: "Bộ công cụ tiện ích online miễn phí: Tính thuế TNCN, BMI, JSON Formatter và nhiều hơn nữa." ,
-  id: "/?source=pwa" , start_url: "/vi/?source=pwa" , display: "standalone" , orientation: "portrait" ,
+  id: "/?source=pwa" , start_url: "/?source=pwa" , display: "standalone" , orientation: "portrait" ,
   background_color: "#0f172a" , theme_color: "#22d3ee" , icons: [ {
   src: "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛠️%3C/text%3E%3C/svg%3E"
   , sizes: "192x192" , type: "image/svg+xml" , purpose: "any" }, {
@@ -14,7 +14,7 @@
   name: t(tool.translationKey + '.title'),
   short_name: t(tool.translationKey + '.title'),
   description: t(tool.translationKey + '.desc').replace(/\n/g, ' '),
-  url: `/${defaultLocale}${tool.link}?source=pwa`,
+  url: `${tool.link}?source=pwa`,
   icons: [
   {
   src: `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext

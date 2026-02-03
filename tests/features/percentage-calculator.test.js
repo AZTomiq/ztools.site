@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const pct = require('../../src/features/percentage-calculator/script.js');
+const pct = require('../../src/features/percentage-calculator/logic.js');
 
 describe('Percentage Calculator Logic', () => {
   describe('Basic: X% of Y', () => {

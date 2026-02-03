@@ -5,6 +5,18 @@ Tất cả các thay đổi quan trọng đối với dự án **ZTools** sẽ �
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 và dự án này tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.2] - 2025-12-29
+
+### Added 🇻🇳
+
+- **Tool Request**: Thêm liên kết "Yêu cầu công cụ mới" trực tiếp trên Header và Footer, giúp người dùng dễ dàng gửi đề xuất cho đội ngũ phát triển.
+- **Star Rating Demo**: Nâng cấp ví dụ Star Rating trong Web Playground với các tính năng nâng cao: Lấy giá trị, Reset và Kích hoạt/Vô hiệu hóa (Enable/Disable).
+
+### Added 🇺🇸
+
+- **Tool Request**: Added "Request a Tool" links in both Header and Footer, allowing users to easily suggest new utilities through the feedback system.
+- **Star Rating Demo**: Upgraded the Star Rating example in Web Playground with advanced controls: Get Value, Reset, and Toggle Enable/Disable.
+
 ## [1.5.1] - 2025-12-22
 
 ### Changed 🇻🇳

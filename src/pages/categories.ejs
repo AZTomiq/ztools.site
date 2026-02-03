@@ -1,7 +1,7 @@
 <!-- title: <%= t('nav.menu_categories') %> - ZTools -->
 
 <div class="container page-categories" style="margin-bottom: 6rem;">
-  <div class="page-header" style="text-align: center; margin-bottom: 3rem;">
+  <div class="page-header" style="text-align: center; margin-bottom: 2rem;">
     <h1><i data-lucide="folder-kanban"
         style="width: 32px; height: 32px; vertical-align: middle; margin-right: 10px;"></i>
       <%= t('nav.menu_categories') %>
@@ -11,17 +11,32 @@
     </p>
   </div>
 
-  <div class="categories-grid">
+  <!-- View Switcher & Category Search -->
+  <div class="categories-toolbar">
+    <div class="cat-search-box">
+      <i data-lucide="search" class="cat-search-icon"></i>
+      <input type="text" id="cat-tool-search" placeholder="Search in categories..." aria-label="Search tools">
+    </div>
+
+    <div class="view-switcher">
+      <button class="view-btn active" data-view="grid" title="Grid View">
+        <i data-lucide="layout-grid"></i>
+      </button>
+      <button class="view-btn" data-view="list" title="List View">
+        <i data-lucide="layout-list"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="categories-container grid-view" id="categories-root">
     <% const catOrder=['job', 'finance' , 'text' , 'generator' , 'daily' , 'dev' ]; const catMap={ 'job' : { title:
       t('home.cats.job.title') || 'Job & Income' , icon: 'briefcase' }, 'finance' : { title:
       t('home.cats.finance.title') || 'Finance' , icon: 'line-chart' }, 'text' : { title: t('home.cats.text.title')
       || 'Text Tools' , icon: 'type' }, 'generator' : { title: t('home.cats.generator.title') || 'Generators' ,
       icon: 'wand-2' }, 'daily' : { title: t('home.cats.daily.title') || 'Daily Utilities' , icon: 'calendar' }, 'dev' :
-      { title: t('home.cats.dev.title') || 'Dev Tools' , icon: 'code' } }; catOrder.forEach(catId=> {
-      const catTools=tools.filter(t=> t.category === catId
-      && (t.status === 'active' || t.status === 'legacy' || t.status === 'not-ready'));
-      if (catTools.length === 0) return;
-      %>
+      { title: t('home.cats.dev.title') || 'Dev Tools' , icon: 'code' } }; catOrder.forEach(function(catId) { const
+      catTools=tools.filter(function(t) { return t.category===catId && (t.status==='active' || t.status==='legacy' ||
+      t.status==='not-ready' ); }); if (catTools.length===0) return; %>
       <div class="category-card card" id="cat-<%= catId %>">
         <h2 class="category-title">
           <span class="cat-icon">
@@ -33,38 +48,85 @@
             </span>
         </h2>
         <div class="cat-tools-list">
-          <% catTools.forEach(tool=> {
-            let modeClass = '';
-            if (tool.mode === 'standard') modeClass = 'mode-standard-only';
-            else if (tool.mode === 'advanced') modeClass = 'mode-advanced-only';
-            %>
-            <a href="<%= rootPath %><%= locale %><%= tool.link %>"
-              class="cat-tool-item <%= tool.status === 'legacy' ? 'legacy-item' : '' %> <%= modeClass %>">
-              <span class="tool-icon">
-                <i data-lucide="<%= tool.icon %>"></i>
-                <% if (tool.status==='legacy' ) { %>
-                  <span class="legacy-dot" title="Legacy Tool"
-                    style="display:inline-block; width: 6px; height: 6px; background: var(--text-muted); border-radius: 50%; position: absolute; top: 0; right: 0;"></span>
-                  <% } %>
-              </span>
-              <span class="tool-name">
-                <%= t(tool.translationKey + '.title' ) %>
-              </span>
+          <% catTools.forEach(function(tool) { let modeClass='' ; if (tool.mode==='standard' )
+            modeClass='mode-standard-only' ; else if (tool.mode==='advanced' ) modeClass='mode-advanced-only' ; %>
+            <div class="cat-tool-wrapper <%= modeClass %>">
+              <a href="<%= rootPath %><%= locale === 'vi' ? '' : locale + '/' %><%= tool.link.substring(1) %>"
+                class="cat-tool-item <%= tool.status === 'legacy' ? 'legacy-item' : '' %>">
+                <span class="tool-icon">
+                  <i data-lucide="<%= tool.icon %>"></i>
+                </span>
+                <span class="tool-name">
+                  <%= t(tool.translationKey + '.title' ) %>
+                </span>
 
-              <% if (tool.status==='not-ready' ) { %>
-                <span class="tool-badge beta" style="margin-left: auto; position: static;">BETA</span>
-                <% } else if (tool.highlight) { %>
-                  <span class="tool-badge hot"
-                    style="font-size: 0.6rem; padding: 2px 6px; background: #fff7ed; color: #c2410c; border: 1px solid #fb923c; border-radius: 4px; display: flex; align-items: center; gap: 3px; font-weight: 700; position: static; margin-left: auto;">
-                    <i data-lucide="sparkles" style="width: 10px; height: 10px;"></i> HOT
-                  </span>
-                  <% } %>
-            </a>
+                <% if (tool.status==='not-ready' ) { %>
+                  <span class="tool-badge beta">BETA</span>
+                  <% } else if (tool.highlight) { %>
+                    <span class="tool-badge hot">
+                      <i data-lucide="sparkles" style="width: 10px; height: 10px;"></i> HOT
+                    </span>
+                    <% } %>
+              </a>
+
+              <!-- Live Demo / Action Button for List View -->
+              <div class="list-tool-actions">
+                <a href="<%= rootPath %><%= locale === 'vi' ? '' : locale + '/' %><%= tool.link.substring(1) %>"
+                  class="btn-demo" title="Open Tool">
+                  <i data-lucide="external-link"></i>
+                  <span>Live Demo</span>
+                </a>
+              </div>
+            </div>
             <% }); %>
         </div>
       </div>
       <% }); %>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.getElementById('categories-root');
+    const viewBtns = document.querySelectorAll('.view-btn');
+    const searchInput = document.getElementById('cat-tool-search');
+    const cards = document.querySelectorAll('.category-card');
+
+    // 1. View Toggling
+    viewBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view');
+        root.className = 'categories-container ' + view + '-view';
+        viewBtns.forEach(b => b.classList.toggle('active', b === btn));
+        localStorage.setItem('cat-view-pref', view);
+      });
+    });
+
+    // Restore preference
+    const pref = localStorage.getItem('cat-view-pref');
+    if (pref) {
+      const target = Array.from(viewBtns).find(b => b.getAttribute('data-view') === pref);
+      if (target) target.click();
+    }
+
+    // 2. Local Search
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        cards.forEach(card => {
+          let hasMatch = false;
+          const items = card.querySelectorAll('.cat-tool-wrapper');
+          items.forEach(item => {
+            const name = item.querySelector('.tool-name').textContent.toLowerCase();
+            const match = name.includes(q);
+            item.style.display = match ? 'flex' : 'none';
+            if (match) hasMatch = true;
+          });
+          card.style.display = hasMatch ? 'block' : 'none';
+        });
+      });
+    }
+  });
+</script>
 
 <link rel="stylesheet" href="<%= asset('assets/css/categories.css') %>">

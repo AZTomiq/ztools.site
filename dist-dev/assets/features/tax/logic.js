@@ -45,8 +45,8 @@
     ],
     bracketsNew: [
       [10_000_000, 0.05],
-      [30_000_000, 0.15],
-      [60_000_000, 0.25],
+      [30_000_000, 0.10],
+      [60_000_000, 0.20],
       [100_000_000, 0.30],
       [Infinity, 0.35],
     ],
@@ -110,6 +110,9 @@
     const breakdownOld = calculateTaxBreakdown(taxableOld, cfg.bracketsOld);
     const breakdownNew = calculateTaxBreakdown(taxableNew, cfg.bracketsNew);
 
+    const taxSelfOnlyOld = calculateProgressiveTax(Math.max(0, incomeAfterInsurance - cfg.personalDeduction.old), cfg.bracketsOld);
+    const taxSelfOnlyNew = calculateProgressiveTax(Math.max(0, incomeAfterInsurance - cfg.personalDeduction.new), cfg.bracketsNew);
+
     return {
       grossIncome,
       dependents,
@@ -124,10 +127,49 @@
       taxableNew,
       taxOld,
       taxNew,
+      taxSelfOnlyOld,
+      taxSelfOnlyNew,
       breakdownOld,
       breakdownNew,
       netOld: grossIncome - insurance - taxOld,
       netNew: grossIncome - insurance - taxNew,
+    };
+  }
+
+  function calculateYearlyPIT(monthlyGross, dependents, bonusMonths, region = 1) {
+    const cfg = TAX_CONFIG;
+    const monthly = calculatePIT(monthlyGross, dependents, region);
+
+    const bonusGross = monthlyGross * bonusMonths;
+    const yearlyGross = monthlyGross * 12 + bonusGross;
+    const yearlyInsurance = monthly.insurance * 12; // Assuming bonus has no insurance
+
+    const yearlyDeductionOld = monthly.deductionOld * 12;
+    const yearlyDeductionNew = monthly.deductionNew * 12;
+
+    const yearlyTaxableOld = Math.max(0, yearlyGross - yearlyInsurance - yearlyDeductionOld);
+    const yearlyTaxableNew = Math.max(0, yearlyGross - yearlyInsurance - yearlyDeductionNew);
+
+    // Yearly brackets are monthly brackets * 12
+    const yearlyBracketsOld = cfg.bracketsOld.map(([t, r]) => [t === Infinity ? Infinity : t * 12, r]);
+    const yearlyBracketsNew = cfg.bracketsNew.map(([t, r]) => [t === Infinity ? Infinity : t * 12, r]);
+
+    const yearlyTaxOld = calculateProgressiveTax(yearlyTaxableOld, yearlyBracketsOld);
+    const yearlyTaxNew = calculateProgressiveTax(yearlyTaxableNew, yearlyBracketsNew);
+
+    return {
+      bonusGross,
+      yearlyGross,
+      yearlyInsurance,
+      yearlyDeductionOld,
+      yearlyDeductionNew,
+      yearlyTaxableOld,
+      yearlyTaxableNew,
+      yearlyTaxOld,
+      yearlyTaxNew,
+      yearlyNetOld: yearlyGross - yearlyInsurance - yearlyTaxOld,
+      yearlyNetNew: yearlyGross - yearlyInsurance - yearlyTaxNew,
+      yearlySaved: yearlyTaxOld - yearlyTaxNew
     };
   }
 
@@ -159,6 +201,7 @@
     calculateProgressiveTax,
     calculateTaxBreakdown,
     calculatePIT,
+    calculateYearlyPIT,
     netToGross,
     calcInsurance
   };

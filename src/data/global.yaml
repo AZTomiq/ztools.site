@@ -1,8 +1,10 @@
 site:
   url: https://ztools.site
   author: Anph
-  description: AZtomiq - Multi-tool utility site with secure, fast, and modern UI
+  description: ZTools - Multi-tool utility site with secure, fast, and modern UI
   og_image: /assets/images/og-default.png
+  google_analytics_id: G-JQ06SN6YNW
+  formspree_url: "https://formspree.io/f/xlgrqrla"
   keywords:
     - free tools
     - online utility
@@ -16,9 +18,9 @@ build:
     - vi
     - en
   default_locale: vi
-  entry_point: blog
+  entry_point:
   deploy:
-    remote: "https://github.com/ph4n4n/ztools.site-public.git"
+    remote: "https://github.com/AZTomiq/ztools.site-public.git"
     branch: "main"
     dist_folder: dist
     strategy: init
@@ -47,6 +49,10 @@ categories:
     icon: 💻
     key: dev
     translation_key: home.cats.dev.title
+  memes:
+    icon: 🐸
+    key: memes
+    translation_key: home.cats.memes.title
 category_order:
   - job
   - finance
@@ -54,3 +60,4 @@ category_order:
   - generator
   - daily
   - dev
+  - memes

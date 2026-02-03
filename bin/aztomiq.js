@@ -25,7 +25,11 @@ const commands = {
     });
   },
   deploy: async () => {
-    runNode(['scripts/deploy.js']);
+    console.log('🧪 Running full test suite before deployment...');
+    runNpm(['run', 'test'], () => {
+      console.log('✅ Tests passed! Proceeding to deploy...');
+      runNode(['scripts/deploy.js']);
+    });
   },
   test: async () => {
     const type = args[1] || 'all';
@@ -269,13 +273,50 @@ meta:
 
     console.log(`✅ Tool "${name}" created successfully!`);
     console.log(`👉 Edit it at: src/features/${name}`);
+  },
+  'meme:commit': async () => {
+    const title = args.find(a => a.startsWith('--title='))?.split('=')[1];
+    const imagePath = args.find(a => a.startsWith('--image='))?.split('=')[1];
+    const tagsStr = args.find(a => a.startsWith('--tags='))?.split('=')[1] || 'dev,meme';
+
+    if (!title || !imagePath) {
+      console.error('❌ Usage: aztomiq meme:commit --title="Name" --image="./path/to/img.png"');
+      return;
+    }
+
+    const jsonPath = path.join(ROOT, 'src/features/dev-memes/memes.json');
+    if (!await fs.pathExists(imagePath)) {
+      console.error(`❌ Image not found: ${imagePath}`);
+      return;
+    }
+
+    console.log(`📦 Committing meme: "${title}"...`);
+    const imgBuffer = await fs.readFile(imagePath);
+    const ext = path.extname(imagePath).replace('.', '') || 'png';
+    const base64 = `data:image/${ext};base64,${imgBuffer.toString('base64')}`;
+
+    let memes = [];
+    if (await fs.pathExists(jsonPath)) {
+      memes = await fs.readJson(jsonPath);
+    }
+
+    memes.unshift({
+      id: require('crypto').randomUUID(),
+      timestamp: new Date().toISOString(),
+      title,
+      image: base64,
+      tags: tagsStr.split(',')
+    });
+
+    await fs.writeJson(jsonPath, memes, { spaces: 2 });
+    console.log('✨ Successfully committed to database.');
   }
 };
 
 if (!command || !commands[command]) {
   console.log(`
 🛠️  AZtomiq CLI v${require('../package.json').version}
-🔗  https://github.com/ph4n4n/aztomiq
+🔗  https://github.com/AZTomiq/aztomiq
 
 Usage:
   aztomiq <command> [options]
@@ -291,6 +332,7 @@ Commands:
   aztomiq test            Run integrity and logic tests
   aztomiq test ui         Run Puppeteer UI automation tests
   aztomiq tool:create <id> Scaffold a new atomic tool
+  aztomiq meme:commit     Bulk commit memes (Base64 + JSON)
   `);
   process.exit(0);
 }
@@ -310,7 +352,7 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 function runNode(args, cb) {
-  const proc = spawn('node', args, { stdio: 'inherit', cwd: ROOT });
+  const proc = spawn(process.execPath, args, { stdio: 'inherit', cwd: ROOT });
   proc.on('close', (code) => {
     if (code === 0 && cb) cb();
   });

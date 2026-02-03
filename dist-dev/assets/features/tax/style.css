@@ -6,7 +6,6 @@
   margin-bottom: 1.5rem;
 }
 
-
 /* Tab Navigation */
 .tab-nav {
   display: flex;
@@ -145,11 +144,11 @@
   transition: 0.2s;
 }
 
-.switch input:checked+.switch-slider {
+.switch input:checked + .switch-slider {
   background: var(--primary-color);
 }
 
-.switch input:checked+.switch-slider::before {
+.switch input:checked + .switch-slider::before {
   transform: translateX(18px);
   background: var(--bg-color);
 }
@@ -179,7 +178,7 @@
 }
 
 .history-value {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.85rem;
   color: var(--text-color);
 }
@@ -199,7 +198,11 @@
 h1 {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--success-color)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -221,8 +224,6 @@ h1 {
 .subtitle .official-link:hover {
   opacity: 0.8;
 }
-
-
 
 .input-stack {
   display: flex;
@@ -258,7 +259,9 @@ h1 {
   border-radius: 10px;
   color: var(--text-color);
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .form-group select:focus {
@@ -302,7 +305,7 @@ h1 {
 
 /* Tool-specific input adjustments */
 .form-group input {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 .form-group input::placeholder {
@@ -410,12 +413,18 @@ h1 {
   font-size: 1rem;
   font-weight: 600;
   font-family: inherit;
-  background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover),
+    var(--primary-color)
+  );
   color: var(--bg-color);
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 
 .btn:hover {
@@ -549,7 +558,7 @@ th {
 }
 
 td {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 tr:last-child td {
@@ -561,7 +570,7 @@ tr:hover td {
 }
 
 .col-label {
-  font-family: 'Be Vietnam Pro', sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
   color: var(--text-muted);
 }
 
@@ -592,7 +601,7 @@ tr:hover td {
 
 .info-row td {
   background: rgba(var(--primary-rgb), 0.1);
-  font-family: 'Be Vietnam Pro', sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
   color: var(--text-muted);
   font-size: 0.85rem;
 }
@@ -798,7 +807,11 @@ footer a {
 
 .breakdown-col h4 {
   color: var(--bg-color);
-  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--success-color)
+  );
   font-size: 0.95rem;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -834,6 +847,94 @@ footer a {
 @media (max-width: 768px) {
   .breakdown-tables {
     grid-template-columns: 1fr;
+  }
+}
+
+.how-to-use-tables {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .how-to-use-tables {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.how-to-use-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.info-card {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.info-card h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+}
+
+.law-update-box {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(74, 222, 128, 0.1));
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.law-update-box h4 {
+  color: var(--primary-color);
+  margin-top: 0;
+}
+
+.reduction-highlight {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.reduction-highlight div {
+  background: var(--card-bg);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px dashed var(--success-color);
+  font-size: 0.9rem;
+}
+
+.info-card p, .info-card ul, .info-card ol {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.info-card ul, .info-card ol {
+  padding-left: 1.25rem;
+}
+
+.info-card li {
+  margin-bottom: 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .how-to-use-grid {
+    grid-template-columns: 1fr;
+  }
+  .reduction-highlight {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 

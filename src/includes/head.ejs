@@ -1,73 +1,154 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>
-  <%= title %>
-</title>
-<% const metaDesc=(toolConfig && toolConfig.translationKey) ? t(toolConfig.translationKey + '.desc' ) :
-  t('meta.description'); const ogImgPath=(toolConfig && toolConfig.ogImage) ? toolConfig.ogImage : global.site.og_image;
-  %>
-  <meta name="description" content="<%= metaDesc %>">
-  <% const kws=(toolConfig && toolConfig.keywords) ? toolConfig.keywords : global.site.keywords; if (kws && kws.length>
-    0) {
-    %>
-    <meta name="keywords" content="<%= kws.join(', ') %>">
-    <% } %>
 
-      <!-- Canonical URL -->
-      <link rel="canonical" href="<%= global.site.url %>/<%= locale %>/<%= pageUrl %>" />
+<script>
+  (function () {
+    window.currentPath = "<%= (typeof toolConfig !== 'undefined' && toolConfig.id) ? toolConfig.id : 'home' %>";
+    const host = window.location.hostname;
+    const path = window.location.pathname;
+    const mainDomain = "<%= siteGlobal.site.url.replace('https://', '').replace(/\/$/, '') %>";
+    const subdomains = <%- subdomainsJson %>;
 
-      <!-- Hreflang Tags for Multi-language -->
-      <% const otherLocale=locale==='vi' ? 'en' : 'vi' ; %>
-        <link rel="alternate" hreflang="vi" href="<%= global.site.url %>/vi/<%= pageUrl %>" />
-        <link rel="alternate" hreflang="en" href="<%= global.site.url %>/en/<%= pageUrl %>" />
-        <link rel="alternate" hreflang="x-default" href="<%= global.site.url %>/vi/<%= pageUrl %>" />
+    // 0. Bypasses for development
+    if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="<%= toolConfig && toolConfig.id ? 'article' : 'website' %>" />
-        <meta property="og:url" content="<%= global.site.url %>/<%= locale %>/<%= pageUrl %>" />
-        <meta property="og:title" content="<%= title %>" />
-        <meta property="og:description" content="<%= metaDesc %>" />
-        <meta property="og:image" content="<%= global.site.url %><%= ogImgPath %>" />
-        <meta property="og:site_name" content="ZTools" />
-        <meta property="og:locale" content="<%= locale === 'vi' ? 'vi_VN' : 'en_US' %>" />
-        <meta property="og:locale:alternate" content="<%= otherLocale === 'vi' ? 'vi_VN' : 'en_US' %>" />
+    // 1. Logic cho Subdomain: Chỉ làm sạch path NẾU đã hiển thị đúng nội dung tool
+    const currentSub = subdomains.find(s => s.domain === host);
+    if (currentSub && path.startsWith(currentSub.path)) {
+      if (window.currentPath !== 'home') {
+        // "Bling Bling" magic: Thay đổi URL trên thanh địa chỉ mà KHÔNG tải lại trang
+        const cleanPath = path.replace(currentSub.path, '/');
+        window.history.replaceState(null, '', cleanPath);
+      }
+      return;
+    }
 
-        <!-- Twitter Card -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="<%= global.site.url %>/<%= locale %>/<%= pageUrl %>" />
-        <meta name="twitter:title" content="<%= title %>" />
-        <meta name="twitter:description" content="<%= metaDesc %>" />
-        <meta name="twitter:image" content="<%= global.site.url %><%= ogImgPath %>" />
+    // 2. Logic cho Main Domain: Redirect sang subdomain tương ứng
+    if (host === mainDomain) {
+      const mappedSub = subdomains.find(s => path.startsWith(s.path));
+      if (mappedSub) {
+        window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
+        return;
+      }
+    }
 
-        <!-- Author & Copyright -->
-        <meta name="author" content="<%= global.site.author %>" />
-        <meta name="robots" content="index, follow" />
+    // 3. Rescue Logic: Hiển thị đúng feature trên subdomain nếu Vercel Rewrite lỗi
+    // Chỉ chạy nếu thực sự đang ở root và thấy nội dung Hub
+    if (currentSub && path === '/' && window.currentPath === 'home') {
+      window.location.replace("https://" + host + currentSub.path);
+      return;
+    }
+  })();
+</script>
 
-        <!-- Stylesheets -->
-        <link rel="stylesheet" href="<%= asset('assets/css/global.css') %>">
-        <% if (toolConfig && toolConfig._assets && toolConfig._assets.css) { %>
-          <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
-          <% } %>
-            <link rel="icon" type="image/svg+xml" href="<%= rootPath %>assets/images/logo.svg">
-            <link rel="manifest" href="<%= rootPath %>manifest.json">
-
-            <!-- Lucide Icons Library -->
-            <script src="https://unpkg.com/lucide@latest"></script>
-
-            <script src="<%= asset('assets/js/user-mode.js') %>"></script>
-
-            <!-- Dark Mode Script (Blocking) -->
-            <script>
-              const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-              document.documentElement.setAttribute('data-theme', savedTheme);
-            </script>
-
-            <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
+<% if (siteGlobal.site.google_analytics_id) { %>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= siteGlobal.site.google_analytics_id %>"></script>
   <script>
-    window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '<%= siteGlobal.site.google_analytics_id %>');
   </script>
-  <script defer src="/_vercel/analytics/script.js"></script>
-  -->
+  <% } %>
 
-            <!-- Schema.org Structured Data -->
-            <%- include('schema.ejs') %>
+    <title>
+      <%= title %>
+    </title>
+    <% const metaDesc=(toolConfig && toolConfig.translationKey) ? t(toolConfig.translationKey + '.desc' ) :
+      t('meta.description'); const ogImgPath=(toolConfig && toolConfig.ogImage) ? toolConfig.ogImage :
+      siteGlobal.site.og_image; %>
+      <meta name="description" content="<%= metaDesc %>">
+      <% const kws=(toolConfig && toolConfig.keywords) ? toolConfig.keywords : siteGlobal.site.keywords; if (kws &&
+        kws.length> 0) {
+        %>
+        <meta name="keywords" content="<%= kws.join(', ') %>">
+        <% } %>
+
+          <!-- Canonical URL (Dynamic Subdomain Support) -->
+          <% let baseUrl=siteGlobal.site.url; const subdomainsList=siteGlobal.subdomains || []; const
+            mappedSubMatch=subdomainsList.find(s=> pageUrl.startsWith(s.path.substring(1)));
+
+            if (mappedSubMatch) {
+            baseUrl = "https://" + mappedSubMatch.domain;
+            }
+
+            const cleanPagePath = mappedSubMatch ? pageUrl.replace(mappedSubMatch.path.substring(1), '') : pageUrl;
+            const currentCanonical = (locale === 'vi' || mappedSubMatch) ?
+            `${baseUrl}/${cleanPagePath}` : `${baseUrl}/${locale}/${cleanPagePath}`;
+            %>
+            <link rel="canonical" href="<%= currentCanonical %>" />
+
+            <!-- Hreflang Tags (Cross-Domain Support) -->
+            <% const viUrl=mappedSubMatch ? `https://${mappedSubMatch.domain}/${cleanPagePath}` :
+              `${siteGlobal.site.url}/${cleanPagePath}`; const enUrl=mappedSubMatch ?
+              `https://${mappedSubMatch.domain}/en/${cleanPagePath}` : `${siteGlobal.site.url}/en/${cleanPagePath}`; %>
+              <link rel="alternate" hreflang="vi" href="<%= viUrl %>" />
+              <link rel="alternate" hreflang="en" href="<%= enUrl %>" />
+              <link rel="alternate" hreflang="x-default" href="<%= enUrl %>" />
+
+              <!-- Open Graph / Facebook -->
+              <meta property="og:type" content="<%= toolConfig && toolConfig.id ? 'article' : 'website' %>" />
+              <meta property="og:url" content="<%= currentCanonical %>" />
+              <meta property="og:title" content="<%= title %>" />
+              <meta property="og:description" content="<%= metaDesc %>" />
+              <meta property="og:image" content="<%= siteGlobal.site.url %><%= ogImgPath %>" />
+              <meta property="og:site_name" content="ZTools" />
+              <% const otherLocale=locale==='vi' ? 'en' : 'vi' ; %>
+                <meta property="og:locale" content="<%= locale === 'vi' ? 'vi_VN' : 'en_US' %>" />
+                <meta property="og:locale:alternate" content="<%= otherLocale === 'vi' ? 'vi_VN' : 'en_US' %>" />
+
+                <!-- Twitter Card -->
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:url" content="<%= currentCanonical %>" />
+                <meta name="twitter:title" content="<%= title %>" />
+                <meta name="twitter:description" content="<%= metaDesc %>" />
+                <meta name="twitter:image" content="<%= siteGlobal.site.url %><%= ogImgPath %>" />
+
+                <!-- Author & Copyright -->
+                <meta name="author" content="<%= siteGlobal.site.author %>" />
+                <meta name="robots" content="index, follow" />
+
+                <!-- Fonts -->
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link
+                  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Outfit:wght@400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap"
+                  rel="stylesheet">
+
+                <!-- Prism.js for Code Highlighting -->
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+                  rel="stylesheet" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+                  defer></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"
+                  defer></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"
+                  defer></script>
+
+                <!-- Stylesheets -->
+                <link rel="stylesheet" href="<%= asset('assets/css/global.css') %>">
+                <% if (toolConfig && toolConfig._assets && toolConfig._assets.css) { %>
+                  <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+                  <% } %>
+                    <link rel="icon" type="image/svg+xml" href="<%= rootPath %>assets/images/logo.svg">
+                    <link rel="manifest" href="<%= rootPath %>manifest.json">
+
+                    <!-- Lucide Icons Library -->
+                    <script src="https://unpkg.com/lucide@latest"></script>
+
+                    <script src="<%= asset('assets/js/user-mode.js') %>"></script>
+                    <script src="<%= asset('assets/js/persona.js') %>"></script>
+
+                    <!-- Dark Mode Script (Blocking) -->
+                    <script>
+                      const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                      document.documentElement.setAttribute('data-theme', savedTheme);
+                    </script>
+
+                    <!-- Vercel Speed Insights -->
+                    <script defer src="/_vercel/insights/script.js"></script>
+
+                    <!-- Schema.org Structured Data -->
+                    <%- include('schema.ejs') %>

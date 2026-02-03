@@ -14,6 +14,14 @@ _No critical bugs currently identified._
 
 ## 🎯 HIGH PRIORITY (This Week)
 
+### 0. **Adaptive Persona Hub & Cache Busting** (NEW)
+
+- [ ] **Cache Busting**: Implement version+hash asset loading in `pages.js`.
+- [ ] **Persona System**: Create `persona.js` state management.
+- [ ] **UI Switcher**: Add identity selector to Header.
+- [ ] **Metadata**: Map all 42 tools to Persona categories.
+- [ ] **Smart Sort**: Update homepage to filter by Persona.
+
 ### 1. **Testing Infrastructure & DX Core** (Completed)
 
 **Ref**: `bin/ztools.js`, `DEVELOPMENT.md`
@@ -60,13 +68,15 @@ _No critical bugs currently identified._
 - [ ] Standardize consistent spacing variables
 - [ ] **Advanced Theme System**: Detailed plan in `plans/2-STRATEGY/STRATEGIC_NOTES.md#3`
 
-### 6. **New Core Features (ZTools v1.6.0)**
+### 6. **User Workspace & Core Features (ZTools v1.6.0)**
 
-- [ ] **Favorite Tools**: Add "Star" button to tools. Keep favorites at Top of Home.
-- [ ] **Tool Request**: Add "Request a Tool" form to Footer/Header.
+- [x] **Favorite Tools**: Add "Star" button to tools. Persisted in `localStorage`.
+- [x] **Recently Used**: Track tool usage and display on homepage.
+- [x] **Tool Breadcrumbs**: Add "Home > Category > Tool" links inside pages.
+- [x] **Blog-Playground Sync**: Linking technical blog posts to interactive demos.
+- [x] **Tool Request**: Add "Request a Tool" form to Footer/Header.
 - [ ] **Result Sharing**: Create secret link for tool results (JSON/Tax).
 - [ ] **PWA Install**: Add "Install App" popup for Mobile browsers.
-- [ ] **Tool Breadcrumbs**: Add "Home > Category > Tool" links inside pages.
 
 ### 7. **Tool Expansion Roadmap**
 

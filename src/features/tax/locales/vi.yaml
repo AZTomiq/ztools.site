@@ -1,3 +1,5 @@
 tax:
-  title: Tính thuế TNCN
-  desc: Tính thuế thu nhập cá nhân 2024 mới nhất, hỗ trợ lương Net/Gross.
+  title: Tính Thuế Thu Nhập Cá Nhân Việt Nam
+  desc: "Cập nhật Luật Thuế TNCN 2025 & Nghị quyết 110/2025/UBTVQH15 (áp dụng từ kỳ tính thuế 2026)"
+  law_label: "Chi tiết điểm mới Luật Thuế TNCN 2025"
+  law_link: "https://xaydungchinhsach.chinhphu.vn/nghi-quyet-110-2025-ubtvqh15-dieu-chinh-muc-giam-tru-gia-canh-cua-thue-thu-nhap-ca-nhan-119251110101313787.htm"

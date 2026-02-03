@@ -1,0 +1,125 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+:root {
+  --primary: #f59e0b;
+  --bg: #0f172a;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--bg);
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+.rating-app {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 32px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--primary);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+h1 { font-size: 1.75rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -0.02em; }
+p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 2.5rem; }
+
+.star-box {
+  background: rgba(0,0,0,0.2);
+  padding: 1.5rem;
+  border-radius: 20px;
+  display: inline-flex;
+  margin-bottom: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/**** Standard Star Styling (Pure CSS logic preserved) ****/
+.rating { border: none; float: left; }
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px; 
+  font-size: 2rem; 
+  font-family: FontAwesome; 
+  display: inline-block; 
+  content: "\f005"; 
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.rating > .half:before { content: "\f089"; position: absolute; }
+.rating > label { color: #334155; float: right; cursor: pointer; position: relative; }
+
+.rating > input:checked ~ label, 
+.rating:not(:checked) > label:hover, 
+.rating:not(:checked) > label:hover ~ label { 
+  color: var(--primary); 
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+.rating > input:checked + label:hover, 
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, 
+.rating > input:checked ~ label:hover ~ label { 
+  color: #fbbf24;
+}
+
+.feedback-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.rating-score {
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+  color: white;
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: none;
+  background: var(--primary);
+  color: black;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.4);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(245, 158, 11, 0.5);
+  background: #fbbf24;
+}
+
+.btn-submit:active { transform: translateY(0); }

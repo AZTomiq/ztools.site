@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect } from 'vitest';
-const bt = require('../../src/features/business-tax/script.js');
+const bt = require('../../src/features/business-tax/logic.js');
 
 describe('Business Tax Logic', () => {
   describe('Detailed Method', () => {

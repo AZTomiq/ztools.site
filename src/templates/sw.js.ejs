@@ -11,11 +11,18 @@ const IS_DEV = <%= isDev %>;
     });
 
     tools.forEach(tool => {
-    assets.add(`./assets/features/${tool.id}/style.css`);
-    assets.add(`./assets/features/${tool.id}/script.js`);
-    locales.forEach(lang => {
-    assets.add(`./${lang}/${tool.id}/`);
-    });
+      if (tool._assets_list) {
+        tool._assets_list.forEach(assetFile => {
+          assets.add(`./assets/features/${tool.id}/${assetFile}`);
+        });
+      } else {
+        // Fallback
+        assets.add(`./assets/features/${tool.id}/style.css`);
+        assets.add(`./assets/features/${tool.id}/script.js`);
+      }
+      locales.forEach(lang => {
+        assets.add(`./${lang}/${tool.id}/`);
+      });
     });
 
     const assetList = Array.from(assets);

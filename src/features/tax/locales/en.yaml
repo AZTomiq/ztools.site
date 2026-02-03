@@ -1,3 +1,5 @@
 tax:
-  title: PIT Calculator
-  desc: Calculate Personal Income Tax 2024, Net/Gross salary converter.
+  title: VIETNAM PIT Calculator
+  desc: "Comparison between tax law 2025 and earlier vs Resolution 110/2025/UBTVQH15 (effective from Jan 1, 2026)"
+  law_label: "View detailed Resolution 110/2025/UBTVQH15 here"
+  law_link: "https://xaydungchinhsach.chinhphu.vn/nghi-quyet-110-2025-ubtvqh15-dieu-chinh-muc-giam-tru-gia-canh-cua-thue-thu-nhap-ca-nhan-119251110101313787.htm"

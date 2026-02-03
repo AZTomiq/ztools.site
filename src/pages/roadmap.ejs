@@ -1,0 +1,142 @@
+<link rel="stylesheet" href="<%= rootPath %>assets/css/roadmap.css">
+
+<div class="roadmap-page">
+  <section class="roadmap-hero">
+    <div class="hero-chip" style="margin: 0 auto 1.5rem;"><i data-lucide="map"></i> The Master Roadmap</div>
+    <h1>Master Tech Stack <br>From Zero to Hero</h1>
+    <p>Hành trình chinh phục thế giới lập trình từ con số 0. Một lộ trình bài bản, chuyên sâu và thực chiến.</p>
+  </section>
+
+  <div class="tree-container">
+
+    <% const zones=[{ id: 'frontend' , title: 'Làng Tân Thủ: Frontend Foundation' , icon: 'layout' , nodes: [{
+      id: 'html' , title: 'HTML Structure' , slug: 'zero-to-hero-html-cau-truc-web-co-ban' , icon: 'file-code' }, {
+      id: 'css' , title: 'CSS Styling' , slug: 'zero-to-hero-css-tu-co-ban-den-nang-cao' , icon: 'palette' }, { id: 'js'
+      , title: 'JavaScript Core' , slug: 'zero-to-hero-javascript-ngon-ngu-lap-trinh-web' , icon: 'code-2' }, { id: 'ts'
+      , title: 'TypeScript Pro' , slug: 'typescript-all-in-one-tu-zero-den-hero' , icon: 'shield-check' }, { id: 'vue' ,
+      title: 'Vue & Nuxt Pro' , slug: 'zero-to-hero-vue-modern-frontend-framework' , icon: 'component' }] }, { id: 'dsa'
+      , title: 'Nội Công Thượng Thừa: DSA & Algorithms' , icon: 'brain' , nodes: [{ id: 'dsa-base' ,
+      title: 'Data Structures' , slug: 'dsa-internal-power' , icon: 'binary' }, { id: 'sorting' ,
+      title: 'Sorting Algorithms' , slug: 'sort-in-javascript-professional-style' , icon: 'list-ordered' }, {
+      id: 'recursion' , title: 'Recursion Master' , slug: 'dsa-internal-power' , icon: 'refresh-cw' }, { id: 'graph' ,
+      title: 'Graph Theory' , slug: 'dsa-internal-power' , icon: 'share-2' }] }, { id: 'backend' ,
+      title: 'Thành Phì Nhiêu: Backend Mastery' , icon: 'server' , nodes: [{ id: 'node' , title: 'Node.js Runtime' ,
+      slug: 'zero-to-hero-node-js-tu-co-ban-den-nang-cao' , icon: 'terminal' }, { id: 'express' , title: 'Express.js' ,
+      slug: 'zero-to-hero-expressjs-web-framework-tu-co-ban-den-nang-cao' , icon: 'zap' }, { id: 'nestjs' ,
+      title: 'NestJS Enterprise' , slug: 'zero-to-hero-nestjs-enterprise-framework-cho-node-js' , icon: 'component' }, {
+      id: 'python' , title: 'Python Expert' , slug: 'zero-to-hero-python' , icon: 'binary' }] }, { id: 'database' ,
+      title: 'Hầm Ngục Dữ Liệu: DB & ORM' , icon: 'database' , nodes: [{ id: 'sql' , title: 'MySQL Mastery' ,
+      slug: 'zero-to-hero-mysql-database-management-tu-co-ban-den-nang-cao' , icon: 'table-2' }, { id: 'nosql' ,
+      title: 'MongoDB NoSQL' , slug: 'zero-to-hero-mongodb-nosql-database-cho-ung-dung-hien-dai' , icon: 'database' }, {
+      id: 'prisma' , title: 'Prisma ORM' , slug: 'zero-to-hero-prisma-modern-database-toolkit' , icon: 'layers' }, {
+      id: 'mongoose' , title: 'Mongoose ODM' , slug: 'zero-to-hero-mongoose' , icon: 'link' }] }, { id: 'devops' ,
+      title: 'Pháo Đài DevOps & Infra' , icon: 'cloud' , nodes: [{ id: 'docker' , title: 'Docker Basics' ,
+      slug: 'zero-to-hero-docker-containerization-tu-co-ban-den-nang-cao' , icon: 'box' }, { id: 'compose' ,
+      title: 'Docker Compose' , slug: 'zero-to-hero-docker-compose-multi-container-orchestration' , icon: 'boxes' }, {
+      id: 'kafka' , title: 'Kafka Stream' , slug: 'zero-to-hero-kafka' , icon: 'shuffle' }, { id: 'rabbitmq' ,
+      title: 'RabbitMQ Broker' , slug: 'zero-to-hero-rabbitmq-message-broker-mastery' , icon: 'messages-square' }] }, {
+      id: 'advanced' , title: 'Đỉnh Vinh Quang: Arch & Pro' , icon: 'trophy' , nodes: [{ id: 'solid' ,
+      title: 'SOLID Principles' , slug: 'solid' , icon: 'gem' }, { id: 'acid' , title: 'ACID Database' , slug: 'acid' ,
+      icon: 'lock' }, { id: 'testing' , title: 'Jest Testing' ,
+      slug: 'zero-to-hero-jest-testing-framework-cho-javascript' , icon: 'check-circle' }, { id: 'automation' ,
+      title: 'Puppeteer Auto' , slug: 'zero-to-hero-puppeteer-web-automation-scraping' , icon: 'bot' }] }]; %>
+
+      <% zones.forEach(zone=> { %>
+        <div class="roadmap-zone" id="zone-<%= zone.id %>">
+          <div class="zone-header">
+            <i data-lucide="<%= zone.icon %>"
+              style="width: 16px; height: 16px; vertical-align: middle; margin-right: 8px;"></i>
+            <%= zone.title %>
+          </div>
+          <div class="node-grid">
+            <% zone.nodes.forEach(node=> { %>
+              <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>blog/#<%= node.slug %>" class="roadmap-node"
+                data-id="<%= node.id %>">
+                <div class="node-status status-lock" id="status-<%= node.id %>">Locked</div>
+                <div class="node-icon">
+                  <i data-lucide="<%= node.icon %>"></i>
+                </div>
+                <span class="node-title">
+                  <%= node.title %>
+                </span>
+                <p class="node-desc">Chinh phục kỹ năng <%= node.title %> chuẩn Pro.</p>
+              </a>
+              <% }); %>
+          </div>
+        </div>
+        <% }); %>
+
+  </div>
+
+  <div class="roadmap-hud">
+    <div class="hud-stat">
+      <span class="stat-val" id="unlocked-count">0</span>
+      <span class="stat-desc">Skills</span>
+    </div>
+    <div class="hud-progress-wrap">
+      <div class="hud-label">
+        <span>Progress</span>
+        <span id="total-progress-text">0%</span>
+      </div>
+      <div class="hud-bar-bg">
+        <div class="hud-bar-fill" id="total-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const nodes = document.querySelectorAll('.roadmap-node');
+    const unlockedCountEl = document.getElementById('unlocked-count');
+    const progressTextEl = document.getElementById('total-progress-text');
+    const progressBarEl = document.getElementById('total-progress-bar');
+    const page = document.querySelector('.roadmap-page');
+
+    // Mouse Tracking Glow
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      page.style.setProperty('--mouse-x', x + '%');
+      page.style.setProperty('--mouse-y', y + '%');
+    });
+
+    function updateProgress() {
+      const stored = JSON.parse(localStorage.getItem('ztools_roadmap_progress') || '{}');
+      let unlocked = 0;
+      nodes.forEach(node => {
+        const id = node.dataset.id;
+        const statusEl = node.querySelector('.node-status');
+        if (stored[id]) {
+          unlocked++;
+          statusEl.textContent = 'Unlocked';
+          statusEl.classList.remove('status-lock');
+          statusEl.classList.add('status-done');
+          node.classList.add('is-unlocked');
+        } else {
+          statusEl.textContent = 'Locked';
+        }
+      });
+
+      const percent = Math.round((unlocked / nodes.length) * 100);
+      unlockedCountEl.textContent = unlocked;
+      progressTextEl.textContent = percent + '%';
+      progressBarEl.style.width = percent + '%';
+    }
+
+    // click to unlock (for demo/dev)
+    nodes.forEach(node => {
+      node.addEventListener('click', (e) => {
+        const id = node.dataset.id;
+        const stored = JSON.parse(localStorage.getItem('ztools_roadmap_progress') || '{}');
+        if (!stored[id]) {
+          stored[id] = true;
+          localStorage.setItem('ztools_roadmap_progress', JSON.stringify(stored));
+          updateProgress();
+        }
+      });
+    });
+
+    updateProgress();
+  })();
+</script>
