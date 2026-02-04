@@ -11,18 +11,18 @@ const IS_DEV = <%= isDev %>;
     });
 
     tools.forEach(tool => {
-      if (tool._assets_list) {
-        tool._assets_list.forEach(assetFile => {
-          assets.add(`./assets/features/${tool.id}/${assetFile}`);
-        });
-      } else {
-        // Fallback
-        assets.add(`./assets/features/${tool.id}/style.css`);
-        assets.add(`./assets/features/${tool.id}/script.js`);
-      }
-      locales.forEach(lang => {
-        assets.add(`./${lang}/${tool.id}/`);
-      });
+    if (tool._assets_list) {
+    tool._assets_list.forEach(assetFile => {
+    assets.add(`./assets/features/${tool.id}/${assetFile}`);
+    });
+    } else {
+    // Fallback
+    assets.add(`./assets/features/${tool.id}/style.css`);
+    assets.add(`./assets/features/${tool.id}/script.js`);
+    }
+    locales.forEach(lang => {
+    assets.add(`./${lang}/${tool.id}/`);
+    });
     });
 
     const assetList = Array.from(assets);
@@ -40,8 +40,19 @@ const IS_DEV = <%= isDev %>;
           console.log('[SW] Installing...');
           e.waitUntil(
           caches.open(CACHE_NAME).then((cache) => {
-          console.log('[SW] Caching App Shell');
-          return cache.addAll(STATIC_ASSETS);
+          console.log('[SW] Caching App Shell (Resilient Mode)');
+          const cachePromises = STATIC_ASSETS.map(url => {
+          return fetch(url).then(response => {
+          if (!response.ok) {
+          console.warn(`[SW] Skip caching missing file: ${url}`);
+          return;
+          }
+          return cache.put(url, response);
+          }).catch(err => {
+          console.warn(`[SW] Cache fail for ${url}:`, err);
+          });
+          });
+          return Promise.all(cachePromises);
           })
           );
           self.skipWaiting();

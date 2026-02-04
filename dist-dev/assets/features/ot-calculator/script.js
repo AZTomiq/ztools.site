@@ -1,19 +1,29 @@
+/**
+ * OT Calculator UI
+ */
+
 function formatVND(amount) {
-  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.round(amount));
 }
 
 function parseInputCurrency(val) {
-  return parseFloat(val.replace(/[^\d]/g, '')) || 0;
+  return parseFloat(val.toString().replace(/[^\d]/g, '')) || 0;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const salaryInput = document.getElementById('base-salary');
+  if (!salaryInput) return;
 
   salaryInput.addEventListener('input', (e) => {
     let value = parseInputCurrency(e.target.value);
     if (value === 0) e.target.value = '';
     else e.target.value = value.toLocaleString('vi-VN');
   });
+
+  const btnCalc = document.getElementById('btn-calculate');
+  if (btnCalc) {
+    btnCalc.addEventListener('click', calculateOT);
+  }
 });
 
 function calculateOT() {
@@ -26,20 +36,7 @@ function calculateOT() {
     return;
   }
 
-  const hourlyRate = salary / (workingDays * workingHours);
-  document.getElementById('hourly-rate').textContent = formatVND(hourlyRate);
-
-  // Multipliers (Based on VT Labor Law)
-  const MULT = {
-    WEEKDAY_DAY: 1.5,
-    WEEKDAY_NIGHT: 2.1, // 150% + 30% + (20% * 150%)
-    WEEKEND_DAY: 2.0,
-    WEEKEND_NIGHT: 2.7, // 200% + 30% + (20% * 200%)
-    HOLIDAY_DAY: 3.0,
-    HOLIDAY_NIGHT: 3.9  // 300% + 30% + (20% * 300%)
-  };
-
-  const inputs = {
+  const otHours = {
     weekdayDay: parseFloat(document.getElementById('weekday-day').value) || 0,
     weekdayNight: parseFloat(document.getElementById('weekday-night').value) || 0,
     weekendDay: parseFloat(document.getElementById('weekend-day').value) || 0,
@@ -48,48 +45,44 @@ function calculateOT() {
     holidayNight: parseFloat(document.getElementById('holiday-night').value) || 0
   };
 
-  let totalOTPay = 0;
-  const breakdown = [];
+  if (typeof calculateOTLogic === 'function') {
+    const res = calculateOTLogic(salary, workingDays, workingHours, otHours);
 
-  const addBreakdown = (label, hours, mult) => {
-    if (hours <= 0) return;
-    const pay = hours * hourlyRate * mult;
-    totalOTPay += pay;
-    breakdown.push({ label, hours, mult, pay });
-  };
+    // Render results
+    document.getElementById('hourly-rate').textContent = formatVND(res.hourlyRate);
+    document.getElementById('total-ot-pay').textContent = formatVND(res.totalOTPay);
+    document.getElementById('final-total').textContent = formatVND(res.finalTotal);
 
-  const isVi = document.documentElement.lang === 'vi';
+    const tbody = document.getElementById('breakdown-body');
+    tbody.innerHTML = '';
 
-  addBreakdown(isVi ? "Ngày thường (Sáng)" : "Weekday (Day)", inputs.weekdayDay, MULT.WEEKDAY_DAY);
-  addBreakdown(isVi ? "Ngày thường (Đêm)" : "Weekday (Night)", inputs.weekdayNight, MULT.WEEKDAY_NIGHT);
-  addBreakdown(isVi ? "Ngày nghỉ (Sáng)" : "Weekend (Day)", inputs.weekendDay, MULT.WEEKEND_DAY);
-  addBreakdown(isVi ? "Ngày nghỉ (Đêm)" : "Weekend (Night)", inputs.weekendNight, MULT.WEEKEND_NIGHT);
-  addBreakdown(isVi ? "Ngày Lễ (Sáng)" : "Holiday (Day)", inputs.holidayDay, MULT.HOLIDAY_DAY);
-  addBreakdown(isVi ? "Ngày Lễ (Đêm)" : "Holiday (Night)", inputs.holidayNight, MULT.HOLIDAY_NIGHT);
+    const labels = {
+      weekday_day: document.documentElement.lang === 'vi' ? 'Ngày thường (Sáng)' : 'Weekday (Day)',
+      weekday_night: document.documentElement.lang === 'vi' ? 'Ngày thường (Đêm)' : 'Weekday (Night)',
+      weekend_day: document.documentElement.lang === 'vi' ? 'Ngày nghỉ (Sáng)' : 'Weekend (Day)',
+      weekend_night: document.documentElement.lang === 'vi' ? 'Ngày nghỉ (Đêm)' : 'Weekend (Night)',
+      holiday_day: document.documentElement.lang === 'vi' ? 'Ngày Lễ (Sáng)' : 'Holiday (Day)',
+      holiday_night: document.documentElement.lang === 'vi' ? 'Ngày Lễ (Đêm)' : 'Holiday (Night)'
+    };
 
-  // Render results
-  document.getElementById('total-ot-pay').textContent = formatVND(totalOTPay);
-  document.getElementById('final-total').textContent = formatVND(salary + totalOTPay);
+    res.breakdown.forEach(item => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+                <td>
+                    <div class="label-muted">${labels[item.label] || item.label}</div>
+                    <div>${item.hours}h x ${item.mult * 100}%</div>
+                </td>
+                <td class="val-bold">${formatVND(item.pay)}</td>
+            `;
+      tbody.appendChild(row);
+    });
 
-  const tbody = document.getElementById('breakdown-body');
-  tbody.innerHTML = '';
+    document.getElementById('result-box').style.display = 'block';
 
-  breakdown.forEach(item => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-            <td>
-                <div class="label-muted">${item.label}</div>
-                <div>${item.hours}h x ${item.mult * 100}%</div>
-            </td>
-            <td class="val-bold">${formatVND(item.pay)}</td>
-        `;
-    tbody.appendChild(row);
-  });
-
-  document.getElementById('result-box').style.display = 'block';
-
-  // Smooth scroll to result
-  if (window.innerWidth <= 900) {
-    document.getElementById('result-box').scrollIntoView({ behavior: 'smooth' });
+    if (window.innerWidth <= 900) {
+      document.getElementById('result-box').scrollIntoView({ behavior: 'smooth' });
+    }
+  } else {
+    console.error('calculateOTLogic function not found.');
   }
 }

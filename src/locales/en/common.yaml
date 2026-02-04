@@ -15,6 +15,7 @@ common:
   try_master: Try New Version
   reset: Reset
 nav:
+  display_mode: "Display Mode"
   home: Home
   tax: Tax Calc
   bmi: BMI
@@ -51,7 +52,14 @@ home:
   hero_title: Small tools. Big help.
   hero_desc: "Fast • Secure • Free"
   favorites: My Favorite Tools
-  tag_cloud_title: Popular Tags
+  tag_cloud_title: Popular Keywords
+  fast_access:
+    title: "🚀 Fast Access"
+    subtitle: "Direct access via subdomain"
+    badge: "Pro"
+  smart_picks:
+    title: "💡 Smart Picks"
+    subtitle: "Based on your preferences and trends"
   cats:
     job:
       title: Job & Income

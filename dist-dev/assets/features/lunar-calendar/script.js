@@ -71,22 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderMonthView(currentViewMonth, currentViewYear);
   });
 
-  // Modal Logic
-  const viewHoursBtn = document.getElementById('view-hours-btn');
-  const hoursModal = document.getElementById('lunar-hours-modal');
-  const closeHoursModal = document.getElementById('close-hours-modal');
-  const closeHoursOverlay = document.getElementById('close-hours-overlay');
-
-  if (viewHoursBtn && hoursModal) {
-    viewHoursBtn.addEventListener('click', () => {
-      hoursModal.style.display = 'flex';
-      displayGoodHours(currentSelectedDate.getDate(), currentSelectedDate.getMonth() + 1, currentSelectedDate.getFullYear());
-    });
-  }
-
-  const hideModal = () => { if (hoursModal) hoursModal.style.display = 'none'; };
-  if (closeHoursModal) closeHoursModal.addEventListener('click', hideModal);
-  if (closeHoursOverlay) closeHoursOverlay.addEventListener('click', hideModal);
+  renderMonthView(today.getMonth() + 1, today.getFullYear());
 });
 
 let currentSelectedDate = new Date();
@@ -146,34 +131,28 @@ function displayTodayLunar(dd, mm, yy) {
 function displayGoodHours(dd, mm, yy) {
   const jd = jdFromDate(dd, mm, yy);
   const goodHours = getGoodHours(jd);
-  const modalContainer = document.getElementById('modal-good-hours-list');
-  const sideContainer = document.getElementById('side-good-hours-list');
+  const inlineContainer = document.getElementById('zodiac-hours-summary');
 
-  if (!modalContainer && !sideContainer) return;
+  if (!inlineContainer) return;
 
   const ranges = [
-    '23:00 - 01:00', '01:00 - 03:00', '03:00 - 05:00', '05:00 - 07:00',
-    '07:00 - 09:00', '09:00 - 11:00', '11:00 - 13:00', '13:00 - 15:00',
-    '15:00 - 17:00', '17:00 - 19:00', '19:00 - 21:00', '21:00 - 23:00'
+    '23-1', '1-3', '3-5', '5-7', '7-9', '9-11',
+    '11-13', '13-15', '15-17', '17-19', '19-21', '21-23'
   ];
 
-  const content = [];
+  const goodList = [];
   for (let i = 0; i < 12; i++) {
-    const isGood = goodHours.includes(i);
-    const label = isGood ? 'Hoàng Đạo' : 'Hắc Đạo';
-    content.push(`
-      <div class="hour-item ${isGood ? 'good' : 'bad'}">
-        <div style="display: flex; flex-direction: column; gap: 2px;">
-          <span class="hour-chi">Giờ ${CHI[i]}</span>
-          <span class="hour-range">${ranges[i]}</span>
-        </div>
-        <span class="hour-status">${label}</span>
-      </div>
-    `);
+    if (goodHours.includes(i)) {
+      goodList.push(`${CHI[i]} (${ranges[i]})`);
+    }
   }
 
-  if (modalContainer) modalContainer.innerHTML = content.join('');
-  if (sideContainer) sideContainer.innerHTML = content.join('');
+  inlineContainer.textContent = goodList.join(', ');
+
+  // Re-run Lucide icons if any were added dynamically
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 function handleDateConversion() {

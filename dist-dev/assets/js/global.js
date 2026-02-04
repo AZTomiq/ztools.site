@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toast = document.createElement('div');
     toast.className = 'az-toast';
-    toast.innerHTML = `<i data-lucide="info" style="width: 14px; height: 14px;"></i> <span>${message}</span>`;
+    toast.innerHTML = `< i data - lucide="info" style = "width: 14px; height: 14px;" ></i > <span>${message}</span>`;
 
     container.appendChild(toast);
     if (window.lucide) lucide.createIcons();
@@ -491,60 +491,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  // --- Subdomain Cross-Linking Logic ---
-  const subdomains = i18nData.subdomains || []; // We'll need to inject this into i18nData
-  const mainDomain = i18nData.mainDomain || window.location.hostname;
-
-  function resolveInternalLink(url) {
-    if (!url || url.startsWith('#') || url.startsWith('javascript:')) return url;
-
-    // Convert absolute internal links to relative for processing
-    let path = url;
-    if (url.startsWith('http')) {
-      try {
-        const urlObj = new URL(url);
-        if (urlObj.hostname === mainDomain || subdomains.some(s => s.domain === urlObj.hostname)) {
-          path = urlObj.pathname;
-        } else {
-          return url; // External link
-        }
-      } catch (e) { return url; }
-    }
-
-    if (!path.startsWith('/')) path = '/' + path;
-
-    const mappedSub = subdomains.find(s => path.startsWith(s.path));
-
-    if (mappedSub) {
-      // Resolve to clean subdomain absolute URL (strip the subdirectory path)
-      return `https://${mappedSub.domain}${path.replace(mappedSub.path, '/')}`;
-    }
-
-    // If not a subdomain path, and we are currently on a subdomain, point back to main
-    if (window.location.hostname !== mainDomain && !host.includes('localhost') && !host.includes('127.0.0.1')) {
-      return `https://${mainDomain}${path}`;
-    }
-
-    return path;
-  }
-
-  // Intercept all internal links to resolve them
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (link) {
-      const href = link.getAttribute('href');
-      if (!href) return;
-
-      const resolved = resolveInternalLink(href);
-      if (resolved !== href) {
-        // We don't necessarily want to MUTATE the DOM href (which might break SPA-like behavior if added later)
-        // but for this static site strategy, resolving it on click or just before is fine.
-        // For SEO, we prefer them to be correct in the HTML (Mega Menu handles this via EJS usually)
-        // This is a safety layer for dynamic links.
-        link.setAttribute('href', resolved);
-      }
-    }
-  }, true);
 
 });
 

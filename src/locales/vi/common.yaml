@@ -15,6 +15,7 @@ common:
   try_master: Trải nghiệm ngay
   reset: Đặt lại
 nav:
+  display_mode: "Chế độ hiển thị"
   home: Trang chủ
   tax: Tính Thuế
   bmi: BMI
@@ -52,6 +53,13 @@ home:
   hero_desc: Fast • Secure • Free
   favorites: Công cụ của tôi
   tag_cloud_title: Từ khóa phổ biến
+  fast_access:
+    title: "🚀 Truy cập nhanh"
+    subtitle: "Mở trực tiếp qua subdomain"
+    badge: "Pro"
+  smart_picks:
+    title: "💡 Gợi ý cho bạn"
+    subtitle: "Dựa trên sở thích và xu hướng"
   cats:
     job:
       title: Việc làm & Lương thưởng

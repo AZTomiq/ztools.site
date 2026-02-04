@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Main Homepage Logic (View Toggle & Sorting)
   const toolGrids = document.querySelectorAll(".tools-grid");
   const viewToggleBtns = document.querySelectorAll("[data-view]");
   const sortSelect = document.getElementById("sort-select");
 
-  // Only proceed if we are on the homepage (elements exist)
   if (toolGrids.length === 0) return;
 
   let globalUsage = {};
+  let recentUsage = JSON.parse(localStorage.getItem('ztools_recent') || '{}');
+  let localUsage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
 
   // --- 1. Fetch Global Usage from API ---
   async function fetchGlobalUsage() {
@@ -19,13 +19,129 @@ document.addEventListener("DOMContentLoaded", () => {
           globalUsage[item.tool_id] = item.total_views;
         });
 
+        // Populate Smart Picks with intelligent algorithm
+        populateSmartPicks(data);
+
         if (sortSelect && sortSelect.value === "popular") {
           applySort("popular");
         }
       }
     } catch (err) {
       console.warn("zHome: Failed to fetch global stats.");
+      // Fallback to local-only smart picks
+      populateSmartPicks([]);
     }
+  }
+
+  // --- 2. Smart Picks Algorithm ---
+  function populateSmartPicks(globalStats) {
+    const smartPicksGrid = document.getElementById('smart-picks-grid');
+    if (!smartPicksGrid) return;
+
+    // Get all tool cards (exclude inner buttons with same data-id)
+    const allCards = Array.from(document.querySelectorAll('.tool-card-wrapper[data-tool-id]'));
+
+    // Scoring algorithm
+    const scoredTools = allCards.map(card => {
+      const toolId = card.getAttribute('data-tool-id');
+
+      // Skip fast-access tools (already shown above)
+      const fastAccessIds = ['web-playground', 'tax', 'json-toolkit', 'compound-interest', 'lunar-calendar'];
+      if (fastAccessIds.includes(toolId)) return null;
+
+      let score = 0;
+
+      // 1. Recent usage (highest weight) - 50 points
+      const recentTime = recentUsage[toolId] || 0;
+      if (recentTime > 0) {
+        const hoursSince = (Date.now() - recentTime) / (1000 * 60 * 60);
+        score += Math.max(0, 50 - hoursSince); // Decay over time
+      }
+
+      // 2. Personal usage frequency - 30 points
+      const personalCount = localUsage[toolId] || 0;
+      score += Math.min(30, personalCount * 5);
+
+      // 3. Global trending (normalized) - 20 points
+      const globalCount = globalUsage[toolId] || 0;
+      const maxGlobal = Math.max(...Object.values(globalUsage), 1);
+      score += (globalCount / maxGlobal) * 20;
+
+      return { card, toolId, score };
+    }).filter(Boolean);
+
+    // Sort by score and take top 8
+    scoredTools.sort((a, b) => b.score - a.score);
+    const topPicks = scoredTools.slice(0, 8);
+
+    // Populate grid
+    topPicks.forEach((pick, index) => {
+      const clone = pick.card.cloneNode(true);
+
+      // Add trending badge for top 3
+      if (index < 3 && pick.score > 20) {
+        // Remove existing badge if any to prevent dupes
+        const existingBadge = clone.querySelector('.trending-badge');
+        if (existingBadge) existingBadge.remove();
+
+        const trendingBadge = document.createElement('div');
+        trendingBadge.className = 'trending-badge';
+        trendingBadge.innerHTML = '<i data-lucide="trending-up" style="width: 12px; height: 12px;"></i> Trending';
+        clone.style.position = 'relative'; // Ensure relative for absolute badge
+        clone.appendChild(trendingBadge); // Append to card, CSS will position absolute
+      }
+
+      // Add view count if available
+      const globalCount = globalUsage[pick.toolId];
+      if (globalCount) {
+        // Check if card-footer exists (new layout)
+        const footer = clone.querySelector('.card-footer');
+        if (footer) {
+          const viewSpan = document.createElement('span');
+          viewSpan.className = 'view-count-mini';
+          viewSpan.style.fontSize = '0.75rem';
+          viewSpan.style.color = 'var(--text-muted)';
+          viewSpan.style.display = 'flex';
+          viewSpan.style.alignItems = 'center';
+          viewSpan.style.gap = '4px';
+          viewSpan.style.marginLeft = 'auto'; // Right align before arrow
+          viewSpan.style.marginRight = '8px';
+          viewSpan.innerHTML = `<i data-lucide="eye" style="width: 12px; height: 12px;"></i> ${formatViews(globalCount)}`;
+
+          // Insert before the arrow icon
+          const arrow = footer.querySelector('i[data-lucide="arrow-right"]');
+          if (arrow) {
+            footer.insertBefore(viewSpan, arrow);
+          } else {
+            footer.appendChild(viewSpan);
+          }
+        } else {
+          // Fallback for old layout (rare)
+          const viewBadge = document.createElement('div');
+          viewBadge.className = 'view-count-badge';
+          viewBadge.innerHTML = `<i data-lucide="eye" style="width: 14px; height: 14px;"></i> ${formatViews(globalCount)}`;
+          const iconDiv = clone.querySelector('.icon');
+          if (iconDiv) {
+            iconDiv.style.position = 'relative';
+            iconDiv.appendChild(viewBadge);
+          }
+        }
+      }
+
+      smartPicksGrid.appendChild(clone);
+    });
+
+    // Re-init Lucide icons
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  function formatViews(count) {
+    if (count >= 1000) {
+      return (count / 1000).toFixed(1) + 'k';
+    }
+    return count.toString();
   }
 
   fetchGlobalUsage();
@@ -76,13 +192,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applySort(sortMode) {
-    const recent = JSON.parse(localStorage.getItem('ztools_recent') || '{}');
-    const localUsage = JSON.parse(localStorage.getItem('ztools_usage') || '{}');
-
     toolGrids.forEach((grid) => {
+      // Skip smart picks grid (already sorted)
+      if (grid.id === 'smart-picks-grid') return;
+
       const items = Array.from(grid.children);
 
-      // Save original index
       if (!grid.dataset.indexed) {
         items.forEach((item, index) => item.dataset.originalIndex = index);
         grid.dataset.indexed = "true";
@@ -90,15 +205,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       items.sort((a, b) => {
         const getID = (el) => {
+          const id = el.getAttribute('data-tool-id');
+          if (id) return id;
+
           const href = el.getAttribute('href');
           if (!href) return '';
           const parts = href.split('/').filter(Boolean);
-          // Handle /vi/ or /en/ prefix
-          const lastPart = parts[parts.length - 1];
-          if (parts.length > 1 && (parts[0] === 'vi' || parts[0] === 'en')) {
-            return lastPart;
-          }
-          return lastPart;
+          return parts[parts.length - 1];
         };
 
         const idA = getID(a);
@@ -113,11 +226,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const titleB = b.querySelector("h3, h4")?.innerText.trim() || "";
           return titleB.localeCompare(titleA);
         } else if (sortMode === "recent") {
-          const timeA = recent[idA] || 0;
-          const timeB = recent[idB] || 0;
+          const timeA = recentUsage[idA] || 0;
+          const timeB = recentUsage[idB] || 0;
           return timeB - timeA;
         } else if (sortMode === "popular") {
-          // Priority: Global Usage > Local Usage
           const countA = (globalUsage[idA] || 0) * 1000 + (localUsage[idA] || 0);
           const countB = (globalUsage[idB] || 0) * 1000 + (localUsage[idB] || 0);
           return countB - countA;
@@ -129,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- 5. Hero Search Logic (Bridge to Global Search) ---
+  // --- 5. Hero Search Logic ---
   const homeSearch = document.getElementById("home-search");
   if (homeSearch) {
     homeSearch.addEventListener("focus", () => {

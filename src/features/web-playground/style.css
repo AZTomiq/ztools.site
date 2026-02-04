@@ -10,11 +10,18 @@
   --pane-min-width: 45px;
 }
 
-/* --- FULL HEIGHT & HIDE FOOTER --- */
+/* --- FULL HEIGHT & HIDE HEADER/FOOTER --- */
 body.is-playground {
   overflow: hidden !important;
   height: 100vh !important;
   width: 100vw !important;
+}
+
+/* Hide global navigation elements for full-screen experience */
+body.is-playground .site-header,
+body.is-playground .breadcrumbs-container,
+body.is-playground .site-footer {
+  display: none !important;
 }
 
 /* Global components are hidden via EJS when hideStandardHeader: true */
@@ -98,7 +105,7 @@ body.is-playground main {
   right: 0;
   bottom: 0;
   background-color: var(--border-color);
-  transition: .3s;
+  transition: 0.3s;
   border-radius: 20px;
 }
 
@@ -110,16 +117,16 @@ body.is-playground main {
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: .3s;
+  transition: 0.3s;
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: var(--primary-color);
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   transform: translateX(14px);
 }
 
@@ -442,19 +449,36 @@ iframe#preview-frame {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  body.is-playground main {
-    height: auto;
-    overflow-y: auto;
+  /* Allow full page scrolling */
+  body.is-playground {
+    overflow: auto !important;
+    height: auto !important;
+  }
+
+  body.is-playground main,
+  .playground-container,
+  .playground-body {
+    height: auto !important;
+    overflow: visible !important;
   }
 
   .playground-body {
     flex-direction: column;
-    height: auto;
   }
 
+  /* Sidebar takes full width when open */
+  .sidebar-examples {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    max-height: 300px; /* Limit height if open */
+    overflow-y: auto;
+  }
+
+  /* Editors Stack */
   .editors-split {
     flex-direction: column;
-    height: auto;
+    height: auto !important; /* Override JS inline styles if any */
     min-height: auto;
   }
 
@@ -462,10 +486,11 @@ iframe#preview-frame {
     height: 300px;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
+    flex: none !important; /* Prevent JS flex manipulation */
   }
 
+  /* Minimized state for mobile */
   .editor-pane.minimized {
-    flex: 0 0 auto !important;
     height: var(--header-height);
     min-width: 100% !important;
   }
@@ -473,10 +498,26 @@ iframe#preview-frame {
   .editor-pane.minimized .pane-header {
     writing-mode: horizontal-tb;
     height: var(--header-height);
+    padding: 0 10px;
+    justify-content: space-between;
+    background-color: var(--editor-header-bg);
+    border-bottom: 1px solid var(--editor-border);
   }
 
+  .editor-pane.minimized .pane-actions {
+    display: flex; /* Show actions to restore */
+  }
+
+  /* Fix Preview Area */
   .preview-area {
-    height: 500px;
+    height: 500px !important; /* Fixed height for preview */
+    flex: none !important;
+  }
+
+  /* Hide resizers on mobile as we use stacking */
+  .resizer-h,
+  .resizer-v {
+    display: none !important;
   }
 }
 
@@ -495,7 +536,9 @@ iframe#preview-frame {
   justify-content: center;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.2s, visibility 0.2s;
+  transition:
+    opacity 0.2s,
+    visibility 0.2s;
 }
 
 .modal-overlay.hidden {
@@ -582,7 +625,7 @@ iframe#preview-frame {
   transition: all 0.2s;
 }
 
-.checkbox-pill input:checked+.pill-text {
+.checkbox-pill input:checked + .pill-text {
   background: var(--primary-color);
   color: white;
   border-color: var(--primary-color);

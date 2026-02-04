@@ -5,6 +5,46 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script>
+  (function () {
+    window.currentPath = "web-playground";
+    const host = window.location.hostname;
+    const path = window.location.pathname;
+    const mainDomain = "ztools.site";
+    const subdomains = [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"},{"domain":"amlich.ztools.site","path":"/lunar-calendar/"},{"domain":"lunar.ztools.site","path":"/lunar-calendar/"}];
+
+    // 0. Bypasses for development
+    if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
+
+    // 1. Logic cho Subdomain: Chỉ làm sạch path NẾU đã hiển thị đúng nội dung tool
+    const currentSub = subdomains.find(s => s.domain === host);
+    if (currentSub && path.startsWith(currentSub.path)) {
+      if (window.currentPath !== 'home') {
+        // "Bling Bling" magic: Thay đổi URL trên thanh địa chỉ mà KHÔNG tải lại trang
+        const cleanPath = path.replace(currentSub.path, '/');
+        window.history.replaceState(null, '', cleanPath);
+      }
+      return;
+    }
+
+    // 2. Logic cho Main Domain: Redirect sang subdomain tương ứng
+    if (host === mainDomain) {
+      const mappedSub = subdomains.find(s => path.startsWith(s.path));
+      if (mappedSub) {
+        window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
+        return;
+      }
+    }
+
+    // 3. Rescue Logic: Hiển thị đúng feature trên subdomain nếu Vercel Rewrite lỗi
+    // Chỉ chạy nếu thực sự đang ở root và thấy nội dung Hub
+    if (currentSub && path === '/' && window.currentPath === 'home') {
+      window.location.replace("https://" + host + currentSub.path);
+      return;
+    }
+  })();
+</script>
+
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQ06SN6YNW"></script>
@@ -15,41 +55,6 @@
     gtag('config', 'G-JQ06SN6YNW');
   </script>
   
-
-    <!-- Subdomain Routing (Shared-Code Strategy) -->
-    <script>
-      (function () {
-        const subdomains = ;
-        const host = window.location.hostname;
-        const path = window.location.pathname;
-        const mainDomain = "ztools.site";
-
-        // 0. Bypasses for development
-        if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
-
-        // 1. Redirection: Path -> Clean Subdomain
-        const mappedSub = subdomains.find(s => path.startsWith(s.path));
-
-        // If on main domain but path has a dedicated subdomain -> Redirect to clean subdomain
-        if (mappedSub && host === mainDomain) {
-          window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
-          return;
-        }
-
-        // 2. Redirection: Wrong Subdomain -> Correct Clean Subdomain (Cross-transition)
-        if (mappedSub && mappedSub.domain !== host) {
-          window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
-          return;
-        }
-
-        // 3. Redirection: If on subdomain but path still has the prefix (safety for old links)
-        const currentSub = subdomains.find(s => s.domain === host);
-        if (currentSub && path.startsWith(currentSub.path)) {
-          window.location.replace("https://" + host + path.replace(currentSub.path, '/'));
-          return;
-        }
-      })();
-    </script>
 
     <title>
       ZTools - Free Online Utility Tools
@@ -111,9 +116,9 @@
                   defer></script>
 
                 <!-- Stylesheets -->
-                <link rel="stylesheet" href="../../assets/css/global.css?h=fe3ebb6f&amp;v=1.5.2">
+                <link rel="stylesheet" href="../../assets/css/global.css?h=75b36733&amp;v=1.5.2">
                 
-                  <link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=551000be&amp;v=1.5.2">
+                  <link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=bc54b051&amp;v=1.5.2">
                   
                     <link rel="icon" type="image/svg+xml" href="../../assets/images/logo.svg">
                     <link rel="manifest" href="../../manifest.json">
@@ -129,13 +134,6 @@
                       const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                       document.documentElement.setAttribute('data-theme', savedTheme);
                     </script>
-
-                    <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
-<script>
-  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
-</script>
-<script defer src="/_vercel/analytics/script.js"></script>
--->
 
                     <!-- Vercel Speed Insights -->
                     <script defer src="/_vercel/insights/script.js"></script>
@@ -210,33 +208,34 @@
             
   <nav class="breadcrumbs-container" aria-label="Breadcrumb">
     <ol class="breadcrumbs-list">
-      <li class="breadcrumb-item">
-        <a href="../../en/" class="breadcrumb-link"
-          title="Home">
-          <i data-lucide="home"></i>
-        </a>
-      </li>
-
       
-        <li class="breadcrumb-separator">
-          <i data-lucide="chevron-right"></i>
-        </li>
         <li class="breadcrumb-item">
-          <a href="../../en/categories/#cat-dev"
-            class="breadcrumb-link">
-            Dev Tools
+          <a href="../../en/" class="breadcrumb-link"
+            title="Home">
+            <i data-lucide="home"></i>
           </a>
         </li>
-        
 
+        
           <li class="breadcrumb-separator">
             <i data-lucide="chevron-right"></i>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            <span class="breadcrumb-current">
-              zTool Playground
-            </span>
+          <li class="breadcrumb-item">
+            <a href="../../en/categories/#cat-dev"
+              class="breadcrumb-link">
+              Dev Tools
+            </a>
           </li>
+          
+
+            <li class="breadcrumb-separator">
+              <i data-lucide="chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <span class="breadcrumb-current">
+                zTool Playground
+              </span>
+            </li>
     </ol>
   </nav>
 
@@ -305,20 +304,21 @@
     }
   </style>
   
-              <!-- title: zTool Playground - ZTools -->
-<link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=551000be&amp;v=1.5.2">
+              
+  <!-- title: zTool Playground - ZTools -->
+  <link rel="stylesheet" href="../../assets/features/web-playground/style.css?h=bc54b051&amp;v=1.5.2">
 
-<div class="playground-container">
-  <!-- Master IDE Toolbar -->
-  <div class="playground-toolbar master-toolbar">
-    <div class="toolbar-left">
-      <!-- Unified Menu & Logo -->
-      <div class="nav-item logo-wrapper">
-        <button class="logo dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Menu">
-          <span class="logo-icon"><i data-lucide="layout-grid"></i></span>
-          <span class="logo-text desktop-only">ZTools</span>
-        </button>
-        <div class="dropdown-menu mega-menu">
+  <div class="playground-container">
+    <!-- Master IDE Toolbar -->
+    <div class="playground-toolbar master-toolbar">
+      <div class="toolbar-left">
+        <!-- Unified Menu & Logo -->
+        <div class="nav-item logo-wrapper">
+          <a href="../../en/" class="logo-link">
+            <img src="../../assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
+            <span class="logo-text">ZTools</span>
+          </a>
+          <div class="dropdown-menu mega-menu">
   <div class="mega-sidebar">
     <div class="mega-sidebar-header">
       <a href="../../en/" class="sidebar-logo logo-link">
@@ -327,39 +327,40 @@
       </a>
     </div>
     <div class="mega-sidebar-links">
-      <a href="../../en/categories/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
-        <span class="link-text">
-          Categories
-        </span>
-      </a>
-      <a href="../../en/blog/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
-        <span class="link-text">
-          Dev Blog
-        </span>
-      </a>
-      <a href="../../en/roadmap/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="map"></i></span>
-        <span class="link-text">
-          Skill Tree
-        </span>
-      </a>
-      <a href="../../en/bookmark-creator/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="star"></i></span>
-        <span class="link-text">
-          Bookmark Creator
-        </span>
-      </a>
-      <a href="../../en/changelog/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="history"></i></span>
-        <span class="link-text">Changelogs</span>
-      </a>
+      
+        <a href="../../en/categories/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
+          <span class="link-text">
+            Categories
+          </span>
+        </a>
+        <a href="../../blog/en/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
+          <span class="link-text">
+            Dev Blog
+          </span>
+        </a>
+        <a href="../../roadmap/en/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="map"></i></span>
+          <span class="link-text">
+            Skill Tree
+          </span>
+        </a>
+        <a href="../../bookmark-creator/en/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
+          <span class="link-text">
+            Bookmark Creator
+          </span>
+        </a>
+        <a href="../../en/changelog/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="history"></i></span>
+          <span class="link-text">Changelogs</span>
+        </a>
     </div>
   </div>
 
@@ -376,7 +377,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="../../en/business-tax/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -388,7 +388,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="../../en/freelancer-tax/"
                   class="mega-tool-link mode-standard-only ">
@@ -402,7 +401,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/ot-calculator/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -415,7 +413,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/salary-tax-master/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -424,7 +421,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/social-insurance/"
                   class="mega-tool-link mode-standard-only ">
@@ -438,8 +434,7 @@
                     
                 </a>
                 
-                
-                <a href="https://tncn.ztools.site/en/"
+                <a href="../../en/tax/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -465,8 +460,7 @@
             </div>
             <div class="mega-cat-links">
               
-                
-                <a href="https://laikep.ztools.site/en/"
+                <a href="../../en/compound-interest/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -480,7 +474,6 @@
                       
                 </a>
                 
-                
                 <a href="../../en/inflation-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -492,7 +485,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="../../en/investment-calc/"
                   class="mega-tool-link  ">
@@ -506,7 +498,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/loan-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -516,7 +507,6 @@
                   
                 </a>
                 
-                
                 <a href="../../en/percentage-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -525,7 +515,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/savings-interest/"
                   class="mega-tool-link  ">
@@ -551,7 +540,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="../../en/lorem-ipsum/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -564,7 +552,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/text-diff/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -574,7 +561,6 @@
                   
                 </a>
                 
-                
                 <a href="../../en/text-formatter/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -583,7 +569,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/word-counter/d"
                   class="mega-tool-link  ">
@@ -606,7 +591,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="../../en/password-generator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -615,7 +599,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/uuid-generator/"
                   class="mega-tool-link  ">
@@ -638,7 +621,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="../../en/bmi/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -648,7 +630,6 @@
                   
                 </a>
                 
-                
                 <a href="../../en/bookmark-creator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -657,7 +638,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/date-time-master/"
                   class="mega-tool-link mode-advanced-only ">
@@ -671,7 +651,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/date-toolkit/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -683,7 +662,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="../../en/lunar-calendar/"
                   class="mega-tool-link  ">
@@ -697,7 +675,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/random-toolkit/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -709,7 +686,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="../../en/unit-converter/"
                   class="mega-tool-link  ">
@@ -732,7 +708,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="../../en/cron-parser/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -742,7 +717,6 @@
                   
                 </a>
                 
-                
                 <a href="../../en/dev-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -751,7 +725,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/hash-toolkit/"
                   class="mega-tool-link  ">
@@ -765,8 +738,7 @@
                     
                 </a>
                 
-                
-                <a href="https://json.ztools.site/en/"
+                <a href="../../en/json-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -780,7 +752,6 @@
                       
                 </a>
                 
-                
                 <a href="../../en/jwt-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -789,7 +760,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="../../en/qr-generator/"
                   class="mega-tool-link  ">
@@ -803,7 +773,6 @@
                     
                 </a>
                 
-                
                 <a href="../../en/timestamp-converter/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -815,7 +784,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="../../en/url-toolkit/"
                   class="mega-tool-link  ">
@@ -829,8 +797,7 @@
                     
                 </a>
                 
-                
-                <a href="https://playground.ztools.site/en/"
+                <a href="../../en/web-playground/"
                   class="mega-tool-link mode-advanced-only active">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -850,227 +817,214 @@
       </div>
   </div>
 </div>
-      </div>
+        </div>
 
-      <div class="toolbar-divider"></div>
+        <div class="toolbar-divider"></div>
 
-      <button id="toggle-sidebar" class="btn-icon-sub" title="Toggle Sidebar">
-        <i data-lucide="panels-left-bottom"></i>
-      </button>
-      <h1 class="tool-title">
-        <span class="icon desktop-only"><i data-lucide="code-2"></i></span>
-        <span class="title-text">
-          zTool Playground
-        </span>
-      </h1>
-    </div>
-
-    <div class="toolbar-center desktop-only">
-      <!-- Minimal Search Box -->
-      <div class="header-search-box compact" id="header-search-box">
-        <span class="search-box-icon"><i data-lucide="search" style="width: 14px; height: 14px;"></i></span>
-        <input type="text" class="header-search-input" placeholder="Search tools... (Ctrl + K)" readonly>
-        <kbd>Ctrl+K</kbd>
-      </div>
-    </div>
-
-    <div class="toolbar-right">
-      <!-- Run Actions -->
-      <div class="setting-item hide-mobile">
-        <label class="switch">
-          <input type="checkbox" id="auto-run-toggle" checked>
-          <span class="slider"></span>
-        </label>
-        <span class="label-text">Auto</span>
-      </div>
-      <button id="btn-run" class="btn-primary btn-sm"><i data-lucide="play"></i> <span
-          class="hide-mobile">Run</span></button>
-      <button id="btn-share" class="btn-secondary btn-sm"><i data-lucide="share-2"></i></button>
-
-      <div class="toolbar-divider hide-mobile"></div>
-
-      <!-- Global Actions -->
-      <div class="global-actions hide-mobile">
-        <a href="../../vi/web-playground/" class="lang-switch small"
-          title="Switch Language">
-          🇻🇳
-        </a>
-
-        <button id="mode-toggle" class="mode-toggle-btn mini" title="Toggle Mode">
-          <div class="mode-switch">
-            <div class="mode-slider">
-              <span class="mode-icon"><i data-lucide="zap" style="width: 10px; height: 10px;"></i></span>
-            </div>
-          </div>
+        <button id="toggle-sidebar" class="btn-icon-sub" title="Toggle Sidebar">
+          <i data-lucide="panels-left-bottom"></i>
         </button>
+        <h1 class="tool-title">
+          <span class="icon desktop-only"><i data-lucide="code-2"></i></span>
+          <span class="title-text">
+            zTool Playground
+          </span>
+        </h1>
+      </div>
 
-        <button id="theme-toggle" class="btn-icon-sub" title="Toggle Theme">
-          <i data-lucide="moon"></i>
-        </button>
+
+
+      <div class="toolbar-right">
+        <!-- Run Actions -->
+        <div class="setting-item hide-mobile">
+          <label class="switch">
+            <input type="checkbox" id="auto-run-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <span class="label-text">Auto</span>
+        </div>
+        <button id="btn-run" class="btn-primary btn-sm"><i data-lucide="play"></i> <span
+            class="hide-mobile">Run</span></button>
+        <button id="btn-share" class="btn-secondary btn-sm"><i data-lucide="share-2"></i></button>
+
+        <div class="toolbar-divider hide-mobile"></div>
+
+        <!-- Global Actions -->
+        <div class="global-actions hide-mobile">
+          <a href="../../vi/web-playground/" class="lang-switch small"
+            title="Switch Language">
+            🇻🇳
+          </a>
+
+          <!-- Mode toggle removed -->
+
+          <button id="theme-toggle" class="btn-icon-sub" title="Toggle Theme">
+            <i data-lucide="moon"></i>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Main Workspace Layout -->
-  <div class="playground-body">
-    <!-- Sidebar Examples -->
-    <div class="sidebar-examples" id="sidebar-examples">
-      <div class="sidebar-header">
-        <h3 style="font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
-          <i data-lucide="library" style="width: 16px; height: 16px;"></i> Examples
-        </h3>
-      </div>
-      <div class="examples-list" id="examples-list">
-        <!-- Items will be injected by JS -->
-      </div>
-    </div>
-
-    <!-- Work Area -->
-    <div class="work-area" id="work-area">
-      <!-- Editors Area -->
-      <div class="editors-split" id="editors-split">
-        <div class="editor-pane active" id="pane-html" data-lang="html">
-          <div class="pane-header">
-            <span class="lang-icon"><i data-lucide="file-type-2" style="width: 14px; height: 14px;"></i></span> HTML
-            <div class="pane-actions">
-              <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
-            </div>
-          </div>
-          <div class="editor-container" id="monaco-html"></div>
+    <!-- Main Workspace Layout -->
+    <div class="playground-body">
+      <!-- Sidebar Examples -->
+      <div class="sidebar-examples" id="sidebar-examples">
+        <div class="sidebar-header">
+          <h3 style="font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="library" style="width: 16px; height: 16px;"></i> Examples
+          </h3>
         </div>
-
-        <div class="resizer-h" id="resizer-h1"></div>
-
-        <div class="editor-pane active" id="pane-js" data-lang="js">
-          <div class="pane-header">
-            <span class="lang-icon"><i data-lucide="braces" style="width: 14px; height: 14px;"></i></span> JS
-            <div class="pane-actions">
-              <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
-            </div>
-          </div>
-          <div class="editor-container" id="monaco-js"></div>
-        </div>
-
-        <div class="resizer-h" id="resizer-h2"></div>
-
-        <div class="editor-pane active" id="pane-css" data-lang="css">
-          <div class="pane-header">
-            <span class="lang-icon"><i data-lucide="palette" style="width: 14px; height: 14px;"></i></span> CSS
-            <div class="pane-actions">
-              <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
-            </div>
-          </div>
-          <div class="editor-container" id="monaco-css"></div>
+        <div class="examples-list" id="examples-list">
+          <!-- Items will be injected by JS -->
         </div>
       </div>
 
-      <!-- Vertical Resizer -->
-      <div class="resizer-v" id="resizer-v"></div>
-
-      <!-- Preview Area -->
-      <div class="preview-area" id="preview-area">
-        <div class="pane-header" id="preview-header">
-          <span class="lang-icon"><i data-lucide="eye" style="width: 14px; height: 14px;"></i></span> Result
-          <div class="pane-actions" style="margin-left: auto; display: flex; gap: 4px;">
-            <button id="toggle-console" class="btn-pane-toggle" title="Toggle Console">
-              <i data-lucide="terminal" style="width: 14px; height: 14px;"></i>
-            </button>
-            <button id="btn-popout" class="btn-pane-toggle" title="Open in new window"><i data-lucide="external-link"
-                style="width: 14px; height: 14px;"></i></button>
-            <button id="btn-maximize-preview" class="btn-pane-toggle" title="Toggle Full Preview"><i
-                data-lucide="maximize" style="width: 14px; height: 14px;"></i></button>
-          </div>
-        </div>
-        <div class="preview-content" style="position: relative; flex: 1; display:flex; flex-direction: column;">
-          <iframe id="preview-frame" sandbox="allow-scripts allow-modals" style="flex: 1;"></iframe>
-          <div id="console-pane" class="console-pane collapsed">
-            <div class="console-header"
-              style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px;">
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <i data-lucide="terminal" style="width: 12px; height: 12px;"></i>
-                <span>Console</span>
+      <!-- Work Area -->
+      <div class="work-area" id="work-area">
+        <!-- Editors Area -->
+        <div class="editors-split" id="editors-split">
+          <div class="editor-pane active" id="pane-html" data-lang="html">
+            <div class="pane-header">
+              <span class="lang-icon"><i data-lucide="file-type-2" style="width: 14px; height: 14px;"></i></span> HTML
+              <div class="pane-actions">
+                <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
               </div>
-              <button id="clear-console"
-                style="color: #666; font-size: 0.8rem; background:none; border:none; cursor:pointer; display: flex; align-items: center; gap: 4px;">
-                <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
-                Clear
-              </button>
             </div>
-            <div id="console-logs"></div>
+            <div class="editor-container" id="monaco-html"></div>
+          </div>
+
+          <div class="resizer-h" id="resizer-h1"></div>
+
+          <div class="editor-pane active" id="pane-js" data-lang="js">
+            <div class="pane-header">
+              <span class="lang-icon"><i data-lucide="braces" style="width: 14px; height: 14px;"></i></span> JS
+              <div class="pane-actions">
+                <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
+              </div>
+            </div>
+            <div class="editor-container" id="monaco-js"></div>
+          </div>
+
+          <div class="resizer-h" id="resizer-h2"></div>
+
+          <div class="editor-pane active" id="pane-css" data-lang="css">
+            <div class="pane-header">
+              <span class="lang-icon"><i data-lucide="palette" style="width: 14px; height: 14px;"></i></span> CSS
+              <div class="pane-actions">
+                <button class="btn-pane-toggle" title="Minimize"><i data-lucide="minus"></i></button>
+              </div>
+            </div>
+            <div class="editor-container" id="monaco-css"></div>
+          </div>
+        </div>
+
+        <!-- Vertical Resizer -->
+        <div class="resizer-v" id="resizer-v"></div>
+
+        <!-- Preview Area -->
+        <div class="preview-area" id="preview-area">
+          <div class="pane-header" id="preview-header">
+            <span class="lang-icon"><i data-lucide="eye" style="width: 14px; height: 14px;"></i></span> Result
+            <div class="pane-actions" style="margin-left: auto; display: flex; gap: 4px;">
+              <button id="toggle-console" class="btn-pane-toggle" title="Toggle Console">
+                <i data-lucide="terminal" style="width: 14px; height: 14px;"></i>
+              </button>
+              <button id="btn-popout" class="btn-pane-toggle" title="Open in new window"><i data-lucide="external-link"
+                  style="width: 14px; height: 14px;"></i></button>
+              <button id="btn-maximize-preview" class="btn-pane-toggle" title="Toggle Full Preview"><i
+                  data-lucide="maximize" style="width: 14px; height: 14px;"></i></button>
+            </div>
+          </div>
+          <div class="preview-content" style="position: relative; flex: 1; display:flex; flex-direction: column;">
+            <iframe id="preview-frame" sandbox="allow-scripts allow-modals" style="flex: 1;"></iframe>
+            <div id="console-pane" class="console-pane collapsed">
+              <div class="console-header"
+                style="display: flex; align-items: center; justify-content: space-between; padding: 4px 10px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <i data-lucide="terminal" style="width: 12px; height: 12px;"></i>
+                  <span>Console</span>
+                </div>
+                <button id="clear-console"
+                  style="color: #666; font-size: 0.8rem; background:none; border:none; cursor:pointer; display: flex; align-items: center; gap: 4px;">
+                  <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
+                  Clear
+                </button>
+              </div>
+              <div id="console-logs"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Share Modal -->
-    <div id="share-modal" class="modal-overlay hidden">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3><i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Share Project</h3>
-          <button id="close-share-modal" class="btn-icon-sub"><i data-lucide="x"></i></button>
-        </div>
-        <div class="modal-body">
-          <!-- Options -->
-          <div class="share-options-group">
-            <label class="share-option-label">Visible Panes:</label>
-            <div class="pane-toggles">
-              <label class="checkbox-pill">
-                <input type="checkbox" id="share-opt-html" value="html">
-                <span class="pill-text">HTML</span>
-              </label>
-              <label class="checkbox-pill">
-                <input type="checkbox" id="share-opt-css" value="css">
-                <span class="pill-text">CSS</span>
-              </label>
-              <label class="checkbox-pill">
-                <input type="checkbox" id="share-opt-js" value="js">
-                <span class="pill-text">JS</span>
-              </label>
-              <label class="checkbox-pill">
-                <input type="checkbox" id="share-opt-result" value="result">
-                <span class="pill-text">Result</span>
-              </label>
-            </div>
+      <!-- Share Modal -->
+      <div id="share-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3><i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Share Project</h3>
+            <button id="close-share-modal" class="btn-icon-sub"><i data-lucide="x"></i></button>
           </div>
-
-          <!-- Direct Link -->
-          <div class="share-group">
-            <label>Direct Link</label>
-            <div class="input-with-copy">
-              <input type="text" id="share-url-input" readonly>
-              <button class="btn-copy" data-target="share-url-input">
-                <i data-lucide="copy"></i> Copy
-              </button>
+          <div class="modal-body">
+            <!-- Options -->
+            <div class="share-options-group">
+              <label class="share-option-label">Visible Panes:</label>
+              <div class="pane-toggles">
+                <label class="checkbox-pill">
+                  <input type="checkbox" id="share-opt-html" value="html">
+                  <span class="pill-text">HTML</span>
+                </label>
+                <label class="checkbox-pill">
+                  <input type="checkbox" id="share-opt-css" value="css">
+                  <span class="pill-text">CSS</span>
+                </label>
+                <label class="checkbox-pill">
+                  <input type="checkbox" id="share-opt-js" value="js">
+                  <span class="pill-text">JS</span>
+                </label>
+                <label class="checkbox-pill">
+                  <input type="checkbox" id="share-opt-result" value="result">
+                  <span class="pill-text">Result</span>
+                </label>
+              </div>
             </div>
-          </div>
 
-          <!-- Embed Code -->
-          <div class="share-group">
-            <label>Embed Code (Iframe)</label>
-            <div class="input-with-copy">
-              <input type="text" id="share-embed-input" readonly>
-              <button class="btn-copy" data-target="share-embed-input">
-                <i data-lucide="code"></i> Copy
-              </button>
+            <!-- Direct Link -->
+            <div class="share-group">
+              <label>Direct Link</label>
+              <div class="input-with-copy">
+                <input type="text" id="share-url-input" readonly>
+                <button class="btn-copy" data-target="share-url-input">
+                  <i data-lucide="copy"></i> Copy
+                </button>
+              </div>
+            </div>
+
+            <!-- Embed Code -->
+            <div class="share-group">
+              <label>Embed Code (Iframe)</label>
+              <div class="input-with-copy">
+                <input type="text" id="share-embed-input" readonly>
+                <button class="btn-copy" data-target="share-embed-input">
+                  <i data-lucide="code"></i> Copy
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  // Force full mode for this tool
-  document.body.classList.add('is-playground');
-</script>
+  <script>
+    // Force full mode for this tool
+    document.body.classList.add('is-playground');
+  </script>
 
-<!-- Monaco Editor Loader -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
-<!-- LZ-String for URL Compression -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
-<!-- External Examples Data -->
-<script src="../../assets/features/web-playground/examples.js?h=e07594df&amp;v=1.5.2"></script>
-<script src="../../assets/features/web-playground/script.js?h=e07594df&amp;v=1.5.2"></script>
+  <!-- Monaco Editor Loader -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <!-- LZ-String for URL Compression -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+  <!-- External Examples Data -->
+  <script src="../../assets/features/web-playground/examples.js?h=c982e326&amp;v=1.5.2"></script>
+  <script src="../../assets/features/web-playground/script.js?h=c982e326&amp;v=1.5.2"></script>
 
                 
           </main>
@@ -1079,7 +1033,7 @@
 
                 
 
-                    <script src="../../assets/js/global.js?h=b0d7d4cb&amp;v=1.5.2"></script>
+                    <script src="../../assets/js/global.js?h=e4d64ed2&amp;v=1.5.2"></script>
                     <script>
                       // Initialize Lucide icons
                       if (window.lucide) {
@@ -1122,7 +1076,7 @@
     "msg_starred": "Added to favorites",
     "msg_unstarred": "Removed from favorites",
     "msg_history_cleared": "History cleared",
-    "subdomains": [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"}],
+    "subdomains": [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"},{"domain":"amlich.ztools.site","path":"/lunar-calendar/"},{"domain":"lunar.ztools.site","path":"/lunar-calendar/"}],
     "mainDomain": "ztools.site"
   }
 </script>

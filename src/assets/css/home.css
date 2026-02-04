@@ -1,340 +1,420 @@
-/* ============================================================
-   zTools Home Page - Apple-Style Storytelling UI
-   ============================================================ */
+/* =====================================================
+   ZTools Home Page - Fast Access + Smart UX
+   ===================================================== */
 
-:root {
-  --apple-headline: 4.5rem;
-  --apple-subheadline: 1.5rem;
-  --apple-body: 1.25rem;
-  --apple-section-spacing: 12vh;
-}
-
-@media (max-width: 768px) {
-  :root {
-    --apple-headline: 3rem;
-    --apple-subheadline: 1.25rem;
-    --apple-body: 1.1rem;
-  }
-}
-
-/* Base Body tweaks for Home */
-.home-page-body {
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-/* SECTION 1: Hero (Above the fold) */
+/* --- 1. Hero Section --- */
 .hero-apple {
-  min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  padding: var(--apple-section-spacing) var(--s-4);
-  position: relative;
-  background: radial-gradient(
-    circle at 50% 50%,
-    var(--primary-subtle) 0%,
-    transparent 70%
-  );
+  padding: 8rem 2rem 6rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .hero-apple .headline {
-  font-size: var(--apple-headline);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 1.05;
-  margin-bottom: var(--s-3);
-  background: linear-gradient(
-    180deg,
-    var(--text-color) 0%,
-    var(--text-muted) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
 }
 
 .hero-apple .sub-headline {
-  font-size: var(--apple-subheadline);
+  font-size: 1.25rem;
   color: var(--text-muted);
-  max-width: 600px;
-  margin-bottom: var(--s-8);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.2, 0, 0.2, 1) 0.2s forwards;
-}
-
-.hero-apple .cta-wrap {
-  opacity: 0;
-  animation: fadeIn 1s ease 0.4s forwards;
+  margin-bottom: 3rem;
+  font-weight: 500;
 }
 
 .hero-search-minimal {
-  width: 100%;
-  max-width: 480px;
-  margin-top: var(--s-8);
   position: relative;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .hero-search-minimal input {
   width: 100%;
-  padding: 1.25rem 1.5rem;
-  border-radius: 50px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
+  padding: 1.25rem 2rem;
   font-size: 1.1rem;
-  box-shadow: var(--shadow);
-  transition: all 0.3s;
-  outline: none;
+  border: 2px solid var(--border-color);
+  border-radius: 50px;
+  background: var(--bg-hover);
+  transition: all 0.3s ease;
 }
 
 .hero-search-minimal input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px var(--primary-subtle);
-  transform: translateY(-2px);
-}
-
-/* SECTION 2: Philosophy */
-.section-philosophy {
-  padding: var(--apple-section-spacing) var(--s-4);
-  text-align: center;
   background: var(--bg-color);
-  border-top: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.section-philosophy .title {
-  font-size: calc(var(--apple-headline) * 0.7);
-  font-weight: 700;
-  margin-bottom: var(--s-6);
-}
-
-.section-philosophy .body-copy {
-  font-size: var(--apple-body);
-  color: var(--text-muted);
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.8;
-}
-
-/* SECTION 3: Product Narrative (Scroll Sections) */
-.product-narrative {
-  position: relative;
-}
-
-.narrative-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--s-10) var(--s-4);
-  position: relative;
-  overflow: hidden;
-}
-
-.narrative-content {
-  max-width: 1100px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-10);
-  align-items: center;
-}
-
-@media (max-width: 992px) {
-  .narrative-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .narrative-visual {
-    order: -1;
-  }
-}
-
-.narrative-text .tag {
-  font-weight: 700;
-  color: var(--primary-color);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.9rem;
-  margin-bottom: var(--s-2);
-  display: block;
-}
-
-.narrative-text h3 {
-  font-size: calc(var(--apple-headline) * 0.5);
-  font-weight: 700;
-  margin-bottom: var(--s-4);
-  line-height: 1.1;
-}
-
-.narrative-text p {
-  font-size: var(--apple-body);
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-.narrative-visual {
-  background: var(--card-bg);
-  border-radius: 24px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 16/10;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Visual Specific Mockups */
-/* 01: Playground (Terminal vibe) */
-.visual-terminal {
-  background: #1e1e1e;
-  width: 100%;
-  height: 100%;
-  padding: var(--s-4);
-  font-family: "JetBrains Mono", "Fira Code", monospace;
-  font-size: 0.9rem;
-  color: #d4d4d4;
-  text-align: left;
-}
-.terminal-header {
-  display: flex;
-  gap: 6px;
-  margin-bottom: var(--s-4);
-}
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.red {
-  background: #ff5f56;
-}
-.yellow {
-  background: #ffbd2e;
-}
-.green {
-  background: #27c93f;
-}
-
-/* 02: Investment Slider */
-.visual-slider {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-6);
-}
-.slider-bar {
-  height: 6px;
+/* --- 2. Fast Access Section (Horizontal Scroll) --- */
+.section-fast-access {
+  padding: 2rem 0 4rem; /* Reduced top padding from 4rem to 2rem */
   background: var(--bg-hover);
-  border-radius: 3px;
-  position: relative;
-}
-.slider-handle {
-  width: 24px;
-  height: 24px;
-  background: white;
-  border: 2px solid var(--primary-color);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-  box-shadow: var(--shadow-sm);
-}
-.visual-chart {
-  height: 100px;
-  width: 100%;
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-}
-.chart-bar {
-  background: var(--primary-color);
-  flex: 1;
-  border-radius: 2px 2px 0 0;
+  overflow: hidden;
 }
 
-/* Section 4: Closing */
-.section-closing {
-  padding: 15vh var(--s-4);
+.section-header {
   text-align: center;
+  margin-bottom: 2rem; /* Reduced bottom margin */
+  padding: 0 2rem;
 }
 
-.section-closing h2 {
-  font-size: var(--apple-headline);
-  font-weight: 800;
-  margin-bottom: var(--s-2);
-}
-
-.section-closing p {
-  font-size: var(--apple-subheadline);
-  color: var(--text-muted);
-  margin-bottom: var(--s-8);
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Utilities Grid (Refined) */
-.section-all-tools {
-  padding: var(--apple-section-spacing) var(--s-4);
-}
-
-.section-all-tools .category-header {
-  margin-bottom: var(--s-8);
-}
-
-.section-all-tools .category-title {
+.section-header h2 {
   font-size: 2rem;
   font-weight: 800;
+  margin-bottom: 0.5rem;
 }
 
-/* Refined Tool Cards for Redesign */
-.tool-card-modern {
+.section-header .subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Responsive Grid Logic (Strict Control to avoid 4+1 orphans) */
+/* Responsive Grid Logic (VIP Layout: 2 Top, 3 Bottom) */
+.fast-access-grid {
+  display: grid;
+  gap: 1rem; /* Reduced gap to tighten rows */
+  padding: 2rem;
+  max-width: 1400px; /* Restrict width for better readability */
+  margin: 0 auto;
+}
+
+/* Desktop: 6-column system for 2-top, 3-bottom layout */
+@media (min-width: 1025px) {
+  .fast-access-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* VIP Tools: Span 3 cols (50% each) */
+  .fast-access-card:nth-child(1),
+  .fast-access-card:nth-child(2) {
+    grid-column: span 3;
+    min-height: 260px; /* Slightly taller for VIP presence */
+    background: linear-gradient(to bottom right, var(--card-bg), var(--bg-hover)); /* Subtle gradient */
+    border-color: var(--primary-subtle);
+  }
+
+  /* Standard Tools: Span 2 cols (33% each) */
+  .fast-access-card:nth-child(n+3) {
+    grid-column: span 2;
+  }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .fast-access-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Make the 5th item span full width on tablet to be balanced */
+  .fast-access-card:last-child {
+    grid-column: span 2; 
+  }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 600px) {
+  .fast-access-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fast-access-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background: var(--card-bg);
-  padding: var(--s-6);
-  border-radius: 20px;
   border: 1px solid var(--border-color);
-  transition: all 0.3s;
+  border-radius: 12px;
+  padding: 2rem 1.25rem 3.5rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   color: inherit;
-  display: block;
+  height: 100%;
+  min-height: 240px;
+}
+
+.fast-access-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+  z-index: 10; /* Bring to front */
+}
+
+/* Fast Access Badge (Sparkle) */
+.fast-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--warning-color));
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(230, 126, 34, 0.4);
+  z-index: 5;
+}
+
+.fast-badge i {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+.fast-icon {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.fast-access-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.fast-access-card p {
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.fast-url {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* --- 3. Smart Picks Section (Refined) --- */
+.section-smart-picks {
+  padding: 6rem 2rem;
+  background: transparent; /* Seamless blend */
+}
+
+#smart-picks-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Slightly wider cards */
+  gap: 2rem;
+}
+
+/* Smart Pick Card Overrides for Premium Look */
+#smart-picks-grid .tool-card-modern {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 220px;
+  overflow: hidden; /* Essential for corner ribbon */
+  position: relative;
+}
+
+#smart-picks-grid .tool-card-modern:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: var(--primary-color);
+}
+
+#smart-picks-grid .tool-card-modern:nth-child(1) {
+  border-color: rgba(var(--primary-rgb), 0.5); /* Highlight first pick */
+}
+
+/* Trending Badge - Corner Ribbon */
+.trending-badge {
+  position: absolute !important;
+  top: 15px;
+  right: -32px;
+  left: auto;
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: white;
+  width: 120px;
+  padding: 0.25rem 0;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  animation: badgeFadeIn 0.5s ease-out;
+}
+
+.trending-badge i {
+  display: none; /* Hide icon for cleaner ribbon based on user request "text small" */
+}
+
+/* Force equal height grid items */
+#smart-picks-grid .tool-card-modern {
+  height: 100%;       /* Fill grid cell height */
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes badgeFadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view-count-mini {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+  padding: 2px 8px;
+  background: var(--bg-hover);
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* --- 4. All Tools Section --- */
+.section-all-tools {
+  padding: 4rem 2rem 8rem;
+  background: var(--bg-hover);
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.tool-card-modern {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  position: relative; /* For absolute pos elements */
 }
 
 .tool-card-modern:hover {
   border-color: var(--primary-color);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow);
   transform: translateY(-4px);
 }
 
+.tool-card-modern:hover .card-footer i {
+  opacity: 1 !important;
+  transform: translateX(4px);
+  transition: all 0.2s ease;
+}
+
 .tool-card-modern .icon {
-  width: 48px;
-  height: 48px;
-  margin-bottom: var(--s-4);
   color: var(--primary-color);
+  position: relative;
+}
+
+.star-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+}
+
+.star-btn:hover {
+  background: var(--primary-subtle);
+  color: var(--primary-color);
+}
+
+.star-btn.starred {
+  color: #f59e0b;
+}
+
+.star-btn.starred i {
+  fill: #f59e0b;
+}
+
+.view-count-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: var(--primary-subtle);
+  color: var(--primary-color);
+  padding: 0.3rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* --- 5. Philosophy Compact --- */
+.section-philosophy-compact {
+  padding: 6rem 2rem;
+  text-align: center;
+  background: var(--card-bg);
+}
+
+.section-philosophy-compact h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.section-philosophy-compact p {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .hero-apple {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .fast-access-card {
+    flex: 0 0 260px;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
 }

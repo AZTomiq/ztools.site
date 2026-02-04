@@ -203,6 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Mobile Init: Collapse Sidebar by default
+  if (window.innerWidth <= 768 && sidebar) {
+    sidebar.classList.add('collapsed');
+  }
+
   function loadExample(ex) {
     if (confirm(`Load example "${ex.title}"?\nYour current code will be replaced.`)) {
       if (editorHtml) editorHtml.setValue(ex.html);
@@ -270,12 +275,10 @@ document.getElementById('click-me').addEventListener('click', () => {
   let autoRunTimer = null;
 
   // Load Monaco
-  require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
-
-  // FIX: Check if Monaco is already defined to prevent "Duplicate definition" warning
   if (window.monaco) {
     initEditors();
   } else {
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
     require(['vs/editor/editor.main'], function () {
       initEditors();
     });

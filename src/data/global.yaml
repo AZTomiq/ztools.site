@@ -13,6 +13,12 @@ site:
     - format json
     - aztomiq
     - tiện ích miễn phí
+featured_tools:
+  - web-playground # playground.ztools.site
+  - tax # tncn.ztools.site
+  - json-toolkit # json.ztools.site
+  - compound-interest # laikep.ztools.site
+  - lunar-calendar # amlich.ztools.site
 build:
   locales:
     - vi

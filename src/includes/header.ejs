@@ -13,7 +13,7 @@
         </button>
 
 
-        <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
+        <div class="header-nav hide-mobile">
           <a href="<%= resolveUrl('/bookmark-creator/') %><%= locale === 'vi' ? '' : 'en/' %>"
             class="nav-link-prominent"
             style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
@@ -107,36 +107,17 @@
               </div>
             </div>
 
-            <div class="prefs-section">
-              <div class="prefs-label">
-                <%= t('nav.user_mode') || 'User Mode' %>
-              </div>
-              <button id="mode-toggle" class="mode-toggle-btn full-width" title="<%= t('nav.mode_advanced_desc') %>">
-                <span class="mode-text">
-                  <%= t('nav.mode_standard') %>
-                </span>
-                <div class="mode-switch">
-                  <div class="mode-slider">
-                    <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
-                  </div>
-                </div>
-                <span class="mode-text">
-                  <%= t('nav.mode_advanced') %>
-                </span>
-              </button>
-            </div>
+            <!-- User Mode removed as it was redundant with Personas -->
 
             <div class="prefs-section no-border">
-              <div class="prefs-label">
-                <%= t('nav.identity') || 'Your Identity' %>
-              </div>
-              <div class="persona-options-grid">
-                <button class="persona-option" data-value="none">🎯 <span>Just Browsing</span></button>
-                <button class="persona-option" data-value="dev">👨‍💻 <span>Developer</span></button>
-                <button class="persona-option" data-value="pro">👩‍💼 <span>Professional</span></button>
-                <button class="persona-option" data-value="finance">💰 <span>Investor</span></button>
-                <button class="persona-option" data-value="creator">🎨 <span>Creator</span></button>
-              </div>
+              <%= t('nav.display_mode') || 'Display Mode' %>
+                <div class="persona-options-grid">
+                  <button class="persona-option" data-value="none">🎯 <span>Just Browsing</span></button>
+                  <button class="persona-option" data-value="dev">👨‍💻 <span>Developer</span></button>
+                  <button class="persona-option" data-value="pro">👩‍💼 <span>Professional</span></button>
+                  <button class="persona-option" data-value="finance">💰 <span>Investor</span></button>
+                  <button class="persona-option" data-value="creator">🎨 <span>Creator</span></button>
+                </div>
             </div>
           </div>
         </div>

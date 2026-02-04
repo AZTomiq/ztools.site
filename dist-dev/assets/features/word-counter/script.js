@@ -1,5 +1,5 @@
 /**
- * Word Counter & Text Analyzer
+ * Word Counter & Text Analyzer UI
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,8 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
         resetStats();
         return;
       }
-      const stats = getTextStats(text);
-      updateDisplay(stats);
+      if (typeof getTextStats === 'function') {
+        const stats = getTextStats(text);
+        updateDisplay(stats);
+      }
     }, 200);
   });
 
@@ -54,8 +56,28 @@ document.addEventListener('DOMContentLoaded', () => {
       if (detailShortest) detailShortest.textContent = stats.shortest;
       if (detailAvgWord) detailAvgWord.textContent = stats.avgLen.toFixed(1);
       if (detailAvgSentence) detailAvgSentence.textContent = stats.avgSenLen.toFixed(1);
-      analyzeKeywords(stats.words, keywordList);
+
+      if (typeof getTopKeywords === 'function') {
+        renderKeywords(getTopKeywords(stats.words), stats.wordCount);
+      }
     }
+  }
+
+  function renderKeywords(keywords, totalWords) {
+    if (!keywordList) return;
+    keywordList.innerHTML = '';
+    if (keywords.length === 0) {
+      keywordList.innerHTML = '<li class="empty">No significant keywords found</li>';
+      return;
+    }
+    keywords.forEach(([word, count]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="keyword-word">${word}</span>
+        <span class="keyword-count">${count} (${Math.round(count / totalWords * 100)}%)</span>
+      `;
+      keywordList.appendChild(li);
+    });
   }
 
   function resetStats() {
@@ -87,14 +109,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.removeExtraSpaces = () => {
     textInput.value = textInput.value.replace(/[ \t]+/g, ' ').replace(/^\s+|\s+$/gm, '');
-    const stats = getTextStats(textInput.value);
-    updateDisplay(stats);
+    if (typeof getTextStats === 'function') {
+      const stats = getTextStats(textInput.value);
+      updateDisplay(stats);
+    }
   };
 
   window.convertCase = (type) => {
     const text = textInput.value;
     if (!text) return;
     let result = text;
+
+    if (typeof toTitleCase !== 'function') return;
+
     switch (type) {
       case 'upper': result = text.toUpperCase(); break;
       case 'lower': result = text.toLowerCase(); break;
@@ -105,73 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'snake': result = toSnakeCase(text); break;
     }
     textInput.value = result;
-    const stats = getTextStats(textInput.value);
+    const stats = getTextStats(result);
     updateDisplay(stats);
     const caseSelect = document.getElementById('case-select');
     if (caseSelect) caseSelect.value = "";
   };
 });
-
-function getTextStats(text) {
-  const charCount = text.length;
-  const charCountNoSpace = text.replace(/\s/g, '').length;
-  const words = text.match(/\b[-?(\w+)?]+\b/gi) || [];
-  const wordCount = words.length;
-  const sentences = text.split(/[.!?]+/).filter(Boolean).length;
-  const lines = text.split(/\r\n|\r|\n/).length;
-  const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
-
-  const timeRead = Math.ceil(wordCount / 200);
-  const timeSpeak = Math.ceil(wordCount / 130);
-
-  let longest = '', shortest = '', avgLen = 0, avgSenLen = 0;
-
-  if (wordCount > 0) {
-    const sortedWords = [...words].sort((a, b) => b.length - a.length);
-    longest = sortedWords[0] || '';
-    shortest = sortedWords[sortedWords.length - 1] || '';
-    avgLen = words.reduce((acc, word) => acc + word.length, 0) / wordCount;
-    avgSenLen = sentences > 0 ? wordCount / sentences : 0;
-  }
-
-  return {
-    charCount, charCountNoSpace, wordCount, words, sentences, lines, paragraphs: Math.max(1, paragraphs),
-    timeRead, timeSpeak, longest, shortest, avgLen, avgSenLen
-  };
-}
-
-function analyzeKeywords(words, targetEl) {
-  if (!targetEl) return;
-  const frequency = {};
-  const lowerWords = words.map(w => w.toLowerCase());
-  const stopWords = new Set(['the', 'and', 'is', 'in', 'it', 'of', 'to', 'a', 'la', 'va', 'cua', 'trong', 'nhung', 'cho', 'voi']);
-
-  lowerWords.forEach(word => {
-    if (word.length > 2 && !stopWords.has(word)) {
-      frequency[word] = (frequency[word] || 0) + 1;
-    }
-  });
-
-  const sorted = Object.entries(frequency)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
-
-  targetEl.innerHTML = '';
-
-  if (sorted.length === 0) {
-    targetEl.innerHTML = '<li class="empty">No significant keywords found</li>';
-    return;
-  }
-
-  sorted.forEach(([word, count]) => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <span class="keyword-word">${word}</span>
-      <span class="keyword-count">${count} (${Math.round(count / words.length * 100)}%)</span>
-    `;
-    targetEl.appendChild(li);
-  });
-}
 
 function formatTime(minutes) {
   if (minutes < 1) return '< 1m';
@@ -179,33 +145,4 @@ function formatTime(minutes) {
   const hrs = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${hrs}h ${mins}m`;
-}
-
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substring(1).toLowerCase());
-}
-
-function toSentenceCase(str) {
-  return str.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase());
-}
-
-function toCamelCase(str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (w, i) => i === 0 ? w.toLowerCase() : w.toUpperCase()).replace(/\s+/g, '');
-}
-
-function toKebabCase(str) {
-  const matches = str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g);
-  return matches ? matches.map(x => x.toLowerCase()).join('-') : str;
-}
-
-function toSnakeCase(str) {
-  const matches = str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g);
-  return matches ? matches.map(x => x.toLowerCase()).join('_') : str;
-}
-
-// Export for Node.js testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    getTextStats, toTitleCase, toSentenceCase, toCamelCase, toKebabCase, toSnakeCase
-  };
 }

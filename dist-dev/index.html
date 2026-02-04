@@ -5,6 +5,46 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script>
+  (function () {
+    window.currentPath = "home";
+    const host = window.location.hostname;
+    const path = window.location.pathname;
+    const mainDomain = "ztools.site";
+    const subdomains = [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"},{"domain":"amlich.ztools.site","path":"/lunar-calendar/"},{"domain":"lunar.ztools.site","path":"/lunar-calendar/"}];
+
+    // 0. Bypasses for development
+    if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
+
+    // 1. Logic cho Subdomain: Chỉ làm sạch path NẾU đã hiển thị đúng nội dung tool
+    const currentSub = subdomains.find(s => s.domain === host);
+    if (currentSub && path.startsWith(currentSub.path)) {
+      if (window.currentPath !== 'home') {
+        // "Bling Bling" magic: Thay đổi URL trên thanh địa chỉ mà KHÔNG tải lại trang
+        const cleanPath = path.replace(currentSub.path, '/');
+        window.history.replaceState(null, '', cleanPath);
+      }
+      return;
+    }
+
+    // 2. Logic cho Main Domain: Redirect sang subdomain tương ứng
+    if (host === mainDomain) {
+      const mappedSub = subdomains.find(s => path.startsWith(s.path));
+      if (mappedSub) {
+        window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
+        return;
+      }
+    }
+
+    // 3. Rescue Logic: Hiển thị đúng feature trên subdomain nếu Vercel Rewrite lỗi
+    // Chỉ chạy nếu thực sự đang ở root và thấy nội dung Hub
+    if (currentSub && path === '/' && window.currentPath === 'home') {
+      window.location.replace("https://" + host + currentSub.path);
+      return;
+    }
+  })();
+</script>
+
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQ06SN6YNW"></script>
@@ -15,41 +55,6 @@
     gtag('config', 'G-JQ06SN6YNW');
   </script>
   
-
-    <!-- Subdomain Routing (Shared-Code Strategy) -->
-    <script>
-      (function () {
-        const subdomains = ;
-        const host = window.location.hostname;
-        const path = window.location.pathname;
-        const mainDomain = "ztools.site";
-
-        // 0. Bypasses for development
-        if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
-
-        // 1. Redirection: Path -> Clean Subdomain
-        const mappedSub = subdomains.find(s => path.startsWith(s.path));
-
-        // If on main domain but path has a dedicated subdomain -> Redirect to clean subdomain
-        if (mappedSub && host === mainDomain) {
-          window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
-          return;
-        }
-
-        // 2. Redirection: Wrong Subdomain -> Correct Clean Subdomain (Cross-transition)
-        if (mappedSub && mappedSub.domain !== host) {
-          window.location.replace("https://" + mappedSub.domain + path.replace(mappedSub.path, '/'));
-          return;
-        }
-
-        // 3. Redirection: If on subdomain but path still has the prefix (safety for old links)
-        const currentSub = subdomains.find(s => s.domain === host);
-        if (currentSub && path.startsWith(currentSub.path)) {
-          window.location.replace("https://" + host + path.replace(currentSub.path, '/'));
-          return;
-        }
-      })();
-    </script>
 
     <title>
       ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
@@ -111,7 +116,7 @@
                   defer></script>
 
                 <!-- Stylesheets -->
-                <link rel="stylesheet" href="./assets/css/global.css?h=fe3ebb6f&amp;v=1.5.2">
+                <link rel="stylesheet" href="./assets/css/global.css?h=75b36733&amp;v=1.5.2">
                 
                     <link rel="icon" type="image/svg+xml" href="./assets/images/logo.svg">
                     <link rel="manifest" href="./manifest.json">
@@ -127,13 +132,6 @@
                       const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                       document.documentElement.setAttribute('data-theme', savedTheme);
                     </script>
-
-                    <!-- Vercel Analytics (Commented to fix 404 in non-Vercel environments)
-<script>
-  window.va = window.va || function () { (window.va.q = window.va.q || []).push(arguments); };
-</script>
-<script defer src="/_vercel/analytics/script.js"></script>
--->
 
                     <!-- Vercel Speed Insights -->
                     <script defer src="/_vercel/insights/script.js"></script>
@@ -163,7 +161,7 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://ztools.site/vi/"
+        "item": "https://ztools.site/"
       }
     ]
   }
@@ -173,35 +171,37 @@
 
 <body>
   
-      <header class="site-header">
-  <div class="header-inner container">
-    <div class="nav-item logo-wrapper">
-      <a href="./" class="logo-link">
-        <img src="./assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
-        <span class="logo-text">ZTools</span>
-      </a>
-
-      <button class="menu-trigger dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Tools Menu"
-        style="background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; margin-left: 5px;">
-        <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted); opacity: 0.6;"></i>
-      </button>
-
-
-      <div class="header-nav hide-mobile" style="margin-left: 1.5rem; display: flex; gap: 1rem;">
-        <a href="./bookmark-creator/" class="nav-link-prominent"
-          style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
-          <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
-          Bookmark Creator
+      
+  <header class="site-header">
+    <div class="header-inner container">
+      <div class="nav-item logo-wrapper">
+        <a href="./" class="logo-link">
+          <img src="./assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
+          <span class="logo-text">ZTools</span>
         </a>
-        <a href="#feedback-form" class="nav-link-secondary tool-request-link"
-          onclick="const sel = document.querySelector('.feedback-select'); if(sel) { sel.value='new_tool'; sel.dispatchEvent(new Event('change')); } document.querySelector('.feedback-textarea')?.focus();"
-          style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">
-          <i data-lucide="plus-square" style="width: 16px; height: 16px;"></i>
-          Yêu cầu tool mới
-        </a>
-      </div>
 
-      <div class="dropdown-menu mega-menu">
+        <button class="menu-trigger dropdown-toggle" aria-haspopup="true" aria-expanded="false" title="Tools Menu"
+          style="background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; margin-left: 5px;">
+          <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: var(--text-muted); opacity: 0.6;"></i>
+        </button>
+
+
+        <div class="header-nav hide-mobile">
+          <a href="./bookmark-creator/"
+            class="nav-link-prominent"
+            style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600; color: var(--primary-color);">
+            <span class="pulse-icon"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
+            Bookmark Creator
+          </a>
+          <a href="#feedback-form" class="nav-link-secondary tool-request-link"
+            onclick="const sel = document.querySelector('.feedback-select'); if(sel) { sel.value='new_tool'; sel.dispatchEvent(new Event('change')); } document.querySelector('.feedback-textarea')?.focus();"
+            style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">
+            <i data-lucide="plus-square" style="width: 16px; height: 16px;"></i>
+            Yêu cầu tool mới
+          </a>
+        </div>
+
+        <div class="dropdown-menu mega-menu">
   <div class="mega-sidebar">
     <div class="mega-sidebar-header">
       <a href="./" class="sidebar-logo logo-link">
@@ -210,39 +210,40 @@
       </a>
     </div>
     <div class="mega-sidebar-links">
-      <a href="./categories/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
-        <span class="link-text">
-          Danh mục
-        </span>
-      </a>
-      <a href="./blog/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
-        <span class="link-text">
-          Dev ký sự
-        </span>
-      </a>
-      <a href="./roadmap/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="map"></i></span>
-        <span class="link-text">
-          Lộ trình (Skill Tree)
-        </span>
-      </a>
-      <a href="./bookmark-creator/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="star"></i></span>
-        <span class="link-text">
-          Bookmark Creator
-        </span>
-      </a>
-      <a href="./changelog/"
-        class="mega-side-link ">
-        <span class="icon-wrap"><i data-lucide="history"></i></span>
-        <span class="link-text">Changelogs</span>
-      </a>
+      
+        <a href="./categories/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="folder-kanban"></i></span>
+          <span class="link-text">
+            Danh mục
+          </span>
+        </a>
+        <a href="./blog/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="pen-tool"></i></span>
+          <span class="link-text">
+            Dev ký sự
+          </span>
+        </a>
+        <a href="./roadmap/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="map"></i></span>
+          <span class="link-text">
+            Lộ trình (Skill Tree)
+          </span>
+        </a>
+        <a href="./bookmark-creator/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="star" style="width: 18px; height: 18px;"></i></span>
+          <span class="link-text">
+            Bookmark Creator
+          </span>
+        </a>
+        <a href="./changelog/"
+          class="mega-side-link ">
+          <span class="icon-wrap"><i data-lucide="history"></i></span>
+          <span class="link-text">Changelogs</span>
+        </a>
     </div>
   </div>
 
@@ -259,7 +260,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="./business-tax/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -271,7 +271,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="./freelancer-tax/"
                   class="mega-tool-link mode-standard-only ">
@@ -285,7 +284,6 @@
                     
                 </a>
                 
-                
                 <a href="./ot-calculator/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -298,7 +296,6 @@
                     
                 </a>
                 
-                
                 <a href="./salary-tax-master/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -307,7 +304,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./social-insurance/"
                   class="mega-tool-link mode-standard-only ">
@@ -321,8 +317,7 @@
                     
                 </a>
                 
-                
-                <a href="https://tncn.ztools.site/"
+                <a href="./tax/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -348,8 +343,7 @@
             </div>
             <div class="mega-cat-links">
               
-                
-                <a href="https://laikep.ztools.site/"
+                <a href="./compound-interest/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -363,7 +357,6 @@
                       
                 </a>
                 
-                
                 <a href="./inflation-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -375,7 +368,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="./investment-calc/"
                   class="mega-tool-link  ">
@@ -389,7 +381,6 @@
                     
                 </a>
                 
-                
                 <a href="./loan-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -399,7 +390,6 @@
                   
                 </a>
                 
-                
                 <a href="./percentage-calculator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -408,7 +398,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./savings-interest/"
                   class="mega-tool-link  ">
@@ -434,7 +423,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="./lorem-ipsum/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -447,7 +435,6 @@
                     
                 </a>
                 
-                
                 <a href="./text-diff/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -457,7 +444,6 @@
                   
                 </a>
                 
-                
                 <a href="./text-formatter/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -466,7 +452,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./word-counter/d"
                   class="mega-tool-link  ">
@@ -489,7 +474,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="./password-generator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -498,7 +482,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./uuid-generator/"
                   class="mega-tool-link  ">
@@ -521,7 +504,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="./bmi/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -531,7 +513,6 @@
                   
                 </a>
                 
-                
                 <a href="./bookmark-creator/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -540,7 +521,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./date-time-master/"
                   class="mega-tool-link mode-advanced-only ">
@@ -554,7 +534,6 @@
                     
                 </a>
                 
-                
                 <a href="./date-toolkit/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -566,7 +545,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="./lunar-calendar/"
                   class="mega-tool-link  ">
@@ -580,7 +558,6 @@
                     
                 </a>
                 
-                
                 <a href="./random-toolkit/"
                   class="mega-tool-link  ">
                   <span class="tool-dot"></span>
@@ -592,7 +569,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="./unit-converter/"
                   class="mega-tool-link  ">
@@ -615,7 +591,6 @@
             </div>
             <div class="mega-cat-links">
               
-                
                 <a href="./cron-parser/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -625,7 +600,6 @@
                   
                 </a>
                 
-                
                 <a href="./dev-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -634,7 +608,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./hash-toolkit/"
                   class="mega-tool-link  ">
@@ -648,8 +621,7 @@
                     
                 </a>
                 
-                
-                <a href="https://json.ztools.site/"
+                <a href="./json-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -663,7 +635,6 @@
                       
                 </a>
                 
-                
                 <a href="./jwt-toolkit/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
@@ -672,7 +643,6 @@
                   </span>
                   
                 </a>
-                
                 
                 <a href="./qr-generator/"
                   class="mega-tool-link  ">
@@ -686,7 +656,6 @@
                     
                 </a>
                 
-                
                 <a href="./timestamp-converter/"
                   class="mega-tool-link mode-standard-only ">
                   <span class="tool-dot"></span>
@@ -698,7 +667,6 @@
                       style="font-size: 0.5rem; padding: 1px 4px; margin-left: auto;">BETA</span>
                     
                 </a>
-                
                 
                 <a href="./url-toolkit/"
                   class="mega-tool-link  ">
@@ -712,8 +680,7 @@
                     
                 </a>
                 
-                
-                <a href="https://playground.ztools.site/"
+                <a href="./web-playground/"
                   class="mega-tool-link mode-advanced-only ">
                   <span class="tool-dot"></span>
                   <span class="tool-label">
@@ -733,117 +700,98 @@
       </div>
   </div>
 </div>
-    </div>
-
-    <div class="header-actions">
-      <!-- Desktop Search Box -->
-      <div class="header-search-box desktop-only" id="header-search-box">
-        <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
-        <input type="text" class="header-search-input" placeholder="Tìm kiếm công cụ... (Ctrl + K)" readonly>
-        <kbd>Ctrl+K</kbd>
       </div>
 
-      <a href="./categories/" class="btn-icon"
-        title="Danh mục" aria-label="Categories">
-        <i data-lucide="grid-3x3"></i>
-      </a>
+      <div class="header-actions">
+        <!-- Desktop Search Box -->
+        <div class="header-search-box desktop-only" id="header-search-box">
+          <span class="search-box-icon"><i data-lucide="search" style="width: 18px; height: 18px;"></i></span>
+          <input type="text" class="header-search-input" placeholder="Tìm kiếm công cụ... (Ctrl + K)" readonly>
+          <kbd>Ctrl+K</kbd>
+        </div>
 
-      <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Tìm kiếm công cụ"
-        aria-label="Search">
-        <i data-lucide="search"></i>
-      </button>
+        <a href="./categories/" class="btn-icon"
+          title="Danh mục" aria-label="Categories">
+          <i data-lucide="grid-3x3"></i>
+        </a>
 
-      <div class="nav-item preferences-wrapper">
-        <button class="btn-icon dropdown-toggle" id="prefs-btn" aria-haspopup="true" aria-expanded="false"
-          title="Tùy chỉnh">
-          <i data-lucide="sliders-horizontal"></i>
+        <button id="search-btn-mobile" class="btn-icon search-trigger mobile-only" title="Tìm kiếm công cụ"
+          aria-label="Search">
+          <i data-lucide="search"></i>
         </button>
 
-        <div class="dropdown-menu preferences-dropdown">
-          <div class="prefs-section">
-            <div class="prefs-label">
-              Giao diện
-            </div>
-            <div class="prefs-row">
-              <span class="prefs-row-label">
-                Chủ đề
-              </span>
-              <button id="theme-toggle" class="mode-toggle-btn theme-toggle-compact" aria-label="Toggle Dark Mode">
-                <i data-lucide="moon" class="theme-icon-light"></i>
-                <i data-lucide="sun" class="theme-icon-dark"></i>
-                <span id="theme-text">
-                  Chế độ tối
-                </span>
-              </button>
-            </div>
-          </div>
+        <div class="nav-item preferences-wrapper">
+          <button class="btn-icon dropdown-toggle" id="prefs-btn" aria-haspopup="true" aria-expanded="false"
+            title="Tùy chỉnh">
+            <i data-lucide="sliders-horizontal"></i>
+          </button>
 
-          <div class="prefs-section">
-            <div class="prefs-label">
-              Ngôn ngữ
-            </div>
-            <div class="prefs-row">
-              
-                <a href="./" class="pref-lang-btn active"
-                  title="Tiếng Việt">
-                  <span class="lang-flag">
-                    🇻🇳
-                  </span>
-                  <span class="lang-name">
-                    Việt
-                  </span>
-                </a>
-                
-                <a href="./en/" class="pref-lang-btn "
-                  title="English">
-                  <span class="lang-flag">
-                    🇺🇸
-                  </span>
-                  <span class="lang-name">
-                    Eng
-                  </span>
-                </a>
-                
-            </div>
-          </div>
-
-          <div class="prefs-section">
-            <div class="prefs-label">
-              Chế độ dùng
-            </div>
-            <button id="mode-toggle" class="mode-toggle-btn full-width" title="Chế độ Nâng cao (Đầy đủ, Master Tools)">
-              <span class="mode-text">
-                Standard
-              </span>
-              <div class="mode-switch">
-                <div class="mode-slider">
-                  <span class="mode-icon"><i data-lucide="zap" style="width: 12px; height: 12px;"></i></span>
-                </div>
+          <div class="dropdown-menu preferences-dropdown">
+            <div class="prefs-section">
+              <div class="prefs-label">
+                Giao diện
               </div>
-              <span class="mode-text">
-                Advanced
-              </span>
-            </button>
-          </div>
-
-          <div class="prefs-section no-border">
-            <div class="prefs-label">
-              Bạn là ai?
+              <div class="prefs-row">
+                <span class="prefs-row-label">
+                  Chủ đề
+                </span>
+                <button id="theme-toggle" class="mode-toggle-btn theme-toggle-compact" aria-label="Toggle Dark Mode">
+                  <i data-lucide="moon" class="theme-icon-light"></i>
+                  <i data-lucide="sun" class="theme-icon-dark"></i>
+                  <span id="theme-text">
+                    Chế độ tối
+                  </span>
+                </button>
+              </div>
             </div>
-            <div class="persona-options-grid">
-              <button class="persona-option" data-value="none">🎯 <span>Just Browsing</span></button>
-              <button class="persona-option" data-value="dev">👨‍💻 <span>Developer</span></button>
-              <button class="persona-option" data-value="pro">👩‍💼 <span>Professional</span></button>
-              <button class="persona-option" data-value="finance">💰 <span>Investor</span></button>
-              <button class="persona-option" data-value="creator">🎨 <span>Creator</span></button>
+
+            <div class="prefs-section">
+              <div class="prefs-label">
+                Ngôn ngữ
+              </div>
+              <div class="prefs-row">
+                
+                  <a href="./" class="pref-lang-btn active"
+                    title="Tiếng Việt">
+                    <span class="lang-flag">
+                      🇻🇳
+                    </span>
+                    <span class="lang-name">
+                      Việt
+                    </span>
+                  </a>
+                  
+                  <a href="./en/" class="pref-lang-btn "
+                    title="English">
+                    <span class="lang-flag">
+                      🇺🇸
+                    </span>
+                    <span class="lang-name">
+                      Eng
+                    </span>
+                  </a>
+                  
+              </div>
+            </div>
+
+            <!-- User Mode removed as it was redundant with Personas -->
+
+            <div class="prefs-section no-border">
+              Chế độ hiển thị
+                <div class="persona-options-grid">
+                  <button class="persona-option" data-value="none">🎯 <span>Just Browsing</span></button>
+                  <button class="persona-option" data-value="dev">👨‍💻 <span>Developer</span></button>
+                  <button class="persona-option" data-value="pro">👩‍💼 <span>Professional</span></button>
+                  <button class="persona-option" data-value="finance">💰 <span>Investor</span></button>
+                  <button class="persona-option" data-value="creator">🎨 <span>Creator</span></button>
+                </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Search Overlay / Modal (Reusable by hidden header mode) -->
+    <!-- Search Overlay / Modal (Reusable by hidden header mode) -->
 <div id="search-modal" class="search-modal">
   <div class="search-overlay"></div>
   <div class="search-container">
@@ -876,7 +824,7 @@
     "msg_starred": "Đã thêm vào yêu thích",
     "msg_unstarred": "Đã xóa khỏi yêu thích",
     "msg_history_cleared": "Đã xóa lịch sử",
-    "subdomains": [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"}],
+    "subdomains": [{"domain":"blog.ph4n4n.xyz","path":"/blog/"},{"domain":"roadmap.ph4n4n.xyz","path":"/roadmap/"},{"domain":"json.ztools.site","path":"/json-toolkit/"},{"domain":"tncn.ztools.site","path":"/tax/"},{"domain":"laikep.ztools.site","path":"/compound-interest/"},{"domain":"playground.ztools.site","path":"/web-playground/"},{"domain":"amlich.ztools.site","path":"/lunar-calendar/"},{"domain":"lunar.ztools.site","path":"/lunar-calendar/"}],
     "mainDomain": "ztools.site"
   }
 </script>
@@ -886,1499 +834,1231 @@
   
   [{"id":"blog","link":"./blog/","icon":"pen-tool","title":"Chuyện Nghề Dev","desc":"Hậu trường, kỹ thuật và những dòng tâm sự của đội ngũ phát triển.","category":"home.cats.legacy.title"},{"id":"bmi","link":"./bmi/","icon":"scale","title":"Tính chỉ số BMI","desc":"Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI & WPRO cho người Việt.","category":"Tiện ích đời sống"},{"id":"bookmark-creator","link":"./bookmark-creator/","icon":"bookmark","title":"Bookmark Creator","desc":"Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.","category":"Tiện ích đời sống"},{"id":"business-tax","link":"./business-tax/","icon":"briefcase","title":"Tính thuế TNDN","desc":"Công cụ tính toán thuế thu nhập doanh nghiệp (TNDN) chính xác và nhanh chóng. Hỗ trợ cả phương pháp trực tiếp và gián tiếp.","category":"Việc làm & Lương thưởng"},{"id":"compound-interest","link":"./compound-interest/","icon":"trending-up","title":"Tính Lãi Kép","desc":"Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.","category":"Tài chính & Ngân hàng"},{"id":"cron-parser","link":"./cron-parser/","icon":"terminal","title":"Giải mã biểu thức Cron","desc":"Giải mã biểu thức Cron sang ngôn ngữ tự nhiên.","category":"Công cụ Lập trình (Dev)"},{"id":"date-time-master","link":"./date-time-master/","icon":"calendar-clock","title":"Bộ Công Cụ Ngày Giờ Master","desc":"Bộ công cụ toàn diện: Tính khoảng cách, cộng trừ ngày và chuyển đổi Unix Timestamp.","category":"Tiện ích đời sống"},{"id":"date-toolkit","link":"./date-toolkit/","icon":"calendar-days","title":"Công cụ Ngày tháng","desc":"Tính khoảng cách ngày, cộng trừ thời gian và đếm ngược.","category":"Tiện ích đời sống"},{"id":"dev-memes","link":"./dev-memes/","icon":"smile","title":"DEV Memes","desc":"Nơi xả stress cho anh em Developer","category":"DEV Memes"},{"id":"dev-toolkit","link":"./dev-toolkit/","icon":"code","title":"Bộ Công Cụ Lập Trình","desc":"Bộ công cụ lập trình toàn diện cho developers","category":"Công cụ Lập trình (Dev)"},{"id":"freelancer-tax","link":"./freelancer-tax/","icon":"receipt","title":"Thuế Freelancer & Hộ kinh doanh","desc":"Tính thuế vĩnh lai (10%) hoặc thuế khoán cho hộ kinh doanh cá thể.","category":"Việc làm & Lương thưởng"},{"id":"glassmorphism-generator","link":"./glassmorphism-generator/","icon":"sparkles","title":"Trình Tạo Glassmorphism","desc":"Tạo hiệu ứng kính mờ đẹp mắt cho giao diện web với xem trước trực tiếp","category":"home.cats.dev-tools.title"},{"id":"hash-toolkit","link":"./hash-toolkit/","icon":"lock","title":"Công cụ Base64 & Hash","desc":"Mã hóa/Giải mã Base64 và tạo các mã băm mật mã như MD5, SHA256 nhanh chóng.","category":"Công cụ Lập trình (Dev)"},{"id":"inflation-calculator","link":"./inflation-calculator/","icon":"line-chart","title":"Tính lạm phát (Việt Nam)","desc":"Tính toán trượt giá tiền tệ và sức mua của đồng tiền qua các năm.","category":"Tài chính & Ngân hàng"},{"id":"investment-calc","link":"./investment-calc/","icon":"piggy-bank","title":"Tính hiệu quả đầu tư (ROI)","desc":"Tính toán lợi nhuận (ROI) và tỷ suất sinh lời hàng năm (CAGR).","category":"Tài chính & Ngân hàng"},{"id":"json-toolkit","link":"./json-toolkit/","icon":"braces","title":"Bộ công cụ JSON","desc":"Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.","category":"Công cụ Lập trình (Dev)"},{"id":"jwt-toolkit","link":"./jwt-toolkit/","icon":"key","title":"Phân tích & Giải mã JWT","desc":"Giải mã và kiểm tra cấu trúc JSON Web Token (JWT) an toàn ngay trên trình duyệt.","category":"Công cụ Lập trình (Dev)"},{"id":"loan-calculator","link":"./loan-calculator/","icon":"home","title":"Tính lãi vay","desc":"Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.","category":"Tài chính & Ngân hàng"},{"id":"lorem-ipsum","link":"./lorem-ipsum/","icon":"pilcrow","title":"Tạo chữ mẫu Lorem Ipsum","desc":"Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.","category":"Công cụ Văn bản"},{"id":"lunar-calendar","link":"./lunar-calendar/","icon":"moon","title":"Xem Âm Lịch","desc":"Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo","category":"Tiện ích đời sống"},{"id":"ot-calculator","link":"./ot-calculator/","icon":"clock","title":"Tính lương tăng ca (OT)","desc":"Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất","category":"Việc làm & Lương thưởng"},{"id":"password-generator","link":"./password-generator/","icon":"key-round","title":"Tạo Mật Khẩu Mạnh","desc":"Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.","category":"Generators (Tạo mã)"},{"id":"percentage-calculator","link":"./percentage-calculator/","icon":"percent","title":"Tính Phần Trăm (%)","desc":"Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.","category":"Tài chính & Ngân hàng"},{"id":"qr-generator","link":"./qr-generator/","icon":"qr-code","title":"Tạo mã QR Code","desc":"Tạo mã QR cho liên kết, văn bản và nhiều hơn thế. Hoạt động offline đảm bảo quyền riêng tư.","category":"Công cụ Lập trình (Dev)"},{"id":"random-toolkit","link":"./random-toolkit/","icon":"dices","title":"Bộ công cụ Ngẫu nhiên","desc":"Tạo số ngẫu nhiên, tung xúc xắc và chọn ngẫu nhiên từ danh sách.","category":"Tiện ích đời sống"},{"id":"salary-tax-master","link":"./salary-tax-master/","icon":"wallet","title":"Bộ Công Cụ Thuế & Lương Master","desc":"Bộ công cụ đầy đủ về Lương và Thuế: TNCN, TNDN, Freelancer, Bảo hiểm xã hội và Tính lương OT.","category":"Việc làm & Lương thưởng"},{"id":"savings-interest","link":"./savings-interest/","icon":"coins","title":"Tính Lãi Suất Tiết Kiệm","desc":"Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.","category":"Tài chính & Ngân hàng"},{"id":"social-insurance","link":"./social-insurance/","icon":"shield-plus","title":"Tính BHXH & Hưu trí","desc":"Tính BHXH bắt buộc vs Tự nguyện.","category":"Việc làm & Lương thưởng"},{"id":"tax","link":"./tax/","icon":"banknote","title":"Tính Thuế Thu Nhập Cá Nhân Việt Nam","desc":"Cập nhật Luật Thuế TNCN 2025 & Nghị quyết 110/2025/UBTVQH15 (áp dụng từ kỳ tính thuế 2026)","category":"Việc làm & Lương thưởng"},{"id":"text-diff","link":"./text-diff/","icon":"file-diff","title":"So Sánh Văn Bản","desc":"So sánh sự khác biệt giữa hai đoạn văn bản, làm nổi bật các phần thêm, xóa, sửa.","category":"Công cụ Văn bản"},{"id":"text-formatter","link":"./text-formatter/","icon":"wand-2","title":"Định Dạng Văn Bản - Xóa Style","desc":"Loại bỏ định dạng và làm sạch văn bản khi copy từ web.","category":"Công cụ Văn bản"},{"id":"timestamp-converter","link":"./timestamp-converter/","icon":"clock","title":"Chuyển đổi Timestamp","desc":"Chuyển đổi thời gian giữa định dạng Unix Timestamp và ngày tháng thực tế.","category":"Công cụ Lập trình (Dev)"},{"id":"unit-converter","link":"./unit-converter/","icon":"ruler","title":"Quy đổi đơn vị","desc":"Công cụ quy đổi chiều dài, khối lượng, thể tích, diện tích và nhiều đơn vị khác.","category":"Tiện ích đời sống"},{"id":"url-toolkit","link":"./url-toolkit/","icon":"link","title":"URL & Base64 Toolkit","desc":"Mã hóa/Giải mã URL, Base64 và phân tích cấu trúc URL nhanh chóng.","category":"Công cụ Lập trình (Dev)"},{"id":"uuid-generator","link":"./uuid-generator/","icon":"fingerprint","title":"UUID Generator","desc":"Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.","category":"Generators (Tạo mã)"},{"id":"web-playground","link":"./web-playground/","icon":"code-2","title":"zTool Playground","desc":"Trình soạn thảo HTML/CSS/JS online, chạy ngay trên trình duyệt, không cần server.","category":"Công cụ Lập trình (Dev)"},{"id":"word-counter","link":"./word-counter/d","icon":"bar-chart-3","title":"Đếm từ & Phân tích văn bản","desc":"Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).","category":"Công cụ Văn bản"}]
 </script>
-</header>
+  </header>
         
 
           <main class="container">
             
               <!-- title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí -->
 
-    
 
+  <div class="home-page-body">
+    <!-- SECTION 1: Hero -->
+    <section class="hero-apple">
+      <h1 class="headline">
+        Small tools. Big help.
+      </h1>
+      <p class="sub-headline">
+        Fast • Secure • Free
+      </p>
 
-      <section class="hero">
-        <h1>
-          Small tools. Big help.
-        </h1>
-        <p>
-          Fast • Secure • Free
-        </p>
-      </section>
-
-      <!-- Big Hero Search Section -->
-      <div class="hero-search-wrap">
-        <div class="search-box-hero">
-          <span class="search-icon"><i data-lucide="search"></i></span>
-          <input type="text" id="home-search" placeholder="Tìm kiếm công cụ... (Ctrl + K)"
-            aria-label="Search tools">
-          <div class="search-hints">
-            <kbd>Ctrl</kbd>
-            <span>+</span>
-            <kbd>K</kbd>
-          </div>
+      <div class="hero-search-minimal">
+        <input type="text" id="home-search" placeholder="Tìm kiếm công cụ... (Ctrl + K)" autocomplete="off">
+        <div class="search-hints"
+          style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); opacity: 0.4;">
+          <kbd>Ctrl K</kbd>
         </div>
       </div>
+    </section>
 
-      <!-- Highlight Section -->
-      
+    <!-- SECTION 2: Fast Access (Subdomain Tools) -->
+    <section class="section-fast-access" id="fast-access">
+      <div class="container">
+        <div class="section-header">
+          <h2>
+            🚀 Truy cập nhanh
+          </h2>
+          <p class="subtitle">
+            Mở trực tiếp qua subdomain
+          </p>
+        </div>
+
+        <div class="fast-access-grid">
+          
+            <a href="./web-playground/"
+              class="fast-access-card">
+              <div class="fast-badge">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div class="fast-icon">
+                <i data-lucide="code-2" style="width: 40px; height: 40px;"></i>
+              </div>
+              <h3>
+                zTool Playground
+              </h3>
+              <p>
+                Trình soạn thảo HTML/CSS/JS online, chạy ngay trên trình duyệt, không cần server.
+              </p>
+              <div class="fast-url">
+                <i data-lucide="link" style="width: 14px; height: 14px;"></i>
+                <span>
+                  playground.ztools.site
+                </span>
+              </div>
+            </a>
+            
+            <a href="./tax/"
+              class="fast-access-card">
+              <div class="fast-badge">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div class="fast-icon">
+                <i data-lucide="banknote" style="width: 40px; height: 40px;"></i>
+              </div>
+              <h3>
+                Tính Thuế Thu Nhập Cá Nhân Việt Nam
+              </h3>
+              <p>
+                Cập nhật Luật Thuế TNCN 2025 &amp; Nghị quyết 110/2025/UBTVQH15 (áp dụng từ kỳ tính thuế 2026)
+              </p>
+              <div class="fast-url">
+                <i data-lucide="link" style="width: 14px; height: 14px;"></i>
+                <span>
+                  tncn.ztools.site
+                </span>
+              </div>
+            </a>
+            
+            <a href="./json-toolkit/"
+              class="fast-access-card">
+              <div class="fast-badge">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div class="fast-icon">
+                <i data-lucide="braces" style="width: 40px; height: 40px;"></i>
+              </div>
+              <h3>
+                Bộ công cụ JSON
+              </h3>
+              <p>
+                Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.
+              </p>
+              <div class="fast-url">
+                <i data-lucide="link" style="width: 14px; height: 14px;"></i>
+                <span>
+                  json.ztools.site
+                </span>
+              </div>
+            </a>
+            
+            <a href="./compound-interest/"
+              class="fast-access-card">
+              <div class="fast-badge">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div class="fast-icon">
+                <i data-lucide="trending-up" style="width: 40px; height: 40px;"></i>
+              </div>
+              <h3>
+                Tính Lãi Kép
+              </h3>
+              <p>
+                Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.
+              </p>
+              <div class="fast-url">
+                <i data-lucide="link" style="width: 14px; height: 14px;"></i>
+                <span>
+                  laikep.ztools.site
+                </span>
+              </div>
+            </a>
+            
+            <a href="./lunar-calendar/"
+              class="fast-access-card">
+              <div class="fast-badge">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div class="fast-icon">
+                <i data-lucide="moon" style="width: 40px; height: 40px;"></i>
+              </div>
+              <h3>
+                Xem Âm Lịch
+              </h3>
+              <p>
+                Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo
+              </p>
+              <div class="fast-url">
+                <i data-lucide="link" style="width: 14px; height: 14px;"></i>
+                <span>
+                  amlich.ztools.site
+                </span>
+              </div>
+            </a>
+            
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Smart Picks (Personalized + Trending) -->
+    <section class="section-smart-picks" id="smart-picks">
+      <div class="container">
+        <div class="section-header">
+          <h2>
+            💡 Gợi ý cho bạn
+          </h2>
+          <p class="subtitle">
+            Dựa trên sở thích và xu hướng
+          </p>
+        </div>
+        <div class="tools-grid" id="smart-picks-grid">
+          <!-- Will be populated by home.js with smart algorithm -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: All Tools by Category -->
+    <section class="section-all-tools" id="all-tools">
+      <div class="container">
+        <div class="category-header" style="text-align: center; margin-bottom: 4rem;">
+          <h2 style="font-size: 2rem; font-weight: 800;">📂 Danh mục
+          </h2>
+        </div>
+
         
-          <div class="container highlight-section">
-            <div class="highlight-header">
-              <span class="badge-new">FEATURED</span>
-              <h2>Phổ biến & Nổi bật <i data-lucide="sparkles"
-                  style="width: 24px; height: 24px; vertical-align: middle; color: #f59e0b;"></i></h2>
-            </div>
-            <div class="highlight-grid">
+          <div class="category-section" id="job-tools" style="margin-bottom: 5rem;">
+            <h3 class="category-title"
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="briefcase"></i>
+              Việc làm &amp; Lương thưởng
+            </h3>
+            <div class="tools-grid">
               
-                <a href="./compound-interest/"
-                  class="highlight-card tool-card-wrapper" data-personas="finance"
-                  data-vn-only="false">
-                  <div class="highlight-icon">
-                    <i data-lucide="trending-up"></i>
-                  </div>
-                  <div class="highlight-info">
-                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                      <h3>
-                        Tính Lãi Kép
-                      </h3>
-                      <button class="star-btn" data-tool-id="compound-interest" aria-label="Add to favorites"
-                        title="Add to favorites">
-                        <i data-lucide="star" style="width: 20px; height: 20px;"></i>
-                      </button>
+                <a href="./business-tax/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="business-tax"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="briefcase" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <p>
-                      Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.
-                    </p>
-                    <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
-                        style="width: 16px; height: 16px;"></i></span>
+                    <button class="star-btn" data-tool-id="business-tax"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính thuế TNDN
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Corporate Income Tax Calculator
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
                 </a>
                 
-                <a href="./json-toolkit/"
-                  class="highlight-card tool-card-wrapper" data-personas="dev"
-                  data-vn-only="false">
-                  <div class="highlight-icon">
-                    <i data-lucide="braces"></i>
-                  </div>
-                  <div class="highlight-info">
-                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                      <h3>
-                        Bộ công cụ JSON
-                      </h3>
-                      <button class="star-btn" data-tool-id="json-toolkit" aria-label="Add to favorites"
-                        title="Add to favorites">
-                        <i data-lucide="star" style="width: 20px; height: 20px;"></i>
-                      </button>
+                <a href="./freelancer-tax/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="freelancer-tax"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="receipt" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <p>
-                      Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.
-                    </p>
-                    <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
-                        style="width: 16px; height: 16px;"></i></span>
+                    <button class="star-btn" data-tool-id="freelancer-tax"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Thuế Freelancer &amp; Hộ kinh doanh
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tính thuế vĩnh lai (10%) hoặc thuế khoán cho hộ kinh doanh cá thể.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
                 </a>
                 
-                <a href="./tax/"
-                  class="highlight-card tool-card-wrapper" data-personas="pro"
-                  data-vn-only="true">
-                  <div class="highlight-icon">
-                    <i data-lucide="banknote"></i>
-                  </div>
-                  <div class="highlight-info">
-                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                      <h3>
-                        Tính Thuế Thu Nhập Cá Nhân Việt Nam
-                      </h3>
-                      <button class="star-btn" data-tool-id="tax" aria-label="Add to favorites"
-                        title="Add to favorites">
-                        <i data-lucide="star" style="width: 20px; height: 20px;"></i>
-                      </button>
+                <a href="./ot-calculator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="ot-calculator"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="clock" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <p>
-                      Cập nhật Luật Thuế TNCN 2025 &amp; Nghị quyết 110/2025/UBTVQH15 (áp dụng từ kỳ tính thuế 2026)
-                    </p>
-                    <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
-                        style="width: 16px; height: 16px;"></i></span>
+                    <button class="star-btn" data-tool-id="ot-calculator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính lương tăng ca (OT)
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
                 </a>
                 
-                <a href="./web-playground/"
-                  class="highlight-card tool-card-wrapper" data-personas=""
-                  data-vn-only="false">
-                  <div class="highlight-icon">
-                    <i data-lucide="code-2"></i>
-                  </div>
-                  <div class="highlight-info">
-                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                      <h3>
-                        zTool Playground
-                      </h3>
-                      <button class="star-btn" data-tool-id="web-playground" aria-label="Add to favorites"
-                        title="Add to favorites">
-                        <i data-lucide="star" style="width: 20px; height: 20px;"></i>
-                      </button>
+                <a href="./salary-tax-master/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="salary-tax-master"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="wallet" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <p>
-                      Trình soạn thảo HTML/CSS/JS online, chạy ngay trên trình duyệt, không cần server.
-                    </p>
-                    <span class="btn-explore">Khám phá ngay <i data-lucide="arrow-right"
-                        style="width: 16px; height: 16px;"></i></span>
+                    <button class="star-btn" data-tool-id="salary-tax-master"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Bộ Công Cụ Thuế &amp; Lương Master
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Bộ công cụ đầy đủ về Lương và Thuế: TNCN, TNDN, Freelancer, Bảo hiểm xã hội và Tính lương OT.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./social-insurance/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="social-insurance"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="shield-plus" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="social-insurance"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính BHXH &amp; Hưu trí
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Social Insurance &amp; Pension Calculator
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
                 </a>
                 
             </div>
           </div>
           
-
-            <!-- Recently Used Section (Dynamic) -->
-            <div class="container recent-section" id="recent-section" style="display: none; margin-bottom: 3rem;">
-              <div class="category-header">
-                <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                  <i data-lucide="history" style="color: var(--primary-color);"></i>
-                  Vừa sử dụng
-                </h2>
-                <button id="clear-history" class="btn-text-small" style="font-size: 0.8rem; opacity: 0.6;">
-                  Xóa lịch sử
-                </button>
-              </div>
-              <div class="tools-grid-horizontal" id="recent-grid">
-                <!-- Dynamically populated -->
-              </div>
-            </div>
-
-            <!-- Favorites Section (Dynamic) -->
-            <div class="container favorites-section" id="favorites-section" style="display: none; margin-bottom: 3rem;">
-              <div class="category-header">
-                <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                  <i data-lucide="star" style="color: #f59e0b; fill: #f59e0b;"></i>
-                  Công cụ của tôi
-                </h2>
-              </div>
-              <div class="tools-grid" id="favorites-grid">
-                <!-- Dynamically populated -->
-              </div>
-            </div>
-
-            <!-- View Options Toolbar -->
-            <div class="container view-toolbar"
-              style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; flex-wrap: wrap;">
-              <div class="view-toggles"
-                style="display: flex; gap: 0.5rem; background: var(--bg-hover); padding: 0.25rem; border-radius: 8px;">
-                <button class="btn-icon" data-view="grid" title="Grid View" aria-label="Grid View">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    aria-hidden="true">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                  </svg>
-                </button>
-                <button class="btn-icon" data-view="list" title="List View" aria-label="List View">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    aria-hidden="true">
-                    <line x1="8" y1="6" x2="21" y2="6"></line>
-                    <line x1="8" y1="12" x2="21" y2="12"></line>
-                    <line x1="8" y1="18" x2="21" y2="18"></line>
-                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
-
-              <div class="sort-options" style="display: flex; gap: 0.5rem;">
-                <!-- Category Filter Dropdown -->
-                <select id="category-filter" style="width: auto; padding: 0.5rem 1rem; cursor: pointer;"
-                  aria-label="Filter by category">
-                  <option value="all">
-                    Danh mục
-                  </option>
-                  
-                    <option value="job">
-                      Việc làm &amp; Lương thưởng
-                    </option>
-                    
-                    <option value="finance">
-                      Tài chính &amp; Ngân hàng
-                    </option>
-                    
-                    <option value="text">
-                      Công cụ Văn bản
-                    </option>
-                    
-                    <option value="generator">
-                      Generators (Tạo mã)
-                    </option>
-                    
-                    <option value="daily">
-                      Tiện ích đời sống
-                    </option>
-                    
-                    <option value="dev">
-                      Công cụ Lập trình (Dev)
-                    </option>
-                    
-                </select>
-
-                <select id="sort-select" style="width: auto; padding: 0.5rem 2rem 0.5rem 0.75rem; cursor: pointer;"
-                  aria-label="Sort tools by">
-                  <option value="default">
-                    Mặc định
-                  </option>
-                  <option value="recent">
-                    Vừa xem gần đây
-                  </option>
-                  <option value="popular">
-                    Phổ biến nhất
-                  </option>
-                  <option value="az">
-                    Tên (A-Z)
-                  </option>
-                  <option value="za">
-                    Tên (Z-A)
-                  </option>
-                </select>
-              </div>
-            </div>
-
-            
+          <div class="category-section" id="finance-tools" style="margin-bottom: 5rem;">
+            <h3 class="category-title"
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="line-chart"></i>
+              Tài chính &amp; Ngân hàng
+            </h3>
+            <div class="tools-grid">
               
-                <div class="category-section" id="job-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="briefcase"></i>
-                    Việc làm &amp; Lương thưởng
-                  </h2>
-                  <div class="tools-grid">
-                    
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="business-tax" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
+                <a href="./inflation-calculator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="inflation-calculator"
+                  data-personas="" data-vn-only="false">
 
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./business-tax/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="briefcase" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính thuế TNDN
-                              </h3>
-                              <p>
-                                Corporate Income Tax Calculator
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="freelancer-tax" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./freelancer-tax/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="receipt" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Thuế Freelancer &amp; Hộ kinh doanh
-                              </h3>
-                              <p>
-                                Tính thuế vĩnh lai (10%) hoặc thuế khoán cho hộ kinh doanh cá thể.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="ot-calculator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./ot-calculator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="clock" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính lương tăng ca (OT)
-                              </h3>
-                              <p>
-                                Tính chính xác tiền lương làm thêm giờ theo Luật Lao động mới nhất
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="salary-tax-master" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./salary-tax-master/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="wallet" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Bộ Công Cụ Thuế &amp; Lương Master
-                              </h3>
-                              <p>
-                                Bộ công cụ đầy đủ về Lương và Thuế: TNCN, TNDN, Freelancer, Bảo hiểm xã hội và Tính lương OT.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="social-insurance" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./social-insurance/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="shield-plus" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính BHXH &amp; Hưu trí
-                              </h3>
-                              <p>
-                                Social Insurance &amp; Pension Calculator
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card "
-                            data-personas="pro"
-                            data-vn-only="true">
-                            <button class="star-btn" data-tool-id="tax" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                                      <span class="tool-badge hot">
-                                        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-                                        HOT
-                                      </span>
-                                      
-                            </div>
-
-                            <a href="./tax/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="banknote" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính Thuế Thu Nhập Cá Nhân Việt Nam
-                              </h3>
-                              <p>
-                                Cập nhật Luật Thuế TNCN 2025 &amp; Nghị quyết 110/2025/UBTVQH15 (áp dụng từ kỳ tính thuế 2026)
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="line-chart" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="inflation-calculator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
                   </div>
-                </div>
-                
-                <div class="category-section" id="finance-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="line-chart"></i>
-                    Tài chính &amp; Ngân hàng
-                  </h2>
-                  <div class="tools-grid">
-                    
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính lạm phát (Việt Nam)
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tính toán trượt giá tiền tệ và sức mua của đồng tiền qua các năm.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
                       
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas="finance"
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="compound-interest" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                                      <span class="tool-badge hot">
-                                        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-                                        HOT
-                                      </span>
-                                      
-                            </div>
-
-                            <a href="./compound-interest/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="trending-up" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính Lãi Kép
-                              </h3>
-                              <p>
-                                Công cụ tính lãi suất kép online chính xác nhất. Tính toán giá trị tương lai của khoản đầu tư với lãi suất gộp hàng tháng/năm.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="inflation-calculator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./inflation-calculator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="line-chart" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính lạm phát (Việt Nam)
-                              </h3>
-                              <p>
-                                Tính toán trượt giá tiền tệ và sức mua của đồng tiền qua các năm.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="investment-calc" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./investment-calc/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="piggy-bank" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính hiệu quả đầu tư (ROI)
-                              </h3>
-                              <p>
-                                Tính toán lợi nhuận (ROI) và tỷ suất sinh lời hàng năm (CAGR).
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="loan-calculator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./loan-calculator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="home" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính lãi vay
-                              </h3>
-                              <p>
-                                Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="percentage-calculator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./percentage-calculator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="percent" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính Phần Trăm (%)
-                              </h3>
-                              <p>
-                                Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="savings-interest" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./savings-interest/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="coins" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính Lãi Suất Tiết Kiệm
-                              </h3>
-                              <p>
-                                Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
-                </div>
+                </a>
                 
-                <div class="category-section" id="text-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="type"></i>
-                    Công cụ Văn bản
-                  </h2>
-                  <div class="tools-grid">
-                    
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="lorem-ipsum" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
+                <a href="./investment-calc/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="investment-calc"
+                  data-personas="" data-vn-only="false">
 
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./lorem-ipsum/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="pilcrow" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tạo chữ mẫu Lorem Ipsum
-                              </h3>
-                              <p>
-                                Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="text-diff" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./text-diff/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="file-diff" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                So Sánh Văn Bản
-                              </h3>
-                              <p>
-                                So sánh sự khác biệt giữa hai đoạn văn bản, làm nổi bật các phần thêm, xóa, sửa.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="text-formatter" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./text-formatter/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="wand-2" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Định Dạng Văn Bản - Xóa Style
-                              </h3>
-                              <p>
-                                Loại bỏ định dạng và làm sạch văn bản khi copy từ web.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas="creator"
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="word-counter" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./word-counter/d"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="bar-chart-3" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Đếm từ &amp; Phân tích văn bản
-                              </h3>
-                              <p>
-                                Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="piggy-bank" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="investment-calc"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
                   </div>
-                </div>
-                
-                <div class="category-section" id="generator-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="wand-2"></i>
-                    Generators (Tạo mã)
-                  </h2>
-                  <div class="tools-grid">
-                    
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính hiệu quả đầu tư (ROI)
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tính toán lợi nhuận (ROI) và tỷ suất sinh lời hàng năm (CAGR).
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
                       
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="password-generator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./password-generator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="key-round" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tạo Mật Khẩu Mạnh
-                              </h3>
-                              <p>
-                                Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="uuid-generator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./uuid-generator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="fingerprint" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                UUID Generator
-                              </h3>
-                              <p>
-                                Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
-                </div>
+                </a>
                 
-                <div class="category-section" id="daily-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="calendar"></i>
-                    Tiện ích đời sống
-                  </h2>
-                  <div class="tools-grid">
-                    
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="bmi" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
+                <a href="./loan-calculator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="loan-calculator"
+                  data-personas="" data-vn-only="false">
 
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./bmi/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="scale" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tính chỉ số BMI
-                              </h3>
-                              <p>
-                                Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI &amp; WPRO cho người Việt.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="bookmark-creator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./bookmark-creator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="bookmark" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Bookmark Creator
-                              </h3>
-                              <p>
-                                Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="date-time-master" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./date-time-master/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="calendar-clock" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Bộ Công Cụ Ngày Giờ Master
-                              </h3>
-                              <p>
-                                Bộ công cụ toàn diện: Tính khoảng cách, cộng trừ ngày và chuyển đổi Unix Timestamp.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="date-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./date-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="calendar-days" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Công cụ Ngày tháng
-                              </h3>
-                              <p>
-                                Tính khoảng cách ngày, cộng trừ thời gian và đếm ngược.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="true">
-                            <button class="star-btn" data-tool-id="lunar-calendar" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./lunar-calendar/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="moon" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Xem Âm Lịch
-                              </h3>
-                              <p>
-                                Chuyển đổi Dương lịch sang Âm lịch, xem Can Chi, Giờ Hoàng Đạo
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="random-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./random-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="dices" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Bộ công cụ Ngẫu nhiên
-                              </h3>
-                              <p>
-                                Tạo số ngẫu nhiên, tung xúc xắc và chọn ngẫu nhiên từ danh sách.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="unit-converter" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./unit-converter/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="ruler" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Quy đổi đơn vị
-                              </h3>
-                              <p>
-                                Công cụ quy đổi chiều dài, khối lượng, thể tích, diện tích và nhiều đơn vị khác.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="home" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="loan-calculator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
                   </div>
-                </div>
-                
-                <div class="category-section" id="dev-tools">
-                  <h2 class="category-title" style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="code"></i>
-                    Công cụ Lập trình (Dev)
-                  </h2>
-                  <div class="tools-grid">
-                    
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính lãi vay
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Công cụ tính lịch trả nợ vay ngân hàng chi tiết. Hỗ trợ tính theo dư nợ giảm dần hoặc dư nợ gốc ban đầu.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
                       
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="cron-parser" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./cron-parser/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="terminal" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Giải mã biểu thức Cron
-                              </h3>
-                              <p>
-                                Giải mã biểu thức Cron sang ngôn ngữ tự nhiên.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="dev-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./dev-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="code" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Bộ Công Cụ Lập Trình
-                              </h3>
-                              <p>
-                                Bộ công cụ lập trình toàn diện cho developers
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="hash-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./hash-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="lock" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Công cụ Base64 &amp; Hash
-                              </h3>
-                              <p>
-                                Mã hóa/Giải mã Base64 và tạo các mã băm mật mã như MD5, SHA256 nhanh chóng.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas="dev"
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="json-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                                      <span class="tool-badge hot">
-                                        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-                                        HOT
-                                      </span>
-                                      
-                            </div>
-
-                            <a href="./json-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="braces" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Bộ công cụ JSON
-                              </h3>
-                              <p>
-                                Format, validate, và convert JSON. Bao gồm Tree view và công cụ xử lý dữ liệu.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="jwt-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                            </div>
-
-                            <a href="./jwt-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="key" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Phân tích &amp; Giải mã JWT
-                              </h3>
-                              <p>
-                                Giải mã và kiểm tra cấu trúc JSON Web Token (JWT) an toàn ngay trên trình duyệt.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="qr-generator" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./qr-generator/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Tạo mã QR Code
-                              </h3>
-                              <p>
-                                Tạo mã QR cho liên kết, văn bản và nhiều hơn thế. Hoạt động offline đảm bảo quyền riêng tư.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-standard-only">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="timestamp-converter" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./timestamp-converter/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="clock" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                Chuyển đổi Timestamp
-                              </h3>
-                              <p>
-                                Chuyển đổi thời gian giữa định dạng Unix Timestamp và ngày tháng thực tế.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper ">
-                          <div
-                            class="tool-card legacy-item"
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="url-toolkit" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-                                  <span class="tool-badge beta">BETA</span>
-                                  
-
-                                    
-                            </div>
-
-                            <a href="./url-toolkit/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="link" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                URL &amp; Base64 Toolkit
-                              </h3>
-                              <p>
-                                Mã hóa/Giải mã URL, Base64 và phân tích cấu trúc URL nhanh chóng.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
-                      
-                        <div class="tool-card-wrapper mode-advanced-only">
-                          <div
-                            class="tool-card "
-                            data-personas=""
-                            data-vn-only="false">
-                            <button class="star-btn" data-tool-id="web-playground" aria-label="Add to favorites"
-                              title="Add to favorites">
-                              <i data-lucide="star" style="width: 16px; height: 16px;"></i>
-                            </button>
-
-                            <div class="tool-badge-row">
-                              
-
-                                    
-                                      <span class="tool-badge hot">
-                                        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-                                        HOT
-                                      </span>
-                                      
-                            </div>
-
-                            <a href="./web-playground/"
-                              class="tool-link">
-                              <div class="tool-icon-wrap">
-                                <i data-lucide="code-2" style="width: 32px; height: 32px;"></i>
-                              </div>
-
-                              <h3>
-                                zTool Playground
-                              </h3>
-                              <p>
-                                Trình soạn thảo HTML/CSS/JS online, chạy ngay trên trình duyệt, không cần server.
-                              </p>
-                            </a>
-                          </div>
-                        </div>
-                        
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
                   </div>
-                </div>
+                </a>
                 
+                <a href="./percentage-calculator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="percentage-calculator"
+                  data-personas="" data-vn-only="false">
 
-                  
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="percent" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="percentage-calculator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính Phần Trăm (%)
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Công cụ tính phần trăm online tiện lợi. Tính % của số, tính giá trị sau khi tăng/giảm %, tính tỷ lệ % giữa 2 số.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./savings-interest/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="savings-interest"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="coins" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="savings-interest"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính Lãi Suất Tiết Kiệm
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Công cụ tính lãi gửi tiết kiệm ngân hàng nhanh chóng. Hỗ trợ tính lãi cuối kỳ, lãi hàng tháng cho các kỳ hạn gửi khác nhau.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+            </div>
+          </div>
+          
+          <div class="category-section" id="text-tools" style="margin-bottom: 5rem;">
+            <h3 class="category-title"
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="type"></i>
+              Công cụ Văn bản
+            </h3>
+            <div class="tools-grid">
+              
+                <a href="./lorem-ipsum/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="lorem-ipsum"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="pilcrow" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="lorem-ipsum"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tạo chữ mẫu Lorem Ipsum
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tạo văn bản giả Lorem Ipsum cho thiết kế và dàn trang.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./text-diff/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="text-diff"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="file-diff" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="text-diff"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    So Sánh Văn Bản
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    So sánh sự khác biệt giữa hai đoạn văn bản, làm nổi bật các phần thêm, xóa, sửa.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./text-formatter/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="text-formatter"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="wand-2" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="text-formatter"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Định Dạng Văn Bản - Xóa Style
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Loại bỏ định dạng và làm sạch văn bản khi copy từ web.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./word-counter/d"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="word-counter"
+                  data-personas="creator" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="bar-chart-3" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="word-counter"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Đếm từ &amp; Phân tích văn bản
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Đếm từ, phân tích tần suất và chuyển đổi chữ hoa/thường (Case Converter).
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+            </div>
+          </div>
+          
+          <div class="category-section" id="generator-tools" style="margin-bottom: 5rem;">
+            <h3 class="category-title"
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="wand-2"></i>
+              Generators (Tạo mã)
+            </h3>
+            <div class="tools-grid">
+              
+                <a href="./password-generator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="password-generator"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="key-round" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="password-generator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tạo Mật Khẩu Mạnh
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tạo mật khẩu ngẫu nhiên, an toàn và bảo mật cao.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./uuid-generator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="uuid-generator"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="fingerprint" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="uuid-generator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    UUID Generator
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tạo UUID/GUID ngẫu nhiên (V1, V4, V7) nhanh chóng.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+            </div>
+          </div>
+          
+          <div class="category-section" id="daily-tools" style="margin-bottom: 5rem;">
+            <h3 class="category-title"
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="calendar"></i>
+              Tiện ích đời sống
+            </h3>
+            <div class="tools-grid">
+              
+                <a href="./bmi/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="bmi"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="scale" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="bmi"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tính chỉ số BMI
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Công cụ tính chỉ số khối cơ thể (BMI) chuẩn xác, giúp đánh giá tình trạng cân nặng theo tiêu chuẩn quốc tế và IDI &amp; WPRO cho người Việt.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                        <span class="mini-tag"
+                          style="font-size: 0.75rem; color: var(--text-muted); background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;">#
+                          bmi calculator
+                        </span>
+                        
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./bookmark-creator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="bookmark-creator"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="bookmark" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="bookmark-creator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Bookmark Creator
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./date-time-master/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="date-time-master"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="calendar-clock" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="date-time-master"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Bộ Công Cụ Ngày Giờ Master
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Bộ công cụ toàn diện: Tính khoảng cách, cộng trừ ngày và chuyển đổi Unix Timestamp.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./date-toolkit/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="date-toolkit"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="calendar-days" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="date-toolkit"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Công cụ Ngày tháng
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tính khoảng cách ngày, cộng trừ thời gian và đếm ngược.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./random-toolkit/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="random-toolkit"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="dices" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="random-toolkit"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Bộ công cụ Ngẫu nhiên
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tạo số ngẫu nhiên, tung xúc xắc và chọn ngẫu nhiên từ danh sách.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./unit-converter/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="unit-converter"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="ruler" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="unit-converter"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Quy đổi đơn vị
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Công cụ quy đổi chiều dài, khối lượng, thể tích, diện tích và nhiều đơn vị khác.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+            </div>
+          </div>
+          
+          <div class="category-section" id="dev-tools" style="margin-bottom: 5rem;">
+            <h3 class="category-title"
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="code"></i>
+              Công cụ Lập trình (Dev)
+            </h3>
+            <div class="tools-grid">
+              
+                <a href="./cron-parser/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="cron-parser"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="terminal" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="cron-parser"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Giải mã biểu thức Cron
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Giải mã biểu thức Cron sang ngôn ngữ tự nhiên.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./dev-toolkit/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="dev-toolkit"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="code" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="dev-toolkit"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Bộ Công Cụ Lập Trình
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Bộ công cụ lập trình toàn diện cho developers
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./hash-toolkit/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="hash-toolkit"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="lock" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="hash-toolkit"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Công cụ Base64 &amp; Hash
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Mã hóa/Giải mã Base64 và tạo các mã băm mật mã như MD5, SHA256 nhanh chóng.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./jwt-toolkit/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="jwt-toolkit"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="key" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="jwt-toolkit"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Phân tích &amp; Giải mã JWT
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Giải mã và kiểm tra cấu trúc JSON Web Token (JWT) an toàn ngay trên trình duyệt.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./qr-generator/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="qr-generator"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="qr-code" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="qr-generator"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Tạo mã QR Code
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Tạo mã QR cho liên kết, văn bản và nhiều hơn thế. Hoạt động offline đảm bảo quyền riêng tư.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./timestamp-converter/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="timestamp-converter"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="clock" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="timestamp-converter"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    Chuyển đổi Timestamp
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Chuyển đổi thời gian giữa định dạng Unix Timestamp và ngày tháng thực tế.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+                <a href="./url-toolkit/"
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="url-toolkit"
+                  data-personas="" data-vn-only="false">
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <div class="icon">
+                      <i data-lucide="link" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <button class="star-btn" data-tool-id="url-toolkit"
+                      onclick="event.preventDefault(); event.stopPropagation();" style="position: static;">
+                      <i data-lucide="star" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
+                    URL &amp; Base64 Toolkit
+                  </h4>
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
+                    Mã hóa/Giải mã URL, Base64 và phân tích cấu trúc URL nhanh chóng.
+                  </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
+                </a>
+                
+            </div>
+          </div>
+          
+      </div>
+    </section>
+
+    <!-- SECTION 5: Philosophy (Compact) -->
+    <section class="section-philosophy-compact">
+      <div class="container">
+        <h2>
+          Không phải nhiều hơn. Mà tốt hơn.
+        </h2>
+        <p>
+          Mỗi công cụ trong zTools được xây dựng với một mục tiêu duy nhất: giảm độ phức tạp, tăng độ rõ ràng. Bạn tập trung vào tư duy — phần còn lại, chúng tôi lo.
+        </p>
+      </div>
+    </section>
+
+    
 
   
     <section class="tag-cloud-section container">
@@ -2578,137 +2258,179 @@
       }
     </style>
     
+  </div>
 
-                    <script src="./assets/js/home.js?h=c2d1daf9&amp;v=1.5.2"></script>
-
-                    <link rel="stylesheet" href="./assets/css/home.css?h=8d411478&amp;v=1.5.2">
+  <script src="./assets/js/home.js?h=663652e4&amp;v=1.5.2"></script>
+  <link rel="stylesheet" href="./assets/css/home.css?h=ac2f5a00&amp;v=1.5.2">
 
                 
           </main>
 
           
             <footer class="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-col">
-      <h3>
-        ZTools.site
-      </h3>
-      <p>
-        Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
-      </p>
-    </div>
-    <div class="footer-col">
-      <h4>
-        Liên kết
-      </h4>
-      <ul>
-        <li><a href="https://ztools.site/about/">
-            Giới thiệu
-          </a></li>
-        <li><a href="https://ztools.site/privacy/">
-            Chính sách
-          </a></li>
-        <li><a href="https://ztools.site/terms/">
-            Điều khoản
-          </a></li>
-        <li><a href="https://ztools.site/changelog/">
-            Nhật ký cập nhật
-          </a></li>
-        <li><a href="https://github.com/AZTomiq/ztools.site-public" target="_blank" rel="noopener noreferrer"
-            aria-label="View Source on GitHub">
-            GitHub Source
-          </a></li>
-        <li><a href="#feedback-form"
-            onclick="const sel = document.querySelector('.feedback-select'); if(sel) { sel.value='new_tool'; sel.dispatchEvent(new Event('change')); } document.querySelector('.feedback-textarea')?.focus();">
-            Yêu cầu tool mới
-          </a></li>
-      </ul>
-    </div>
-    <div class="footer-col feedback-col">
-      <div class="feedback-card">
-        <div class="feedback-header">
-          <div class="feedback-icon-title">
-            <i data-lucide="message-square-heart" class="warm-icon"></i>
-            <h4>
-              Nhắn nhủ ZTools
-            </h4>
-          </div>
-          <p class="feedback-desc">
-            Chúng tôi luôn ở đây để lắng nghe! Bạn có điều gì muốn nhắn nhủ đến đội ngũ ZTools.site?
-          </p>
-        </div>
-
-        <form id="feedback-form" action="https://formspree.io/f/xlgrqrla" method="POST" class="feedback-form">
-          <div class="feedback-row">
-            <div class="feedback-input-group">
-              <input type="text" name="name" placeholder="Tên của bạn (không bắt buộc)" class="feedback-input">
-              <i data-lucide="user" class="input-icon"></i>
-            </div>
-            <div class="feedback-input-group">
-              <input type="email" name="email" placeholder="Email liên hệ (không bắt buộc)" class="feedback-input">
-              <i data-lucide="mail" class="input-icon"></i>
-            </div>
-          </div>
-
-          <div class="feedback-input-group select-wrap">
-            <select name="topic" class="feedback-input feedback-select">
-              <option value="general">
-                Góp ý chung
-              </option>
-              <option value="new_tool">
-                Yêu cầu tool mới
-              </option>
-              <option value="bug">
-                Báo lỗi hệ thống
-              </option>
-              <option value="ui">
-                Góp ý giao diện
-              </option>
-            </select>
-            <i data-lucide="layers" class="input-icon"></i>
-          </div>
-
-          <div class="feedback-input-group">
-            <textarea name="message" placeholder="Nhập nội dung chi tiết..." required
-              class="feedback-input feedback-textarea"></textarea>
-            <i data-lucide="pen-tool" class="input-icon textarea-icon"></i>
-          </div>
-          <button type="submit" class="btn-primary feedback-submit-premium">
-            <span>
-              Gửi lời nhắn đến đội ngũ
-            </span>
-            <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-          </button>
-          <div id="feedback-status" class="feedback-status"></div>
-        </form>
-
-        <p class="feedback-slogan">
-          <i data-lucide="quote" style="width: 12px; height: 12px; opacity: 0.5;"></i>
-          <span>
-            Những góp ý của bạn là động lực của chúng tôi! Xin chân thành cảm ơn!
-          </span>
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Col 1: Brand & About -->
+      <div class="footer-col brand-col">
+        <a href="./" class="footer-logo">
+          <img src="./assets/images/logo.svg" alt="ZTools" width="32" height="32">
+          <span>ZTools</span>
+        </a>
+        <p class="footer-desc">
+          Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
         </p>
+        <div class="footer-social-links">
+          <a href="https://github.com/AZTomiq/ztools.site-public" target="_blank" aria-label="Github"
+            class="social-btn">
+            <i data-lucide="github"></i>
+          </a>
+          <a href="mailto:contact@ztools.site" aria-label="Email" class="social-btn">
+            <i data-lucide="mail"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 2: Product -->
+      <div class="footer-col links-col">
+        <h4>Product</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="https://ztools.site/about/">
+              Giới thiệu
+            </a>
+          </li>
+          <li>
+            <a href="https://ztools.site/changelog/">
+              Nhật ký cập nhật
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/AZTomiq/ztools.site-public" target="_blank">
+              Source Code
+            </a>
+          </li>
+          <li>
+            <a href="https://ztools.site/roadmap">
+              Roadmap
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Legal -->
+      <div class="footer-col links-col">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="https://ztools.site/privacy/">
+              Chính sách
+            </a>
+          </li>
+          <li>
+            <a href="https://ztools.site/terms/">
+              Điều khoản
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Feedback (Premium) -->
+      <div class="footer-col feedback-col">
+        <div class="feedback-widget-premium">
+          <div class="widget-header">
+            <div class="icon-badge">
+              <i data-lucide="message-square-heart"></i>
+            </div>
+            <div>
+              <h4>
+                Nhắn nhủ ZTools
+              </h4>
+              <p class="widget-desc">
+                Chúng tôi luôn ở đây để lắng nghe! Bạn có điều gì muốn nhắn nhủ đến đội ngũ ZTools.site?
+              </p>
+            </div>
+          </div>
+
+          <form id="feedback-form" action="https://formspree.io/f/xlgrqrla" method="POST"
+            onsubmit="this.querySelector('input[name=_timestamp]').value = new Date().toISOString()">
+            <div class="input-with-icon">
+              <i data-lucide="user"></i>
+              <input type="text" name="name" placeholder="Tên của bạn (không bắt buộc)"
+                class="premium-input" required>
+            </div>
+
+            <div class="input-with-icon">
+              <i data-lucide="mail"></i>
+              <input type="email" name="email" placeholder="Email liên hệ (không bắt buộc)"
+                class="premium-input">
+            </div>
+
+            <div class="input-with-icon">
+              <i data-lucide="pen-tool" class="textarea-icon"></i>
+              <textarea name="message" placeholder="Nhập nội dung chi tiết..." required
+                class="premium-textarea" rows="2"></textarea>
+            </div>
+
+            <input type="hidden" name="topic" value="general" class="feedback-select">
+
+            <!-- Hidden Meta Fields -->
+            <input type="hidden" name="_timestamp" value="">
+            <input type="hidden" name="_url" value="https://ztools.site">
+            <input type="hidden" name="_locale" value="vi">
+
+
+            <button type="submit" class="btn-premium-submit">
+              <span>
+                Gửi lời nhắn đến đội ngũ
+              </span>
+              <i data-lucide="sparkles"></i>
+            </button>
+            <div id="feedback-status" class="feedback-status"></div>
+          </form>
+
+          <div class="widget-footer">
+            <i data-lucide="quote" class="quote-icon"></i>
+            <span>
+              Những góp ý của bạn là động lực của chúng tôi! Xin chân thành cảm ơn!
+            </span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="footer-bottom container">
-    <div class="footer-bottom-unified">
-      <div class="footer-copyright-text">
-        © 2025 AZtomiq. Built with ❤️.
+
+    <div class="footer-separator"></div>
+
+    <div class="footer-bottom">
+      <div class="copyright-text">
+        &copy; 2026 AZtomiq. All rights reserved.
       </div>
-      <div class="footer-powered-by">
-        Powered by <a href="https://github.com/AZTomiq/aztomiq" target="_blank" rel="noopener noreferrer">AZtomiq
-          Core</a>
-        v1.5.2
+
+      <div class="footer-badges">
+        <div class="dmca-badge-wrap">
+          <a href="//www.dmca.com/Protection/Status.aspx?ID=375b6320-f1c3-4d2d-8b01-1b9195b6c694"
+            title="DMCA.com Protection Status" class="dmca-badge">
+            <img
+              src="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=375b6320-f1c3-4d2d-8b01-1b9195b6c694"
+              alt="DMCA.com Protection Status" />
+          </a>
+          <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
+        </div>
+      </div>
+
+      <div class="powered-by">
+        Powered by <a href="https://github.com/AZTomiq/aztomiq" target="_blank">AZtomiq Core</a> v1.5.2
       </div>
     </div>
   </div>
 </footer>
+
+<!-- Analytics & Tracking -->
+<script src="./assets/js/tracker.js?h=bce8c1d6&amp;v=1.5.2" defer></script>
               
 
                 
 
-                    <script src="./assets/js/global.js?h=b0d7d4cb&amp;v=1.5.2"></script>
+                    <script src="./assets/js/global.js?h=e4d64ed2&amp;v=1.5.2"></script>
                     <script>
                       // Initialize Lucide icons
                       if (window.lucide) {

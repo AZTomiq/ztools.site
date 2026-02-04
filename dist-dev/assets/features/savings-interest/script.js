@@ -48,16 +48,19 @@ document.addEventListener('DOMContentLoaded', function () {
         months = parseInt(termSelect.value) || 0;
       }
 
-      if (amount <= 0 || rate <= 0 || months <= 0) {
+      if (amount <= 0 || isNaN(rate) || months <= 0) {
         alert("Please enter valid amount, rate and term.");
         return;
       }
 
-      const result = calculateSavingsInterest(amount, rate, months);
-
-      document.getElementById('res-interest').textContent = formatCurrency(result.interest);
-      document.getElementById('res-total').textContent = formatCurrency(result.total);
-      resultSection.classList.add('show');
+      if (typeof calculateSavingsInterest === 'function') {
+        const result = calculateSavingsInterest(amount, rate, months);
+        document.getElementById('res-interest').textContent = formatCurrency(result.interest);
+        document.getElementById('res-total').textContent = formatCurrency(result.total);
+        resultSection.classList.add('show');
+      } else {
+        console.error('calculateSavingsInterest function not found. logic.js might not be loaded.');
+      }
     });
   }
 
@@ -79,14 +82,3 @@ document.addEventListener('DOMContentLoaded', function () {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
   }
 });
-
-function calculateSavingsInterest(amount, rate, months) {
-  const interest = amount * (rate / 100) * (months / 12);
-  const total = amount + interest;
-  return { interest, total };
-}
-
-// Export for Node.js testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { calculateSavingsInterest };
-}

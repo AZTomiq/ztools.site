@@ -39,8 +39,10 @@ window.calcBasic = function () {
   const num = parseFloat(document.getElementById('basic-num').value);
   if (isNaN(pct) || isNaN(num)) return;
 
-  const res = calculateBasicPercentage(pct, num);
-  showResult('res-basic-box', 'res-basic-val', prettify(res));
+  if (typeof calculateBasicPercentage === 'function') {
+    const res = calculateBasicPercentage(pct, num);
+    showResult('res-basic-box', 'res-basic-val', prettify(res));
+  }
 };
 
 window.calcChange = function () {
@@ -48,11 +50,12 @@ window.calcChange = function () {
   const to = parseFloat(document.getElementById('change-to').value);
   if (isNaN(from) || isNaN(to)) return;
 
-  const result = calculatePercentageChange(from, to);
-  let sign = result > 0 ? "+" : "";
-  let display = (result === Infinity || result === -Infinity) ? result.toString() : (sign + prettify(result) + "%");
-
-  showResult('res-change-box', 'res-change-val', display);
+  if (typeof calculatePercentageChange === 'function') {
+    const result = calculatePercentageChange(from, to);
+    let sign = result > 0 ? "+" : "";
+    let display = (result === Infinity || result === -Infinity) ? result.toString() : (sign + prettify(result) + "%");
+    showResult('res-change-box', 'res-change-val', display);
+  }
 };
 
 window.calcPhrase = function () {
@@ -60,32 +63,9 @@ window.calcPhrase = function () {
   const y = parseFloat(document.getElementById('phrase-y').value);
   if (isNaN(x) || isNaN(y)) return;
 
-  const result = calculateWhatPercentage(x, y);
-  let display = (result === Infinity || result === -Infinity) ? result.toString() : (prettify(result) + "%");
-
-  showResult('res-phrase-box', 'res-phrase-val', display);
+  if (typeof calculateWhatPercentage === 'function') {
+    const result = calculateWhatPercentage(x, y);
+    let display = (result === Infinity || result === -Infinity) ? result.toString() : (prettify(result) + "%");
+    showResult('res-phrase-box', 'res-phrase-val', display);
+  }
 };
-
-// Pure logic functions
-function calculateBasicPercentage(percent, number) {
-  return (percent / 100) * number;
-}
-
-function calculatePercentageChange(from, to) {
-  if (from === 0) return to > 0 ? Infinity : (to < 0 ? -Infinity : 0);
-  return ((to - from) / from) * 100;
-}
-
-function calculateWhatPercentage(x, y) {
-  if (y === 0) return x > 0 ? Infinity : (x < 0 ? -Infinity : 0);
-  return (x / y) * 100;
-}
-
-// Export for Node.js testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    calculateBasicPercentage,
-    calculatePercentageChange,
-    calculateWhatPercentage
-  };
-}

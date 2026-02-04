@@ -4,16 +4,19 @@
   titleKey: 'home.cats.text.title' , defaultTitle: 'Text Tools' , icon: 'type' }, { id: 'generator' ,
   titleKey: 'home.cats.generator.title' , defaultTitle: 'Generators' , icon: 'wand-2' }, { id: 'daily' ,
   titleKey: 'home.cats.daily.title' , defaultTitle: 'Daily Utilities' , icon: 'calendar' }, { id: 'dev' ,
-  titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , icon: 'code' } ]; %>
+  titleKey: 'home.cats.dev.title' , defaultTitle: 'DEV Tools' , icon: 'code' } ]; // Fast Access tools (subdomain tools)
+  var fastAccessIds=siteGlobal.featured_tools || []; var fastAccessTools=fastAccessIds.map(id=> tools.find(t => t.id ===
+  id)).filter(Boolean);
+  %>
 
   <div class="home-page-body">
     <!-- SECTION 1: Hero -->
     <section class="hero-apple">
       <h1 class="headline">
-        <%- (t('home.apple.hero_headline') || 'zTools.' ).replace(/\n/g, '<br>' ) %>
+        <%= t('home.hero_title') %>
       </h1>
       <p class="sub-headline">
-        <%= t('home.apple.hero_subheadline') %>
+        <%= t('home.hero_desc') %>
       </p>
 
       <div class="hero-search-minimal">
@@ -23,237 +26,97 @@
           <kbd>Ctrl K</kbd>
         </div>
       </div>
-
-      <div class="cta-wrap" style="margin-top: 3rem;">
-        <a href="#all-tools" class="btn btn-primary" style="padding: 1rem 2rem; border-radius: 30px; font-weight: 700;">
-          <%= t('home.apple.hero_explore') %>
-        </a>
-      </div>
     </section>
 
-    <!-- SECTION 2: Philosophy -->
-    <section class="section-philosophy">
+    <!-- SECTION 2: Fast Access (Subdomain Tools) -->
+    <section class="section-fast-access" id="fast-access">
       <div class="container">
-        <h2 class="title">
-          <%= t('home.apple.philosophy_title') %>
-        </h2>
-        <p class="body-copy">
-          <%= t('home.apple.philosophy_body') %>
-        </p>
-      </div>
-    </section>
-
-    <!-- SECTION 3: Product Narrative -->
-    <section class="product-narrative">
-      <!-- 01: Playground -->
-      <div class="narrative-section">
-        <div class="narrative-content">
-          <div class="narrative-text">
-            <span class="tag">01 — <%= t('home.apple.story.playground.title') %></span>
-            <h3>
-              <%= t('home.apple.story.playground.subtitle') %>
-            </h3>
-            <p>
-              <%= t('home.apple.story.playground.desc') %>
-            </p>
-            <a href="<%= rootPath %>playground/" class="btn-explore" style="margin-top: 2rem;">
-              Try Playground <i data-lucide="arrow-right"></i>
-            </a>
-          </div>
-          <div class="narrative-visual">
-            <div class="visual-terminal">
-              <div class="terminal-header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-              </div>
-              <div class="terminal-content">
-                <p style="color: #6a9955;">// Welcome to zTool Playground</p>
-                <p><span style="color: #569cd6;">const</span> ideas = [];</p>
-                <p><span style="color: #569cd6;">function</span> create() {</p>
-                <p>&nbsp;&nbsp;ideas.<span style="color: #dcdcaa;">push</span>(<span
-                    style="color: #ce9178;">'Innovation'</span>);</p>
-                <p>&nbsp;&nbsp;<span style="color: #c586c0;">return</span> ideas;</p>
-                <p>}</p>
-                <p><span style="color: #dcdcaa;">console</span>.<span style="color: #dcdcaa;">log</span>(<span
-                    style="color: #dcdcaa;">create</span>());</p>
-                <p class="cursor-blink"
-                  style="border-right: 2px solid var(--primary-color); width: 8px; height: 1.2em; display: inline-block; vertical-align: middle;">
-                </p>
-              </div>
-            </div>
-          </div>
+        <div class="section-header">
+          <h2>
+            <%= t('home.fast_access.title') %>
+          </h2>
+          <p class="subtitle">
+            <%= t('home.fast_access.subtitle') %>
+          </p>
         </div>
-      </div>
 
-      <!-- 02: Compound Interest -->
-      <div class="narrative-section" style="background: var(--bg-hover);">
-        <div class="narrative-content">
-          <div class="narrative-visual">
-            <div class="visual-slider">
-              <div style="display: flex; justify-content: space-between;">
-                <span style="font-weight: 700;">Duration</span>
-                <span class="value" style="color: var(--primary-color);">30 Years</span>
+        <div class="fast-access-grid">
+          <% fastAccessTools.forEach(tool=> {
+            const subdomainMap = {
+            'web-playground': 'playground',
+            'tax': 'tncn',
+            'json-toolkit': 'json',
+            'compound-interest': 'laikep',
+            'lunar-calendar': 'amlich'
+            };
+            const subdomain = subdomainMap[tool.id] || tool.id;
+            %>
+            <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %><%= tool.link.substring(1) %>"
+              class="fast-access-card">
+              <div class="fast-badge">
+                <i data-lucide="sparkles"></i>
               </div>
-              <div class="slider-bar">
-                <div class="slider-handle"></div>
+              <div class="fast-icon">
+                <i data-lucide="<%= tool.icon || 'tool' %>" style="width: 40px; height: 40px;"></i>
               </div>
-              <div class="visual-chart">
-                <div class="chart-bar" style="height: 10%;"></div>
-                <div class="chart-bar" style="height: 15%;"></div>
-                <div class="chart-bar" style="height: 25%;"></div>
-                <div class="chart-bar" style="height: 40%;"></div>
-                <div class="chart-bar" style="height: 65%;"></div>
-                <div class="chart-bar" style="height: 95%;"></div>
+              <h3>
+                <%= t(tool.translationKey + '.title' ) || tool.defaultTitle %>
+              </h3>
+              <p>
+                <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
+              </p>
+              <div class="fast-url">
+                <i data-lucide="link" style="width: 14px; height: 14px;"></i>
+                <span>
+                  <%= subdomain %>.ztools.site
+                </span>
               </div>
-            </div>
-          </div>
-          <div class="narrative-text">
-            <span class="tag">02 — <%= t('home.apple.story.compound.title') %></span>
-            <h3>
-              <%= t('home.apple.story.compound.subtitle') %>
-            </h3>
-            <p>
-              <%= t('home.apple.story.compound.desc') %>
-            </p>
-            <a href="<%= rootPath %>finance/compound-interest/" class="btn-explore" style="margin-top: 2rem;">
-              Calculate Interest <i data-lucide="arrow-right"></i>
             </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 03: JSON -->
-      <div class="narrative-section">
-        <div class="narrative-content">
-          <div class="narrative-text">
-            <span class="tag">03 — <%= t('home.apple.story.json.title') %></span>
-            <h3>
-              <%= t('home.apple.story.json.subtitle') %>
-            </h3>
-            <p>
-              <%= t('home.apple.story.json.desc') %>
-            </p>
-            <a href="<%= rootPath %>dev/json-toolkit/" class="btn-explore" style="margin-top: 2rem;">
-              Format JSON <i data-lucide="arrow-right"></i>
-            </a>
-          </div>
-          <div class="narrative-visual" style="background: #fafafa;">
-            <div style="width: 100%; height: 100%; display: flex;">
-              <div
-                style="flex: 1; padding: 1rem; border-right: 1px solid var(--border-color); font-family: monospace; font-size: 0.7rem; opacity: 0.5;">
-                {"id":1,"name":"Test","active":true}
-              </div>
-              <div style="flex: 1; padding: 1rem; font-family: monospace; font-size: 0.7rem;">
-                {<br>
-                &nbsp;&nbsp;"id": 1,<br>
-                &nbsp;&nbsp;"name": "Test",<br>
-                &nbsp;&nbsp;"active": true<br>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 04: Lunar -->
-      <div class="narrative-section" style="background: var(--bg-hover);">
-        <div class="narrative-content">
-          <div class="narrative-visual">
-            <div style="text-align: center;">
-              <div style="font-size: 3rem; font-weight: 800; color: var(--primary-color);">01</div>
-              <div style="font-size: 1rem; color: var(--text-muted);">Tháng Giêng</div>
-              <div
-                style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary-subtle); border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
-                Tết Nguyên Đán</div>
-            </div>
-          </div>
-          <div class="narrative-text">
-            <span class="tag">04 — <%= t('home.apple.story.lunar.title') %></span>
-            <h3>
-              <%= t('home.apple.story.lunar.subtitle') %>
-            </h3>
-            <p>
-              <%= t('home.apple.story.lunar.desc') %>
-            </p>
-            <a href="<%= rootPath %>daily/lunar-calendar/" class="btn-explore" style="margin-top: 2rem;">
-              View Calendar <i data-lucide="arrow-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 05: Tax -->
-      <div class="narrative-section">
-        <div class="narrative-content">
-          <div class="narrative-text">
-            <span class="tag">05 — <%= t('home.apple.story.tax.title') %></span>
-            <h3>
-              <%= t('home.apple.story.tax.subtitle') %>
-            </h3>
-            <p>
-              <%= t('home.apple.story.tax.desc') %>
-            </p>
-            <a href="<%= rootPath %>job/tax/" class="btn-explore" style="margin-top: 2rem;">
-              Calculate Tax <i data-lucide="arrow-right"></i>
-            </a>
-          </div>
-          <div class="narrative-visual">
-            <div style="padding: 2rem; width: 100%;">
-              <div
-                style="height: 12px; background: var(--bg-hover); border-radius: 6px; width: 60%; margin-bottom: 1rem;">
-              </div>
-              <div
-                style="height: 40px; border: 2px solid var(--primary-color); border-radius: 8px; width: 100%; margin-bottom: 1.5rem;">
-              </div>
-              <div style="height: 80px; background: var(--primary-subtle); border-radius: 12px; width: 100%;"></div>
-            </div>
-          </div>
+            <% }); %>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 4: Power Grid (All Tools) -->
+    <!-- SECTION 3: Smart Picks (Personalized + Trending) -->
+    <section class="section-smart-picks" id="smart-picks">
+      <div class="container">
+        <div class="section-header">
+          <h2>
+            <%= t('home.smart_picks.title') %>
+          </h2>
+          <p class="subtitle">
+            <%= t('home.smart_picks.subtitle') %>
+          </p>
+        </div>
+        <div class="tools-grid" id="smart-picks-grid">
+          <!-- Will be populated by home.js with smart algorithm -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: All Tools by Category -->
     <section class="section-all-tools" id="all-tools">
       <div class="container">
-        <div class="category-header" style="text-align: center; margin-bottom: 5rem;">
-          <h2 style="font-size: 3rem; font-weight: 800;">
-            <%= t('nav.menu_categories') %>
+        <div class="category-header" style="text-align: center; margin-bottom: 4rem;">
+          <h2 style="font-size: 2rem; font-weight: 800;">📂 <%= t('nav.menu_categories') %>
           </h2>
-          <p style="color: var(--text-muted); font-size: 1.2rem;">Một thư viện công cụ khổng lồ, luôn sẵn sàng.</p>
-        </div>
-
-        <div id="favorites-section" style="display: none; margin-bottom: 5rem;">
-          <h3 class="category-title" style="margin-bottom: 2rem;">
-            <i data-lucide="star" style="color: #f59e0b; fill: #f59e0b;"></i>
-            <%= t('home.favorites') %>
-          </h3>
-          <div class="tools-grid" id="favorites-grid"></div>
-        </div>
-
-        <div id="recent-section" style="display: none; margin-bottom: 5rem;">
-          <h3 class="category-title" style="margin-bottom: 2rem;">
-            <i data-lucide="history" style="color: var(--primary-color);"></i>
-            <%= t('home.recent') %>
-          </h3>
-          <div class="tools-grid-horizontal" id="recent-grid"></div>
         </div>
 
         <% categories.forEach(cat=> {
-          const catTools = tools.filter(t => t.category === cat.id);
+          const catTools = tools.filter(t => t.category === cat.id && !fastAccessIds.includes(t.id));
           if (catTools.length === 0) return;
           %>
-          <div class="category-section" id="<%= cat.id %>-tools" style="margin-bottom: 6rem;">
+          <div class="category-section" id="<%= cat.id %>-tools" style="margin-bottom: 5rem;">
             <h3 class="category-title"
-              style="font-size: 1.75rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 12px;">
+              style="font-size: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;">
               <i data-lucide="<%= cat.icon %>"></i>
               <%= t(cat.titleKey) || cat.defaultTitle %>
             </h3>
             <div class="tools-grid">
               <% catTools.forEach(tool=> { %>
                 <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %><%= tool.link.substring(1) %>"
-                  class="tool-card-modern tool-card-wrapper" data-personas="<%= (tool.personas || []).join(',') %>"
-                  data-vn-only="<%= tool.vn_only || false %>">
+                  class="tool-card-modern tool-card-wrapper" data-tool-id="<%= tool.id %>"
+                  data-personas="<%= (tool.personas || []).join(',') %>" data-vn-only="<%= tool.vn_only || false %>">
 
                   <div
                     style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
@@ -269,9 +132,24 @@
                   <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">
                     <%= t(tool.translationKey + '.title' ) || tool.defaultTitle %>
                   </h4>
-                  <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                  <p
+                    style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; flex-grow: 1;">
                     <%= tool.descOverride || t(tool.translationKey + '.desc' ) %>
                   </p>
+
+                  <div class="card-footer"
+                    style="padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                    <div class="card-tags" style="display: flex; gap: 0.5rem;">
+                      <% (tool.keywords || []).slice(0, 1).forEach(tag=> { %>
+                        <span class="mini-tag"
+                          style="font-size: 0.75rem; color: var(--text-muted); background: var(--bg-hover); padding: 2px 6px; border-radius: 4px;">#
+                          <%= tag %>
+                        </span>
+                        <% }); %>
+                    </div>
+                    <i data-lucide="arrow-right"
+                      style="width: 16px; height: 16px; color: var(--primary-color); opacity: 0;"></i>
+                  </div>
                 </a>
                 <% }); %>
             </div>
@@ -280,19 +158,15 @@
       </div>
     </section>
 
-    <!-- SECTION 5: Closing -->
-    <section class="section-closing">
+    <!-- SECTION 5: Philosophy (Compact) -->
+    <section class="section-philosophy-compact">
       <div class="container">
         <h2>
-          <%= t('home.apple.closing_headline') %>
+          <%= t('home.apple.philosophy_title') %>
         </h2>
         <p>
-          <%= t('home.apple.closing_subheadline') %>
+          <%= t('home.apple.philosophy_body') %>
         </p>
-        <a href="#home-search" class="btn btn-primary"
-          style="padding: 1.25rem 3rem; border-radius: 40px; font-weight: 800; font-size: 1.1rem;">
-          <%= t('home.apple.closing_cta') %>
-        </a>
       </div>
     </section>
 
@@ -301,21 +175,3 @@
 
   <script src="<%= asset('assets/js/home.js') %>"></script>
   <link rel="stylesheet" href="<%= asset('assets/css/home.css') %>">
-
-  <style>
-    .cursor-blink {
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink {
-
-      from,
-      to {
-        border-color: transparent;
-      }
-
-      50% {
-        border-color: var(--primary-color);
-      }
-    }
-  </style>

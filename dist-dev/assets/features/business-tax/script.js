@@ -1,20 +1,6 @@
 /**
- * Business Tax Calculator Logic
+ * Business Tax Calculator UI
  */
-
-const TAX_RATES = {
-  general: 0.20,
-  small: 0.20,
-  'oil-gas-min': 0.32,
-  'oil-gas-max': 0.50,
-  'rare-resources': 0.40
-};
-
-const SIMPLE_RATES = {
-  goods: 0.01,
-  services: 0.05,
-  other: 0.02
-};
 
 document.addEventListener('DOMContentLoaded', function () {
   const methodRadios = document.querySelectorAll('input[name="calculation-method"]');
@@ -41,29 +27,49 @@ document.addEventListener('DOMContentLoaded', function () {
   if (btnCalculateDetailed) {
     btnCalculateDetailed.addEventListener('click', () => {
       const inputs = {
-        revenue: parseNumber(document.getElementById('revenue').value),
-        expenses: parseNumber(document.getElementById('deductible-expenses').value),
-        otherIncome: parseNumber(document.getElementById('other-income').value),
-        exemptIncome: parseNumber(document.getElementById('exempt-income').value),
-        previousLosses: parseNumber(document.getElementById('previous-losses').value),
-        businessType: document.getElementById('business-type').value,
-        rdFundPercent: parseFloat(document.getElementById('rd-fund').value) / 100
+        revenue: parseNumber(detailedForm.querySelector('#revenue').value),
+        expenses: parseNumber(detailedForm.querySelector('#deductible-expenses').value),
+        otherIncome: parseNumber(detailedForm.querySelector('#other-income').value),
+        exemptIncome: parseNumber(detailedForm.querySelector('#exempt-income').value),
+        previousLosses: parseNumber(detailedForm.querySelector('#previous-losses').value),
+        businessType: detailedForm.querySelector('#business-type').value,
+        rdFundPercent: parseFloat(detailedForm.querySelector('#rd-fund').value) / 100
       };
 
-      if (inputs.revenue === 0) return alert('Vui lòng nhập doanh thu!');
-      const res = calculateDetailedTaxLogic(inputs);
-      displayDetailedResults(res);
+      if (inputs.revenue === 0 && inputs.otherIncome === 0) {
+        alert('Vui lòng nhập doanh thu!');
+        return;
+      }
+
+      if (typeof calculateDetailedTaxLogic === 'function') {
+        const res = calculateDetailedTaxLogic(inputs);
+        displayDetailedResults(res);
+      } else {
+        console.error('calculateDetailedTaxLogic function not found.');
+      }
     });
   }
 
   const btnCalculateSimple = document.getElementById('btn-calculate-simple');
   if (btnCalculateSimple) {
     btnCalculateSimple.addEventListener('click', () => {
-      const revenue = parseNumber(document.getElementById('simple-revenue').value);
-      const sector = document.getElementById('business-sector').value;
-      if (revenue === 0) return alert('Vui lòng nhập doanh thu!');
-      const res = calculateSimpleTaxLogic(revenue, sector);
-      displaySimpleResults(res);
+      const revenueInput = simpleForm.querySelector('#simple-revenue');
+      const sectorSelect = simpleForm.querySelector('#business-sector');
+
+      const revenue = parseNumber(revenueInput.value);
+      const sector = sectorSelect.value;
+
+      if (revenue === 0) {
+        alert('Vui lòng nhập doanh thu!');
+        return;
+      }
+
+      if (typeof calculateSimpleTaxLogic === 'function') {
+        const res = calculateSimpleTaxLogic(revenue, sector);
+        displaySimpleResults(res);
+      } else {
+        console.error('calculateSimpleTaxLogic function not found.');
+      }
     });
   }
 
@@ -91,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('detailed-results').style.display = 'block';
     document.getElementById('simple-results').style.display = 'none';
     resultSection.classList.add('show');
+    resultSection.scrollIntoView({ behavior: 'smooth' });
   }
 
   function displaySimpleResults(data) {
@@ -100,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('detailed-results').style.display = 'none';
     document.getElementById('simple-results').style.display = 'block';
     resultSection.classList.add('show');
+    resultSection.scrollIntoView({ behavior: 'smooth' });
   }
 
   function parseNumber(str) {
@@ -111,34 +119,3 @@ document.addEventListener('DOMContentLoaded', function () {
     return Math.round(num).toLocaleString('vi-VN') + ' đ';
   }
 });
-
-function calculateDetailedTaxLogic(inputs) {
-  const taxableIncome = inputs.revenue - inputs.expenses + inputs.otherIncome;
-  let incomeForTax = Math.max(0, taxableIncome - inputs.exemptIncome - inputs.previousLosses);
-  const rdFund = incomeForTax * Math.min(inputs.rdFundPercent || 0, 0.10);
-  const finalIncomeForTax = incomeForTax - rdFund;
-
-  let taxRate = TAX_RATES.general;
-  if (inputs.businessType === 'small') taxRate = TAX_RATES.small;
-  else if (inputs.businessType === 'oil-gas') taxRate = TAX_RATES['oil-gas-min'];
-  else if (inputs.businessType === 'rare-resources') taxRate = TAX_RATES['rare-resources'];
-
-  return {
-    ...inputs,
-    taxableIncome,
-    incomeForTax,
-    rdFund,
-    taxRate,
-    totalTax: finalIncomeForTax * taxRate
-  };
-}
-
-function calculateSimpleTaxLogic(revenue, sector) {
-  const rate = SIMPLE_RATES[sector] || 0.01;
-  return { revenue, rate, totalTax: revenue * rate };
-}
-
-// Export for Node.js testing
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { calculateDetailedTaxLogic, calculateSimpleTaxLogic };
-}
