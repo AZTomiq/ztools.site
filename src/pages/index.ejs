@@ -11,11 +11,16 @@
 
   <div class="home-page-body">
     <!-- SECTION 1: Hero -->
-    <section class="hero-apple">
+    <section class="hero-apple tet-hero">
+      <div class="tet-decor-top-left">🏮</div>
+      <div class="tet-decor-top-right">🏮</div>
+      <div class="tet-decor-extra-1">🧨</div>
+      <div class="tet-decor-extra-2">🧧</div>
       <h1 class="headline">
+        <span class="tet-text-gold">🧧</span>
         <%= t('home.hero_title') %>
       </h1>
-      <p class="sub-headline">
+      <p class="sub-headline" style="color: #5d4037; font-weight: 600; opacity: 0.9;">
         <%= t('home.hero_desc') %>
       </p>
 
@@ -24,6 +29,74 @@
         <div class="search-hints"
           style="position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); opacity: 0.4;">
           <kbd>Ctrl K</kbd>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tet-countdown" id="tet-countdown">
+      <div class="countdown-wrapper">
+        <!-- Top Right Fullscreen Toggle -->
+        <button id="fullscreen-countdown" class="fs-trigger-icon" title="Toàn màn hình">
+          <i data-lucide="maximize" style="width: 24px; height: 24px;"></i>
+        </button>
+
+        <h2 class="countdown-title">PHÓNG NHƯ BAY TỚI TẾT BÍNH NGỌ 2026</h2>
+
+        <div id="tet-timer" class="tet-timer">
+          <div class="timer-unit"><span id="days">00</span><small>Ngày</small></div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit"><span id="hours">00</span><small>Giờ</small></div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit"><span id="minutes">00</span><small>Phút</small></div>
+          <div class="timer-sep">·</div>
+          <div class="timer-unit"><span id="seconds">00</span><small>Giây</small></div>
+        </div>
+
+        <div class="horse-slogan">
+          <div class="slogan-line">🐎 Mã chưa kịp hí đã tới Tết</div>
+          <div class="slogan-wish">chúc bạn</div>
+          <div class="slogan-main">🧧 Bính Ngọ chưa kịp chạy đã thành công!</div>
+        </div>
+
+        <!-- Mã Đáo Thành Công Background Image -->
+        <div class="ma-dao-bg"></div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: Featured Folk Games -->
+    <section class="section-folk-showcase" id="folk-games-featured">
+      <div class="container">
+        <div class="section-header">
+          <h2 style="color: var(--folk-red);">🏮 TRÒ CHƠI DÂN GIAN TẾT</h2>
+          <p class="subtitle">Mừng Xuân Bính Ngọ 2026 - Mã Đáo Thành Công</p>
+        </div>
+        <div class="tools-grid">
+          <!-- Featured Horse Racing -->
+          <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>racing-horse/"
+            class="tool-card-modern folk-card hot-card">
+            <div class="icon" style="background: var(--folk-red);">🏇</div>
+            <h4>Về Đích Bính Ngọ</h4>
+            <p>Đua ngựa đầu năm, vạn sự hanh thông.</p>
+            <div class="badge-hot">HOT</div>
+          </a>
+          <!-- Featured Piggy Bank -->
+          <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>dap-heo/" class="tool-card-modern folk-card">
+            <div class="icon" style="background: #FF80AB;">🐷</div>
+            <h4>Đập Heo Đất</h4>
+            <p>Đập heo lấy lộc, sung túc cả năm.</p>
+          </a>
+          <!-- Featured Red Envelope -->
+          <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>li-xi/" class="tool-card-modern folk-card">
+            <div class="icon" style="background: var(--folk-red);">🧧</div>
+            <h4>Lì Xì Tết 2026</h4>
+            <p>Hái lộc đầu xuân, nhận ngàn lời chúc.</p>
+          </a>
+          <!-- Featured Wheel -->
+          <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>lucky-wheel/" class="tool-card-modern folk-card">
+            <div class="icon" style="background: var(--folk-gold);">🎡</div>
+            <h4>Vòng Quay May Mắn</h4>
+            <p>Xoay là trúng, vận may mỉm cười.</p>
+          </a>
         </div>
       </div>
     </section>
@@ -98,6 +171,14 @@
     <section class="section-all-tools" id="all-tools">
       <div class="container">
         <div class="category-header" style="text-align: center; margin-bottom: 4rem;">
+          <div class="hero-actions">
+            <a href="#cats-section" class="btn btn-primary">
+              <%= t('nav.menu_categories') %>
+            </a>
+            <a href="/folk-games/" class="btn"
+              style="background: var(--folk-red, #B71C1C); color: white; border: 2px solid var(--folk-gold, #FFD700);">🧧
+              Trò Chơi Dân Gian</a>
+          </div>
           <h2 style="font-size: 2rem; font-weight: 800;">📂 <%= t('nav.menu_categories') %>
           </h2>
         </div>

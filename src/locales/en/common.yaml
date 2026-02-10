@@ -234,6 +234,7 @@ bookmarkCreator:
     step2: Click "Export Bookmarks" to download
     step3: Import the file into your browser (Chrome, Safari,...)
 
+# ... existing ...
 blog:
   title: Dev Stories
   desc: Behind the scenes, coding techniques, and updates from the team.
@@ -243,3 +244,28 @@ blog:
   playground_promo_title: Practice now!
   playground_promo_desc: The source code for this article is available on Web Playground for you to explore.
   playground_promo_btn: Open Playground ➔
+
+folkGames:
+  title: Vietnamese Folk Games
+  desc: A collection of traditional Vietnamese folk games, entertainment and luck for the New Year.
+  your_coins: Your Coins
+  play_now: Play Now
+  games:
+    wheel:
+      title: Lucky Wheel
+      desc: Input a list and spin to find a lucky winner or make decisions.
+    lixi:
+      title: Lì Xì Tết 2026
+      desc: Receive lucky red envelopes every day to celebrate the Year of the Horse.
+    heo:
+      title: Piggy Bank Smash
+      desc: Smash the piggy bank to collect lucky coins.
+    nieu:
+      title: Clay Pot Smash (Đập Niêu)
+      desc: Traditional Vietnamese blindfolded pot smashing game.
+    racing_horse:
+      title: Race to Bính Ngọ Finish
+      desc: Year of the Horse racing for luck and success!
+    more:
+      title: Coming Soon...
+      desc: Mandarin Square Capturing and many more.

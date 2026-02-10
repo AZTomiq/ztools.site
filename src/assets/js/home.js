@@ -267,4 +267,61 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+  // --- 7. Tết 2026 Countdown Logic ---
+  const tetDate = new Date("February 17, 2026 00:00:00").getTime();
+  const timerElements = {
+    days: document.getElementById("days"),
+    hours: document.getElementById("hours"),
+    minutes: document.getElementById("minutes"),
+    seconds: document.getElementById("seconds")
+  };
+
+  if (timerElements.days) {
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = tetDate - now;
+
+      if (distance < 0) {
+        const title = document.querySelector(".countdown-title");
+        if (title) title.innerText = "CHÚC MỪNG NĂM MỚI BÍNH NGỌ 2026!";
+        return;
+      }
+
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElements.days.innerText = d.toString().padStart(2, '0');
+      timerElements.hours.innerText = h.toString().padStart(2, '0');
+      timerElements.minutes.innerText = m.toString().padStart(2, '0');
+      timerElements.seconds.innerText = s.toString().padStart(2, '0');
+    };
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  }
+
+  const fsBtn = document.getElementById("fullscreen-countdown");
+  const countdownContainer = document.getElementById("tet-countdown");
+
+  if (fsBtn && countdownContainer) {
+    fsBtn.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        countdownContainer.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+        countdownContainer.classList.add("fullscreen-tet");
+      } else {
+        document.exitFullscreen();
+        countdownContainer.classList.remove("fullscreen-tet");
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) {
+        countdownContainer.classList.remove("fullscreen-tet");
+      }
+    });
+  }
 });

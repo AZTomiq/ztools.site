@@ -525,7 +525,7 @@ main {
   z-index: 1200;
   margin-top: 0.75rem;
   overflow: hidden;
-  height: 500px; /* Fixed height for clean layout */
+  max-height: calc(100vh - 100px); /* Use viewport height minus header/margin space */
 }
 
 /* Explicit class for JS toggle */

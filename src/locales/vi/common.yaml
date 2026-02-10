@@ -233,6 +233,7 @@ bookmarkCreator:
     step2: Nhấn nút "Xuất file Bookmark" để tải về
     step3: Nhập file vào trình duyệt (Chrome, Safari,...)
 
+# ... existing ...
 blog:
   title: Dev ký sự
   desc: Chuyện hậu trường, kỹ thuật code và những cập nhật từ đội ngũ iZTools.
@@ -242,3 +243,28 @@ blog:
   playground_promo_title: Thực hành ngay!
   playground_promo_desc: Mã nguồn bài viết này đã có sẵn trên Web Playground để bạn vọc vạch.
   playground_promo_btn: Mở Playground ➔
+
+folkGames:
+  title: Trò Chơi Dân Gian
+  desc: Bộ sưu tập các trò chơi dân gian Việt Nam, giải trí và may mắn cho dịp Tết.
+  your_coins: Xu của bạn
+  play_now: Chơi ngay
+  games:
+    wheel:
+      title: Vòng Xoay Kỳ Diệu
+      desc: Nhập danh sách và xoay để tìm người may mắn hoặc đưa ra quyết định.
+    lixi:
+      title: Lì Xì Tết 2026
+      desc: Nhận lì xì may mắn mỗi ngày mừng năm mới Bính Ngọ.
+    heo:
+      title: Đập Heo Đất
+      desc: Đập heo đất lấy xu may mắn, giải trí vui nhộn.
+    nieu:
+      title: Đập Niêu Đất
+      desc: Bịt mắt đập niêu đất truyền thống Việt Nam.
+    racing_horse:
+      title: Về Đích Cùng Bính Ngọ
+      desc: Năm ngựa đua ngựa, Mã Đáo Thành Công!
+    more:
+      title: Sắp ra mắt...
+      desc: Ô ăn quan và nhiều trò chơi hấp dẫn khác.
