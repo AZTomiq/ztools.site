@@ -1,0 +1,71 @@
+<!-- title: <%= t('folkGames.games.lixi.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= asset('assets/css/folk-games.css') %>">
+
+<section class="tool-container folk-bg-paper">
+  <div class="page-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <h1 style="margin-bottom: 0;">🧧 <%= t('folkGames.games.lixi.title') %>
+      </h1>
+      <a href="../" class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem; text-decoration: none;">← <%=
+          t('blog.back') %></a>
+    </div>
+    <p style="color: var(--folk-red-dark); font-weight: bold;">🏮 Năm Bính Ngọ 2026 - Mã Đáo Thành Công 🐴</p>
+  </div>
+
+  <div class="lixi-container-refined">
+    <!-- Settings Panel -->
+    <div class="lixi-settings folk-card" style="margin-bottom: 2rem;">
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+        <div class="setting-item">
+          <label>Số bao lì xì:</label>
+          <input type="number" id="lixi-count" value="5" min="1" max="20" class="btn-folk"
+            style="background: white; color: black; border-color: var(--border-color); width: 70px;">
+        </div>
+        <div class="setting-item">
+          <label>Mệnh giá tối đa:</label>
+          <select id="lixi-max-value" class="btn-folk"
+            style="background: white; color: black; border-color: var(--border-color);">
+            <option value="5000">5,000 xu</option>
+            <option value="20000">20,000 xu</option>
+            <option value="100000" selected>100,000 xu</option>
+            <option value="500000">500,000 xu</option>
+          </select>
+        </div>
+        <button id="lixi-reset" class="btn-folk" style="padding: 0.5rem 1rem;">LÀM MỚI</button>
+      </div>
+    </div>
+
+    <div id="lixi-wallet" class="folk-card" style="max-width: 300px; margin: 0 auto 2rem; text-align: center;">
+      <div style="font-size: 0.9rem; color: var(--text-muted);">
+        <%= t('folkGames.your_coins') %>
+      </div>
+      <div id="lixi-coins" style="font-size: 1.5rem; font-weight: 800; color: var(--folk-red);">0</div>
+    </div>
+
+    <!-- Dynamic Playground -->
+    <div id="lixi-playground" class="lixi-playground">
+      <!-- Envelopes will be absolute-positioned here -->
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+      <p id="lixi-hint" style="font-size: 1.1rem; color: var(--folk-red-dark); font-weight: bold;">🏮 Chọn một phong bao
+        để nhận lộc đầu năm!</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Lì Xì Result Modal -->
+<div id="lixi-modal" class="modal">
+  <div class="folk-card lixi-result-card">
+    <div class="zodiac-ribbon">Bính Ngọ 2026</div>
+    <h2 style="color: var(--folk-red);">🧧 LÌ XÌ MAY MẮN</h2>
+    <div id="lixi-amount" class="lixi-amount">...</div>
+    <p id="lixi-blessing" class="lixi-blessing">Chúc mừng năm mới!</p>
+    <button id="close-lixi" class="btn-folk" style="margin-top: 2rem; width: 100%;">NHẬN NGAY</button>
+  </div>
+</div>
+
+<!-- Include Core Assets -->
+<script src="<%= asset('assets/features/folk-games/core.js') %>"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

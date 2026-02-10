@@ -1,0 +1,18 @@
+id: dap-heo
+category: daily
+personas: ["pro", "hobby"]
+vn_only: true
+icon: hammer
+highlight: true
+translationKey: folkGames.games.heo
+status: active
+link: /dap-heo/
+mode: standard
+meta:
+  version: 1.0.0
+keywords:
+  - đập heo đất
+  - game tết 2026
+  - piggy bank smash
+  - folk games vietnam
+tags: [games, vietnam, tet, entertainment]

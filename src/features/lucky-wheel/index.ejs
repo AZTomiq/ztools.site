@@ -1,0 +1,135 @@
+<!-- title: <%= t('folkGames.games.wheel.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= asset('assets/css/folk-games.css') %>">
+
+<section class="tool-container folk-bg-paper">
+  <div class="page-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <h1 style="margin-bottom: 0;">🎡 <%= t('folkGames.games.wheel.title') %>
+      </h1>
+      <a href="../" class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem; text-decoration: none;">← <%=
+          t('blog.back') %></a>
+    </div>
+  </div>
+
+  <div class="wheel-game-layout">
+    <!-- Left: Game Area -->
+    <div class="wheel-main-area">
+      <div class="wheel-container">
+        <canvas id="wheel-canvas" width="500" height="500"></canvas>
+        <div class="wheel-pointer">▼</div>
+      </div>
+
+      <div class="wheel-actions" style="text-align: center; margin-top: 2rem;">
+        <button id="spin-btn" class="btn-folk" style="font-size: 1.5rem; padding: 1rem 3rem;">
+          🚀 <%= t('folkGames.play_now').toUpperCase() %>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right: Control Panel -->
+    <div class="wheel-controls folk-card">
+      <h3>📝 <%= t('folkGames.games.wheel.title') %>
+      </h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+        Nhập danh sách tên (mỗi dòng 1 tên)
+      </p>
+
+      <textarea id="wheel-names" class="form-control" rows="10"
+        style="width: 100%; border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); font-family: inherit;">
+An
+Bình
+Cường
+Dũng
+Em
+Giang
+Hương</textarea>
+
+      <div style="margin-top: 1rem; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+        <input type="checkbox" id="remove-winner" style="width: 18px; height: 18px; cursor: pointer;">
+        <label for="remove-winner" style="cursor: pointer;">Tự động xóa người đã trúng</label>
+      </div>
+
+      <div style="margin-top: 1rem; display: flex; gap: 10px;">
+        <button id="update-wheel" class="btn-folk" style="flex: 1; padding: 8px;">
+          <%= t('common.reset') %>
+        </button>
+        <button id="clear-wheel" class="btn-folk"
+          style="background: var(--folk-jade); border-color: var(--folk-jade); flex: 1; padding: 8px;">Xóa hết</button>
+      </div>
+
+      <div class="history-section" style="margin-top: 2rem;">
+        <h4>📜 Lịch sử</h4>
+        <div id="wheel-history" style="font-size: 0.9rem; max-height: 150px; overflow-y: auto;">
+          <p style="color: var(--text-muted);">Chưa có kết quả.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Win Modal -->
+<div id="win-modal" class="modal">
+  <div class="folk-card" style="max-width: 400px; width: 90%; text-align: center; animation: coin-pop 0.5s ease-out;">
+    <h2 style="font-size: 2rem; color: var(--folk-red);">🎉 CHÚC MỪNG!</h2>
+    <div id="winner-name" style="font-size: 2.5rem; font-weight: 800; margin: 1.5rem 0; color: var(--folk-gold-dark);">
+      ...</div>
+    <p>Đã trở thành người may mắn!</p>
+    <button id="close-modal" class="btn-folk" style="margin-top: 2rem;">ĐÓNG</button>
+  </div>
+</div>
+
+<style>
+  .wheel-game-layout {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .wheel-main-area {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wheel-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+  }
+
+  #wheel-canvas {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+  }
+
+  .wheel-pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: var(--folk-red);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+
+  .wheel-controls {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  @media (max-width: 900px) {
+    .wheel-game-layout {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<!-- Include Core Assets -->
+<script src="<%= asset('assets/features/folk-games/core.js') %>"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

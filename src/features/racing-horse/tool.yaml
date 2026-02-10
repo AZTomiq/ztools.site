@@ -1,0 +1,18 @@
+id: racing-horse
+category: daily
+personas: ["pro", "hobby"]
+vn_only: true
+icon: chevrons-right
+highlight: true
+translationKey: folkGames.games.racing_horse
+status: active
+link: /racing-horse/
+mode: standard
+meta:
+  version: 1.0.0
+keywords:
+  - về đích cùng bính ngọ
+  - đua ngựa tết 2026
+  - horse racing
+  - folk games vietnam
+tags: [games, vietnam, tet, racing]

@@ -1,0 +1,209 @@
+/* 🐷 Đập Heo Bựa Edition Styles */
+
+.heo-game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 500px;
+    padding: 10px;
+}
+
+@media (max-width: 600px) {
+    .heo-game-container {
+        min-height: 400px;
+    }
+}
+
+/* Screen Transitions */
+.heo-screen {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.heo-screen.hidden {
+    display: none;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Setup Screen */
+.heo-setup-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    border: 3px solid var(--folk-gold);
+}
+
+.turn-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.turn-option {
+    padding: 1rem 2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.turn-option.active {
+    background: var(--folk-red);
+    color: white;
+    border-color: var(--folk-red);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+}
+
+/* Grid Layout */
+.heo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+@media (max-width: 600px) {
+    .heo-grid {
+        gap: 0.75rem;
+        padding: 0.5rem;
+    }
+    .heo-pig {
+        font-size: 3rem;
+    }
+}
+
+.heo-item {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: url('/assets/images/dap-heo/hammer.png') 32 32, auto;
+}
+
+.heo-pig img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.heo-shard {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-size: 150px 150px;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.heo-pig {
+    font-size: 4rem;
+    transition: transform 0.1s;
+    user-select: none;
+}
+
+.heo-item:hover .heo-pig {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.heo-item:active .heo-pig {
+    transform: scale(0.9) rotate(-10deg);
+}
+
+/* Tiers */
+.heo-pig.tier-gold { filter: drop-shadow(0 0 10px gold); }
+.heo-pig.tier-diamond { filter: drop-shadow(0 0 15px cyan); }
+
+/* Reveal Screen */
+.reveal-content {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 25px;
+    border: 5px solid var(--folk-red);
+    box-shadow: 0 20px 50px rgba(183, 28, 28, 0.2);
+}
+
+@media (max-width: 600px) {
+    .reveal-money {
+        font-size: 3rem;
+    }
+    .reveal-pig-emoji {
+        font-size: 6rem;
+    }
+}
+
+.reveal-money {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--folk-gold-dark);
+    margin: 1rem 0;
+    text-shadow: 2px 2px 0 white, -2px -2px 0 white;
+}
+
+.reveal-wish {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Quick Challenge */
+.challenge-box {
+    background: #fffbeb;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px dashed #f59e0b;
+    margin-top: 2rem;
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-0.5px); }
+    75% { transform: translateX(0.5px); }
+}
+
+.animate-shake {
+    animation: shake 0.2s ease-in-out infinite;
+}
+
+.animate-crack {
+    position: relative;
+    animation: shake 0.2s ease-in-out infinite;
+}
+
+.animate-crack::after {
+    display: none;
+}
+
+@keyframes reveal {
+    0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.animate-reveal {
+    animation: reveal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.heo-pig {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+}

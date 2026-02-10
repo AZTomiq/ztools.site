@@ -1,0 +1,112 @@
+<!-- title: <%= t('folkGames.games.nieu.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container folk-bg-paper">
+  <div class="page-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <h1 style="margin-bottom: 0;">🏺 <%= t('folkGames.games.nieu.title') %>
+      </h1>
+      <a href="../" class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem; text-decoration: none;">← <%=
+          t('blog.back') %></a>
+    </div>
+    <p class="folk-red-dark">
+      <%= t('folkGames.games.nieu.desc') %>
+    </p>
+  </div>
+
+  <div class="nieu-game-container">
+    <!-- Game Stage -->
+    <div id="nieu-stage" class="nieu-stage">
+      <div id="nieu-blindfold" class="nieu-blindfold"></div>
+
+      <!-- Target Pot -->
+      <div id="nieu-pot" class="nieu-pot">
+        <span style="font-size: 5rem;">🏺</span>
+      </div>
+
+      <!-- Player Avatar -->
+      <div id="nieu-player" class="nieu-player">
+        <span style="font-size: 3rem;">🚶</span>
+        <div class="player-direction">↑</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="nieu-controls folk-card"
+      style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+      <div class="d-flex gap-3">
+        <button id="nieu-left" class="btn-folk" style="background: var(--folk-jade);">◀ QUAY TRÁI</button>
+        <button id="nieu-step" class="btn-folk" style="padding: 1rem 3rem;">👣 BƯỚC ĐI</button>
+        <button id="nieu-right" class="btn-folk" style="background: var(--folk-jade);">QUAY PHẢI ▶</button>
+      </div>
+      <button id="nieu-smash" class="btn-folk"
+        style="width: 100%; max-width: 400px; font-size: 1.5rem; background: var(--folk-red-dark);">🔨 ĐẬP
+        NIÊU!</button>
+      <p id="nieu-status" style="font-weight: bold; color: var(--folk-red);">Nhấn QUAY để đổi hướng, BƯỚC để tiến lên!
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Result Modal -->
+<div id="nieu-modal" class="modal">
+  <div class="folk-card" style="text-align: center;">
+    <h2 id="nieu-result-title">XUẤT SẮC!</h2>
+    <p id="nieu-result-desc">Bạn đã đập trúng niêu!</p>
+    <div id="nieu-reward" style="font-size: 2rem; color: var(--folk-gold-dark); margin: 1rem 0;">+0 xu</div>
+    <button id="nieu-restart" class="btn-folk">CHƠI LẠI</button>
+  </div>
+</div>
+
+<style>
+  .nieu-game-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .nieu-stage {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: var(--folk-wood);
+    border: 10px solid var(--folk-gold-dark);
+    border-radius: 12px;
+    overflow: hidden;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(0, 0, 0, 0.1) 20px, rgba(0, 0, 0, 0.1) 40px);
+  }
+
+  .nieu-blindfold {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 100px, rgba(0, 0, 0, 0.95) 250px);
+    z-index: 10;
+    pointer-events: none;
+    transition: opacity 1s;
+  }
+
+  .nieu-pot {
+    position: absolute;
+    transition: all 0.5s ease;
+    z-index: 5;
+  }
+
+  .nieu-player {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: left 0.3s, top 0.3s, transform 0.3s;
+  }
+
+  .player-direction {
+    font-size: 1.5rem;
+    color: var(--folk-gold);
+    font-weight: bold;
+    margin-top: -10px;
+  }
+</style>
+
+<!-- Include Core Assets -->
+<script src="<%= asset('assets/features/folk-games/core.js') %>"></script>
+<script src="<%= asset('assets/features/folk-games/nieu.js') %>"></script>

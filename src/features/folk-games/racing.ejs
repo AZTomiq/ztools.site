@@ -1,0 +1,173 @@
+<!-- title: <%= t('folkGames.games.racing.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= toolConfig._assets.css %>">
+
+<section class="tool-container folk-bg-paper">
+  <div class="page-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <h1 style="margin-bottom: 0;">🦆 Đua Vịt Xuân 2026</h1>
+      <a href="../" class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem; text-decoration: none;">← <%=
+          t('blog.back') %></a>
+    </div>
+    <p>Chọn chú vịt may mắn của bạn và đặt cược!</p>
+  </div>
+
+  <div class="racing-container">
+    <!-- Betting Area -->
+    <div id="betting-panel" class="folk-card" style="margin-bottom: 2rem;">
+      <h3 style="text-align: center; color: var(--folk-red);">💰 ĐẶT CƯỢC</h3>
+      <div class="bet-input-group" style="display: flex; justify-content: center; gap: 1rem; margin: 1rem 0;">
+        <div>
+          <label style="display: block; font-size: 0.8rem;">Chọn vịt:</label>
+          <select id="duck-select" class="btn-folk"
+            style="background: white; color: black; border-color: var(--border-color);">
+            <option value="0">Vịt Đỏ (0)</option>
+            <option value="1">Vịt Vàng (1)</option>
+            <option value="2">Vịt Xanh (2)</option>
+            <option value="3">Vịt Tím (3)</option>
+            <option value="4">Vịt Hồng (4)</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem;">Số xu cược:</label>
+          <input type="number" id="bet-amount" value="50" min="10" step="10" class="btn-folk"
+            style="background: white; color: black; border-color: var(--border-color); width: 100px;">
+        </div>
+        <button id="start-race" class="btn-folk" style="padding-top: 1.5rem;">🔥 BẮT ĐẦU ĐUA!</button>
+      </div>
+      <div style="text-align: center;">
+        <span style="font-size: 0.9rem; color: var(--text-muted);">
+          <%= t('folkGames.your_coins') %>:
+        </span>
+        <span id="racing-coins" style="font-weight: bold; color: var(--folk-red);">0</span>
+      </div>
+    </div>
+
+    <!-- Race Track -->
+    <div class="race-track">
+      <div class="finish-line"></div>
+      <% for(let i=0; i<5; i++) { %>
+        <div class="lane" id="lane-<%= i %>">
+          <div class="duck" id="duck-<%= i %>">
+            <span class="duck-avatar">🦆</span>
+            <div class="duck-label">Vịt <%= i %>
+            </div>
+          </div>
+        </div>
+        <% } %>
+    </div>
+
+    <div id="race-status" class="race-status" style="display: none;">Đang đua...</div>
+  </div>
+</section>
+
+<!-- Racing Modal -->
+<div id="racing-modal" class="modal">
+  <div class="folk-card" style="text-align: center;">
+    <h2 id="racing-result-title">KẾT QUẢ</h2>
+    <div id="winner-reveal" style="font-size: 4rem; margin: 2rem 0;">🏆 🦆</div>
+    <p id="racing-result-msg">Chú vịt số 0 đã về nhất!</p>
+    <div id="racing-reward" style="font-size: 2rem; color: var(--folk-gold-dark); margin-bottom: 2rem;">+0 xu</div>
+    <button id="race-again" class="btn-folk">TIẾP TỤC</button>
+  </div>
+</div>
+
+<style>
+  .racing-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .race-track {
+    position: relative;
+    background: #4fc3f7;
+    /* River blue */
+    border: 5px solid var(--folk-wood);
+    border-radius: 8px;
+    padding: 20px 0;
+    overflow: hidden;
+  }
+
+  .finish-line {
+    position: absolute;
+    right: 50px;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background: repeating-linear-gradient(0deg, white, white 10px, black 10px, black 20px);
+    z-index: 1;
+  }
+
+  .lane {
+    position: relative;
+    height: 70px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+  }
+
+  .lane:last-child {
+    border-bottom: none;
+  }
+
+  .duck {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: left 0.1s linear;
+    z-index: 5;
+  }
+
+  .duck-avatar {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+  }
+
+  #duck-0 .duck-avatar {
+    filter: hue-rotate(0deg);
+  }
+
+  #duck-1 .duck-avatar {
+    filter: hue-rotate(60deg);
+  }
+
+  #duck-2 .duck-avatar {
+    filter: hue-rotate(120deg);
+  }
+
+  #duck-3 .duck-rotate {
+    filter: hue-rotate(180deg);
+  }
+
+  #duck-4 .duck-rotate {
+    filter: hue-rotate(240deg);
+  }
+
+  .duck-label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+
+  .race-status {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 100;
+  }
+</style>
+
+<!-- Include Core Assets -->
+<script src="<%= asset('assets/features/folk-games/core.js') %>"></script>
+<script src="<%= asset('assets/features/folk-games/racing.js') %>"></script>

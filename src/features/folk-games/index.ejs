@@ -1,0 +1,114 @@
+<!-- title: <%= t('folkGames.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= asset('assets/css/folk-games.css') %>">
+
+<section class="tool-container folk-bg-paper">
+    <div class="page-header">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <h1 style="margin-bottom: 0;">🏮 <%= t('folkGames.title') %>
+            </h1>
+            <button class="version-badge">v<%= toolConfig.meta.version %></button>
+        </div>
+        <p>
+            <%= t('folkGames.desc') %>
+        </p>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="folk-stats-bar" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem;">
+        <div class="folk-card" style="padding: 0.75rem 2rem; display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.5rem;">💰</span>
+            <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                    <%= t('folkGames.your_coins') %>
+                </div>
+                <div id="user-coins" style="font-size: 1.2rem; font-weight: 800; color: var(--folk-red);">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games Grid -->
+    <div class="container">
+        <div class="tools-grid">
+            <!-- Game: Đua Ngựa Bính Ngọ -->
+            <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>racing-horse/" class="tool-card-modern folk-card"
+                style="border-color: var(--folk-red);">
+                <div class="icon" style="background: var(--folk-red); color: white;">
+                    <i data-lucide="chevrons-right" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h4 style="color: var(--folk-red);">
+                    <%= t('folkGames.games.racing_horse.title') %> 🐴
+                </h4>
+                <p>
+                    <%= t('folkGames.games.racing_horse.desc') %>
+                </p>
+                <div class="card-footer"
+                    style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <span class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem;">CHƠI NGAY - HOT</span>
+                </div>
+            </a>
+
+            <!-- Game: Vòng Quay -->
+            <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>lucky-wheel/" class="tool-card-modern folk-card">
+                <div class="icon" style="background: var(--folk-gold); color: white;">
+                    <i data-lucide="rotate-cw" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h4>
+                    <%= t('folkGames.games.wheel.title') %>
+                </h4>
+                <p>
+                    <%= t('folkGames.games.wheel.desc') %>
+                </p>
+                <div class="card-footer"
+                    style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <span class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem;">
+                        <%= t('folkGames.play_now') %>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Game: Lì Xì -->
+            <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>li-xi/" class="tool-card-modern folk-card">
+                <div class="icon" style="background: var(--folk-red); color: white;">
+                    <i data-lucide="gift" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h4>
+                    <%= t('folkGames.games.lixi.title') %>
+                </h4>
+                <p>
+                    <%= t('folkGames.games.lixi.desc') %>
+                </p>
+                <div class="card-footer"
+                    style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <span class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem;">
+                        <%= t('folkGames.play_now') %>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Game: Đập Heo Đất -->
+            <a href="<%= rootPath %><%= locale === 'vi' ? '' : 'en/' %>dap-heo/" class="tool-card-modern folk-card">
+                <div class="icon" style="background: #FF80AB; color: white;">
+                    <i data-lucide="hammer" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h4>
+                    <%= t('folkGames.games.heo.title') %>
+                </h4>
+                <p>
+                    <%= t('folkGames.games.heo.desc') %>
+                </p>
+                <div class="card-footer"
+                    style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <span class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem;">
+                        <%= t('folkGames.play_now') %>
+                    </span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Include Core Assets -->
+<script src="<%= asset('assets/features/folk-games/core.js') %>"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

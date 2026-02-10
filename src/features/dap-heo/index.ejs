@@ -1,0 +1,87 @@
+<!-- title: <%= t('folkGames.games.heo.title') %> - ZTools -->
+<link rel="stylesheet" href="<%= asset('assets/css/folk-games.css') %>">
+<link rel="stylesheet" href="<%= asset('assets/css/dap-heo.css') %>">
+
+<section class="tool-container folk-bg-paper">
+  <div class="page-header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <h1 style="margin-bottom: 0;">🐷 <%= t('folkGames.games.heo.title') %>
+      </h1>
+      <a href="../" class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem; text-decoration: none;">← <%=
+          t('blog.back') %></a>
+    </div>
+    <p>
+      <%= t('folkGames.games.heo.desc') %>
+    </p>
+  </div>
+
+  <div class="heo-game-container">
+    <!-- Screen 1: Setup -->
+    <div id="screen-setup" class="heo-screen">
+      <div class="heo-setup-card">
+        <h3>CHỌN SỐ LƯỢT ĐẬP HEO</h3>
+        <p>Mỗi lượt đập là một cơ hội nhận lì xì khủng!</p>
+
+        <div class="turn-selector">
+          <div class="turn-option" data-turns="1">1 LƯỢT</div>
+          <div class="turn-option active" data-turns="2">2 LƯỢT</div>
+          <div class="turn-option" data-turns="3">3 LƯỢT</div>
+        </div>
+
+        <button id="btn-start-game" class="btn-folk" style="padding: 1rem 3rem; font-size: 1.2rem;">
+          🧧 BẮT ĐẦU NGAY
+        </button>
+      </div>
+    </div>
+
+    <!-- Screen 2: Game Grid -->
+    <div id="screen-game" class="heo-screen hidden">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span class="btn-folk" style="background: var(--folk-gold-dark); pointer-events: none;">
+          LƯỢT CÒN LẠI: <span id="remaining-turns">0</span>
+        </span>
+      </div>
+
+      <div class="heo-grid" id="heo-grid">
+        <!-- 9 pigs will be here -->
+      </div>
+    </div>
+
+    <!-- Screen 3: Reveal -->
+    <div id="screen-reveal" class="heo-screen hidden">
+      <div class="reveal-content">
+        <div id="reveal-tier" style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">HEO THƯỜNG</div>
+        <div id="reveal-pig-emoji" style="font-size: 8rem; margin-bottom: 1rem;">🐖</div>
+        <div class="reveal-money" id="reveal-amount">+0đ</div>
+        <div class="reveal-wish" id="reveal-wish">Chúc bạn năm mới phát tài!</div>
+
+        <div id="reveal-challenge" class="challenge-box hidden">
+          <h4 style="color: #92400e; margin-top: 0;">⚡ THỬ THÁCH NHANH!</h4>
+          <p id="challenge-text">Hát một câu về ngày Tết</p>
+        </div>
+
+        <button id="btn-continue" class="btn-folk" style="margin-top: 2rem; min-width: 200px;">TIẾP TỤC</button>
+      </div>
+    </div>
+
+    <!-- Screen 4: Summary -->
+    <div id="screen-summary" class="heo-screen hidden">
+      <div class="heo-setup-card">
+        <h2 style="color: var(--folk-red);">TỔNG KẾT LÌ XÌ</h2>
+        <div style="font-size: 4rem; color: var(--folk-gold-dark); font-weight: 800; margin: 2rem 0;">
+          <span id="summary-total">0</span>đ
+        </div>
+
+        <div id="summary-badge" style="margin-bottom: 2rem; font-size: 1.2rem; font-weight: bold;">
+          Huy hiệu: <span style="color: var(--folk-red);">ĐẠI GIA LÌ XÌ</span>
+        </div>
+
+        <button id="btn-play-again" class="btn-folk">CHƠI LẠI TỪ ĐẦU</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Include Core Assets -->
+<script src="<%= asset('assets/features/folk-games/core.js') %>"></script>
+<script src="<%= toolConfig._assets.js %>"></script>

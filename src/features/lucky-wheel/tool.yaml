@@ -1,0 +1,18 @@
+id: lucky-wheel
+category: daily
+personas: ["pro", "hobby"]
+vn_only: true
+icon: rotate-cw
+highlight: true
+translationKey: folkGames.games.wheel
+status: active
+link: /lucky-wheel/
+mode: standard
+meta:
+  version: 1.0.0
+keywords:
+  - vòng quay kỳ diệu
+  - lucky wheel
+  - spin the wheel
+  - folk games vietnam
+tags: [games, vietnam, luck, decision]

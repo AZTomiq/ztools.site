@@ -1,0 +1,18 @@
+id: li-xi
+category: daily
+personas: ["pro", "hobby"]
+vn_only: true
+icon: gift
+highlight: true
+translationKey: folkGames.games.lixi
+status: active
+link: /li-xi/
+mode: standard
+meta:
+  version: 1.0.0
+keywords:
+  - lì xì tết 2026
+  - red envelope
+  - bốc lì xì
+  - folk games vietnam
+tags: [games, vietnam, tet, luck]
