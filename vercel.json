@@ -3,102 +3,179 @@
   "trailingSlash": true,
   "redirects": [
     {
-      "source": "/blog/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "json.ztools.site"
+        }
+      ],
+      "destination": "https://json.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "json.eztools.site"
+        }
+      ],
+      "destination": "https://json.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "tncn.ztools.site"
+        }
+      ],
+      "destination": "https://tncn.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "tncn.eztools.site"
+        }
+      ],
+      "destination": "https://tncn.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laikep.ztools.site"
+        }
+      ],
+      "destination": "https://laikep.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laikep.eztools.site"
+        }
+      ],
+      "destination": "https://laikep.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "playground.ztools.site"
+        }
+      ],
+      "destination": "https://playground.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "playground.eztools.site"
+        }
+      ],
+      "destination": "https://playground.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amlich.ztools.site"
+        }
+      ],
+      "destination": "https://amlich.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amlich.eztools.site"
+        }
+      ],
+      "destination": "https://amlich.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lunar.ztools.site"
+        }
+      ],
+      "destination": "https://lunar.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lunar.eztools.site"
+        }
+      ],
+      "destination": "https://lunar.iztools.xyz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "ztools.site"
         }
       ],
-      "destination": "https://blog.ph4n4n.xyz/:path*",
+      "destination": "https://iztools.xyz/:path*",
       "permanent": true
     },
     {
-      "source": "/roadmap/:path*",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
-          "value": "ztools.site"
+          "value": "www.ztools.site"
         }
       ],
-      "destination": "https://roadmap.ph4n4n.xyz/:path*",
+      "destination": "https://iztools.xyz/:path*",
       "permanent": true
     },
     {
-      "source": "/blog/:path*",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
-          "value": "blog.ph4n4n.xyz"
+          "value": "eztools.site"
         }
       ],
-      "destination": "/:path*",
+      "destination": "https://iztools.xyz/:path*",
       "permanent": true
     },
     {
-      "source": "/roadmap/:path*",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
-          "value": "roadmap.ph4n4n.xyz"
+          "value": "www.eztools.site"
         }
       ],
-      "destination": "/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/web-playground/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ztools.site"
-        }
-      ],
-      "destination": "https://playground.ztools.site/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/tax/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ztools.site"
-        }
-      ],
-      "destination": "https://tncn.ztools.site/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/json-toolkit/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ztools.site"
-        }
-      ],
-      "destination": "https://json.ztools.site/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/compound-interest/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ztools.site"
-        }
-      ],
-      "destination": "https://laikep.ztools.site/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/lunar-calendar/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ztools.site"
-        }
-      ],
-      "destination": "https://amlich.ztools.site/:path*",
+      "destination": "https://iztools.xyz/:path*",
       "permanent": true
     }
   ],
@@ -152,126 +229,6 @@
       "has": [
         {
           "type": "host",
-          "value": "playground.ztools.site"
-        }
-      ],
-      "destination": "/en/web-playground/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "playground.ztools.site"
-        }
-      ],
-      "destination": "/web-playground/:path*"
-    },
-    {
-      "source": "/en/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "tncn.ztools.site"
-        }
-      ],
-      "destination": "/en/tax/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "tncn.ztools.site"
-        }
-      ],
-      "destination": "/tax/:path*"
-    },
-    {
-      "source": "/en/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "json.ztools.site"
-        }
-      ],
-      "destination": "/en/json-toolkit/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "json.ztools.site"
-        }
-      ],
-      "destination": "/json-toolkit/:path*"
-    },
-    {
-      "source": "/en/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "laikep.ztools.site"
-        }
-      ],
-      "destination": "/en/compound-interest/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "laikep.ztools.site"
-        }
-      ],
-      "destination": "/compound-interest/:path*"
-    },
-    {
-      "source": "/en/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "amlich.ztools.site"
-        }
-      ],
-      "destination": "/en/lunar-calendar/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "amlich.ztools.site"
-        }
-      ],
-      "destination": "/lunar-calendar/:path*"
-    },
-    {
-      "source": "/en/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lunar.ztools.site"
-        }
-      ],
-      "destination": "/en/lunar-calendar/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lunar.ztools.site"
-        }
-      ],
-      "destination": "/lunar-calendar/:path*"
-    },
-    {
-      "source": "/en/:path*",
-      "has": [
-        {
-          "type": "host",
           "value": "blog.ph4n4n.xyz"
         }
       ],
@@ -306,6 +263,126 @@
         }
       ],
       "destination": "/roadmap/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "json.iztools.xyz"
+        }
+      ],
+      "destination": "/en/json-toolkit/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "json.iztools.xyz"
+        }
+      ],
+      "destination": "/json-toolkit/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "tncn.iztools.xyz"
+        }
+      ],
+      "destination": "/en/tax/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "tncn.iztools.xyz"
+        }
+      ],
+      "destination": "/tax/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laikep.iztools.xyz"
+        }
+      ],
+      "destination": "/en/compound-interest/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laikep.iztools.xyz"
+        }
+      ],
+      "destination": "/compound-interest/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "playground.iztools.xyz"
+        }
+      ],
+      "destination": "/en/web-playground/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "playground.iztools.xyz"
+        }
+      ],
+      "destination": "/web-playground/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amlich.iztools.xyz"
+        }
+      ],
+      "destination": "/en/lunar-calendar/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amlich.iztools.xyz"
+        }
+      ],
+      "destination": "/lunar-calendar/:path*"
+    },
+    {
+      "source": "/en/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lunar.iztools.xyz"
+        }
+      ],
+      "destination": "/en/lunar-calendar/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lunar.iztools.xyz"
+        }
+      ],
+      "destination": "/lunar-calendar/:path*"
     }
   ]
 }

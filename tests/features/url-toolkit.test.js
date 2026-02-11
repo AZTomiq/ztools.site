@@ -16,20 +16,20 @@ describe('URL Toolkit Logic', () => {
 
   describe('URL Parser', () => {
     it('should parse a complete URL correctly', () => {
-      const input = 'https://ztools.site/features/tax?q=test#top';
+      const input = 'https://iztools.xyz/features/tax?q=test#top';
       const res = url.parseURLLogic(input);
       expect(res.protocol).toBe('https:');
-      expect(res.host).toBe('ztools.site');
+      expect(res.host).toBe('iztools.xyz');
       expect(res.path).toBe('/features/tax');
       expect(res.query).toBe('?q=test');
       expect(res.hash).toBe('#top');
     });
 
     it('should handle URL without protocol by defaulting to http', () => {
-      const input = 'ztools.site/test';
+      const input = 'iztools.xyz/test';
       const res = url.parseURLLogic(input);
       expect(res.protocol).toBe('http:');
-      expect(res.host).toBe('ztools.site');
+      expect(res.host).toBe('iztools.xyz');
     });
   });
 });

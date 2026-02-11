@@ -52,11 +52,22 @@ async function generateVercelConfig() {
       const { domain, path: toolPath } = item;
       const cleanPath = toolPath.replace(/^\/|\/$/g, ''); // e.g. "tax"
 
-      // Only add redirect for ztools.site based domains
-      if (domain.endsWith('ztools.site')) {
+      // Add redirects from satellite domains to main subdomain
+      if (domain.endsWith('iztools.xyz')) {
+        const subdomainPrefix = domain.replace('.iztools.xyz', '');
+
+        // Redirect from ztools.site subdomains
         config.redirects.push({
-          source: `/${cleanPath}/:path*`,
-          has: [{ type: 'host', value: 'ztools.site' }],
+          source: '/:path*',
+          has: [{ type: 'host', value: `${subdomainPrefix}.ztools.site` }],
+          destination: `https://${domain}/:path*`,
+          permanent: true
+        });
+
+        // Redirect from eztools.site subdomains (if they exist/future-proof)
+        config.redirects.push({
+          source: '/:path*',
+          has: [{ type: 'host', value: `${subdomainPrefix}.eztools.site` }],
           destination: `https://${domain}/:path*`,
           permanent: true
         });
@@ -75,6 +86,24 @@ async function generateVercelConfig() {
         source: '/:path*',
         has: [{ type: 'host', value: domain }],
         destination: `/${cleanPath}/:path*`
+      });
+    });
+
+    // 4. Global Satellite Root Redirects
+    const satelliteDomains = ['ztools.site', 'eztools.site'];
+    satelliteDomains.forEach(sat => {
+      config.redirects.push({
+        source: '/:path*',
+        has: [{ type: 'host', value: sat }],
+        destination: `https://iztools.xyz/:path*`,
+        permanent: true
+      });
+      // Also handle www if needed (optional but good)
+      config.redirects.push({
+        source: '/:path*',
+        has: [{ type: 'host', value: `www.${sat}` }],
+        destination: `https://iztools.xyz/:path*`,
+        permanent: true
       });
     });
 

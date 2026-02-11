@@ -45,22 +45,22 @@ describe('Sitemap Integrity', () => {
       expect(pathPart).not.toBe('/roadmap/');
     });
 
-    // 3. Playground Subdomain (playground.ztools.site)
+    // 3. Playground Subdomain (playground.iztools.xyz)
     // Original path: /web-playground/
-    const playgroundUrls = urls.filter(u => u.includes('playground.ztools.site'));
+    const playgroundUrls = urls.filter(u => u.includes('playground.iztools.xyz'));
     expect(playgroundUrls.length).toBeGreaterThan(0);
     playgroundUrls.forEach(url => {
-      const pathPart = url.replace('https://playground.ztools.site', '');
+      const pathPart = url.replace('https://playground.iztools.xyz', '');
       expect(pathPart).not.toMatch(/\/web-playground\//);
       expect(pathPart).not.toBe('/web-playground/');
     });
 
-    // 4. Compound Interest (laikep.ztools.site)
+    // 4. Compound Interest (laikep.iztools.xyz)
     // Original path: /compound-interest/
-    const laikepUrls = urls.filter(u => u.includes('laikep.ztools.site'));
+    const laikepUrls = urls.filter(u => u.includes('laikep.iztools.xyz'));
     expect(laikepUrls.length).toBeGreaterThan(0);
     laikepUrls.forEach(url => {
-      const pathPart = url.replace('https://laikep.ztools.site', '');
+      const pathPart = url.replace('https://laikep.iztools.xyz', '');
       expect(pathPart).not.toMatch(/\/compound-interest\//);
     });
   });
