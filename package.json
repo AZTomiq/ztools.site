@@ -1,5 +1,5 @@
 {
-  "name": "ztools-site",
+  "name": "iZTools-site",
   "version": "1.5.2",
   "description": "Multi-tool utility site built with EJS - iztools.xyz",
   "main": "scripts/build.js",
@@ -27,8 +27,8 @@
     "utility",
     "calculator",
     "vtools",
-    "ztools",
-    "ztools.site"
+    "iZTools",
+    "iZTools.site"
   ],
   "author": "Anph",
   "license": "ISC",

@@ -1,6 +1,6 @@
 bookmarkCreator:
   title: "Bookmark Creator"
-  desc: "Create a personal bookmark set for your browser with your favorite ZTools."
+  desc: "Create a personal bookmark set for your browser with your favorite iZTools."
   form:
     title: "Generate Bookmark List"
     subtitle: "Select the tools you want to add to your bookmarks"

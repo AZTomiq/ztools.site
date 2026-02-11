@@ -1,6 +1,6 @@
 # 🧪 Unit Test Master Plan (Chuẩn chỉnh)
 
-Để ZTools trở thành một nền tảng tin cậy, đặc biệt là các công cụ tính toán tài chính (Thuế, Lãi kép, Bảo hiểm), chúng ta cần một hệ thống Unit Test chuyên nghiệp.
+Để iZTools trở thành một nền tảng tin cậy, đặc biệt là các công cụ tính toán tài chính (Thuế, Lãi kép, Bảo hiểm), chúng ta cần một hệ thống Unit Test chuyên nghiệp.
 
 ## 1. Nguyên tắc cốt lõi (Core Principles)
 

@@ -19,7 +19,7 @@
     }
 
     // Dispatch event for other components
-    window.dispatchEvent(new CustomEvent('ztools-mode-change', { detail: { mode } }));
+    window.dispatchEvent(new CustomEvent('iZTools-mode-change', { detail: { mode } }));
   }
 
   // Initial apply

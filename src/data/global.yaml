@@ -14,11 +14,11 @@ site:
     - aztomiq
     - tiện ích miễn phí
 featured_tools:
-  - web-playground # playground.ztools.site
-  - tax # tncn.ztools.site
-  - json-toolkit # json.ztools.site
-  - compound-interest # laikep.ztools.site
-  - lunar-calendar # amlich.ztools.site
+  - web-playground # playground.iZTools.site
+  - tax # tncn.iZTools.site
+  - json-toolkit # json.iZTools.site
+  - compound-interest # laikep.iZTools.site
+  - lunar-calendar # amlich.iZTools.site
 build:
   locales:
     - vi
@@ -26,7 +26,7 @@ build:
   default_locale: vi
   entry_point:
   deploy:
-    remote: "https://github.com/AZTomiq/ztools.site-public.git"
+    remote: "https://github.com/AZTomiq/iZTools.site-public.git"
     branch: "main"
     dist_folder: dist
     strategy: init

@@ -60,7 +60,7 @@ async function readSitemap() {
   // Map production URLs to localhost
   let urls = sitemap.urlset.url
     .map(entry => entry.loc[0].trim())
-    .map(url => url.replace('https://ztools.site', CONFIG.baseUrl));
+    .map(url => url.replace('https://iZTools.site', CONFIG.baseUrl));
 
   // Filter by language if specified
   if (CONFIG.langFilter) {
@@ -83,8 +83,8 @@ async function checkI18nIssues(page, url) {
 
     // Whitelist of known non-translation patterns
     const whitelist = [
-      'ZTools.site',
-      'ztools.site',
+      'iZTools.site',
+      'iZTools.site',
       'localhost.3000',
       'github.com',
       'npmjs.com'

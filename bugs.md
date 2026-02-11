@@ -28,7 +28,7 @@ How to fix
 
 FIX INTENT: Add validation to reject zero or invalid height values in the BMI calculator
 
-CONTEXT: The BMI Calculator at https://ztools.site/bmi/ accepts zero as a valid height input and displays an incorrect result (22.5) instead of showing an error. When height is 0 cm and weight is 65 kg, the form should reject this invalid input but currently does not.
+CONTEXT: The BMI Calculator at https://iZTools.site/bmi/ accepts zero as a valid height input and displays an incorrect result (22.5) instead of showing an error. When height is 0 cm and weight is 65 kg, the form should reject this invalid input but currently does not.
 
 ## FIX PROMPT: Help me add input validation to the BMI calculator so that it rejects height values of zero or less, displays a clear error message to the user, and prevents calculation until valid height is entered.
 
@@ -49,7 +49,7 @@ How to fix
 
 FIX INTENT: Add validation to reject zero and negative height values in the BMI Calculator
 
-CONTEXT: The BMI Calculator at https://ztools.site/bmi/ accepts invalid height inputs like 0 cm and -170 cm without any error checking. Both produce identical incorrect results (BMI of 22.5), misleading users about their health metrics.
+CONTEXT: The BMI Calculator at https://iZTools.site/bmi/ accepts invalid height inputs like 0 cm and -170 cm without any error checking. Both produce identical incorrect results (BMI of 22.5), misleading users about their health metrics.
 
 ## FIX PROMPT: Add input validation to the BMI Calculator form that rejects zero and negative height values. Display a clear error message when users try to submit invalid height data, and prevent the calculation from running until valid positive values are entered.
 
@@ -93,7 +93,7 @@ How to fix
 
 FIX INTENT: Remove duplicate Monaco Editor module definition warning
 
-CONTEXT: The zTool Playground page at https://ztools.site/web-playground/ shows a console warning "Duplicate definition of module 'vs/editor/editor.main'" when Monaco Editor loads. This suggests the editor module is being loaded or defined multiple times in the page configuration.
+CONTEXT: The zTool Playground page at https://iZTools.site/web-playground/ shows a console warning "Duplicate definition of module 'vs/editor/editor.main'" when Monaco Editor loads. This suggests the editor module is being loaded or defined multiple times in the page configuration.
 
 FIX PROMPT: Help me fix the Monaco Editor module loading configuration to eliminate the duplicate module definition warning. The module 'vs/editor/editor.main' should only be defined once during initialization.
 

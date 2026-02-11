@@ -1,7 +1,7 @@
 # 🎭 Persona-Driven Hub Strategy
 
 **Status**: ACTIVE (Implementation Phase)
-**Goal**: Transform ZTools from a static utility site into an **Adaptive Workspace** that learns from and caters to specific user types.
+**Goal**: Transform iZTools from a static utility site into an **Adaptive Workspace** that learns from and caters to specific user types.
 
 ---
 

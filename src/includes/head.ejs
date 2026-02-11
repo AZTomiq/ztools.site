@@ -7,7 +7,7 @@
     const host = window.location.hostname;
     const path = window.location.pathname;
     const mainDomain = "<%= siteGlobal.site.url.replace('https://', '').replace(/\/$/, '') %>";
-    const subdomains = <%- subdomainsJson %>;
+    const subdomains = <% - subdomainsJson %>;
 
     // 0. Bypasses for development
     if (host === 'localhost' || host === '127.0.0.1' || host.includes('.local')) return;
@@ -93,7 +93,7 @@
               <meta property="og:title" content="<%= title %>" />
               <meta property="og:description" content="<%= metaDesc %>" />
               <meta property="og:image" content="<%= siteGlobal.site.url %><%= ogImgPath %>" />
-              <meta property="og:site_name" content="ZTools" />
+              <meta property="og:site_name" content="iZTools" />
               <% const otherLocale=locale==='vi' ? 'en' : 'vi' ; %>
                 <meta property="og:locale" content="<%= locale === 'vi' ? 'vi_VN' : 'en_US' %>" />
                 <meta property="og:locale:alternate" content="<%= otherLocale === 'vi' ? 'vi_VN' : 'en_US' %>" />

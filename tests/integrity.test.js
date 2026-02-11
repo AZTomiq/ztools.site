@@ -7,7 +7,7 @@ const ROOT_DIR = path.join(__dirname, '..');
 const SRC_DIR = path.join(ROOT_DIR, 'src');
 const DIST_DIR = path.join(ROOT_DIR, 'dist-dev');
 
-describe('ZTools Integrity Tests', () => {
+describe('iZTools Integrity Tests', () => {
 
   describe('Feature Configurations', () => {
     const featuresDir = path.join(SRC_DIR, 'features');

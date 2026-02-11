@@ -1,5 +1,5 @@
 -- =====================================================
--- ZTools Usage Stats Seed Script
+-- iZTools Usage Stats Seed Script
 -- =====================================================
 -- Run this in Supabase SQL Editor to populate initial data
 -- Based on realistic usage patterns for Vietnamese market

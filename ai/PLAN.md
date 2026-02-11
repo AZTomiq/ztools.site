@@ -1,4 +1,4 @@
-# ZTools.site - Project Master Plan
+# iZTools.site - Project Master Plan
 
 ## 📊 Đánh giá hiện trạng (Audit)
 
@@ -38,7 +38,7 @@
 
 ### Giai đoạn 3: Nâng tầm tính năng (Advanced Features)
 
-- [ ] **ZTools API Layer:** Hỗ trợ dữ liệu thời gian thực (tỷ giá, giá vàng, crypto) qua Vercel Functions.
+- [ ] **iZTools API Layer:** Hỗ trợ dữ liệu thời gian thực (tỷ giá, giá vàng, crypto) qua Vercel Functions.
 - [ ] **Offline Mode (PWA):** Tối ưu `sw.js` để hỗ trợ sử dụng tool khi không có kết nối mạng.
 
 ### Giai đoạn 4: Hệ sinh thái & Cộng đồng (Expansion)

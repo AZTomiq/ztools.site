@@ -1,5 +1,5 @@
 /**
- * ZTools Persona System
+ * iZTools Persona System
  * Handles user identity and adaptive UI filtering
  */
 
@@ -26,7 +26,7 @@ const PersonaManager = {
       this.applyToUI();
 
       // Trigger custom event for other components
-      window.dispatchEvent(new CustomEvent('ztools:personaChanged', { detail: persona }));
+      window.dispatchEvent(new CustomEvent('iZTools:personaChanged', { detail: persona }));
 
       // Log for behavioral learning (future)
       console.log(`Persona set to: ${persona}`);

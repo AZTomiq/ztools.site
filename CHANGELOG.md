@@ -1,6 +1,6 @@
 # Changelog
 
-Tất cả các thay đổi quan trọng đối với dự án **ZTools** sẽ được ghi lại trong file này.
+Tất cả các thay đổi quan trọng đối với dự án **iZTools** sẽ được ghi lại trong file này.
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 và dự án này tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -120,7 +120,7 @@ và dự án này tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0
 
 ### Added
 
-- Khởi tạo dự án ZTools với các công cụ cơ bản: Tính thuế TNCN, BMI, JSON Toolkit, Loan Calculator.
+- Khởi tạo dự án iZTools với các công cụ cơ bản: Tính thuế TNCN, BMI, JSON Toolkit, Loan Calculator.
 - Hệ thống đa ngôn ngữ (i18n) Việt/Anh.
 - Hỗ trợ PWA (Progressive Web App).
 - Hệ thống build SSG (Static Site Generation) tùy chỉnh.

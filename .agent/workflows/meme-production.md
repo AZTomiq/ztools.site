@@ -1,5 +1,5 @@
 ---
-description: Pipeline chuẩn 5 bước để sản xuất Meme cho ZTools (Dev Reality + Master Persona)
+description: Pipeline chuẩn 5 bước để sản xuất Meme cho iZTools (Dev Reality + Master Persona)
 ---
 
 # 🐸 Meme Production Workflow
@@ -8,7 +8,7 @@ Quy trình này đảm bảo chất lượng nội dung "mặn", visual nhất q
 
 ## Bước 1: Ideation (Batch)
 
-- Agent sử dụng dàn nhân vật **Tèo, Tý, Tủn, Tẹt, Sếp** và map vào các **ZTools Master**.
+- Agent sử dụng dàn nhân vật **Tèo, Tý, Tủn, Tẹt, Sếp** và map vào các **iZTools Master**.
 - Output: Bảng 5-10 ý tưởng kèm: ID, Master, Scenario, Visual Description.
 
 ## Bước 2: Idea Approval

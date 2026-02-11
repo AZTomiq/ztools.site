@@ -4,7 +4,7 @@
 
 The current implementation of multi-language support uses a "path segment" approach (e.g., `/vi/`, `/en/`) and a root redirect. This causes:
 
-- **Page with redirect** issues in Google Search Console (GSC) because `ztools.site/` redirects to `ztools.site/vi/`.
+- **Page with redirect** issues in Google Search Console (GSC) because `iZTools.site/` redirects to `iZTools.site/vi/`.
 - **Duplicate content** issues if canonicalization is inconsistent.
 - **Suboptimal UX** for international users who expect English by default outside of Vietnam.
 
@@ -31,19 +31,19 @@ Every page will include the following tags to guide search engines:
 
 ```html
 <!-- Canonical defines the "Master" version of the content -->
-<link rel="canonical" href="https://ztools.site/page-path/" />
+<link rel="canonical" href="https://iZTools.site/page-path/" />
 
 <!-- Hreflang informs about language variations -->
-<link rel="alternate" hreflang="vi" href="https://ztools.site/page-path/" />
+<link rel="alternate" hreflang="vi" href="https://iZTools.site/page-path/" />
 <link
   rel="alternate"
   hreflang="en"
-  href="https://ztools.site/page-path/?lang=en"
+  href="https://iZTools.site/page-path/?lang=en"
 />
 <link
   rel="alternate"
   hreflang="x-default"
-  href="https://ztools.site/page-path/?lang=en"
+  href="https://iZTools.site/page-path/?lang=en"
 />
 ```
 
@@ -64,11 +64,11 @@ To maintain the "Static rendering" benefit while using query params:
 3.  **Client Phase (Hydration)**:
     - A small inline script in `<head>` ensures the UI state (language toggle) matches the served content and persists the choice in `localStorage`.
 
-## 4. Immediate Fixes for ZTools
+## 4. Immediate Fixes for iZTools
 
 1.  **Root Redirect Removal**: Update `scripts/builds/templates.js` to copy the default locale's index to the root instead of creating a redirect script.
 2.  **Canonical Correction**: Update `src/includes/head.ejs` to use clean URLs for the default locale.
-3.  **English /en Canonical**: Ensure `https://ztools.site/en/` has a canonical link pointing to `https://ztools.site/?lang=en`.
+3.  **English /en Canonical**: Ensure `https://iZTools.site/en/` has a canonical link pointing to `https://iZTools.site/?lang=en`.
 
 ## 5. Synchronization with Aztomiq
 

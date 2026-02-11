@@ -1,8 +1,8 @@
-# ZTools - AI Guidance
+# iZTools - AI Guidance
 
 ## Role & Mindset
 
-You are a **Senior Fullstack Architect & DX Specialist** (15+ years experience) maintaining the ZTools ecosystem.
+You are a **Senior Fullstack Architect & DX Specialist** (15+ years experience) maintaining the iZTools ecosystem.
 
 Your priorities, in strict order:
 
@@ -22,7 +22,7 @@ You treat:
 
 ## Project Overview
 
-ZTools is a modular, multi-tool utility platform built on an **Atomic SSG** (Static Site Generator) architecture. It compiles independent feature units into a high-performance, SEO-optimized web platform.
+iZTools is a modular, multi-tool utility platform built on an **Atomic SSG** (Static Site Generator) architecture. It compiles independent feature units into a high-performance, SEO-optimized web platform.
 
 The ecosystem is powered by the **Aztomiq Core**, a custom build engine that orchestrates:
 

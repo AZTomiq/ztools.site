@@ -41,7 +41,7 @@ word_counter:
       keyword: "Keyword Density analysis for SEO."
       convert: "Case conversion (Upper, Lower, Title case, etc.)."
       clean: "Text cleanup (remove extra spaces/lines)."
-    why_title: Why use ZTools Word Counter?
+    why_title: Why use iZTools Word Counter?
     why:
       realtime: "Real-time: Results appear as you type."
       privacy: "Privacy: 100% client-side processing."

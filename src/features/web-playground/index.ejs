@@ -1,5 +1,5 @@
 <% const navBase=isDev ? rootPath : siteGlobal.site.url + '/' ; %>
-  <!-- title: <%= t('playground.title') %> - ZTools -->
+  <!-- title: <%= t('playground.title') %> - iZTools -->
   <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 
   <div class="playground-container">
@@ -9,8 +9,9 @@
         <!-- Unified Menu & Logo -->
         <div class="nav-item logo-wrapper">
           <a href="<%= navBase %><%= locale === 'vi' ? '' : 'en/' %>" class="logo-link">
-            <img src="<%= rootPath %>assets/images/logo.svg" alt="ZTools Logo" class="logo-icon" width="28" height="28">
-            <span class="logo-text">ZTools</span>
+            <img src="<%= rootPath %>assets/images/logo.svg" alt="iZTools Logo" class="logo-icon" width="28"
+              height="28">
+            <span class="logo-text">iZTools</span>
           </a>
           <%- include('mega-menu.ejs') %>
         </div>

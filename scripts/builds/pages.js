@@ -199,8 +199,8 @@ async function buildPage(filePath, locale, baseDir) {
       const normalizedPath = '/' + outputRelPath.replace('index.html', '').replace(/^(en|vi)\//, '');
       const subdomain = GLOBAL_CONFIG.subdomains.find(s => s.path === normalizedPath);
       if (subdomain) {
-        // Create a flat file name, e.g., playground.ztools.site -> subdom-playground.ztools.site.html
-        // If it's English, name it subdom-en-playground.ztools.site.html
+        // Create a flat file name, e.g., playground.iZTools.site -> subdom-playground.iZTools.site.html
+        // If it's English, name it subdom-en-playground.iZTools.site.html
         const isEn = outputRelPath.startsWith('en/');
         const flatFileName = `subdom-${isEn ? 'en-' : ''}${subdomain.domain}.html`;
         await fs.writeFile(path.join(paths.DIST, flatFileName), fullHtml);

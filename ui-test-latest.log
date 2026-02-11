@@ -1,5 +1,5 @@
 
-> ztools-site@1.2.0 test:ui
+> iZTools-site@1.2.0 test:ui
 > node scripts/ui-test.js
 
 🚀 Starting UI Testing Tool

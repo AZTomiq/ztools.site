@@ -1,6 +1,6 @@
 bookmarkCreator:
   title: "Bookmark Creator"
-  desc: "Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên ZTools."
+  desc: "Tạo bộ bookmark cá nhân cho trình duyệt của bạn với các công cụ yêu thích trên iZTools."
   form:
     title: "Tạo danh sách Bookmark"
     subtitle: "Chọn các công cụ bạn muốn thêm vào bộ Bookmark"

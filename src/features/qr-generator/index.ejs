@@ -1,4 +1,4 @@
-<!-- title: <%= t('qr.title') %> - ZTools -->
+<!-- title: <%= t('qr.title') %> - iZTools -->
 <link rel="stylesheet" href="<%= toolConfig._assets.css %>">
 <script src="<%= asset('assets/vendor/qrcode/qrcode.min.js') %>"></script>
 
@@ -7,7 +7,7 @@
     <h1>🔳 <%= t('qr.title') %>
         <% if (typeof toolConfig !=='undefined' && toolConfig.meta && toolConfig.meta.version) { %>
           <button class="version-badge" id="open-changelog" aria-label="View Changelog">v<%= toolConfig.meta.version %>
-              </button>
+          </button>
           <% } %>
     </h1>
     <p>
@@ -21,7 +21,7 @@
         <label for="qr-input">
           <%= t('qr.labels.input') %>
         </label>
-        <textarea id="qr-input" placeholder="<%= t('qr.placeholder') %>">https://ztools.site</textarea>
+        <textarea id="qr-input" placeholder="<%= t('qr.placeholder') %>">https://iZTools.site</textarea>
       </div>
 
       <div class="qr-options">

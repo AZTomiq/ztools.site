@@ -1,5 +1,5 @@
 /**
- * zTools Anonymous Tracking System (Secure Proxy)
+ * iZTools Anonymous Tracking System (Secure Proxy)
  */
 
 (function () {

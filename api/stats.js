@@ -1,5 +1,5 @@
 /**
- * zTools Statistics API (Proxy for Supabase)
+ * iZTools Statistics API (Proxy for Supabase)
  * 
  * GET  - Fetch all tool usage stats
  * POST - Increment usage for a specific tool

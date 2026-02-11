@@ -30,7 +30,7 @@ We need a **Sharper Niche** to cut through the noise.
 - **Examples**:
   - "Moving a ticket from 'To Do' to 'In Progress' is my only coding today."
 
-### 4. The "ZTools Studio" Cast (Nhân vật Chủ thể) 🎭
+### 4. The "iZTools Studio" Cast (Nhân vật Chủ thể) 🎭
 
 To make memes relatable and consistent, we need a recurring cast of characters (Archetypes in VN Tech companies).
 
@@ -64,7 +64,7 @@ To make memes relatable and consistent, we need a recurring cast of characters (
 - **Style**: Hand-drawn Sketch / Sticker Style (Dễ thương nhưng bựa).
 - **Consistency**: Re-use character assets in different situations (Templates).
 
-## 🚀 Batch 2: ZTools Studio Cast (Ideator Output)
+## 🚀 Batch 2: iZTools Studio Cast (Ideator Output)
 
 | ID     | Title             | Characters    | Scenario                                                                                                             | Visual Description                                                                        |
 | :----- | :---------------- | :------------ | :------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |

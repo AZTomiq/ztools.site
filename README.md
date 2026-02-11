@@ -1,6 +1,6 @@
 # 🛠️ iztools.xyz
 
-**ZTools** is a collection of free, fast, and secure online utility tools designed for Vietnamese users. Built with a focus on privacy, performance, and user experience.
+**iZTools** is a collection of free, fast, and secure online utility tools designed for Vietnamese users. Built with a focus on privacy, performance, and user experience.
 
 ## 🌟 Features
 
@@ -36,7 +36,7 @@
 ## 📁 Project Structure
 
 ```
-ztools.site/
+iZTools.site/
 ├── src/                          # Source files
 │   ├── assets/
 │   │   ├── css/                  # Stylesheets
@@ -96,7 +96,7 @@ ztools.site/
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd ztools.site
+cd iZTools.site
 
 # Install dependencies
 npm install

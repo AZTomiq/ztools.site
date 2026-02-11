@@ -1,6 +1,6 @@
-# 🎯 ZTools Project Master Plan
+# 🎯 iZTools Project Master Plan
 
-Chào mừng bạn đến với trung tâm điều hành dự án ZTools. Cấu trúc kế hoạch đã được tái thiết kế để tập trung vào việc xử lý lỗi UI và hoàn thiện chất lượng sản phẩm.
+Chào mừng bạn đến với trung tâm điều hành dự án iZTools. Cấu trúc kế hoạch đã được tái thiết kế để tập trung vào việc xử lý lỗi UI và hoàn thiện chất lượng sản phẩm.
 
 ---
 

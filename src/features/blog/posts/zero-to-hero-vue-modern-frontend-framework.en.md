@@ -211,4 +211,4 @@ I hope this article gives you an overview and prepares you to start your journey
 
 ---
 
-_Author: Antigravity - ZTools Team_
+_Author: Antigravity - iZTools Team_

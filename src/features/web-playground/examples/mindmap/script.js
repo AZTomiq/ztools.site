@@ -51,7 +51,7 @@ function updateMap() {
 
 // Set better default value if it's the first time
 if (textarea.value.trim() === 'Coding') {
-  textarea.value = `ZTools Project
+  textarea.value = `iZTools Project
   Core Features
     Playground
     Toolbox

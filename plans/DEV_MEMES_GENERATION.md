@@ -2,13 +2,13 @@
 
 ## 🎯 Objective
 
-Create high-quality, relatable DEV memes for ztools.site using a controlled multi-agent pipeline.
+Create high-quality, relatable DEV memes for iZTools.site using a controlled multi-agent pipeline.
 
 ## 🤖 The 5-Step Workflow
 
 ### Step 1: Ideation (Agent 1)
 
-- **Goal**: Generate 10-20 "niche" concepts based on "ZTools Studio Cast" (Tèo, Tý, Tủn, Tẹt, Sếp).
+- **Goal**: Generate 10-20 "niche" concepts based on "iZTools Studio Cast" (Tèo, Tý, Tủn, Tẹt, Sếp).
 - **Output**: A list of ideas with Title and Visual Description.
 
 ### Step 2: Idea Review (User/Agent 3)

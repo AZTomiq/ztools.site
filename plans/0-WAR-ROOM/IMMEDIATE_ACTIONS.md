@@ -24,13 +24,13 @@ _No critical bugs currently identified._
 
 ### 1. **Testing Infrastructure & DX Core** (Completed)
 
-**Ref**: `bin/ztools.js`, `DEVELOPMENT.md`
+**Ref**: `bin/iZTools.js`, `DEVELOPMENT.md`
 **Priority**: HIGH - Prevent regressions & Speed up scaffolding
 
 - [x] Create `tests/integrity.test.js` (Check if broken logic is fixed)
 - [x] Create `tests/locales.test.js` (Verify missing keys again)
 - [x] Implement `npm test` command
-- [x] **ZTools CLI**: Implement `ztools status`, `analyze`, `cleanup`, `version`, and `tool:create` scaffolding.
+- [x] **iZTools CLI**: Implement `iZTools status`, `analyze`, `cleanup`, `version`, and `tool:create` scaffolding.
 - [x] **Framework Portability**: Standardized `bin/` structure for easier core migration.
 
 ### 2. **SEO Enhancements - Schema & Content**
@@ -68,7 +68,7 @@ _No critical bugs currently identified._
 - [ ] Standardize consistent spacing variables
 - [ ] **Advanced Theme System**: Detailed plan in `plans/2-STRATEGY/STRATEGIC_NOTES.md#3`
 
-### 6. **User Workspace & Core Features (ZTools v1.6.0)**
+### 6. **User Workspace & Core Features (iZTools v1.6.0)**
 
 - [x] **Favorite Tools**: Add "Star" button to tools. Persisted in `localStorage`.
 - [x] **Recently Used**: Track tool usage and display on homepage.
@@ -99,7 +99,7 @@ _No critical bugs currently identified._
 
 - **Active Tools**: 42/334 (12%)
 - **Lighthouse**: ~95 (Need re-check after UI updates)
-- **Framework Health**: 100% (Verfied via `ztools status`)
+- **Framework Health**: 100% (Verfied via `iZTools status`)
 - **Test Coverage**: ~35% (Automated integrity & locale checks + 21 feature tests)
 - **Translation Coverage**: 100% (Atomic YAML system in place)
 
