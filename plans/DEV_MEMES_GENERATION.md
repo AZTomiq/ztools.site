@@ -2,7 +2,7 @@
 
 ## 🎯 Objective
 
-Create high-quality, relatable DEV memes for iZTools.site using a controlled multi-agent pipeline.
+Create high-quality, relatable DEV memes for iztools.xyz using a controlled multi-agent pipeline.
 
 ## 🤖 The 5-Step Workflow
 

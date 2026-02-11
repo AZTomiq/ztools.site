@@ -10,7 +10,7 @@ Rules for AI:
 
 ## Project Overview
 
-**Name**: iZTools.site
+**Name**: iztools.xyz
 **Description**: Multi-tool utility site with secure, fast, and modern UI.
 **Tech Stack**:
 

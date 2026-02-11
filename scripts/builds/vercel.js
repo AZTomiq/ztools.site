@@ -56,10 +56,10 @@ async function generateVercelConfig() {
       if (domain.endsWith('iztools.xyz')) {
         const subdomainPrefix = domain.replace('.iztools.xyz', '');
 
-        // Redirect from iZTools.site subdomains
+        // Redirect from iztools.xyz subdomains
         config.redirects.push({
           source: '/:path*',
-          has: [{ type: 'host', value: `${subdomainPrefix}.iZTools.site` }],
+          has: [{ type: 'host', value: `${subdomainPrefix}.iztools.xyz` }],
           destination: `https://${domain}/:path*`,
           permanent: true
         });
@@ -90,7 +90,7 @@ async function generateVercelConfig() {
     });
 
     // 4. Global Satellite Root Redirects
-    const satelliteDomains = ['iZTools.site', 'eztools.site'];
+    const satelliteDomains = ['iztools.xyz', 'eztools.site'];
     satelliteDomains.forEach(sat => {
       config.redirects.push({
         source: '/:path*',

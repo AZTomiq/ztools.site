@@ -1,4 +1,4 @@
-# iZTools.site - Project Master Plan
+# iztools.xyz - Project Master Plan
 
 ## 📊 Đánh giá hiện trạng (Audit)
 

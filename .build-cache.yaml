@@ -225,10 +225,10 @@ prod/features/web-playground/script.js: b96125665d6978b4133a22819bfc51a8
 prod/features/word-counter/style.css: abbd1e2661839701a5a3b621fba30515
 prod/features/word-counter/script.js: 45e5b9771f24baf052849cc852351c2b
 prod/page/pages/404.ejs: e33bdf8c602155a5beafa541520a3911
-prod/page/pages/about.ejs: 86455018fe490289d038dd0e620a0f99
+prod/page/pages/about.ejs: fbb44444ff410d60c46af967924bcb66
 prod/page/pages/categories.ejs: 3f6bdd27a9b153ab36124158bccc0ac6
 prod/page/pages/changelog.ejs: e7110b651cd58a0554e7e75f28b94a4c
-prod/page/pages/index.ejs: 60317504587bef5c4b8b08351e0bb8b4
+prod/page/pages/index.ejs: 8668916e640b10284f16e143a0aef528
 prod/page/pages/privacy.ejs: cf795eb08b0d54c5c37944e433cbad42
 prod/page/pages/roadmap.ejs: f2e83dc4e40df99ff80ca44017c5de7b
 prod/page/pages/terms.ejs: 7b6a89e9ba36e9e747c31287622fcdf7
@@ -254,7 +254,7 @@ prod/page/features/lunar-calendar/index.ejs: d87470c42884914932f7540e837a3ed7
 prod/page/features/ot-calculator/index.ejs: a3bbb589a16a15870b8efe1f8bdd484e
 prod/page/features/password-generator/index.ejs: 3e4579359ab3d2ee6eb82a7ef55ebe25
 prod/page/features/percentage-calculator/index.ejs: 6de097b2ec2f71ae0f9a1a34b77e18b4
-prod/page/features/qr-generator/index.ejs: d00344b2cdeacf35a8ead295890010ef
+prod/page/features/qr-generator/index.ejs: e78399ee278799bd6a6adaaf5db1f050
 prod/page/features/random-toolkit/index.ejs: 7fa36d1adf6234185b13fb8682499862
 prod/page/features/salary-tax-master/index.ejs: e87ae1af453ab04393cfdbf6f4fbda3f
 prod/page/features/savings-interest/index.ejs: a5a678bf93514d9c861ed889062031b5
@@ -268,10 +268,10 @@ prod/page/features/url-toolkit/index.ejs: 4a343d8100cf5c7a764e398a9ce145b0
 prod/page/features/uuid-generator/index.ejs: 1e40acdc17e58c321ce00ca844120b57
 prod/page/features/web-playground/index.ejs: e3049e1f7f1d1e473c8ba0e73e66410a
 prod/page/features/word-counter/index.ejs: 827805ceffb23a6c003928e3e3c4076c
-prod/global/data/global.yaml: e15ac475f23468d96ec4ad1c804bf38c
+prod/global/data/global.yaml: 8b922579204d88254153ad871b06c7ba
 prod/includes/includes/breadcrumbs.ejs: 969998be5d086450fa4680c4fd8d6ef5
 prod/includes/includes/cloud-tags.ejs: e99242b808c5c09dc407be1650c55c5c
-prod/includes/includes/footer.ejs: db5aa499ad817387db5f57b78451c13e
+prod/includes/includes/footer.ejs: 34ad89d4770e2396bfe6fe5861cd06c4
 prod/includes/includes/generator.ejs: ca7c90146912c11a0b76330070a391f2
 prod/includes/includes/head.ejs: ea21a424a4b6d3bfcd1d2cb3d8e336ed
 prod/includes/includes/header-data-only.ejs: 7ad928e1ff25f7ea84d9b96c1eb4bedd

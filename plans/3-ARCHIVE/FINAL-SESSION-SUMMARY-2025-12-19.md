@@ -91,7 +91,7 @@
 
 1. ✅ Master layout CSS container width
 2. ✅ JSON toolkit overflow
-3. ✅ i18n false positives (iZTools.site)
+3. ✅ i18n false positives (iztools.xyz)
 4. ✅ Screenshot cleanup needed
 
 ### Minor (Remaining)

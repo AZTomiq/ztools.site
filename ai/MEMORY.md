@@ -10,7 +10,7 @@
 
 - **Canonical URLs**: Generated dynamically in `head.ejs` and `sitemap.xml.ejs`. Subdomains strip their prefix (e.g., `/web-playground/` becomes `/`).
 - **Navigation Perfection**: Hub links (Logo, Home, Categories) are **forced to Absolute URLs** (`global.site.url`) to prevent 404s on subdomains.
-- **Language Switcher**: Calculates absolute target URLs. If on a subdomain, it stays on that subdomain (e.g., `laikep.iZTools.site/en/`).
+- **Language Switcher**: Calculates absolute target URLs. If on a subdomain, it stays on that subdomain (e.g., `laikep.iztools.xyz/en/`).
 - **Dev Safety**: All absolute URL overrides are wrapped in `isDev` checks or browser-side localhost checks to prevent production redirects during local development.
 
 ## Coding Conventions

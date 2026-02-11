@@ -7,7 +7,7 @@
       "has": [
         {
           "type": "host",
-          "value": "json.iZTools.site"
+          "value": "json.iztools.xyz"
         }
       ],
       "destination": "https://json.iztools.xyz/:path*",
@@ -29,7 +29,7 @@
       "has": [
         {
           "type": "host",
-          "value": "tncn.iZTools.site"
+          "value": "tncn.iztools.xyz"
         }
       ],
       "destination": "https://tncn.iztools.xyz/:path*",
@@ -51,7 +51,7 @@
       "has": [
         {
           "type": "host",
-          "value": "laikep.iZTools.site"
+          "value": "laikep.iztools.xyz"
         }
       ],
       "destination": "https://laikep.iztools.xyz/:path*",
@@ -73,7 +73,7 @@
       "has": [
         {
           "type": "host",
-          "value": "playground.iZTools.site"
+          "value": "playground.iztools.xyz"
         }
       ],
       "destination": "https://playground.iztools.xyz/:path*",
@@ -95,7 +95,7 @@
       "has": [
         {
           "type": "host",
-          "value": "amlich.iZTools.site"
+          "value": "amlich.iztools.xyz"
         }
       ],
       "destination": "https://amlich.iztools.xyz/:path*",
@@ -117,7 +117,7 @@
       "has": [
         {
           "type": "host",
-          "value": "lunar.iZTools.site"
+          "value": "lunar.iztools.xyz"
         }
       ],
       "destination": "https://lunar.iztools.xyz/:path*",
@@ -139,7 +139,7 @@
       "has": [
         {
           "type": "host",
-          "value": "iZTools.site"
+          "value": "iztools.xyz"
         }
       ],
       "destination": "https://iztools.xyz/:path*",
@@ -150,7 +150,7 @@
       "has": [
         {
           "type": "host",
-          "value": "www.iZTools.site"
+          "value": "www.iztools.xyz"
         }
       ],
       "destination": "https://iztools.xyz/:path*",

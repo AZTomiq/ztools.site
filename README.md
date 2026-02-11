@@ -36,7 +36,7 @@
 ## 📁 Project Structure
 
 ```
-iZTools.site/
+iztools.xyz/
 ├── src/                          # Source files
 │   ├── assets/
 │   │   ├── css/                  # Stylesheets
@@ -96,7 +96,7 @@ iZTools.site/
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd iZTools.site
+cd iztools.xyz
 
 # Install dependencies
 npm install

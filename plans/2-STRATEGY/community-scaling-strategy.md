@@ -11,7 +11,7 @@ goals:
 
 # 🚀 Community Scaling Strategy
 
-**Mission:** Transform `iZTools.site` from a personal side-project into a **Community-Driven Toolkit Platform**.
+**Mission:** Transform `iztools.xyz` from a personal side-project into a **Community-Driven Toolkit Platform**.
 
 ## 1. The Core Philosophy
 

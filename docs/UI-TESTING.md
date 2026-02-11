@@ -226,7 +226,7 @@ await page.waitForTimeout(2000); // Wait 2 seconds
 
 ```javascript
 const CONFIG = {
-  baseUrl: "https://iZTools.site", // Production URL
+  baseUrl: "https://iztools.xyz", // Production URL
   // ...
 };
 ```
