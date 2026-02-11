@@ -1,8 +1,8 @@
 meta:
-  title: ZTools - Free Online Utility Tools
+  title: iZTools - Free Online Utility Tools
   description: "Free online utility tools: Tax Calculator, BMI, JSON Formatter, and more."
 about:
-  title: About ZTools
+  title: About iZTools
 privacy:
   title: Privacy Policy
 terms:
@@ -109,14 +109,14 @@ home:
     desc: Optimized performance with specialized environments, high speed, and professional UI.
     launch: Launch Now
   apple:
-    hero_headline: "zTools.\nTools designed to think clearer."
+    hero_headline: "iZTools.\nTools designed to think clearer."
     hero_subheadline: "A minimalist ecosystem — refined for speed, precision, and a seamless experience."
     hero_explore: "Explore Ecosystem →"
     philosophy_title: "Not more. Just better."
-    philosophy_body: "Every tool in zTools is built with a single goal: reduce complexity, increase clarity. You focus on thinking — we handle the rest."
+    philosophy_body: "Every tool in iZTools is built with a single goal: reduce complexity, increase clarity. You focus on thinking — we handle the rest."
     story:
       playground:
-        title: "zTool Playground"
+        title: "iZTool Playground"
         subtitle: "Your personal sandbox."
         desc: "Write. Run. Observe. No setup, no friction, no distractions. Just you and your ideas."
       compound:
@@ -135,16 +135,16 @@ home:
         title: "Income Tax Calc"
         subtitle: "Clear. Transparent. Correct."
         desc: "Tax doesn't have to be complex. Input data. Get results. Understand immediately."
-    closing_headline: "zTools — tools, designed."
+    closing_headline: "iZTools — tools, designed."
     closing_subheadline: "No noise. No flash. It just works, beautifully."
-    closing_cta: "Experience zTools"
+    closing_cta: "Experience iZTools"
 
 msg:
   starred: "Added to favorites"
   unstarred: "Removed from favorites"
   history_cleared: "History cleared"
 footer:
-  about_title: ZTools.site
+  about_title: iZTools.xyz
   about_desc: "Free, simple, and secure utility tools."
   links_title: Links
   intro: About
@@ -153,8 +153,8 @@ footer:
   changelog: Versions
   copyright: "© 2025 AZtomiq. Built with ❤️."
   feedback:
-    title: "Message ZTools"
-    desc: "We are always here to listen! Is there anything you'd like to share with the ZTools.site team?"
+    title: "Message iZTools"
+    desc: "We are always here to listen! Is there anything you'd like to share with the iZTools.xyz team?"
     slogan: "Your feedback is our greatest motivation! Thank you so much!"
     name: "Your Name (optional)"
     email: "Contact email (optional)"

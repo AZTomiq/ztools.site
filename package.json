@@ -1,7 +1,7 @@
 {
   "name": "ztools-site",
   "version": "1.5.2",
-  "description": "zTools - Multi-tool utility site with secure, fast, and modern UI",
+  "description": "Multi-tool utility site built with EJS - iztools.xyz",
   "main": "scripts/build.js",
   "bin": {
     "aztomiq": "bin/aztomiq.js"

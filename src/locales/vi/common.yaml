@@ -1,8 +1,8 @@
 meta:
-  title: ZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
+  title: iZTools - Bộ Công Cụ Tiện Ích Online Miễn Phí
   description: Bộ công cụ tiện ích online miễn phí, tính thuế TNCN, BMI, format JSON, và nhiều công cụ hữu ích khác cho người Việt.
 about:
-  title: Về ZTools
+  title: Về iZTools
 privacy:
   title: Chính Sách Bảo Mật
 terms:
@@ -109,14 +109,14 @@ home:
     desc: Trải nghiệm tối ưu với môi trường riêng biệt, tốc độ cao và giao diện chuyên nghiệp.
     launch: Truy cập ngay
   apple:
-    hero_headline: "zTools.\nCông cụ được thiết kế để suy nghĩ rõ hơn."
+    hero_headline: "iZTools.\nCông cụ được thiết kế để suy nghĩ rõ hơn."
     hero_subheadline: "Một hệ sinh thái công cụ tối giản — được tinh chỉnh cho tốc độ, độ chính xác và trải nghiệm mượt mà."
     hero_explore: "Khám phá hệ sinh thái →"
     philosophy_title: "Không phải nhiều hơn. Mà tốt hơn."
-    philosophy_body: "Mỗi công cụ trong zTools được xây dựng với một mục tiêu duy nhất: giảm độ phức tạp, tăng độ rõ ràng. Bạn tập trung vào tư duy — phần còn lại, chúng tôi lo."
+    philosophy_body: "Mỗi công cụ trong iZTools được xây dựng với một mục tiêu duy nhất: giảm độ phức tạp, tăng độ rõ ràng. Bạn tập trung vào tư duy — phần còn lại, chúng tôi lo."
     story:
       playground:
-        title: "zTool Playground"
+        title: "iZTool Playground"
         subtitle: "Không gian thử nghiệm của bạn."
         desc: "Viết. Chạy. Quan sát. Không setup, không ma sát, không phiền nhiễu. Chỉ bạn và ý tưởng của mình."
       compound:
@@ -135,15 +135,15 @@ home:
         title: "Tính Thuế Thu Nhập"
         subtitle: "Rõ ràng. Minh bạch. Đúng đắn."
         desc: "Thuế không cần phức tạp. Nhập số liệu. Nhận kết quả. Hiểu ngay."
-    closing_headline: "zTools — công cụ, được thiết kế."
+    closing_headline: "iZTools — công cụ, được thiết kế."
     closing_subheadline: "Không ồn ào. Không phô trương. Chỉ đơn giản là hoạt động thật tốt."
-    closing_cta: "Trải nghiệm zTools"
+    closing_cta: "Trải nghiệm iZTools"
 msg:
   starred: "Đã thêm vào yêu thích"
   unstarred: "Đã xóa khỏi yêu thích"
   history_cleared: "Đã xóa lịch sử"
 footer:
-  about_title: ZTools.site
+  about_title: iZTools.xyz
   about_desc: Bộ công cụ tiện ích miễn phí, đơn giản và bảo mật.
   links_title: Liên kết
   intro: Giới thiệu
@@ -152,8 +152,8 @@ footer:
   changelog: Nhật ký cập nhật
   copyright: © 2025 AZtomiq. Built with ❤️.
   feedback:
-    title: "Nhắn nhủ ZTools"
-    desc: "Chúng tôi luôn ở đây để lắng nghe! Bạn có điều gì muốn nhắn nhủ đến đội ngũ ZTools.site?"
+    title: "Nhắn nhủ iZTools"
+    desc: "Chúng tôi luôn ở đây để lắng nghe! Bạn có điều gì muốn nhắn nhủ đến đội ngũ iZTools.xyz?"
     slogan: "Những góp ý của bạn là động lực của chúng tôi! Xin chân thành cảm ơn!"
     name: "Tên của bạn (không bắt buộc)"
     email: "Email liên hệ (không bắt buộc)"
@@ -235,7 +235,7 @@ bookmarkCreator:
 
 blog:
   title: Dev ký sự
-  desc: Chuyện hậu trường, kỹ thuật code và những cập nhật từ đội ngũ zTools.
+  desc: Chuyện hậu trường, kỹ thuật code và những cập nhật từ đội ngũ iZTools.
   hero_title: "Dev Diary & <br>Coding Tales"
   back: Quay lại
   more: Xem thêm bài viết
