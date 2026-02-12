@@ -34,32 +34,59 @@
     </section>
 
     <section class="section-tet-countdown" id="tet-countdown">
-      <div class="countdown-wrapper">
+      <!-- Particle Layer -->
+      <canvas id="tet-blossom-canvas"></canvas>
+
+      <div class="countdown-overlay"></div>
+
+      <div class="countdown-wrapper vpc-glass">
+        <!-- Floating Decor -->
+        <div class="floating-lantern l1">🏮</div>
+        <div class="floating-lantern l2">🏮</div>
+
         <!-- Top Right Fullscreen Toggle -->
         <button id="fullscreen-countdown" class="fs-trigger-icon" title="Toàn màn hình">
-          <i data-lucide="maximize" style="width: 24px; height: 24px;"></i>
+          <i data-lucide="maximize"></i>
         </button>
 
-        <h2 class="countdown-title">PHÓNG NHƯ BAY TỚI TẾT BÍNH NGỌ 2026</h2>
+        <h2 class="countdown-title-premium">
+          <span class="gradient-text">PHÓNG NHƯ BAY TỚI TẾT BÍNH NGỌ 2026</span>
+        </h2>
 
-        <div id="tet-timer" class="tet-timer">
-          <div class="timer-unit"><span id="days">00</span><small>Ngày</small></div>
-          <div class="timer-sep">·</div>
-          <div class="timer-unit"><span id="hours">00</span><small>Giờ</small></div>
-          <div class="timer-sep">·</div>
-          <div class="timer-unit"><span id="minutes">00</span><small>Phút</small></div>
-          <div class="timer-sep">·</div>
-          <div class="timer-unit"><span id="seconds">00</span><small>Giây</small></div>
+        <div id="tet-timer" class="tet-timer-modern">
+          <div class="timer-unit-modern">
+            <div class="num-card"><span id="days">00</span></div>
+            <small>Ngày</small>
+          </div>
+          <div class="timer-sep-modern">:</div>
+          <div class="timer-unit-modern">
+            <div class="num-card"><span id="hours">00</span></div>
+            <small>Giờ</small>
+          </div>
+          <div class="timer-sep-modern">:</div>
+          <div class="timer-unit-modern">
+            <div class="num-card"><span id="minutes">00</span></div>
+            <small>Phút</small>
+          </div>
+          <div class="timer-sep-modern">:</div>
+          <div class="timer-unit-modern">
+            <div class="num-card"><span id="seconds">00</span></div>
+            <small>Giây</small>
+          </div>
         </div>
 
-        <div class="horse-slogan">
-          <div class="slogan-line">🐎 Mã chưa kịp hí đã tới Tết</div>
-          <div class="slogan-wish">chúc bạn</div>
-          <div class="slogan-main">🧧 Bính Ngọ chưa kịp chạy đã thành công!</div>
+        <div class="premium-slogan">
+          <p class="slogan-sub">🐎 Mã Đáo Thành Công</p>
+          <p class="slogan-main">🧧 Bính Ngọ chưa kịp chạy đã thành công!</p>
+
+          <button id="lucky-lixi" class="btn-lixi" title="Nhận lộc đầu xuân">
+            <span class="lixi-icon">🧧</span>
+            <span class="lixi-text">Nhận Lộc</span>
+          </button>
         </div>
 
-        <!-- Mã Đáo Thành Công Background Image -->
-        <div class="ma-dao-bg"></div>
+        <!-- Background Image with Parallax -->
+        <div class="ma-dao-parallax-bg"></div>
       </div>
     </section>
 

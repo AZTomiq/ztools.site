@@ -1,82 +1,254 @@
-<!-- title: <%= t('folkGames.games.heo.title') %> - ZTools -->
+<!-- title: <%= t('folkGames.games.heo.title') %> - iZTools -->
+<meta name="description"
+  content="Trò chơi Đập Heo Lì Xì Tết - Nhận lì xì may mắn đầu năm với những thử thách bựa và câu chúc hài hước.">
+<meta property="og:title" content="🐷 Đập Heo Lì Xì Tết - iZTools">
+<meta property="og:description" content="Đập heo săn lì xì, cười thả ga với phiên bản Bựa Edition cực hấp dẫn.">
+<meta property="og:image" content="<%= asset('assets/images/dap-heo/heo_dat_nung.png') %>">
 <link rel="stylesheet" href="<%= asset('assets/css/folk-games.css') %>">
 <link rel="stylesheet" href="<%= asset('assets/css/dap-heo.css') %>">
 
 <section class="tool-container folk-bg-paper">
-  <div class="page-header">
-    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-      <h1 style="margin-bottom: 0;">🐷 <%= t('folkGames.games.heo.title') %>
-      </h1>
-      <a href="../" class="btn-folk" style="padding: 4px 12px; font-size: 0.8rem; text-decoration: none;">← <%=
-          t('blog.back') %></a>
-    </div>
-    <p>
-      <%= t('folkGames.games.heo.desc') %>
-    </p>
-  </div>
-
+  <button class="fullscreen-exit-btn" id="btn-exit-fullscreen">✕</button>
   <div class="heo-game-container">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h1 style="cursor: default; font-size: 4rem; margin-bottom: 0.25rem;" id="secret-trigger-emoji">🐷</h1>
+      <h2 class="text-3xl font-bold" style="color: var(--folk-red);">ĐẬP HEO LÌ XÌ</h2>
+      <p style="color: var(--text-muted); font-style: italic;">"Bựa Edition" - Thử vận may, nhận lì xì ngay!</p>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="heo-modal hidden">
+      <div class="heo-modal-content admin-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="margin: 0; font-size: 1.2rem; font-weight: bold;">⚙️ QUẢN LÝ QUOTA & TỈ LỆ</h3>
+          <button id="btn-close-admin"
+            style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <h4 style="font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 4px; margin-bottom: 0.75rem;">
+            💰 NGÂN SÁCH</h4>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="number" id="cfg-budget" class="admin-input" value="2000000" min="100000" step="100000"
+              style="flex: 1; font-size: 1.1rem; font-weight: bold;">
+            <span style="font-size: 0.8rem; color: #888;">đ</span>
+          </div>
+          <button id="btn-auto-distribute" class="btn-folk"
+            style="width: 100%; margin-top: 0.5rem; background: #6c5ce7; font-size: 0.85rem; padding: 0.5rem;">
+            🎲 TỰ PHÂN BỔ
+          </button>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <h4 style="font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 4px; margin-bottom: 0.75rem;">
+            🎨 CHỦ ĐỀ (THEME)</h4>
+          <select id="cfg-theme" class="admin-input" style="width: 100%; font-weight: bold;">
+            <option value="heo">🐷 Đập Heo (Default)</option>
+            <option value="lixi">🧧 Khui Lì Xì</option>
+            <option value="nieu">🏺 Đập Niêu</option>
+          </select>
+        </div>
+
+        <section style="padding-top: 0.75rem; border-top: 2px dashed #eee;">
+          <h4 style="font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 4px; margin-bottom: 0.75rem;">
+            📊 PHÂN BỔ HEO (tự tính hoặc chỉnh tay)</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
+            <div>
+              <label style="font-size: 0.7rem;">💎 Kim Cương (500k)</label>
+              <input type="number" id="cfg-diamond-count" class="admin-input" value="1" min="0" max="10">
+            </div>
+            <div>
+              <label style="font-size: 0.7rem;">🥇 Vàng (200k)</label>
+              <input type="number" id="cfg-gold-count" class="admin-input" value="3" min="0" max="20">
+            </div>
+            <div>
+              <label style="font-size: 0.7rem;">🐷 Thường (10-50k)</label>
+              <input type="number" id="cfg-common-count" class="admin-input" value="29" min="0" max="90">
+            </div>
+          </div>
+          <div id="admin-budget-sum"
+            style="font-size: 1rem; font-weight: 700; color: var(--folk-red); text-align: center; margin-top: 0.5rem;">
+            Tổng: 0đ
+          </div>
+        </section>
+
+        <section style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 2px dashed #eee;">
+          <h4 style="font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 4px; margin-bottom: 0.75rem;">
+            🎯 CẤU HÌNH ĐẶC BIỆT</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
+            <div>
+              <label style="font-size: 0.7rem;">💨 HEO TRỐNG</label>
+              <input type="number" id="cfg-empty-count" class="admin-input" value="17" min="0" max="80">
+            </div>
+            <div>
+              <label style="font-size: 0.7rem;">⭐ HEO X2</label>
+              <input type="number" id="cfg-x2-count" class="admin-input" value="2" min="0" max="5">
+            </div>
+            <div>
+              <label style="font-size: 0.7rem;">🏆 HEO TOP2</label>
+              <input type="number" id="cfg-top2-count" class="admin-input" value="1" min="0" max="5">
+            </div>
+          </div>
+          <div id="admin-slot-info" style="font-size: 0.75rem; color: #888; text-align: center; margin-top: 0.5rem;">
+            Tổng slots: 100 | Còn lại: --
+          </div>
+        </section>
+
+        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+          <button id="btn-save-admin" class="btn-folk" style="flex: 1;">LƯU CÀI ĐẶT</button>
+          <button id="btn-reset-admin" class="btn-folk" style="flex: 1; background: #888;">RESET</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Screen 1: Setup -->
     <div id="screen-setup" class="heo-screen">
       <div class="heo-setup-card">
-        <h3>CHỌN SỐ LƯỢT ĐẬP HEO</h3>
-        <p>Mỗi lượt đập là một cơ hội nhận lì xì khủng!</p>
-
-        <div class="turn-selector">
-          <div class="turn-option" data-turns="1">1 LƯỢT</div>
-          <div class="turn-option active" data-turns="2">2 LƯỢT</div>
-          <div class="turn-option" data-turns="3">3 LƯỢT</div>
+        <!-- Phase 1: Name Entry -->
+        <div id="phase-form" class="setup-phase">
+          <div class="heo-wheel-area">
+            <label style="font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 0.75rem;">🎡 Ai sẽ đập
+              heo?</label>
+            <textarea id="heo-wheel-names" class="heo-wheel-names" rows="5"
+              placeholder="Nhập danh sách tên (mỗi dòng 1 tên)...">An
+Bình
+Cường
+Dũng
+Em</textarea>
+            <div class="heo-wheel-container">
+              <canvas id="heo-wheel-canvas" width="400" height="400"></canvas>
+              <div class="heo-wheel-pointer">▼</div>
+            </div>
+            <button id="btn-spin-wheel" class="btn-folk setup-btn-start"
+              style="font-size: 1.2rem; padding: 0.8rem 2.5rem;">
+              🎡 QUAY NGAY!
+            </button>
+          </div>
         </div>
 
-        <button id="btn-start-game" class="btn-folk" style="padding: 1rem 3rem; font-size: 1.2rem;">
-          🧧 BẮT ĐẦU NGAY
-        </button>
+        <!-- Phase 2: Dice Rolling -->
+        <div id="phase-dice" class="setup-phase hidden">
+          <p class="dice-greeting" id="dice-greeting">Chào <strong>bạn</strong>! Tung xúc xắc nào...</p>
+          <div class="dice-stage">
+            <div class="dice-scene">
+              <div class="dice-cube" id="dice-cube">
+                <div class="dice-face face-1"><span class="pip center"></span></div>
+                <div class="dice-face face-2"><span class="pip top-left"></span><span class="pip bottom-right"></span>
+                </div>
+                <div class="dice-face face-3"><span class="pip top-left"></span><span class="pip center"></span><span
+                    class="pip bottom-right"></span></div>
+                <div class="dice-face face-4"><span class="pip top-left"></span><span class="pip top-right"></span><span
+                    class="pip bottom-left"></span><span class="pip bottom-right"></span></div>
+                <div class="dice-face face-5"><span class="pip top-left"></span><span class="pip top-right"></span><span
+                    class="pip center"></span><span class="pip bottom-left"></span><span
+                    class="pip bottom-right"></span></div>
+                <div class="dice-face face-6"><span class="pip top-left"></span><span class="pip top-right"></span><span
+                    class="pip mid-left"></span><span class="pip mid-right"></span><span
+                    class="pip bottom-left"></span><span class="pip bottom-right"></span></div>
+              </div>
+            </div>
+            <div class="dice-shadow"></div>
+          </div>
+          <div id="dice-result-area" class="dice-result-area hidden">
+            <div class="dice-result-number" id="roll-value">?</div>
+            <div class="dice-result-text" id="roll-text">lượt đập heo!</div>
+            <button id="btn-enter-game" class="btn-folk setup-btn-enter">
+              BẮT ĐẦU 🔨
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Screen 2: Game Grid -->
     <div id="screen-game" class="heo-screen hidden">
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <span class="btn-folk" style="background: var(--folk-gold-dark); pointer-events: none;">
+      <div class="game-bar">
+        <span class="game-bar-item">
           LƯỢT CÒN LẠI: <span id="remaining-turns">0</span>
         </span>
+        <span class="game-bar-item">
+          💰 MAX: <span id="current-max">0</span>đ
+        </span>
+        <span class="game-bar-item powerup" id="bar-x2">⚡ X2</span>
+        <span class="game-bar-item powerup" id="bar-top2">🏆 TOP 2</span>
       </div>
 
       <div class="heo-grid" id="heo-grid">
-        <!-- 9 pigs will be here -->
+        <!-- 100 pigs will be here -->
+      </div>
+
+      <div id="admin-game-tools" class="admin-game-tools hidden">
+        <button id="btn-reveal-positions" class="btn-folk"
+          style="background: #6c5ce7; font-size: 0.8rem; padding: 0.5rem 1rem;">
+          👁️ Tiết lộ vị trí
+        </button>
+        <button id="btn-reshuffle" class="btn-folk"
+          style="background: #e17055; font-size: 0.8rem; padding: 0.5rem 1rem;">
+          🔀 Đảo thứ tự
+        </button>
+        <button id="btn-reset-grid" class="btn-folk"
+          style="background: #d63031; font-size: 0.8rem; padding: 0.5rem 1rem;">
+          🔄 Reset Grid
+        </button>
       </div>
     </div>
 
     <!-- Screen 3: Reveal -->
     <div id="screen-reveal" class="heo-screen hidden">
       <div class="reveal-content">
-        <div id="reveal-tier" style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">HEO THƯỜNG</div>
-        <div id="reveal-pig-emoji" style="font-size: 8rem; margin-bottom: 1rem;">🐖</div>
-        <div class="reveal-money" id="reveal-amount">+0đ</div>
-        <div class="reveal-wish" id="reveal-wish">Chúc bạn năm mới phát tài!</div>
+        <div class="reveal-rays"></div>
+        <div style="position: relative; z-index: 1;">
+          <div class="badge badge-error" style="margin-bottom: 0.5rem;" id="reveal-tier">HEO VÀNG</div>
+          <div id="reveal-pig-emoji" style="margin-bottom: 1rem;">🐖</div>
+          <div class="reveal-money" id="reveal-amount">+0đ</div>
+          <div class="reveal-wish" id="reveal-wish">Chúc bạn năm mới phát tài!</div>
 
-        <div id="reveal-challenge" class="challenge-box hidden">
-          <h4 style="color: #92400e; margin-top: 0;">⚡ THỬ THÁCH NHANH!</h4>
-          <p id="challenge-text">Hát một câu về ngày Tết</p>
+          <div id="reveal-challenge" class="challenge-box hidden">
+            <h4 style="color: #92400e; margin-top: 0;">⚡ THỬ THÁCH NHANH!</h4>
+            <p id="challenge-text">Hát một câu về ngày Tết</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem;">
+            <button id="btn-stop" class="btn-folk"
+              style="background: #fff; color: var(--folk-red); border: 2px solid var(--folk-red);">
+              💰 ĐỦ: DỪNG LẠI
+            </button>
+            <button id="btn-continue" class="btn-folk" style="padding: 1rem; font-size: 1.1rem;">
+              🐷 LIỀU: ĐẬP TIẾP!
+            </button>
+          </div>
         </div>
-
-        <button id="btn-continue" class="btn-folk" style="margin-top: 2rem; min-width: 200px;">TIẾP TỤC</button>
       </div>
     </div>
 
     <!-- Screen 4: Summary -->
     <div id="screen-summary" class="heo-screen hidden">
-      <div class="heo-setup-card">
-        <h2 style="color: var(--folk-red);">TỔNG KẾT LÌ XÌ</h2>
-        <div style="font-size: 4rem; color: var(--folk-gold-dark); font-weight: 800; margin: 2rem 0;">
-          <span id="summary-total">0</span>đ
-        </div>
+      <div class="heo-summary-card heo-setup-card">
+        <div class="summary-festive-bg"></div>
+        <div style="position: relative; z-index: 1;">
+          <h2 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem;">🧧 TỔNG KẾT LÌ XÌ 🧧</h2>
+          <p id="summary-player-name"
+            style="font-size: 1.2rem; font-weight: bold; color: var(--folk-red); margin-bottom: 1rem;">CHÚC MỪNG BẠN!
+          </p>
 
-        <div id="summary-badge" style="margin-bottom: 2rem; font-size: 1.2rem; font-weight: bold;">
-          Huy hiệu: <span style="color: var(--folk-red);">ĐẠI GIA LÌ XÌ</span>
-        </div>
+          <div style="font-size: 4rem; color: var(--folk-gold-dark); font-weight: 800; margin: 1rem 0;">
+            <span id="summary-total">0</span>đ
+          </div>
 
-        <button id="btn-play-again" class="btn-folk">CHƠI LẠI TỪ ĐẦU</button>
+          <div id="summary-badge" style="margin-bottom: 1.5rem; font-size: 1.2rem; font-weight: bold;">
+            Huy hiệu: <span style="color: var(--folk-red);">ĐẠI GIA LÌ XÌ</span>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <canvas id="summary-chart" width="360" height="180" style="max-width: 100%; border-radius: 12px;"></canvas>
+            <div id="summary-chart-legend"
+              style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; font-size: 0.75rem;">
+            </div>
+          </div>
+
+          <button id="btn-play-again" class="btn-folk">CHƠI LẠI TỪ ĐẦU</button>
+        </div>
       </div>
     </div>
   </div>
