@@ -12,7 +12,9 @@
       <%- include('header.ejs') %>
         <% } %>
 
-          <main class="<%= (typeof toolConfig !== 'undefined' && toolConfig.hideStandardHeader) ? '' : 'container' %>">
+          <main
+            class="<%= (typeof toolConfig !== 'undefined' && toolConfig.hideStandardHeader || (typeof currentPath !== 'undefined' && currentPath === 'home')) ? 'full-width-main' : 'container' %>"
+            <%- (typeof currentPath !=='undefined' && currentPath==='home' ) ? 'data-page="home"' : '' %>>
             <%- include('breadcrumbs.ejs') %>
               <%- body %>
 

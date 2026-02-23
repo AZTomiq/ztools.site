@@ -10,6 +10,27 @@ const {
   GLOBAL_CONFIG, LOCALES, TOOLS
 } = require('./data');
 
+// --- Custom .env Loader (runs once per process) ---
+if (!process.env._DAP_HEO_ENV_LOADED) {
+  const _customEnvPath = path.join(__dirname, '../../src/features/dap-heo/.env');
+  const _rootEnvPath = path.join(__dirname, '../../.env');
+  [_customEnvPath, _rootEnvPath].forEach(envPath => {
+    if (fs.existsSync(envPath)) {
+      const envContent = fs.readFileSync(envPath, 'utf-8');
+      envContent.split('\n').forEach(line => {
+        const parts = line.split('=');
+        if (parts.length >= 2 && !line.trim().startsWith('#')) {
+          const key = parts[0].trim();
+          const value = parts.slice(1).join('=').trim().replace(/(^['"]|['"]$)/g, '');
+          process.env[key] = value;
+        }
+      });
+    }
+  });
+  process.env._DAP_HEO_ENV_LOADED = '1';
+  console.log('📄 Loaded .env (Supabase ready)');
+}
+
 async function buildPage(filePath, locale, baseDir) {
   const packageJson = fs.readJsonSync(path.join(paths.ROOT, 'package.json'));
   const packageVersion = packageJson.version;
@@ -118,6 +139,7 @@ async function buildPage(filePath, locale, baseDir) {
     'text': 'nav.menu_text',
     'generator': 'nav.menu_generator',
     'daily': 'nav.menu_utils',
+    'random': 'nav.menu_random',
     'dev': 'nav.menu_dev'
   };
 
@@ -137,6 +159,10 @@ async function buildPage(filePath, locale, baseDir) {
   const category = categoryKey ? t(categoryKey) : '';
 
   const pageData = {
+    env: {
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY
+    },
     title: t('meta.title'),
     rootPath,
     assetPath,

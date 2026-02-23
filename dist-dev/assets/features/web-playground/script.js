@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ZTools Playground</title>
+  <title>iZTools Playground</title>
   <style>
     body { font-family: sans-serif; padding: 20px; color: #333; height: 100vh; margin:0; display:flex; align-items:center; justify-content:center; background: #f0f2f5; }
     .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align:center; max-width: 400px; }
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </head>
 <body>
   <div class="card">
-    <h1>ZTools Playground</h1>
+    <h1>iZTools Playground</h1>
     <p>Now with <b>Resizability</b> and better <b>Pane Share</b>!</p>
     <button id="click-me">Click Me</button>
     <div id="result" style="margin-top: 20px; font-weight: bold; color: #0891b2;"></div>
@@ -286,8 +286,8 @@ document.getElementById('click-me').addEventListener('click', () => {
 
   function initEditors() {
     // Theme config
-    if (!monaco.editor._themeService?._theme?.themeName?.includes('ztools-dark')) {
-      monaco.editor.defineTheme('ztools-dark', {
+    if (!monaco.editor._themeService?._theme?.themeName?.includes('iZTools-dark')) {
+      monaco.editor.defineTheme('iZTools-dark', {
         base: 'vs-dark',
         inherit: true,
         rules: [],
@@ -298,7 +298,7 @@ document.getElementById('click-me').addEventListener('click', () => {
     }
 
     const editorOptions = {
-      theme: 'ztools-dark',
+      theme: 'iZTools-dark',
       minimap: { enabled: false },
       fontSize: 14,
       padding: { top: 10 },
@@ -469,7 +469,7 @@ document.getElementById('click-me').addEventListener('click', () => {
       const url = `${window.location.origin}${window.location.pathname}#code=${compressed}`;
 
       shareUrlInput.value = url;
-      shareEmbedInput.value = `<iframe src="${url}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="ZTools Playground" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>`;
+      shareEmbedInput.value = `<iframe src="${url}" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="iZTools Playground" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>`;
     } catch (e) {
       console.error('Data compression error', e);
     }

@@ -1,0 +1,310 @@
+/* 🏮 Folk Games Core Styles */
+:root {
+    /* Primary Folk Colors */
+    --folk-red: #B71C1C;
+    --folk-red-light: #E53935;
+    --folk-gold: #FFD700;
+    --folk-gold-dark: #B8860B;
+    
+    /* Secondary Traditional Colors */
+    --folk-jade: #00695C;
+    --folk-wood: #5D4037;
+    --folk-paper: #FFF8E1;
+    --folk-ink: #1A1A2E;
+    
+    /* Shadows & Glows */
+    --folk-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --gold-glow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+/* Common Backgrounds */
+.folk-bg-paper {
+    background-color: var(--folk-paper);
+    background-image: radial-gradient(rgba(184, 134, 11, 0.1) 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+}
+
+/* Animations */
+@keyframes coin-pop {
+    0% { transform: scale(0) translateY(0); opacity: 0; }
+    50% { transform: scale(1.2) translateY(-20px); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.animate-coin {
+    animation: coin-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-1deg); }
+    75% { transform: translateX(5px) rotate(1deg); }
+}
+
+.animate-shake {
+    animation: shake 0.2s ease-in-out infinite;
+}
+
+/* Common Components */
+.folk-card {
+    background: white;
+    border: 2px solid var(--folk-gold-dark);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--folk-shadow);
+    transition: transform 0.2s ease;
+}
+
+.folk-card:hover {
+    transform: translateY(-4px);
+}
+
+.btn-folk {
+    background: var(--folk-red);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    border: 2px solid var(--folk-gold);
+    box-shadow: var(--folk-shadow);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-folk:hover {
+    background: var(--folk-red-light);
+    transform: scale(1.05);
+}
+
+/* Wheel Game Layout */
+.wheel-game-layout {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.wheel-main-area {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wheel-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+}
+
+#wheel-canvas {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: var(--folk-red);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.wheel-controls {
+    flex: 1;
+    min-width: 300px;
+}
+
+@media (max-width: 900px) {
+    .wheel-game-layout {
+        flex-direction: column;
+    }
+}
+
+/* Win Modal Animation Overlay */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Lì Xì Refined Styles */
+.lixi-container-refined {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.lixi-playground {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background: rgba(183, 28, 28, 0.05);
+    border: 3px dashed var(--folk-gold);
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.envelope-wrapper-refined {
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+}
+
+.envelope-wrapper-refined:hover {
+    transform: scale(1.1) rotate(0deg) !important;
+    z-index: 10;
+    filter: drop-shadow(0 0 15px var(--folk-gold));
+}
+
+.envelope-wrapper-refined .envelope {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.envelope-wrapper-refined.opening {
+    transform: scale(1.5) translateY(-50px) !important;
+    opacity: 0;
+}
+
+.lixi-settings {
+    background: var(--folk-paper) !important;
+}
+
+.lixi-blessing {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--folk-wood);
+    margin-top: 1rem;
+    padding: 10px;
+    border-top: 1px solid var(--folk-gold-dark);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Đập Heo Đất Refined Styles */
+.heo-settings-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    background: var(--folk-paper) !important;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+}
+
+.heo-playground {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    min-height: 400px;
+    padding: 1rem;
+    justify-items: center;
+    align-items: center;
+}
+
+.heo-piggy-wrapper {
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.heo-piggy-wrapper.broken {
+    transform: scale(0);
+    opacity: 0;
+}
+
+.heo-piggy-refined {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="%23B71C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h5.2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h1.8"/><path d="M15 12V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v8"/></svg>'), pointer;
+    transition: transform 0.1s;
+}
+
+.heo-emoji {
+    font-size: 8rem;
+    user-select: none;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+
+.heo-number {
+    position: absolute;
+    top: 60%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    pointer-events: none;
+}
+
+.heo-cracks-refined {
+    position: absolute;
+    inset: 10px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M10 10L30 40L10 70M90 10L70 40L90 70M40 10L50 30L60 10" stroke="rgba(0,0,0,0.4)" stroke-width="3" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0%;
+    transition: background-size 0.2s;
+    pointer-events: none;
+}
+
+.heo-fragment {
+    position: absolute;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.heo-piggy-refined:active {
+    transform: scale(0.9) rotate(-5deg);
+}
+
+.animate-hit {
+    animation: shake 0.2s ease-in-out;
+}
+
+@keyframes coin-fly {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.floating-coin {
+    position: absolute;
+    font-weight: bold;
+    color: var(--folk-gold-dark);
+    pointer-events: none;
+    animation: coin-fly 0.8s ease-out forwards;
+    z-index: 10000;
+}
+
+
+

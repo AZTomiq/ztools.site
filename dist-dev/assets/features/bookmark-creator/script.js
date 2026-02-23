@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const bookmarkHtml = generateBookmarkHtml(selected);
-    downloadBlob(bookmarkHtml, 'ztools-bookmarks.html', 'text/html');
+    downloadBlob(bookmarkHtml, 'iZTools-bookmarks.html', 'text/html');
   });
 
   function generateBookmarkHtml(selectedTools) {
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <TITLE>Bookmarks</TITLE>
 <H1>Bookmarks</H1>
 <DL><p>
-    <DT><H3 ADD_DATE="${now}" LAST_MODIFIED="${now}">ZTools</H3>
+    <DT><H3 ADD_DATE="${now}" LAST_MODIFIED="${now}">iZTools</H3>
     <DL><p>
 `;
 

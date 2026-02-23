@@ -1,0 +1,769 @@
+/* =====================================================
+   iZTools Neo-Festive Homepage - 2026
+   ===================================================== */
+
+:root {
+  /* Core Brand & Theme Colors - Synced with global.css */
+  --neo-bg: #000000;
+  --neo-card-bg: #121214; /* Match global dark card */
+  --neo-card-border: #27272a; /* Match global dark border */
+  --neo-primary: #ea580c; /* Main accent color */
+  --neo-accent: #f97316;
+  --neo-text: #fafafa;
+  --neo-text-muted: #a1a1aa;
+  
+  /* Modern soft glow instead of heavy drop shadow */
+  --neo-glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  
+  /* Animations */
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+[data-theme="light"] {
+    --neo-bg: radial-gradient(circle at top center, #ffffff 0%, #f4f4f5 100%); /* Crisp zinc background */
+    --neo-card-bg: rgba(255, 255, 255, 0.7); /* Subtle glass */
+    --neo-card-border: #e4e4e7; /* Clean zinc 200 border */
+    --neo-primary: #ea580c; 
+    --neo-accent: #c2410c; 
+    --neo-text: #09090b; /* Deep zinc */
+    --neo-text-muted: #71717a;
+    --neo-glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Premium soft shadow */
+}
+
+body {
+    background-color: var(--neo-bg);
+    color: var(--neo-text);
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header adaptation (only override if needed, but respect theme) */
+.site-header {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--neo-card-border);
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(0,0,0,0.6);
+}
+
+[data-theme="light"] .site-header {
+    background: rgba(255,255,255,0.8);
+}
+
+/* --- 1. Hero Section (Full Viewport) --- */
+.hero-neo {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: var(--neo-bg); /* Use variable for theme support */
+  padding: 0 1rem;
+}
+
+/* Background Effects */
+.hero-bg-anim {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+}
+
+.hero-particles {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 62, 62, 0.15) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    animation: pulseGlow 8s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+}
+
+/* Content Container */
+.hero-content {
+  z-index: 10;
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tet-badge {
+    background: rgba(255, 62, 62, 0.2);
+    border: 1px solid rgba(255, 62, 62, 0.3);
+    color: #ff6b6b;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+}
+
+/* Glitch/Neon Title */
+.neo-title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin-bottom: 2rem;
+  color: var(--neo-text); /* Fallback */
+  position: relative;
+  text-transform: uppercase;
+}
+
+/* Dark Mode Gradient */
+[data-theme="dark"] .neo-title {
+  background: linear-gradient(to bottom, #ffffff, #a1a1aa); /* Pure white to Zinc 400 */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Light Mode Gradient - Dark Text */
+[data-theme="light"] .neo-title {
+  background: linear-gradient(to bottom, #09090b, #52525b); /* Zinc 950 to Zinc 600 */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.neo-title span {
+    color: var(--neo-primary);
+    -webkit-text-fill-color: var(--neo-primary);
+    text-shadow: 0 0 20px rgba(255, 62, 62, 0.5);
+}
+
+/* COUNTDOWN STYLES (Restored & Modernized) */
+.neo-countdown-wrapper {
+    margin: 2rem 0;
+    min-width: 600px; /* Ensure width for larger screens */
+    background: var(--neo-card-bg); /* Theme aware */
+    border: 1px solid var(--neo-card-border);
+    padding: 1.5rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: var(--neo-glass-shadow);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.neo-countdown-wrapper:hover {
+    transform: scale(1.02);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.neo-timer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.timer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-block span {
+    font-size: 2.5rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--neo-text); /* Theme aware */
+    line-height: 1;
+}
+
+.timer-block label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--neo-accent);
+    margin-top: 5px;
+}
+
+.timer-block .sep {
+    font-size: 2rem;
+    color: var(--neo-text-muted); /* Theme aware */
+    margin-bottom: 1rem;
+}
+
+.neo-countdown-label {
+    font-size: 0.9rem;
+    color: var(--neo-text-muted); /* Theme aware */
+    margin-top: 8px;
+}
+
+/* Subtitle */
+.neo-subtitle {
+  font-size: 1.25rem;
+  color: var(--neo-text-muted);
+  max-width: 600px;
+  margin: 2rem auto 3rem;
+  line-height: 1.6;
+}
+
+/* Command Bar (Search) */
+.cmd-bar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.cmd-bar {
+  width: 100%;
+  background: var(--neo-card-bg); /* Theme aware */
+  border: 1px solid var(--neo-card-border);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
+  color: var(--neo-text); /* Theme aware */
+  transition: all 0.3s var(--ease-elastic);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--neo-glass-shadow);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cmd-bar input {
+  background: transparent;
+  border: none;
+  color: var(--neo-text); /* Theme aware */
+  width: 100%;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.cmd-bar input::placeholder {
+    color: var(--neo-text-muted);
+}
+
+.cmd-bar:focus-within {
+  background: var(--neo-card-bg);
+  border-color: var(--neo-primary);
+  box-shadow: 0 0 0 4px rgba(255, 62, 62, 0.2), var(--neo-glass-shadow);
+  transform: scale(1.02);
+}
+
+.cmd-hint {
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.3);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-10px);}
+    60% {transform: translateY(-5px);}
+}
+
+/* --- 2. Bento Grid Section --- */
+.section-bento {
+  padding: 4rem 2rem;
+  background: transparent; /* Let body bg show through */
+}
+
+.bento-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.bento-header {
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.bento-header h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #fff, #999);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Default 4 columns */
+  grid-auto-rows: 240px; /* Base height for rows */
+  gap: 1.5rem;
+}
+
+/* Bento Item Styles */
+.bento-item {
+  position: relative;
+  background: var(--neo-card-bg);
+  border: 1px solid var(--neo-card-border);
+  border-radius: 20px;
+  padding: 2rem;
+  overflow: hidden;
+  transition: all 0.4s var(--ease-elastic);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+.bento-item:hover {
+  transform: translateY(-5px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: var(--neo-glass-shadow);
+  z-index: 2;
+}
+
+.bento-item h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.bento-item p {
+    font-size: 0.95rem;
+    color: var(--neo-text-muted);
+    line-height: 1.4;
+}
+
+.bento-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    color: var(--neo-primary);
+    background: rgba(255, 62, 62, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Special Sizes */
+.bento-large {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: linear-gradient(135deg, rgba(255, 62, 62, 0.1), rgba(0,0,0,0));
+  border-color: rgba(255, 62, 62, 0.3);
+}
+
+.bento-wide {
+  grid-column: span 2;
+}
+
+.bento-tall {
+  grid-row: span 2;
+}
+
+/* Featured / Hot Badge */
+.bento-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--neo-primary);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px -1px rgba(234, 88, 12, 0.4), 0 2px 4px -2px rgba(234, 88, 12, 0.4); /* Premium colored shadow */
+}
+
+.tet-card {
+    border: 1px solid #ffd700 !important;
+    background: linear-gradient(135deg, rgba(255, 62, 62, 0.2), rgba(0,0,0,0.8)) !important;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .neo-title {
+      font-size: 3rem;
+  }
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .bento-large, .bento-wide, .bento-tall {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .bento-item {
+      min-height: 200px;
+  }
+  .neo-timer {
+      gap: 0.5rem;
+  }
+  .timer-block span {
+      font-size: 1.5rem;
+  }
+  .timer-block .sep {
+      font-size: 1.2rem;
+  }
+}
+
+/* --- RESTORED SECTIONS (From home.css) --- */
+
+/* 1. Tết Countdown (Full) */
+.section-tet-countdown {
+  padding: 0;
+  width: 100%;
+  min-height: 80vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--neo-bg); /* Use theme variable */
+  overflow: hidden;
+  margin-top: -20px; /* Overlap hero slightly */
+}
+
+#tet-blossom-canvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 2;
+}
+
+[data-theme="light"] .section-tet-countdown {
+    background: #ffffff; /* Pure white for brightness */
+}
+
+.countdown-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+[data-theme="light"] .countdown-overlay {
+    background: none; /* Remove overlay in light mode for maximum brightness */
+    opacity: 0;
+}
+
+.vpc-glass {
+  background: var(--neo-card-bg); /* Theme aware */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid var(--neo-card-border);
+  box-shadow: var(--neo-glass-shadow);
+}
+
+[data-theme="light"] .vpc-glass {
+    background: rgba(255, 255, 255, 0.95); /* Almost solid white glass */
+    border-color: rgba(0,0,0,0.05);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+.countdown-wrapper {
+  position: relative;
+  width: 90%; max-width: 1000px;
+  padding: 5rem 2rem;
+  border-radius: 40px;
+  text-align: center;
+  z-index: 10;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* Fullscreen Toggle - Refined */
+#fullscreen-countdown {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: 1px solid var(--neo-card-border);
+    color: var(--neo-text-muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+    z-index: 20;
+}
+
+#fullscreen-countdown:hover {
+    opacity: 1;
+    background: var(--neo-card-bg);
+    color: var(--neo-primary);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.floating-lantern {
+  position: absolute;
+  font-size: 3rem;
+  filter: drop-shadow(0 0 15px rgba(255, 69, 0, 0.6));
+  animation: lanternFloat 6s infinite ease-in-out;
+  pointer-events: none; z-index: 5;
+}
+.l1 { top: 10%; left: 5%; animation-delay: 0s; }
+.l2 { top: 15%; right: 8%; animation-delay: 2s; }
+
+@keyframes lanternFloat {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-25px) rotate(5deg); }
+}
+
+.countdown-title-premium {
+  margin-bottom: 3.5rem;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 900;
+  background: linear-gradient(to right, #D4AF37 20%, #FFF8DC 40%, #FFD700 60%, #D4AF37 80%);
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+  text-transform: uppercase;
+  /* Add text shadow for better contrast on light mode if needed, effectively "baking" the dark bg for text */
+   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+[data-theme="light"] .gradient-text {
+    /* Darker gold gradient for light mode */
+    background: linear-gradient(to right, #B8860B 20%, #D4AF37 40%, #B8860B 60%, #8B6914 80%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 2px rgba(255,255,255,0.5));
+}
+
+@keyframes shine { to { background-position: 200% center; } }
+
+.tet-timer-modern {
+  display: flex; justify-content: center; align-items: center; gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.timer-unit-modern {
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+
+.num-card {
+  background: rgba(0, 0, 0, 0.4); /* Keep semi-transparent dark on both modes for contrast with gold text/white numbers? */
+  padding: 2rem 1.5rem;
+  min-width: 110px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  position: relative;
+  box-shadow: var(--neo-glass-shadow), inset 0 0 15px rgba(212, 175, 55, 0.1);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+[data-theme="light"] .num-card {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 0 15px rgba(212, 175, 55, 0.05);
+}
+
+.num-card:hover { transform: scale(1.05) translateZ(10px); border-color: rgba(212, 175, 55, 0.6); }
+
+.num-changing { animation: numFlip 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95); }
+
+@keyframes numFlip {
+  0% { transform: rotateX(0deg); opacity: 1; }
+  50% { transform: rotateX(90deg); opacity: 0.5; }
+  100% { transform: rotateX(0deg); opacity: 1; }
+}
+
+.num-card span {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-feature-settings: "tnum";
+}
+
+[data-theme="light"] .num-card span {
+    color: #333; /* Dark number on light card */
+}
+
+.timer-unit-modern small {
+  color: #D4AF37; text-transform: uppercase; font-weight: 700; letter-spacing: 0.15em; font-size: 0.85rem;
+}
+[data-theme="light"] .timer-unit-modern small {
+    color: #B8860B; /* Darker gold */
+}
+
+.timer-sep-modern {
+  font-size: 3rem; color: #D4AF37; font-weight: 900; margin-top: -1.5rem; opacity: 0.5;
+}
+[data-theme="light"] .timer-sep-modern {
+    color: #B8860B;
+}
+
+.premium-slogan {
+  margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+}
+
+.slogan-sub {
+  font-size: 1.25rem; font-style: italic; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.5rem;
+}
+
+[data-theme="light"] .slogan-sub {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.slogan-main {
+  font-size: 1.75rem; font-weight: 700; color: #D4AF37; text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+[data-theme="light"] .slogan-main {
+    color: #B8860B;
+    text-shadow: none;
+}
+
+.btn-lixi {
+  background: linear-gradient(135deg, #C41E3A, #8B0000);
+  border: 2px solid #D4AF37;
+  border-radius: 50px;
+  padding: 12px 30px;
+  color: #D4AF37;
+  font-weight: 800;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 10px 20px rgba(139, 0, 0, 0.4);
+}
+
+.btn-lixi:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 15px 30px rgba(139, 0, 0, 0.6);
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  color: #8B0000;
+}
+
+.ma-dao-parallax-bg {
+  position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.8) 100%);
+  background-size: cover; background-position: center;
+  z-index: -1; transition: transform 0.2s ease-out;
+}
+
+/* Fullscreen Overrides */
+.fullscreen-tet { background: #000 !important; }
+.fullscreen-tet .countdown-wrapper {
+  width: 100vw; height: 100vh; max-width: none; border-radius: 0; background: transparent;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* 2. Folk Games Section */
+.section-folk-showcase {
+    padding: 4rem 2rem;
+    background: transparent;
+    text-align: center;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 2rem auto 0;
+}
+
+.tool-card-modern {
+    background: var(--neo-card-bg);
+    border: 1px solid var(--neo-card-border);
+    backdrop-filter: blur(var(--glass-blur));
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card-modern:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--neo-glass-shadow);
+    border-color: rgba(255,255,255,0.2);
+}
+
+.tool-card-modern .icon {
+    font-size: 2.5rem;
+    width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    color: #fff;
+    box-shadow: var(--neo-glass-shadow);
+}
+
+.tool-card-modern h4 {
+    font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;
+}
+
+.tool-card-modern p {
+    font-size: 0.9rem; color: var(--neo-text-muted); line-height: 1.4;
+}
+
+.badge-hot {
+    position: absolute; top: 12px; right: 12px;
+    background: #ff3e3e; color: white;
+    font-size: 0.7rem; font-weight: 800;
+    padding: 4px 8px; border-radius: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(255, 62, 62, 0.4);
+    animation: bounce 2s infinite;
+}
+

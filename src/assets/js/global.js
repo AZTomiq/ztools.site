@@ -4,10 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Update button icon based on current theme
   const updateIcon = (theme) => {
-    if (!toggleBtn) return;
-    const iconName = theme === 'dark' ? 'sun' : 'moon';
-    toggleBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
-    if (window.lucide) lucide.createIcons();
+    // Icon swapping is handled purely via CSS classes (.theme-icon-light / .theme-icon-dark)
   };
 
   if (toggleBtn) {
@@ -29,8 +26,28 @@ document.addEventListener('DOMContentLoaded', () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
-        .then(req => console.log('SW Registered!', req.scope))
+        .then(req => {
+          console.log('SW Registered!', req.scope);
+
+          req.addEventListener('updatefound', () => {
+            const newWorker = req.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('New application version ready. Auto-reloading...');
+                window.location.reload();
+              }
+            });
+          });
+        })
         .catch(err => console.error('SW Registration Failed', err));
+
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
     });
   }
 
