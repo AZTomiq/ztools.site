@@ -26,6 +26,7 @@ nav:
   menu_text: Công cụ Văn bản
   menu_generator: Tạo mã (Generators)
   menu_categories: Danh mục
+  menu_random: Công cụ ngẫu nhiên
   menu_dev: Công cụ Lập trình
   blog: Dev ký sự
   roadmap: Lộ trình (Skill Tree)
@@ -95,6 +96,8 @@ home:
     memes:
       title: DEV Memes
       desc: Giải trí cho Developer
+    random:
+      title: Công cụ ngẫu nhiên
   sort:
     default: Mặc định
     az: Tên (A-Z)

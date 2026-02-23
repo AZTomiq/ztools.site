@@ -23,7 +23,7 @@ function downloadQR() {
   if (!img) return;
 
   const link = document.createElement('a');
-  link.download = `ztools-qr-${Date.now()}.png`;
+  link.download = `iZTools-qr-${Date.now()}.png`;
   link.href = img.src;
   link.click();
 }

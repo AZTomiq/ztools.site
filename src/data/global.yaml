@@ -14,8 +14,8 @@ site:
     - aztomiq
     - tiện ích miễn phí
 featured_tools:
-  - web-playground # playground.iztools.xyz
   - tax # tncn.iztools.xyz
+  - web-playground # playground.iztools.xyz
   - json-toolkit # json.iztools.xyz
   - compound-interest # laikep.iztools.xyz
   - lunar-calendar # amlich.iztools.xyz
@@ -26,7 +26,7 @@ build:
   default_locale: vi
   entry_point:
   deploy:
-    remote: "https://github.com/AZTomiq/iztools.xyz-public.git"
+    remote: "https://github.com/AZTomiq/ztools.site-public.git"
     branch: "main"
     dist_folder: dist
     strategy: init
@@ -59,6 +59,10 @@ categories:
     icon: 🐸
     key: memes
     translation_key: home.cats.memes.title
+  random:
+    icon: 🎲
+    key: random
+    translation_key: home.cats.random.title
 category_order:
   - job
   - finance
@@ -66,4 +70,5 @@ category_order:
   - generator
   - daily
   - dev
+  - random
   - memes

@@ -26,6 +26,7 @@ nav:
   menu_text: Text Tools
   menu_generator: Generators
   menu_categories: Categories
+  menu_random: Random Tools
   menu_dev: Dev Tools
   blog: Dev Blog
   roadmap: Skill Tree
@@ -95,6 +96,8 @@ home:
     memes:
       title: DEV Memes
       desc: Just for Fun
+    random:
+      title: Random Tools
   sort:
     default: Default
     az: Name (A-Z)

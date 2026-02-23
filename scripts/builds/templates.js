@@ -36,6 +36,7 @@ async function buildTemplates() {
       const outputName = file.replace('.ejs', ''); // robots.txt.ejs -> robots.txt
       const outputPath = path.join(paths.DIST, outputName);
 
+      const packageJson = fs.readJsonSync(path.join(paths.ROOT, 'package.json'));
       const data = {
         global: GLOBAL_CONFIG,
         siteGlobal: GLOBAL_CONFIG,
@@ -47,6 +48,7 @@ async function buildTemplates() {
         blogPosts: blogPosts || [],
         toolsMap,
         categories,
+        packageVersion: packageJson.version,
         isDev: require('./config').isDev
       };
 

@@ -1,150 +1,18 @@
 {
   "cleanUrls": true,
   "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/(sw\\.js|manifest\\.json|index\\.html)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
   "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "json.iztools.xyz"
-        }
-      ],
-      "destination": "https://json.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "json.eztools.site"
-        }
-      ],
-      "destination": "https://json.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "tncn.iztools.xyz"
-        }
-      ],
-      "destination": "https://tncn.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "tncn.eztools.site"
-        }
-      ],
-      "destination": "https://tncn.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "laikep.iztools.xyz"
-        }
-      ],
-      "destination": "https://laikep.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "laikep.eztools.site"
-        }
-      ],
-      "destination": "https://laikep.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "playground.iztools.xyz"
-        }
-      ],
-      "destination": "https://playground.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "playground.eztools.site"
-        }
-      ],
-      "destination": "https://playground.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "amlich.iztools.xyz"
-        }
-      ],
-      "destination": "https://amlich.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "amlich.eztools.site"
-        }
-      ],
-      "destination": "https://amlich.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lunar.iztools.xyz"
-        }
-      ],
-      "destination": "https://lunar.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "lunar.eztools.site"
-        }
-      ],
-      "destination": "https://lunar.iztools.xyz/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "iztools.xyz"
-        }
-      ],
-      "destination": "https://iztools.xyz/:path*",
-      "permanent": true
-    },
     {
       "source": "/:path*",
       "has": [
@@ -373,6 +241,16 @@
         }
       ],
       "destination": "/en/lunar-calendar/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "dap-heo.iztools.xyz"
+        }
+      ],
+      "destination": "/dap-heo/:path*"
     },
     {
       "source": "/:path*",

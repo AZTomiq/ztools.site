@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aztomiq-v1';
+const CACHE_NAME = 'aztomiq-v<%= packageVersion.replace(/\\./g, "") %>';
 const IS_DEV = <%= isDev %>;
   const STATIC_ASSETS = [
   './',
@@ -21,6 +21,8 @@ const IS_DEV = <%= isDev %>;
     assets.add(`./assets/features/${tool.id}/script.js`);
     }
     locales.forEach(lang => {
+    if (tool.vn_only && lang !== 'vi') return;
+    if (tool.en_only && lang !== 'en') return;
     assets.add(`./${lang}/${tool.id}/`);
     });
     });
@@ -75,6 +77,14 @@ const IS_DEV = <%= isDev %>;
           self.addEventListener('fetch', (e) => {
           if (IS_DEV) return; // Skip cache in dev mode
 
+          const url = new URL(e.request.url);
+
+          // 1. Bypass Service Worker for external tracking/insights (like Vercel) to prevent network failure loops
+          if (url.hostname.includes('vercel.com') || url.hostname.includes('_vercel') ||
+          url.pathname.includes('/insights/')) {
+          return;
+          }
+
           if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) {
           return;
           }
@@ -82,15 +92,23 @@ const IS_DEV = <%= isDev %>;
           e.respondWith(
           caches.open(CACHE_NAME).then(async (cache) => {
           const cachedResponse = await cache.match(e.request);
-          const fetchPromise = fetch(e.request).then((networkResponse) => {
-          if (networkResponse.ok) {
+          if (cachedResponse) return cachedResponse;
+
+          try {
+          const networkResponse = await fetch(e.request);
+          // Prevent caching partial content (206) which causes errors
+          if (networkResponse && networkResponse.ok && networkResponse.status !== 206) {
           cache.put(e.request, networkResponse.clone());
+          } else if (!networkResponse) {
+          // Fallback if fetch returns nothing
+          return new Response('Network error', { status: 408, headers: { 'Content-Type': 'text/plain' } });
           }
           return networkResponse;
-          }).catch((err) => {
+          } catch (err) {
           console.warn('[SW] Network fail:', err);
-          });
-          return cachedResponse || fetchPromise;
+          // Return a safe fallback response instead of undefined/null
+          return new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
+          }
           })
           );
           });
